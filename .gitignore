@@ -92,6 +92,6 @@ orleans.codegen.cs
 *.ndf
 
 # Others
-ModuloCadastro/ModuloCadastro.csproj"
+ModuloCadastro/ModuloCadastro.csproj
 ModuloCadastro/obj/
 ModuloCadastro/.vs/

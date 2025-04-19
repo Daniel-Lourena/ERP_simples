@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EpZqSgCLC4bpsWwKNNaSOF0uMHe+V24bX84Xv/DcP5nEFjGYrIgHLeNYuwhWVQC+RgIdINlGDGfLa9X01KijGA==",
+  "dgSpecHash": "W509GTCOX1avMMQtuJOB6Ly0v7dmaNKvqF8xmR7KyMYD64vEizwZBONoM0W5pjA3vvyR2Nqh1CZQGcEGH8jMMw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dhlou\\source\\repos\\ModuloCadastro\\ModuloCadastro.csproj",
+  "projectFilePath": "C:\\ERP_simples\\ModuloCadastro\\ModuloCadastro.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dhlou\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.20\\microsoft.entityframeworkcore.7.0.20.nupkg.sha512",
     "C:\\Users\\dhlou\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.20\\microsoft.entityframeworkcore.abstractions.7.0.20.nupkg.sha512",

@@ -1,0 +1,107 @@
+## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+# [Pp]roperties/
+[Pp]ackages/
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/
+
+
+# Build Results of an ATL Project
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+# Benchmark Results
+BenchmarkDotNet.Artifacts/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+*.user
+*.dll
+*.licx
+
+# Chutzpah Test files
+_Chutzpah*
+
+# Click-Once directory
+publish/
+
+# Others
+ClientBin/
+~$*
+*~
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.publishsettings
+orleans.codegen.cs
+
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# Others
+ModuloCadastro/ModuloCadastro.csproj"
+ModuloCadastro/obj/Debug/net6.0/ModuloCadastro.GeneratedMSBuildEditorConfig.editorconfig
+ModuloCadastro/obj/project.nuget.cache
+ModuloCadastro/obj/project.assets.json
+ModuloCadastro/obj/ModuloCadastro.csproj.nuget.dgspec.json
+ModuloCadastro/obj/Debug/net6.0/ModuloCadastro.GeneratedMSBuildEditorConfig.editorconfig
+ModuloCadastro/obj/Debug/net6.0/ModuloCadastro.assets.cache
+ModuloCadastro/.vs/ModuloCadastro/FileContentIndex/d6219a7a-5496-4af1-af45-97c6c8f03dd7.vsidx
+ModuloCadastro/.vs/ModuloCadastro/FileContentIndex/d4733a5e-271e-4a36-8d13-89220f198ac1.vsidx
+ModuloCadastro/.vs/ModuloCadastro/FileContentIndex/8d092e07-5f51-4c70-9ea4-f8bbdd09504b.vsidx
+ModuloCadastro/.vs/ModuloCadastro/FileContentIndex/798c5dad-97c2-485c-a78c-c6a28d7eb273.vsidx
+ModuloCadastro/.vs/ModuloCadastro/FileContentIndex/1349689e-c3fe-4234-bc1d-96a740b45bb2.vsidx
+ModuloCadastro/.vs/ModuloCadastro/DesignTimeBuild/.dtbcache.v2

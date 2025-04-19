@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dhlou\\source\\repos\\ModuloCadastro\\ModuloCadastro.csproj": {}
+    "C:\\ERP_simples\\ModuloCadastro\\ModuloCadastro.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dhlou\\source\\repos\\ModuloCadastro\\ModuloCadastro.csproj": {
+    "C:\\ERP_simples\\ModuloCadastro\\ModuloCadastro.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dhlou\\source\\repos\\ModuloCadastro\\ModuloCadastro.csproj",
+        "projectUniqueName": "C:\\ERP_simples\\ModuloCadastro\\ModuloCadastro.csproj",
         "projectName": "ModuloCadastro",
-        "projectPath": "C:\\Users\\dhlou\\source\\repos\\ModuloCadastro\\ModuloCadastro.csproj",
+        "projectPath": "C:\\ERP_simples\\ModuloCadastro\\ModuloCadastro.csproj",
         "packagesPath": "C:\\Users\\dhlou\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dhlou\\source\\repos\\ModuloCadastro\\obj\\",
+        "outputPath": "C:\\ERP_simples\\ModuloCadastro\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

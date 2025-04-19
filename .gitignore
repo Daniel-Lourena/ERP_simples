@@ -49,6 +49,8 @@ bld/
 *.dll
 *.licx
 *.suo
+*.v2
+*.bin
 
 # Visual Studio cache
 .vs/

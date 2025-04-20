@@ -8,13 +8,21 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Context
 {
-    internal class ModuloCadastroContext : DbContext
+    public class ModuloCadastroContext : DbContext
     {
         internal DbSet<AutoNumeradorEntity> AutoNumeradores { get; set; }
         internal DbSet<UsuarioEntity> Usuarios { get; set; }
         internal DbSet<ClienteEntity> Clientes { get; set; }
         internal DbSet<CidadeEntity> Cidades { get; set; }
         internal DbSet<EstadoEntity> Estados { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Conexão com MySQL
+            optionsBuilder.UseMySql(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB + "AllowLoadLocalInfile=true;",
+                new MySqlServerVersion(new Version(5, 7)),  // Versão mínima suportada
+                options => options.EnableRetryOnFailure()); // Configurações adicionais
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

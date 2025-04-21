@@ -53,7 +53,6 @@ namespace SistemaERP.Cadastros.Usuario
                 
                 CarregaUsuarios();
             }
-
         }
 
         private void CriarColunasDataGridView<T>(List<T> listaDataSource)

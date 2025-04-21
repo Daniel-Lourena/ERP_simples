@@ -12,7 +12,7 @@ namespace ModuloCadastro.Entity
     [Table("tb_produtos")]
     public class ProdutoEntity : BaseEntity<ProdutoEntity>
     {
-        [Key,Display(Name = "Id", Description = "")]
+        [Key,Display(Name = "ID", Description = "")]
         public int id { get; set; }
         [Display(Name = "Descrição", Description = "")]
         public string descricao { get; set; }

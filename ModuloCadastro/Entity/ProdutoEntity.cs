@@ -12,35 +12,35 @@ namespace ModuloCadastro.Entity
     [Table("tb_produtos")]
     public class ProdutoEntity : BaseEntity<ProdutoEntity>
     {
-        [Key,Display(Name = "ID", Description = "")]
+        [Key, Display(Name = "ID", Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
-        [Display(Name = "Descrição", Description = "")]
+        [Display(Name = "Descrição", Description = ""), Column(TypeName = "varchar(150)")]
         public string descricao { get; set; }
-        [Display(Name = "UN", Description = "")]
+        [Display(Name = "UN", Description = ""), Column(TypeName = "varchar(10)")]
         public string idUnidade { get; set; }
-        [Display(Name = "Setor Estoque", Description = "")]
+        [Display(Name = "Setor Estoque", Description = ""), Column(TypeName = "int")]
         public int setorEstoque { get; set; }
-        [Display(Name = "CEST", Description = "")]
+        [Display(Name = "CEST", Description = ""), Column(TypeName = "varchar(7)")]
         public string cest { get; set; }
-        [Display(Name = "NCM", Description = "")]
+        [Display(Name = "NCM", Description = ""), Column(TypeName = "varchar(8)")]
         public string ncm { get; set; }
-        [Display(Name = "Cód. Estoque", Description = "")]
+        [Display(Name = "Cód. Estoque", Description = ""), Column(TypeName = "varchar(100)")]
         public string codigoEstoque_SKU { get; set; }
-        [Display(Name = "Categoria", Description = "")]
+        [Display(Name = "Categoria", Description = ""), Column(TypeName = "int")]
         public int categoria { get; set; }
-        [Display(Name = "Est. Mínimo", Description = "")]
+        [Display(Name = "Est. Mínimo", Description = ""), Column(TypeName = "decimal(10,2)")]
         public decimal estoqueMinimo { get; set; }
-        [Display(Name = "Origem", Description = "")]
+        [Display(Name = "Origem", Description = ""), Column(TypeName = "int")]
         public int origem { get; set; }
-        [Display(Name = "CST/CSOSN", Description = "")]
+        [Display(Name = "CST/CSOSN", Description = ""), Column(TypeName = "varchar(5)")]
         public string cst_csosn { get; set; }
-        [Display(Name = "Inativo", Description = "")]
+        [Display(Name = "Inativo", Description = ""), Column(TypeName = "tinyint(1)")]
         public bool inativo { get; set; }
-        [Display(Name = "Usuário Cadastro", Description = "")]
+        [Display(Name = "Usuário Cadastro", Description = ""), Column(TypeName = "int")]
         public int usuarioCadastro { get; set; }
-        [Display(Name = "Dta. Cadastro", Description = "")]
+        [Display(Name = "Dta. Cadastro", Description = ""), Column(TypeName = "datetime")]
         public DateTime dataCadastro { get; set; }
-        [Display(Name = "Dta. Atualização", Description = "")]
+        [Display(Name = "Dta. Atualização", Description = ""), Column(TypeName = "datetime")]
         public DateTime dataAtualizacao { get; set; }
     }
 }

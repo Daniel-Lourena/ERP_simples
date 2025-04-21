@@ -12,19 +12,19 @@ namespace ModuloCadastro.Entity
     [Table("tb_usuario")]
     public class UsuarioEntity : BaseEntity<UsuarioEntity>
     {
-        [Display(Name = "ID",Description = "")] 
+        [Display(Name = "ID",Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)] 
         public int id { get; set; }
-        [Display(Name = "Nome",Description = "")] 
+        [Display(Name = "Nome",Description = ""), Column(TypeName = "varchar(50)")] 
         public string nome { get; set; }
-        [Display(Name = "Cargo",Description = "")] 
+        [Display(Name = "Cargo",Description = ""), Column(TypeName = "int")] 
         public int cargo { get; set; }
-        [Display(Name = "Dta. Cadastro",Description = "")] 
+        [Display(Name = "Dta. Cadastro", Description = ""), Column(TypeName = "datetime")] 
         public DateTime dataCadastro { get; set; }
-        [Display(Name = "Dta. Atualização",Description = "")] 
+        [Display(Name = "Dta. Atualização", Description = ""), Column(TypeName = "datetime")] 
         public DateTime dataAtualizacao { get; set; }
-        [Display(Name = "Excluído",Description = "")] 
+        [Display(Name = "Excluído", Description = ""), Column(TypeName = "tinyint(1)")] 
         public bool excluido { get; set; }
-        [Display(Name = "Dta. Exclusão", Description = "")]
+        [Display(Name = "Dta. Exclusão", Description = ""), Column(TypeName = "datetime")]
         public DateTime dataExclusao { get; set; }
     }
 }

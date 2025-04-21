@@ -53,6 +53,21 @@ namespace ModuloCadastro.Context
             {
                 entity.HasKey(c => c.cuf);
             });
+
+            modelBuilder.Entity<ProdutoEntity>(entity =>
+            {
+                entity.HasKey(c => c.id);
+            });
+
+            modelBuilder.Entity<CategoriaEntity>(entity =>
+            {
+                entity.HasKey(c => c.id);
+            });
+
+            modelBuilder.Entity<SetorEstoqueEntity>(entity =>
+            {
+                entity.HasKey(c => c.id);
+            });
         }
     }
 }

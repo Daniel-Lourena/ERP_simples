@@ -12,13 +12,13 @@ namespace ModuloCadastro.Entity
     [Table("tb_cidade")]
     public class CidadeEntity : BaseEntity<CidadeEntity>
     {
-        [Key,Display(Name = "ID",Description = "")]
+        [Key,Display(Name = "ID",Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
-        [Display(Name = "UF",Description = "")]
+        [Display(Name = "UF", Description = ""), Column(TypeName = "int")]
         public int cuf { get; set; }
-        [Display(Name = "Cód. Município",Description = "")]
+        [Display(Name = "Cód. Município", Description = ""), Column(TypeName = "varchar(10)")]
         public string cmunicipio { get; set; }
-        [Display(Name = "Nome",Description = "")]
+        [Display(Name = "Nome", Description = ""), Column(TypeName = "varchar(50)")]
         public string dmunicipio { get; set; }
     }
 }

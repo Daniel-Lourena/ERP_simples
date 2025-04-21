@@ -172,7 +172,7 @@
             txtNome.Size = new Size(272, 23);
             txtNome.TabIndex = 0;
             // 
-            // formDetalhesUsuario
+            // formDetalhesCliente
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;

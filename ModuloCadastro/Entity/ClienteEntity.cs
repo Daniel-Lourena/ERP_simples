@@ -21,6 +21,8 @@ namespace ModuloCadastro.Entity
         public decimal limiteCredito { get; set; }
         [Display(Name = "Rua", Description = "")]
         public string end_nomeRua { get; set; }
+        [Display(Name = "Bairro", Description = "")]
+        public string end_bairro { get; set; }
         [Display(Name = "N°", Description = "")]
         public string end_numero { get; set; }
         [Display(Name = "Logradouro", Description = "")]
@@ -29,6 +31,14 @@ namespace ModuloCadastro.Entity
         public string end_uf { get; set; }
         [Display(Name = "ID Cidade", Description = "")]
         public string end_cidade { get; set; }
+        [Display(Name = "Dta. Cadastro", Description = "")]
+        public DateTime dataCadastro { get; set; }
+        [Display(Name = "Dta. Atualização", Description = "")]
+        public DateTime dataAtualizacao { get; set; }
+        [Display(Name = "Excluído", Description = "")]
+        public bool excluido { get; set; }
+        [Display(Name = "Dta. Exclusão", Description = "")]
+        public DateTime dataExclusao { get; set; }
 
         [NotMapped]
         public string enderecoCompleto

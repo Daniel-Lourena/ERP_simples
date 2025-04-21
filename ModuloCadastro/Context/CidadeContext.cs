@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Context
 {
-    internal class CidadeContext
+    public class CidadeContext
     {
-        internal CidadeEntity Get(int id)
+        public CidadeEntity Get(int id)
         {
             return new ModuloCadastroContext().Cidades.FirstOrDefault(x => x.id.Equals(id))!;
         }
-        internal List<CidadeEntity> GetList()
+        public List<CidadeEntity> GetList()
         {
             return new ModuloCadastroContext().Cidades.ToList();
         }
-        internal List<CidadeEntity> GetListByEstado(int cuf)
+        public List<CidadeEntity> GetListByEstado(int cuf)
         {
             return new ModuloCadastroContext().Cidades.ToList().Where(x => x.cuf.Equals(cuf)).ToList();
         }

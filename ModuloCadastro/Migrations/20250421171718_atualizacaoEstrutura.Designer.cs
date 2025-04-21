@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModuloCadastro.Context;
 
@@ -10,9 +11,10 @@ using ModuloCadastro.Context;
 namespace ModuloCadastro.Migrations
 {
     [DbContext(typeof(ModuloCadastroContext))]
-    partial class ModuloCadastroContextModelSnapshot : ModelSnapshot
+    [Migration("20250421171718_atualizacaoEstrutura")]
+    partial class atualizacaoEstrutura
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +44,6 @@ namespace ModuloCadastro.Migrations
             modelBuilder.Entity("ModuloCadastro.Entity.CategoriaEntity", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("descricao")
@@ -56,18 +57,19 @@ namespace ModuloCadastro.Migrations
             modelBuilder.Entity("ModuloCadastro.Entity.CidadeEntity", b =>
                 {
                     b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("cmunicipio")
                         .IsRequired()
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("cuf")
                         .HasColumnType("int");
 
                     b.Property<string>("dmunicipio")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("id");
 
@@ -77,54 +79,55 @@ namespace ModuloCadastro.Migrations
             modelBuilder.Entity("ModuloCadastro.Entity.ClienteEntity", b =>
                 {
                     b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("dataAtualizacao")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("dataCadastro")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("dataExclusao")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("end_bairro")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("end_cidade")
                         .IsRequired()
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("end_logradouro")
                         .IsRequired()
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("end_nomeRua")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("end_numero")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("end_uf")
                         .IsRequired()
-                        .HasColumnType("varchar(2)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("excluido")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("fantasia")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<decimal>("limiteCredito")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("razaoSocial")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("id");
 
@@ -134,15 +137,16 @@ namespace ModuloCadastro.Migrations
             modelBuilder.Entity("ModuloCadastro.Entity.EstadoEntity", b =>
                 {
                     b.Property<int>("cuf")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("nome")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("uf")
                         .IsRequired()
-                        .HasColumnType("varchar(2)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("cuf");
 
@@ -152,6 +156,7 @@ namespace ModuloCadastro.Migrations
             modelBuilder.Entity("ModuloCadastro.Entity.ProdutoEntity", b =>
                 {
                     b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("categoria")
@@ -159,39 +164,39 @@ namespace ModuloCadastro.Migrations
 
                     b.Property<string>("cest")
                         .IsRequired()
-                        .HasColumnType("varchar(7)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("codigoEstoque_SKU")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("cst_csosn")
                         .IsRequired()
-                        .HasColumnType("varchar(5)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("dataAtualizacao")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("dataCadastro")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("longtext");
 
                     b.Property<decimal>("estoqueMinimo")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("idUnidade")
                         .IsRequired()
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("inativo")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ncm")
                         .IsRequired()
-                        .HasColumnType("varchar(8)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("origem")
                         .HasColumnType("int");
@@ -215,7 +220,7 @@ namespace ModuloCadastro.Migrations
 
                     b.Property<string>("descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("id");
 
@@ -225,26 +230,27 @@ namespace ModuloCadastro.Migrations
             modelBuilder.Entity("ModuloCadastro.Entity.UsuarioEntity", b =>
                 {
                     b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("cargo")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("dataAtualizacao")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("dataCadastro")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("dataExclusao")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("excluido")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("nome")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("id");
 

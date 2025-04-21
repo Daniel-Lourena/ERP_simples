@@ -11,33 +11,33 @@ namespace ModuloCadastro.Entity
     [Table("tb_cliente")]
     public class ClienteEntity : BaseEntity<ClienteEntity>
     {
-        [Key, Display(Name = "ID", Description = "")]
+        [Key, Display(Name = "ID", Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
-        [Display(Name = "Razão Social", Description = "")]
+        [Display(Name = "Razão Social", Description = ""), Column(TypeName = "varchar(255)")]
         public string razaoSocial { get; set; }
-        [Display(Name = "Fantasia", Description = "")]
+        [Display(Name = "Fantasia", Description = ""), Column(TypeName = "varchar(100)")]
         public string fantasia { get; set; }
-        [Display(Name = "Limite Crédito", Description = "")]
+        [Display(Name = "Limite Crédito", Description = ""), Column(TypeName = "decimal(10,2)")]
         public decimal limiteCredito { get; set; }
-        [Display(Name = "Rua", Description = "")]
+        [Display(Name = "Rua", Description = ""), Column(TypeName = "varchar(255)")]
         public string end_nomeRua { get; set; }
-        [Display(Name = "Bairro", Description = "")]
+        [Display(Name = "Bairro", Description = ""), Column(TypeName = "varchar(100)")]
         public string end_bairro { get; set; }
-        [Display(Name = "N°", Description = "")]
+        [Display(Name = "N°", Description = ""), Column(TypeName = "varchar(20)")]
         public string end_numero { get; set; }
-        [Display(Name = "Logradouro", Description = "")]
+        [Display(Name = "Logradouro", Description = ""), Column(TypeName = "varchar(10)")]
         public string end_logradouro { get; set; }
-        [Display(Name = "UF", Description = "")]
+        [Display(Name = "UF", Description = ""), Column(TypeName = "varchar(2)")]
         public string end_uf { get; set; }
-        [Display(Name = "ID Cidade", Description = "")]
+        [Display(Name = "ID Cidade", Description = ""), Column(TypeName = "varchar(10)")]
         public string end_cidade { get; set; }
-        [Display(Name = "Dta. Cadastro", Description = "")]
+        [Display(Name = "Dta. Cadastro", Description = ""), Column(TypeName = "datetime")]
         public DateTime dataCadastro { get; set; }
-        [Display(Name = "Dta. Atualização", Description = "")]
+        [Display(Name = "Dta. Atualização", Description = ""), Column(TypeName = "datetime")]
         public DateTime dataAtualizacao { get; set; }
-        [Display(Name = "Excluído", Description = "")]
+        [Display(Name = "Excluído", Description = ""), Column(TypeName = "tinyint(1)")]
         public bool excluido { get; set; }
-        [Display(Name = "Dta. Exclusão", Description = "")]
+        [Display(Name = "Dta. Exclusão", Description = ""), Column(TypeName = "datetime")]
         public DateTime dataExclusao { get; set; }
 
         [NotMapped]

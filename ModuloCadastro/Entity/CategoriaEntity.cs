@@ -11,7 +11,7 @@ namespace ModuloCadastro.Entity
     [Table("tb_categoria")]
     public class CategoriaEntity : BaseEntity<CategoriaEntity>
     {
-        [Key,Display(Name = "ID",Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key,Display(Name = "ID",Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Display(Name = "Descrição",Description = ""), Column(TypeName = "varchar(100)")]
         public string? descricao { get; set; }

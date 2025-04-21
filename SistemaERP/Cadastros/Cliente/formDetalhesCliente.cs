@@ -63,10 +63,10 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void formDetalhesCliente_Load(object sender, EventArgs e)
         {
-            if (_id > 0) MostraUsuario();
+            if (_id > 0) MostraCliente();
         }
 
-        private void MostraUsuario()
+        private void MostraCliente()
         {
             _cliente = new ClienteContext().Get(_id);
             txtFantasia.Text = _cliente.fantasia;

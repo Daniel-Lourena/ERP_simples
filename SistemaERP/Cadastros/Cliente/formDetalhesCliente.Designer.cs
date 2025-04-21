@@ -30,8 +30,6 @@
         {
             tcCliente = new TabControl();
             tpDadosGerais = new TabPage();
-            lblDataExclusao = new Label();
-            txtExclusao = new TextBox();
             label10 = new Label();
             txtBairro = new TextBox();
             label9 = new Label();
@@ -44,8 +42,6 @@
             cbEstados = new ComboBox();
             label5 = new Label();
             txtRazaoSocial = new TextBox();
-            btnSalvar = new Button();
-            btnCancelar = new Button();
             label4 = new Label();
             cbCidades = new ComboBox();
             label3 = new Label();
@@ -58,6 +54,10 @@
             label13 = new Label();
             nudLimite = new NumericUpDown();
             label12 = new Label();
+            lblDataExclusao = new Label();
+            txtExclusao = new TextBox();
+            btnSalvar = new Button();
+            btnCancelar = new Button();
             tcCliente.SuspendLayout();
             tpDadosGerais.SuspendLayout();
             tpFinanceiro.SuspendLayout();
@@ -75,15 +75,13 @@
             tcCliente.Multiline = true;
             tcCliente.Name = "tcCliente";
             tcCliente.SelectedIndex = 0;
-            tcCliente.Size = new Size(715, 351);
+            tcCliente.Size = new Size(715, 305);
             tcCliente.SizeMode = TabSizeMode.Fixed;
             tcCliente.TabIndex = 0;
             tcCliente.DrawItem += tcCliente_DrawItem;
             // 
             // tpDadosGerais
             // 
-            tpDadosGerais.Controls.Add(lblDataExclusao);
-            tpDadosGerais.Controls.Add(txtExclusao);
             tpDadosGerais.Controls.Add(label10);
             tpDadosGerais.Controls.Add(txtBairro);
             tpDadosGerais.Controls.Add(label9);
@@ -96,8 +94,6 @@
             tpDadosGerais.Controls.Add(cbEstados);
             tpDadosGerais.Controls.Add(label5);
             tpDadosGerais.Controls.Add(txtRazaoSocial);
-            tpDadosGerais.Controls.Add(btnSalvar);
-            tpDadosGerais.Controls.Add(btnCancelar);
             tpDadosGerais.Controls.Add(label4);
             tpDadosGerais.Controls.Add(cbCidades);
             tpDadosGerais.Controls.Add(label3);
@@ -109,30 +105,10 @@
             tpDadosGerais.Location = new Point(104, 4);
             tpDadosGerais.Name = "tpDadosGerais";
             tpDadosGerais.Padding = new Padding(3);
-            tpDadosGerais.Size = new Size(607, 343);
+            tpDadosGerais.Size = new Size(607, 297);
             tpDadosGerais.TabIndex = 0;
             tpDadosGerais.Text = "Dados Gerais";
             tpDadosGerais.UseVisualStyleBackColor = true;
-            // 
-            // lblDataExclusao
-            // 
-            lblDataExclusao.AutoSize = true;
-            lblDataExclusao.Location = new Point(7, 306);
-            lblDataExclusao.Name = "lblDataExclusao";
-            lblDataExclusao.Size = new Size(59, 15);
-            lblDataExclusao.TabIndex = 33;
-            lblDataExclusao.Text = "Exclusão: ";
-            lblDataExclusao.Visible = false;
-            // 
-            // txtExclusao
-            // 
-            txtExclusao.BackColor = SystemColors.Menu;
-            txtExclusao.Location = new Point(72, 303);
-            txtExclusao.Name = "txtExclusao";
-            txtExclusao.ReadOnly = true;
-            txtExclusao.Size = new Size(167, 23);
-            txtExclusao.TabIndex = 32;
-            txtExclusao.Visible = false;
             // 
             // label10
             // 
@@ -211,7 +187,7 @@
             // 
             cbEstados.FormattingEnabled = true;
             cbEstados.Location = new Point(195, 156);
-            cbEstados.Name = "cbEstado";
+            cbEstados.Name = "cbEstados";
             cbEstados.Size = new Size(183, 23);
             cbEstados.TabIndex = 22;
             cbEstados.SelectedValueChanged += cbEstado_SelectedValueChanged;
@@ -232,30 +208,6 @@
             txtRazaoSocial.Size = new Size(347, 23);
             txtRazaoSocial.TabIndex = 20;
             // 
-            // btnSalvar
-            // 
-            btnSalvar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnSalvar.Location = new Point(523, 287);
-            btnSalvar.Name = "btnSalvar";
-            btnSalvar.Size = new Size(75, 39);
-            btnSalvar.TabIndex = 19;
-            btnSalvar.Text = "SALVAR";
-            btnSalvar.UseVisualStyleBackColor = true;
-            btnSalvar.Click += btnSalvar_Click;
-            // 
-            // btnCancelar
-            // 
-            btnCancelar.BackColor = Color.IndianRed;
-            btnCancelar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnCancelar.ForeColor = SystemColors.ButtonHighlight;
-            btnCancelar.Location = new Point(442, 287);
-            btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(75, 39);
-            btnCancelar.TabIndex = 18;
-            btnCancelar.Text = "CANCELAR";
-            btnCancelar.UseVisualStyleBackColor = false;
-            btnCancelar.Click += btnCancelar_Click;
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -269,7 +221,7 @@
             // 
             cbCidades.FormattingEnabled = true;
             cbCidades.Location = new Point(6, 156);
-            cbCidades.Name = "cbCidade";
+            cbCidades.Name = "cbCidades";
             cbCidades.Size = new Size(183, 23);
             cbCidades.TabIndex = 16;
             // 
@@ -366,12 +318,58 @@
             label12.TabIndex = 14;
             label12.Text = "Limite disponível: ";
             // 
+            // lblDataExclusao
+            // 
+            lblDataExclusao.AutoSize = true;
+            lblDataExclusao.Location = new Point(2, 331);
+            lblDataExclusao.Name = "lblDataExclusao";
+            lblDataExclusao.Size = new Size(59, 15);
+            lblDataExclusao.TabIndex = 37;
+            lblDataExclusao.Text = "Exclusão: ";
+            lblDataExclusao.Visible = false;
+            // 
+            // txtExclusao
+            // 
+            txtExclusao.BackColor = SystemColors.Menu;
+            txtExclusao.Location = new Point(67, 328);
+            txtExclusao.Name = "txtExclusao";
+            txtExclusao.ReadOnly = true;
+            txtExclusao.Size = new Size(167, 23);
+            txtExclusao.TabIndex = 36;
+            txtExclusao.Visible = false;
+            // 
+            // btnSalvar
+            // 
+            btnSalvar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnSalvar.Location = new Point(642, 312);
+            btnSalvar.Name = "btnSalvar";
+            btnSalvar.Size = new Size(75, 39);
+            btnSalvar.TabIndex = 35;
+            btnSalvar.Text = "SALVAR";
+            btnSalvar.UseVisualStyleBackColor = true;
+            // 
+            // btnCancelar
+            // 
+            btnCancelar.BackColor = Color.IndianRed;
+            btnCancelar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCancelar.ForeColor = SystemColors.ButtonHighlight;
+            btnCancelar.Location = new Point(561, 312);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(75, 39);
+            btnCancelar.TabIndex = 34;
+            btnCancelar.Text = "CANCELAR";
+            btnCancelar.UseVisualStyleBackColor = false;
+            // 
             // formDetalhesCliente
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(720, 355);
             ControlBox = false;
+            Controls.Add(lblDataExclusao);
+            Controls.Add(txtExclusao);
+            Controls.Add(btnSalvar);
+            Controls.Add(btnCancelar);
             Controls.Add(tcCliente);
             MinimizeBox = false;
             Name = "formDetalhesCliente";
@@ -384,6 +382,7 @@
             tpFinanceiro.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nudLimite).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -391,8 +390,6 @@
         private TabControl tcCliente;
         private TabPage tpDadosGerais;
         private TabPage tpFinanceiro;
-        private Button btnSalvar;
-        private Button btnCancelar;
         private Label label4;
         private ComboBox cbCidades;
         private Label label3;
@@ -413,10 +410,12 @@
         private TextBox txtBairro;
         private Label label9;
         private TextBox txtRua;
-        private Label lblDataExclusao;
-        private TextBox txtExclusao;
         private Label label12;
         private NumericUpDown nudLimite;
         private Label label13;
+        private Label lblDataExclusao;
+        private TextBox txtExclusao;
+        private Button btnSalvar;
+        private Button btnCancelar;
     }
 }

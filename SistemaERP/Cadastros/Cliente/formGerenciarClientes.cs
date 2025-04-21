@@ -37,7 +37,7 @@ namespace SistemaERP.Cadastros.Cliente
         {
             if (dgvClientes.CurrentRow != null)
             {
-                new formDetalhesCliente(Convert.ToInt32(dgvClientes.CurrentRow.Cells[nameof(UsuarioEntity.id)].Value)).ShowDialog();
+                new formDetalhesCliente(Convert.ToInt32(dgvClientes.CurrentRow.Cells[nameof(ClienteEntity.id)].Value)).ShowDialog();
             }
         }
 

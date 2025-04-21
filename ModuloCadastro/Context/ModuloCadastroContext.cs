@@ -15,6 +15,9 @@ namespace ModuloCadastro.Context
         internal DbSet<ClienteEntity> Clientes { get; set; }
         internal DbSet<CidadeEntity> Cidades { get; set; }
         internal DbSet<EstadoEntity> Estados { get; set; }
+        internal DbSet<ProdutoEntity> Produtos { get; set; }
+        internal DbSet<CategoriaEntity> Categorias { get; set; }
+        internal DbSet<SetorEstoqueEntity> SetoresEstoque { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

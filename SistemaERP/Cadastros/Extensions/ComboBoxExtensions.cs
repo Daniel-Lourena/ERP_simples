@@ -23,6 +23,12 @@ namespace SistemaERP.Cadastros.Extensions
                     cbCidades, cidades, nameof(CidadeEntity.id),
                     nameof(CidadeEntity.dmunicipio), true);
         }
+        public static void GetList<T>(this ComboBox comboBox, List<T> dataSource,string valueMember,string displayMember,bool selecionarPrimeiro = false) where T : class 
+        {
+            Extensions.Helper.ComboBoxHelper.PreencherComboBoxList(
+                    comboBox, dataSource, valueMember,
+                    displayMember, selecionarPrimeiro);
+        }
         public static void GetListEnum<E>(this ComboBox comboBox) where E : Enum
         {
             Extensions.Helper.ComboBoxHelper.PreencherComboBoxEnum<E>(comboBox);

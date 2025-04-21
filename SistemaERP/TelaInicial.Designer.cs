@@ -31,16 +31,17 @@
             menuStrip1 = new MenuStrip();
             cadastrosToolStripMenuItem = new ToolStripMenuItem();
             usuáriosToolStripMenuItem = new ToolStripMenuItem();
+            gerenciarUsuáriosToolStripMenuItem = new ToolStripMenuItem();
             clientesToolStripMenuItem = new ToolStripMenuItem();
+            gerenciarToolStripMenuItem = new ToolStripMenuItem();
             produtosToolStripMenuItem = new ToolStripMenuItem();
+            gerenciarProdutosToolStripMenuItem = new ToolStripMenuItem();
             bancosToolStripMenuItem = new ToolStripMenuItem();
             vendasToolStripMenuItem = new ToolStripMenuItem();
             pedidosToolStripMenuItem = new ToolStripMenuItem();
             pedidosFinalizadosToolStripMenuItem = new ToolStripMenuItem();
             financeiroToolStripMenuItem = new ToolStripMenuItem();
             movimentaçãoBancáriaToolStripMenuItem = new ToolStripMenuItem();
-            gerenciarProdutosToolStripMenuItem = new ToolStripMenuItem();
-            gerenciarUsuáriosToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -67,11 +68,26 @@
             usuáriosToolStripMenuItem.Size = new Size(180, 22);
             usuáriosToolStripMenuItem.Text = "Usuários";
             // 
+            // gerenciarUsuáriosToolStripMenuItem
+            // 
+            gerenciarUsuáriosToolStripMenuItem.Name = "gerenciarUsuáriosToolStripMenuItem";
+            gerenciarUsuáriosToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarUsuáriosToolStripMenuItem.Text = "Gerenciar";
+            gerenciarUsuáriosToolStripMenuItem.Click += gerenciarUsuariosToolStripMenuItem_Click;
+            // 
             // clientesToolStripMenuItem
             // 
+            clientesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gerenciarToolStripMenuItem });
             clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
             clientesToolStripMenuItem.Size = new Size(180, 22);
             clientesToolStripMenuItem.Text = "Clientes";
+            // 
+            // gerenciarToolStripMenuItem
+            // 
+            gerenciarToolStripMenuItem.Name = "gerenciarToolStripMenuItem";
+            gerenciarToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarToolStripMenuItem.Text = "Gerenciar";
+            gerenciarToolStripMenuItem.Click += gerenciarClientesToolStripMenuItem_Click;
             // 
             // produtosToolStripMenuItem
             // 
@@ -79,6 +95,13 @@
             produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
             produtosToolStripMenuItem.Size = new Size(180, 22);
             produtosToolStripMenuItem.Text = "Produtos";
+            // 
+            // gerenciarProdutosToolStripMenuItem
+            // 
+            gerenciarProdutosToolStripMenuItem.Name = "gerenciarProdutosToolStripMenuItem";
+            gerenciarProdutosToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarProdutosToolStripMenuItem.Text = "Gerenciar";
+            gerenciarProdutosToolStripMenuItem.Click += gerenciarProdutosToolStripMenuItem_Click;
             // 
             // bancosToolStripMenuItem
             // 
@@ -118,20 +141,6 @@
             movimentaçãoBancáriaToolStripMenuItem.Size = new Size(202, 22);
             movimentaçãoBancáriaToolStripMenuItem.Text = "Movimentação Bancária";
             // 
-            // gerenciarProdutosToolStripMenuItem
-            // 
-            gerenciarProdutosToolStripMenuItem.Name = "gerenciarProdutosToolStripMenuItem";
-            gerenciarProdutosToolStripMenuItem.Size = new Size(180, 22);
-            gerenciarProdutosToolStripMenuItem.Text = "Gerenciar Produtos";
-            gerenciarProdutosToolStripMenuItem.Click += gerenciarProdutosToolStripMenuItem_Click;
-            // 
-            // gerenciarUsuáriosToolStripMenuItem
-            // 
-            gerenciarUsuáriosToolStripMenuItem.Name = "gerenciarUsuáriosToolStripMenuItem";
-            gerenciarUsuáriosToolStripMenuItem.Size = new Size(180, 22);
-            gerenciarUsuáriosToolStripMenuItem.Text = "Gerenciar Usuários";
-            gerenciarUsuáriosToolStripMenuItem.Click += gerenciarUsuáriosToolStripMenuItem_Click;
-            // 
             // TelaInicial
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -162,5 +171,6 @@
         private ToolStripMenuItem movimentaçãoBancáriaToolStripMenuItem;
         private ToolStripMenuItem gerenciarProdutosToolStripMenuItem;
         private ToolStripMenuItem gerenciarUsuáriosToolStripMenuItem;
+        private ToolStripMenuItem gerenciarToolStripMenuItem;
     }
 }

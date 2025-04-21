@@ -14,7 +14,7 @@ namespace SistemaERP
 
         }
 
-        private void gerenciarUsuáriosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void gerenciarUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (Form f in this.MdiChildren)
             {
@@ -25,6 +25,21 @@ namespace SistemaERP
                 }
             }
             Cadastros.Usuario.formGerenciarUsuarios childForm = new();
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
+        private void gerenciarClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                if (f.GetType() == typeof(Cadastros.Cliente.formGerenciarClientes))
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            Cadastros.Cliente.formGerenciarClientes childForm = new();
             childForm.MdiParent = this;
             childForm.Show();
         }

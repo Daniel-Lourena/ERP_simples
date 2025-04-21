@@ -39,12 +39,13 @@ namespace SistemaERP.Cadastros.Produto
         }
         private void CarregaOrigem()
         {
-            //cbOrigem.GetListEnum();
+            cbOrigem.GetListEnum<ModuloCadastro.Enum.EOrigemProduto>();
         }
         private void CarregaCST()
         {
-            //cbCST.GetListEnum();
+            cbCST.GetListEnum<ModuloCadastro.Enum.ECst>();
         }
+
         private void CarregaCategoria()
         {
             List<CategoriaEntity> categorias = new ModuloCadastro.Context.CategoriaContext().GetList();

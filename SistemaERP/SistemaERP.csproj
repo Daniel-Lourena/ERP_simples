@@ -23,6 +23,12 @@
     <Compile Update="Cadastros\Cliente\formGerenciarClientes.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Cadastros\Produto\formDetalhesProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Cadastros\Produto\formGerenciarProdutos.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -17,5 +17,7 @@ namespace ModuloCadastro.Entity
         public int idCliente { get; set; }
         [Display(Name = "ID Usuário",Description = "")]
         public int idUsuario { get; set; }
+        [Display(Name = "ID Produto",Description = "")]
+        public int idProduto { get; set; }
     }
 }

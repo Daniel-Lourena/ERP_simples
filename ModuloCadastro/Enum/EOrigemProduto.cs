@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,5 +9,23 @@ namespace ModuloCadastro.Enum
 {
     public enum EOrigemProduto
     {
+        [Description("0 - NACIONAL, EXCETO AS INDICADAS NOS CÓDIGOS 3, 4, 5 E 8;")]
+        Item00 = 0,
+        [Description("1 - ESTRANGEIRA - IMPORTAÇÃO DIRETA, EXCETO A INDICADA NO CÓDIGO 6;")]
+        Item01 = 1,
+        [Description("2 - ESTRANGEIRA - ADQUIRIDA NO MERCADO INTERNO, EXCETO A INDICADA NO CÓDIGO 7;")]
+        Item02 = 2,
+        [Description("3 - NACIONAL, MERCADORIA OU BEM COM CONTEÚDO DE IMPORTAÇÃO SUPERIOR A 40% E INFERIOR OU IGUAL A 70%;")]
+        Item03 = 3,
+        [Description("4 - NACIONAL, CUJA PRODUÇÃO TENHA SIDO FEITA EM CONFORMIDADE COM OS PROCESSOS PRODUTIVOS BÁSICOS DE QUE TRATAM AS LEGISLAÇÕES CITADAS NOS AJUSTES;")]
+        Item04 = 4,
+        [Description("5 - NACIONAL, MERCADORIA OU BEM COM CONTEÚDO DE IMPORTAÇÃO INFERIOR OU IGUAL A 40%;")]
+        Item05 = 5,
+        [Description("6 - ESTRANGEIRA - IMPORTAÇÃO DIRETA, SEM SIMILAR NACIONAL, CONSTANTE EM LISTA DA CAMEX E GÁS NATURAL;")]
+        Item06 = 6,
+        [Description("7 - ESTRANGEIRA - ADQUIRIDA NO MERCADO INTERNO, SEM SIMILAR NACIONAL, CONSTANTE LISTA CAMEX E GÁS NATURAL.")]
+        Item07 = 7,
+        [Description("8 - NACIONAL, MERCADORIA OU BEM COM CONTEÚDO DE IMPORTAÇÃO SUPERIOR A 70%;")]
+        Item08 = 8
     }
 }

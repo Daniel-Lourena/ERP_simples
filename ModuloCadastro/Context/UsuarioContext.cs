@@ -33,16 +33,9 @@ namespace ModuloCadastro.Context
             _context.SaveChanges();
         }
 
-        public void UpdateParcial(UsuarioEntity usuarioEntity,List<string> listaPropriedadesAtualizar)
+        public void UpdateParcial(UsuarioEntity entity,List<string> listaPropriedadesAtualizar)
         {
-            var _context = new ModuloCadastroContext();
-            _context.Usuarios.Attach(usuarioEntity);
-
-            listaPropriedadesAtualizar.
-                ForEach(propriedadeAtualiza => 
-                _context.Entry(usuarioEntity).Property(propriedadeAtualiza).IsModified = true);
-
-            _context.SaveChanges();
+            ContextMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }
 }

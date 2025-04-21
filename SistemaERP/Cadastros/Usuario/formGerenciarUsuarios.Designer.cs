@@ -38,7 +38,7 @@
             panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // dgvUsuarios
+            // dgvClientes
             // 
             dgvUsuarios.AllowUserToAddRows = false;
             dgvUsuarios.AllowUserToDeleteRows = false;
@@ -108,7 +108,7 @@
             btnNovo.UseVisualStyleBackColor = false;
             btnNovo.Click += btnNovo_Click;
             // 
-            // formGerenciarUsuarios
+            // formGerenciarClientes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;

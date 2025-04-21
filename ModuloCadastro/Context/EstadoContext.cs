@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Context
 {
-    internal class EstadoContext
+    public class EstadoContext
     {
-        internal EstadoEntity Get(int cuf)
+        public EstadoEntity Get(int cuf)
         {
             return new ModuloCadastroContext().Estados.FirstOrDefault(x => x.cuf.Equals(cuf))!;
         }
-        internal EstadoEntity Get(string uf)
+        public EstadoEntity Get(string uf)
         {
             return new ModuloCadastroContext().Estados.FirstOrDefault(x => x.uf.Equals(uf))!;
         }
-        internal List<EstadoEntity> GetList()
+        public List<EstadoEntity> GetList()
         {
             return new ModuloCadastroContext().Estados.ToList();
         }

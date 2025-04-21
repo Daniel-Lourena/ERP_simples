@@ -1,6 +1,7 @@
 ﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
+using SistemaERP.Cadastros.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,33 +21,37 @@ namespace SistemaERP.Cadastros.Usuario
         public formDetalhesUsuario()
         {
             InitializeComponent();
+            CarregaCargo();
         }
+
         public formDetalhesUsuario(int id) : this()
         {
             _id = id;
         }
 
+        private void CarregaCargo()
+        {
+            cbCargo.GetListEnum< ModuloCadastro.Enum.ECargo>();
+        }
+
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            UsuarioEntity usuario = new()
+            {
+                nome = txtNome.Text,
+                cargo = Convert.ToInt32(cbCargo.SelectedValue),
+                dataCadastro = DateTime.Now,
+                dataAtualizacao = DateTime.Now
+            };
+
             if (_id == 0)
             {
-                new ModuloCadastro.Context.UsuarioContext().Insert(new UsuarioEntity()
-                {
-                    nome = txtNome.Text,
-                    cargo = Convert.ToInt32(cbCargo.SelectedValue),
-                    dataCadastro = DateTime.Now,
-                    dataAtualizacao = DateTime.Now
-                });
+                new ModuloCadastro.Context.UsuarioContext().Insert(usuario);
             }
             else
             {
-                new ModuloCadastro.Context.UsuarioContext().Update(new UsuarioEntity()
-                {
-                    nome = txtNome.Text,
-                    cargo = Convert.ToInt32(cbCargo.SelectedValue),
-                    dataCadastro = _usuario.dataCadastro,
-                    dataAtualizacao = DateTime.Now
-                });
+                usuario.dataCadastro = _usuario.dataCadastro;
+                new ModuloCadastro.Context.UsuarioContext().Update(usuario);
             }
         }
 

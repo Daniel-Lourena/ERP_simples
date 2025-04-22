@@ -48,7 +48,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void CarregaCategoria()
         {
-            List<CategoriaEntity> categorias = new ModuloCadastro.Context.CategoriaContext().GetList();
+            List<CategoriaEntity> categorias = new ModuloCadastro.Context.CategoriaContext(new ModuloCadastroContext()).GetList();
             cbCategoria.GetList(categorias,nameof(CategoriaEntity.id), nameof(CategoriaEntity.descricao),true);
         }
 

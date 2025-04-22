@@ -65,13 +65,13 @@
             // 
             usuáriosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gerenciarUsuáriosToolStripMenuItem });
             usuáriosToolStripMenuItem.Name = "usuáriosToolStripMenuItem";
-            usuáriosToolStripMenuItem.Size = new Size(180, 22);
+            usuáriosToolStripMenuItem.Size = new Size(122, 22);
             usuáriosToolStripMenuItem.Text = "Usuários";
             // 
             // gerenciarUsuáriosToolStripMenuItem
             // 
             gerenciarUsuáriosToolStripMenuItem.Name = "gerenciarUsuáriosToolStripMenuItem";
-            gerenciarUsuáriosToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarUsuáriosToolStripMenuItem.Size = new Size(124, 22);
             gerenciarUsuáriosToolStripMenuItem.Text = "Gerenciar";
             gerenciarUsuáriosToolStripMenuItem.Click += gerenciarUsuariosToolStripMenuItem_Click;
             // 
@@ -79,13 +79,13 @@
             // 
             clientesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gerenciarToolStripMenuItem });
             clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            clientesToolStripMenuItem.Size = new Size(180, 22);
+            clientesToolStripMenuItem.Size = new Size(122, 22);
             clientesToolStripMenuItem.Text = "Clientes";
             // 
             // gerenciarToolStripMenuItem
             // 
             gerenciarToolStripMenuItem.Name = "gerenciarToolStripMenuItem";
-            gerenciarToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarToolStripMenuItem.Size = new Size(124, 22);
             gerenciarToolStripMenuItem.Text = "Gerenciar";
             gerenciarToolStripMenuItem.Click += gerenciarClientesToolStripMenuItem_Click;
             // 
@@ -93,20 +93,20 @@
             // 
             produtosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gerenciarProdutosToolStripMenuItem });
             produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
-            produtosToolStripMenuItem.Size = new Size(180, 22);
+            produtosToolStripMenuItem.Size = new Size(122, 22);
             produtosToolStripMenuItem.Text = "Produtos";
             // 
             // gerenciarProdutosToolStripMenuItem
             // 
             gerenciarProdutosToolStripMenuItem.Name = "gerenciarProdutosToolStripMenuItem";
-            gerenciarProdutosToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarProdutosToolStripMenuItem.Size = new Size(124, 22);
             gerenciarProdutosToolStripMenuItem.Text = "Gerenciar";
             gerenciarProdutosToolStripMenuItem.Click += gerenciarProdutosToolStripMenuItem_Click;
             // 
             // bancosToolStripMenuItem
             // 
             bancosToolStripMenuItem.Name = "bancosToolStripMenuItem";
-            bancosToolStripMenuItem.Size = new Size(180, 22);
+            bancosToolStripMenuItem.Size = new Size(122, 22);
             bancosToolStripMenuItem.Text = "Bancos";
             // 
             // vendasToolStripMenuItem
@@ -147,9 +147,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(menuStrip1);
+            IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
             Name = "TelaInicial";
             Text = "Sistema ERP";
+            WindowState = FormWindowState.Maximized;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

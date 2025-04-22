@@ -38,10 +38,11 @@
             panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // dgvClientes
+            // dgvUsuarios
             // 
             dgvUsuarios.AllowUserToAddRows = false;
             dgvUsuarios.AllowUserToDeleteRows = false;
+            dgvUsuarios.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUsuarios.BackgroundColor = SystemColors.ActiveBorder;
             dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsuarios.Location = new Point(12, 83);
@@ -53,6 +54,7 @@
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Size = new Size(776, 65);
@@ -60,6 +62,7 @@
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.Controls.Add(btnExcluir);
             panel2.Controls.Add(btnEditar);
             panel2.Controls.Add(btnNovo);
@@ -70,6 +73,7 @@
             // 
             // btnExcluir
             // 
+            btnExcluir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnExcluir.BackColor = Color.IndianRed;
             btnExcluir.FlatAppearance.BorderColor = Color.Black;
             btnExcluir.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
@@ -84,6 +88,7 @@
             // 
             // btnEditar
             // 
+            btnEditar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnEditar.FlatAppearance.BorderColor = Color.Black;
             btnEditar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnEditar.Location = new Point(102, 12);
@@ -96,6 +101,7 @@
             // 
             // btnNovo
             // 
+            btnNovo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnNovo.BackColor = SystemColors.ActiveCaption;
             btnNovo.FlatAppearance.BorderColor = Color.Black;
             btnNovo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
@@ -108,7 +114,7 @@
             btnNovo.UseVisualStyleBackColor = false;
             btnNovo.Click += btnNovo_Click;
             // 
-            // formGerenciarClientes
+            // formGerenciarUsuarios
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;

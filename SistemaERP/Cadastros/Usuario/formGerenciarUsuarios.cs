@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace SistemaERP.Cadastros.Usuario
 {
     public partial class formGerenciarUsuarios : Form
     {
-        public formGerenciarUsuarios()
+        public formGerenciarUsuarios(DbContext db_context)
         {
             InitializeComponent();
             CarregaUsuarios();
@@ -43,14 +44,14 @@ namespace SistemaERP.Cadastros.Usuario
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Deseja realmente excluir os usuários selecionados?",String.Empty,MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Deseja realmente excluir os usuários selecionados?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 new ModuloCadastro.Context.UsuarioContext().UpdateParcial(new UsuarioEntity()
                 {
                     dataExclusao = DateTime.Now,
                     excluido = true
                 }, new List<string>() { nameof(UsuarioEntity.dataExclusao), nameof(UsuarioEntity.excluido) });
-                
+
                 CarregaUsuarios();
             }
         }

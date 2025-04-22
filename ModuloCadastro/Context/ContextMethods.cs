@@ -11,15 +11,16 @@ namespace ModuloCadastro.Context
     {
         public static void UpdateParcial<T>(T entity, List<string> listaPropriedadesAtualizar) where T : class
         {
-            var _context = new ModuloCadastroContext();
+            using (var _context = new ModuloCadastroContext())
+            {
+                _context.Attach(entity);
 
-            _context.Attach(entity);
+                listaPropriedadesAtualizar.
+                    ForEach(propriedadeAtualiza =>
+                    _context.Entry(entity).Property(propriedadeAtualiza).IsModified = true);
 
-            listaPropriedadesAtualizar.
-                ForEach(propriedadeAtualiza =>
-                _context.Entry(entity).Property(propriedadeAtualiza).IsModified = true);
-
-            _context.SaveChanges();
+                _context.SaveChanges();
+            }
         }
     }
 }

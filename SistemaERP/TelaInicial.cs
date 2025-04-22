@@ -1,9 +1,11 @@
+using Microsoft.EntityFrameworkCore;
 using SistemaERP.Cadastros.Usuario;
 
 namespace SistemaERP
 {
     public partial class TelaInicial : Form
     {
+        ModuloCadastro.Context.ModuloCadastroContext db_context = new();
         public TelaInicial()
         {
             InitializeComponent();
@@ -24,8 +26,9 @@ namespace SistemaERP
                     return;
                 }
             }
-            Cadastros.Usuario.formGerenciarUsuarios childForm = new();
+            Cadastros.Usuario.formGerenciarUsuarios childForm = new(db_context);
             childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();
         }
 
@@ -39,8 +42,9 @@ namespace SistemaERP
                     return;
                 }
             }
-            Cadastros.Cliente.formGerenciarClientes childForm = new();
+            Cadastros.Cliente.formGerenciarClientes childForm = new(db_context);
             childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();
         }
     }

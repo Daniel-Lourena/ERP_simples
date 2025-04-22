@@ -1,9 +1,12 @@
-﻿using ModuloCadastro.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Context;
+using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -16,15 +19,17 @@ namespace SistemaERP.Cadastros.Cliente
 {
     public partial class formGerenciarClientes : Form
     {
-        public formGerenciarClientes()
+        ModuloCadastro.Context.ModuloCadastroContext _db_context;
+        public formGerenciarClientes(ModuloCadastroContext db_context)
         {
+            _db_context = db_context;
             InitializeComponent();
             CarregaClientes();
         }
 
         private void CarregaClientes()
         {
-            var listaDataSource = new ModuloCadastro.Context.ClienteContext().GetList().Select(x => new ClienteEntity { id = x.id, fantasia = x.fantasia, end_cidade = x.end_cidade,end_uf = x.end_uf }).ToList();
+            var listaDataSource = new ModuloCadastro.Context.ClienteContext(_db_context).GetList().Select(x => new ClienteEntity { id = x.id, fantasia = x.fantasia, end_cidade = x.end_cidade, end_uf = x.end_uf }).ToList();
             CriarColunasDataGridView(listaDataSource);
         }
 
@@ -43,14 +48,14 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Deseja realmente excluir os clientes selecionados?",String.Empty,MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Deseja realmente excluir os clientes selecionados?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                new ModuloCadastro.Context.ClienteContext().UpdateParcial(new ClienteEntity()
+                ModuloCadastro.Context.ClienteContext.UpdateParcial(new ClienteEntity()
                 {
                     dataExclusao = DateTime.Now,
                     excluido = true
                 }, new List<string>() { nameof(ClienteEntity.dataExclusao), nameof(ClienteEntity.excluido) });
-                
+
                 CarregaClientes();
             }
         }
@@ -60,7 +65,7 @@ namespace SistemaERP.Cadastros.Cliente
             dgvClientes.Columns.Clear();
             dgvClientes.Refresh();
 
-            PropertyInfo[]? propriedades = typeof(T).GetProperties();
+            PropertyInfo[]? propriedades = typeof(T).GetProperties().Where(x=> x.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
 
             foreach (var prop in propriedades)
             {

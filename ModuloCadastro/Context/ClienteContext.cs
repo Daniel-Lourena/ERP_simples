@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Context
 {
-    public class ClienteContext 
+    public class ClienteContext
     {
+        ModuloCadastro.Context.ModuloCadastroContext _db_context;
+
+        public ClienteContext(ModuloCadastroContext db_context) => _db_context = db_context;
+
         public ClienteEntity Get(int id)
         {
-            return new ModuloCadastroContext().Clientes.FirstOrDefault(x => x.id.Equals(id))!;
+            return _db_context.Clientes.FirstOrDefault(x => x.id.Equals(id))!;
         }
         public List<ClienteEntity> GetList()
         {
-            return new ModuloCadastroContext().Clientes.ToList();
+            return _db_context.Clientes.ToList();
         }
 
         public void Insert(ClienteEntity clienteEntity)
@@ -32,7 +37,7 @@ namespace ModuloCadastro.Context
             _context.SaveChanges();
         }
 
-        public void UpdateParcial(ClienteEntity entity, List<string> listaPropriedadesAtualizar)
+        public static void UpdateParcial(ClienteEntity entity, List<string> listaPropriedadesAtualizar)
         {
             ContextMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
         }

@@ -10,18 +10,18 @@ namespace ModuloCadastro.Enum
     public enum ECargo
     {
         [Description("DIRETOR")]
-        DIRETOR = 0,
+        DIRETOR = 1,
         [Description("SÓCIO")]
-        SOCIO = 1,
+        SOCIO = 2,
         [Description("FATURISTA")]
-        FATURISTA = 2,
+        FATURISTA = 3,
         [Description("ORÇAMENTISTA")]
-        ORCAMENTISTA = 3,
+        ORCAMENTISTA = 4,
         [Description("CARREGADOR")]
-        CARREGADOR = 4,
+        CARREGADOR = 5,
         [Description("SUPERVISOR")]
-        SUPERVISOR = 5,
+        SUPERVISOR = 6,
         [Description("GERENTE")]
-        GERENTE = 6
+        GERENTE = 7
     }
 }

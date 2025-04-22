@@ -27,10 +27,10 @@ namespace ModuloCadastro.Entity
         public string end_numero { get; set; }
         [Display(Name = "Logradouro", Description = ""), Column(TypeName = "varchar(10)")]
         public string end_logradouro { get; set; }
-        [Display(Name = "UF", Description = ""), Column(TypeName = "varchar(2)")]
-        public string end_uf { get; set; }
-        [Display(Name = "ID Cidade", Description = ""), Column(TypeName = "varchar(10)")]
-        public string end_cidade { get; set; }
+        [Display(Name = "UF", Description = ""), Column(TypeName = "int")]
+        public int end_uf { get; set; }
+        [Display(Name = "ID Cidade", Description = ""), Column(TypeName = "int")]
+        public int end_cidade { get; set; }
         [Display(Name = "Dta. Cadastro", Description = ""), Column(TypeName = "datetime")]
         public DateTime dataCadastro { get; set; }
         [Display(Name = "Dta. Atualização", Description = ""), Column(TypeName = "datetime")]
@@ -38,7 +38,7 @@ namespace ModuloCadastro.Entity
         [Display(Name = "Excluído", Description = ""), Column(TypeName = "tinyint(1)")]
         public bool excluido { get; set; }
         [Display(Name = "Dta. Exclusão", Description = ""), Column(TypeName = "datetime")]
-        public DateTime dataExclusao { get; set; }
+        public DateTime? dataExclusao { get; set; }
 
         [NotMapped]
         public string enderecoCompleto

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ModuloCadastro.Entity
 {
     [Table("tb_autonumerador")]
-    internal class AutoNumeradorEntity : BaseEntity<AutoNumeradorEntity>
+    public class AutoNumeradorEntity : BaseEntity<AutoNumeradorEntity>
     {
         [Key,Display(Name = "ID",Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }

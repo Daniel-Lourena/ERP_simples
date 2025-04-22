@@ -41,10 +41,11 @@ namespace SistemaERP.Cadastros.Cliente
                 fantasia = txtFantasia.Text,
                 razaoSocial = txtRazaoSocial.Text,
                 end_logradouro = txtLogradouro.Text,
+                end_numero = txtNro.Text,
                 end_nomeRua = txtRua.Text,
                 end_bairro = txtBairro.Text,
-                end_cidade = cbCidades.SelectedValue as string,
-                end_uf = cbEstados.SelectedValue as string,
+                end_cidade = (int)cbCidades.SelectedValue,
+                end_uf = (int)cbEstados.SelectedValue,
                 dataCadastro = DateTime.Now,
                 dataAtualizacao = DateTime.Now,
                 limiteCredito = nudLimite.Value
@@ -52,12 +53,19 @@ namespace SistemaERP.Cadastros.Cliente
 
             if (_id == 0)
             {
-                new ModuloCadastro.Context.ClienteContext().Insert(cliente);
+                using (var autoNumeradorContext = new ModuloCadastro.Context.AutoNumeradorContext(new ModuloCadastroContext()))
+                {
+                    AutoNumeradorEntity numerador = autoNumeradorContext.Get();
+                    numerador.idCliente++;
+                    cliente.id = numerador.idCliente;
+                    new ModuloCadastro.Context.ClienteContext(new ModuloCadastroContext()).Insert(cliente);
+                    ContextMethods.UpdateParcial<AutoNumeradorEntity>(numerador,new List<string>() { nameof(AutoNumeradorEntity.idCliente) });
+                }
             }
             else
             {
                 cliente.dataCadastro = _cliente.dataCadastro;
-                new ModuloCadastro.Context.ClienteContext().Update(cliente);
+                new ModuloCadastro.Context.ClienteContext(new ModuloCadastroContext()).Update(cliente);
             }
         }
 
@@ -68,7 +76,7 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void MostraCliente()
         {
-            _cliente = new ClienteContext().Get(_id);
+            _cliente = new ClienteContext(new ModuloCadastroContext()).Get(_id);
             txtFantasia.Text = _cliente.fantasia;
             txtRazaoSocial.Text = _cliente.razaoSocial;
             txtLogradouro.Text = _cliente.end_logradouro;
@@ -77,8 +85,8 @@ namespace SistemaERP.Cadastros.Cliente
             txtBairro.Text = _cliente.end_bairro;
             txtCadastro.Text = _cliente.dataCadastro.ToString();
             txtAtualizacao.Text = _cliente.dataAtualizacao.ToString();
-            cbCidades.SelectedValue = _cliente.end_cidade;
             cbEstados.SelectedValue = _cliente.end_uf;
+            cbCidades.SelectedValue = _cliente.end_cidade;
 
             if (_cliente.excluido)
             {
@@ -114,7 +122,7 @@ namespace SistemaERP.Cadastros.Cliente
             }
         }
 
-        private void cbEstado_SelectedValueChanged(object sender, EventArgs e)
+        private void cbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
             cbCidades.GetListCidades((int)cbEstados.SelectedValue);
         }

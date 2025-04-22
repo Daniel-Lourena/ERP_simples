@@ -190,7 +190,7 @@
             cbEstados.Name = "cbEstados";
             cbEstados.Size = new Size(183, 23);
             cbEstados.TabIndex = 22;
-            cbEstados.SelectedValueChanged += cbEstado_SelectedValueChanged;
+            cbEstados.SelectedIndexChanged+= cbEstado_SelectedIndexChanged;
             // 
             // label5
             // 
@@ -285,7 +285,7 @@
             tpFinanceiro.Location = new Point(104, 4);
             tpFinanceiro.Name = "tpFinanceiro";
             tpFinanceiro.Padding = new Padding(3);
-            tpFinanceiro.Size = new Size(607, 343);
+            tpFinanceiro.Size = new Size(607, 297);
             tpFinanceiro.TabIndex = 1;
             tpFinanceiro.Text = "Financeiro";
             tpFinanceiro.UseVisualStyleBackColor = true;
@@ -347,6 +347,7 @@
             btnSalvar.TabIndex = 35;
             btnSalvar.Text = "SALVAR";
             btnSalvar.UseVisualStyleBackColor = true;
+            btnSalvar.Click += btnSalvar_Click;
             // 
             // btnCancelar
             // 
@@ -359,6 +360,7 @@
             btnCancelar.TabIndex = 34;
             btnCancelar.Text = "CANCELAR";
             btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // formDetalhesCliente
             // 
@@ -373,6 +375,7 @@
             Controls.Add(tcCliente);
             MinimizeBox = false;
             Name = "formDetalhesCliente";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "[NOVO]";
             Load += formDetalhesCliente_Load;
             tcCliente.ResumeLayout(false);

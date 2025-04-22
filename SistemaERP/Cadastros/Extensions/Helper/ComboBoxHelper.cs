@@ -11,10 +11,10 @@ namespace SistemaERP.Cadastros.Extensions.Helper
     {
         public static void PreencherComboBoxList<T>(ComboBox comboBox,List<T> dataSource,string valueMember,string displayMember, bool selecionarPrimeiro = false) where T : class
         {
-            comboBox.DataSource = null;
-            comboBox.DataSource = dataSource;
-            comboBox.DisplayMember = displayMember;
             comboBox.ValueMember = valueMember;
+            comboBox.DisplayMember = displayMember;
+            comboBox.DataSource = dataSource;
+            comboBox.Refresh();
 
             if (selecionarPrimeiro && comboBox.Items.Count > 0)
                 comboBox.SelectedIndex = 0;
@@ -23,10 +23,9 @@ namespace SistemaERP.Cadastros.Extensions.Helper
         {
             List<EnumItem> dataSource = Extensions.EnumExtensions.GetList<E>();
 
-            comboBox.DataSource = null;
-            comboBox.DataSource = dataSource;
             comboBox.ValueMember = nameof(EnumItem.Value);
             comboBox.DisplayMember = nameof(EnumItem.Name);
+            comboBox.DataSource = dataSource;
 
             if (selecionarPrimeiro && comboBox.Items.Count > 0)
                 comboBox.SelectedIndex = 0;

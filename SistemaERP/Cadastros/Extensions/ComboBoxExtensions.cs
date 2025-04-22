@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace SistemaERP.Cadastros.Extensions
 {
-    internal static class ComboBoxExtensions
+    public static class ComboBoxExtensions
     {
         public static void GetListEstados(this ComboBox cbEstados)
         {
-            List<EstadoEntity> estados = new ModuloCadastro.Context.EstadoContext().GetList();
+            List<EstadoEntity> estados = new ModuloCadastro.Context.EstadoContext().GetList().OrderBy(x => x.nome).ToList();
             Extensions.Helper.ComboBoxHelper.PreencherComboBoxList(
                     cbEstados, estados, nameof(EstadoEntity.cuf),
                     nameof(EstadoEntity.nome), true);
         }
         public static void GetListCidades(this ComboBox cbCidades, int estado)
         {
-            List<CidadeEntity> cidades = new ModuloCadastro.Context.CidadeContext().GetListByEstado(estado);
+            List<CidadeEntity> cidades = new ModuloCadastro.Context.CidadeContext().GetListByEstado(estado).OrderBy(x => x.dmunicipio).ToList();
             Extensions.Helper.ComboBoxHelper.PreencherComboBoxList(
                     cbCidades, cidades, nameof(CidadeEntity.id),
                     nameof(CidadeEntity.dmunicipio), true);

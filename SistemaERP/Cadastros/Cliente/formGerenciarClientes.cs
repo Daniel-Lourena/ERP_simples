@@ -2,6 +2,7 @@
 using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
+using SistemaERP.Cadastros.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,8 +31,11 @@ namespace SistemaERP.Cadastros.Cliente
         private void CarregaClientes()
         {
             var listaDataSource = new ModuloCadastro.Context.ClienteContext(_db_context).GetList().Select(x => new ClienteEntity { id = x.id, fantasia = x.fantasia, end_cidade = x.end_cidade, end_uf = x.end_uf }).ToList();
-            CriarColunasDataGridView(listaDataSource,new List<string>() 
-            { nameof(ClienteEntity.id), nameof(ClienteEntity.fantasia),nameof(ClienteEntity.end_cidade),nameof(ClienteEntity.end_uf) });
+            dgvClientes.CriarColunasDataGridView(listaDataSource, new List<(string,bool)>()
+            { 
+                (nameof(ClienteEntity.id),true), (nameof(ClienteEntity.fantasia),true),
+                (nameof(ClienteEntity.end_cidade),true),(nameof(ClienteEntity.end_uf),true)
+            });
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
@@ -59,37 +63,6 @@ namespace SistemaERP.Cadastros.Cliente
 
                 CarregaClientes();
             }
-        }
-
-        private void CriarColunasDataGridView<T>(List<T> listaDataSource, List<string> popularColunas)
-        {
-            dgvClientes.Columns.Clear();
-            dgvClientes.Refresh();
-
-            PropertyInfo[]? propriedades = typeof(T).GetProperties().Where(x=> x.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-
-            foreach (var prop in propriedades)
-            {
-                if (popularColunas.Any(x => x.Equals(prop.Name)))
-                {
-                    DataGridViewTextBoxColumn coluna = new()
-                    {
-                        DataPropertyName = prop.Name,
-                        ReadOnly = true,
-                        Name = prop.Name,
-                        HeaderText = prop.GetCustomAttribute<DisplayAttribute>().Name ?? prop.Name
-                    };
-                    dgvClientes.Columns.Add(coluna);
-                }
-            }
-
-            foreach (var item in listaDataSource)
-            {
-                object[] valores = popularColunas.Select(nomeColuna => item.GetType().GetProperty(nomeColuna).GetValue(item)).ToArray();
-                dgvClientes.Rows.Add(valores);
-            }
-
-            dgvClientes.Refresh();
         }
     }
 }

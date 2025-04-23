@@ -114,7 +114,6 @@ namespace SistemaERP.Cadastros.Cliente
                 sf.LineAlignment = StringAlignment.Center;
 
                 g.TranslateTransform(tabBounds.Left + tabBounds.Width / 2, tabBounds.Top + tabBounds.Height / 2);
-                g.RotateTransform(-90); // Rotaciona 90° no sentido anti-horário
 
                 g.DrawString(tabPage.Text, this.Font, SystemBrushes.ControlText, 0, 0, sf);
 

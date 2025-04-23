@@ -9,13 +9,16 @@ namespace ModuloCadastro.Context
 {
     public class ProdutoContext
     {
+        private ModuloCadastro.Context.ModuloCadastroContext _db_context;
+
+        public ProdutoContext(ModuloCadastroContext db_context) => _db_context = db_context;
         public ProdutoEntity Get(int id)
         {
             return new ModuloCadastroContext().Produtos.FirstOrDefault(x => x.id.Equals(id))!;
         }
         public List<ProdutoEntity> GetList()
         {
-            return new ModuloCadastroContext().Produtos.ToList();
+            return _db_context.Produtos.ToList();
         }
 
         public void Insert(ProdutoEntity entity)

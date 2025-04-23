@@ -71,12 +71,12 @@ namespace SistemaERP.Cadastros.Produto
 
             if (_id == 0)
             {
-                new ModuloCadastro.Context.ProdutoContext().Insert(produto);
+                new ModuloCadastro.Context.ProdutoContext(new ModuloCadastroContext()).Insert(produto);
             }
             else
             {
                 produto.dataCadastro = _produto.dataCadastro;
-                new ModuloCadastro.Context.ProdutoContext().Update(produto);
+                new ModuloCadastro.Context.ProdutoContext(new ModuloCadastroContext()).Update(produto);
             }
         }
 
@@ -87,7 +87,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void MostraProduto()
         {
-            _produto = new ProdutoContext().Get(_id);
+            _produto = new ProdutoContext(new ModuloCadastroContext()).Get(_id);
             txtCodigoSKU.Text = _produto.codigoEstoque_SKU;
             txtDescricao.Text = _produto.descricao;
             txtNCM.Text = _produto.ncm;

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SistemaERP.Cadastros.Produto;
 using SistemaERP.Cadastros.Usuario;
 
 namespace SistemaERP
@@ -13,7 +14,18 @@ namespace SistemaERP
 
         private void gerenciarProdutosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            foreach (Form f in this.MdiChildren)
+            {
+                if (f.GetType() == typeof(Cadastros.Produto.formGerenciarProdutos))
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            Cadastros.Produto.formGerenciarProdutos childForm = new(db_context);
+            childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
+            childForm.Show();
         }
 
         private void gerenciarUsuariosToolStripMenuItem_Click(object sender, EventArgs e)

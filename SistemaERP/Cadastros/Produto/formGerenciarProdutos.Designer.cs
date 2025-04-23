@@ -41,6 +41,7 @@
             // 
             dgvProdutos.AllowUserToAddRows = false;
             dgvProdutos.AllowUserToDeleteRows = false;
+            dgvProdutos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvProdutos.BackgroundColor = SystemColors.ActiveBorder;
             dgvProdutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProdutos.Location = new Point(12, 83);
@@ -52,6 +53,7 @@
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Size = new Size(776, 65);
@@ -59,6 +61,7 @@
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.Controls.Add(btnEditar);
             panel2.Controls.Add(btnNovo);
             panel2.Location = new Point(12, 373);
@@ -68,6 +71,7 @@
             // 
             // btnEditar
             // 
+            btnEditar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnEditar.FlatAppearance.BorderColor = Color.Black;
             btnEditar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnEditar.Location = new Point(102, 12);
@@ -80,6 +84,7 @@
             // 
             // btnNovo
             // 
+            btnNovo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnNovo.BackColor = SystemColors.ActiveCaption;
             btnNovo.FlatAppearance.BorderColor = Color.Black;
             btnNovo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);

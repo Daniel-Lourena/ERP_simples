@@ -30,7 +30,8 @@ namespace SistemaERP.Cadastros.Cliente
         private void CarregaClientes()
         {
             var listaDataSource = new ModuloCadastro.Context.ClienteContext(_db_context).GetList().Select(x => new ClienteEntity { id = x.id, fantasia = x.fantasia, end_cidade = x.end_cidade, end_uf = x.end_uf }).ToList();
-            CriarColunasDataGridView(listaDataSource);
+            CriarColunasDataGridView(listaDataSource,new List<string>() 
+            { nameof(ClienteEntity.id), nameof(ClienteEntity.fantasia),nameof(ClienteEntity.end_cidade),nameof(ClienteEntity.end_uf) });
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
@@ -60,7 +61,7 @@ namespace SistemaERP.Cadastros.Cliente
             }
         }
 
-        private void CriarColunasDataGridView<T>(List<T> listaDataSource)
+        private void CriarColunasDataGridView<T>(List<T> listaDataSource, List<string> popularColunas)
         {
             dgvClientes.Columns.Clear();
             dgvClientes.Refresh();
@@ -69,20 +70,22 @@ namespace SistemaERP.Cadastros.Cliente
 
             foreach (var prop in propriedades)
             {
-                DataGridViewTextBoxColumn coluna = new()
+                if (popularColunas.Any(x => x.Equals(prop.Name)))
                 {
-                    DataPropertyName = prop.Name,
-                    ReadOnly = true,
-                    Name = prop.Name,
-                    HeaderText = prop.GetCustomAttribute<DisplayAttribute>().Name ?? prop.Name
-                };
-
-                dgvClientes.Columns.Add(coluna);
+                    DataGridViewTextBoxColumn coluna = new()
+                    {
+                        DataPropertyName = prop.Name,
+                        ReadOnly = true,
+                        Name = prop.Name,
+                        HeaderText = prop.GetCustomAttribute<DisplayAttribute>().Name ?? prop.Name
+                    };
+                    dgvClientes.Columns.Add(coluna);
+                }
             }
 
             foreach (var item in listaDataSource)
             {
-                var valores = propriedades.Select(p => p.GetValue(item)?.ToString() ?? String.Empty).ToArray();
+                object[] valores = popularColunas.Select(nomeColuna => item.GetType().GetProperty(nomeColuna).GetValue(item)).ToArray();
                 dgvClientes.Rows.Add(valores);
             }
 

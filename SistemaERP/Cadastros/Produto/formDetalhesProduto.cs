@@ -35,21 +35,21 @@ namespace SistemaERP.Cadastros.Produto
         private void CarregaSetorEstoque()
         {
             List<SetorEstoqueEntity> setoresEstoque = new ModuloCadastro.Context.SetorEstoqueContext().GetList();
-            cbSetorEstoque.GetList(setoresEstoque, nameof(SetorEstoqueEntity.id), nameof(SetorEstoqueEntity.descricao),true);
+            cbSetorEstoque.PreencherComboBoxList(setoresEstoque, nameof(SetorEstoqueEntity.id), nameof(SetorEstoqueEntity.descricao),true);
         }
         private void CarregaOrigem()
         {
-            cbOrigem.GetListEnum<ModuloCadastro.Enum.EOrigemProduto>();
+            cbOrigem.PreencherComboBoxEnum<ModuloCadastro.Enum.EOrigemProduto>();
         }
         private void CarregaCST()
         {
-            cbCST.GetListEnum<ModuloCadastro.Enum.ECst>();
+            cbCST.PreencherComboBoxEnum<ModuloCadastro.Enum.ECst>();
         }
 
         private void CarregaCategoria()
         {
             List<CategoriaEntity> categorias = new ModuloCadastro.Context.CategoriaContext(new ModuloCadastroContext()).GetList();
-            cbCategoria.GetList(categorias,nameof(CategoriaEntity.id), nameof(CategoriaEntity.descricao),true);
+            cbCategoria.PreencherComboBoxList(categorias,nameof(CategoriaEntity.id), nameof(CategoriaEntity.descricao),true);
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)

@@ -1,7 +1,7 @@
 ﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
-using SistemaERP.Cadastros.Extensions;
+using SistemaERP.Cadastros.Helper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

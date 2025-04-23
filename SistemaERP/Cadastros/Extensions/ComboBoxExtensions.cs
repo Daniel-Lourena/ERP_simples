@@ -1,4 +1,4 @@
-﻿using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +9,26 @@ namespace SistemaERP.Cadastros.Extensions
 {
     public static class ComboBoxExtensions
     {
-        public static void GetListEstados(this ComboBox cbEstados)
+        public static void PreencherComboBoxList<T>(this ComboBox comboBox, List<T> dataSource, string valueMember, string displayMember, bool selecionarPrimeiro = false) where T : class
         {
-            List<EstadoEntity> estados = new ModuloCadastro.Context.EstadoContext().GetList().OrderBy(x => x.nome).ToList();
-            Extensions.Helper.ComboBoxHelper.PreencherComboBoxList(
-                    cbEstados, estados, nameof(EstadoEntity.cuf),
-                    nameof(EstadoEntity.nome), true);
+            comboBox.ValueMember = valueMember;
+            comboBox.DisplayMember = displayMember;
+            comboBox.DataSource = dataSource;
+            comboBox.Refresh();
+
+            if (selecionarPrimeiro && comboBox.Items.Count > 0)
+                comboBox.SelectedIndex = 0;
         }
-        public static void GetListCidades(this ComboBox cbCidades, int estado)
+        public static void PreencherComboBoxEnum<E>(this ComboBox comboBox, bool selecionarPrimeiro = false) where E : Enum
         {
-            List<CidadeEntity> cidades = new ModuloCadastro.Context.CidadeContext().GetListByEstado(estado).OrderBy(x => x.dmunicipio).ToList();
-            Extensions.Helper.ComboBoxHelper.PreencherComboBoxList(
-                    cbCidades, cidades, nameof(CidadeEntity.id),
-                    nameof(CidadeEntity.dmunicipio), true);
-        }
-        public static void GetList<T>(this ComboBox comboBox, List<T> dataSource,string valueMember,string displayMember,bool selecionarPrimeiro = false) where T : class 
-        {
-            Extensions.Helper.ComboBoxHelper.PreencherComboBoxList(
-                    comboBox, dataSource, valueMember,
-                    displayMember, selecionarPrimeiro);
-        }
-        public static void GetListEnum<E>(this ComboBox comboBox) where E : Enum
-        {
-            Extensions.Helper.ComboBoxHelper.PreencherComboBoxEnum<E>(comboBox);
+            List<EnumItem> dataSource = EnumExtensions.GetList<E>();
+
+            comboBox.ValueMember = nameof(EnumItem.Value);
+            comboBox.DisplayMember = nameof(EnumItem.Description);
+            comboBox.DataSource = dataSource;
+
+            if (selecionarPrimeiro && comboBox.Items.Count > 0)
+                comboBox.SelectedIndex = 0;
         }
     }
 }

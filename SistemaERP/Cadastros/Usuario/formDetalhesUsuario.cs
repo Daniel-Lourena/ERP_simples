@@ -31,7 +31,7 @@ namespace SistemaERP.Cadastros.Usuario
 
         private void CarregaCargo()
         {
-            cbCargo.GetListEnum<ModuloCadastro.Enum.ECargo>();
+            cbCargo.PreencherComboBoxEnum<ModuloCadastro.Enum.ECargo>();
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)

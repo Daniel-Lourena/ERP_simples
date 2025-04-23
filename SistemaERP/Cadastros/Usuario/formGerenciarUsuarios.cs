@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
+using SistemaERP.Cadastros.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,16 +19,24 @@ namespace SistemaERP.Cadastros.Usuario
 {
     public partial class formGerenciarUsuarios : Form
     {
-        public formGerenciarUsuarios(DbContext db_context)
+        private ModuloCadastro.Context.ModuloCadastroContext _db_context;
+
+        public formGerenciarUsuarios(ModuloCadastroContext db_context)
         {
+            _db_context = db_context;
             InitializeComponent();
             CarregaUsuarios();
         }
 
         private void CarregaUsuarios()
         {
-            var listaDataSource = new ModuloCadastro.Context.UsuarioContext().GetList().Select(x => new UsuarioEntity { id = x.id, nome = x.nome, cargo = x.cargo }).ToList();
-            CriarColunasDataGridView(listaDataSource);
+            var listaDataSource = new ModuloCadastro.Context.UsuarioContext(_db_context).GetList().Select(x => new UsuarioEntity { id = x.id, nome = x.nome, cargo = x.cargo }).ToList();
+
+            dgvUsuarios.CriarColunasDataGridView(listaDataSource, new List<(string, bool)>()
+            {
+                (nameof(UsuarioEntity.id),true), (nameof(UsuarioEntity.nome),true),
+                (nameof(UsuarioEntity.cargo),true)
+            });
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
@@ -46,7 +56,7 @@ namespace SistemaERP.Cadastros.Usuario
         {
             if (MessageBox.Show("Deseja realmente excluir os usuários selecionados?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                new ModuloCadastro.Context.UsuarioContext().UpdateParcial(new UsuarioEntity()
+                new ModuloCadastro.Context.UsuarioContext(new ModuloCadastroContext()).UpdateParcial(new UsuarioEntity()
                 {
                     dataExclusao = DateTime.Now,
                     excluido = true
@@ -54,35 +64,6 @@ namespace SistemaERP.Cadastros.Usuario
 
                 CarregaUsuarios();
             }
-        }
-
-        private void CriarColunasDataGridView<T>(List<T> listaDataSource)
-        {
-            dgvUsuarios.Columns.Clear();
-            dgvUsuarios.Refresh();
-
-            PropertyInfo[]? propriedades = typeof(T).GetProperties();
-
-            foreach (var prop in propriedades)
-            {
-                DataGridViewTextBoxColumn coluna = new()
-                {
-                    DataPropertyName = prop.Name,
-                    ReadOnly = true,
-                    Name = prop.Name,
-                    HeaderText = prop.GetCustomAttribute<DisplayAttribute>().Name ?? prop.Name
-                };
-
-                dgvUsuarios.Columns.Add(coluna);
-            }
-
-            foreach (var item in listaDataSource)
-            {
-                var valores = propriedades.Select(p => p.GetValue(item)?.ToString() ?? String.Empty).ToArray();
-                dgvUsuarios.Rows.Add(valores);
-            }
-
-            dgvUsuarios.Refresh();
         }
     }
 }

@@ -46,12 +46,12 @@ namespace SistemaERP.Cadastros.Usuario
 
             if (_id == 0)
             {
-                new ModuloCadastro.Context.UsuarioContext().Insert(usuario);
+                new ModuloCadastro.Context.UsuarioContext(new ModuloCadastroContext()).Insert(usuario);
             }
             else
             {
                 usuario.dataCadastro = _usuario.dataCadastro;
-                new ModuloCadastro.Context.UsuarioContext().Update(usuario);
+                new ModuloCadastro.Context.UsuarioContext(new ModuloCadastroContext()).Update(usuario);
             }
         }
 
@@ -62,7 +62,7 @@ namespace SistemaERP.Cadastros.Usuario
 
         private void MostraUsuario()
         {
-            _usuario = new UsuarioContext().Get(_id);
+            _usuario = new UsuarioContext(new ModuloCadastroContext()).Get(_id);
             txtNome.Text = _usuario.nome;
             txtCadastro.Text = _usuario.dataCadastro.ToString();
             txtAtualizacao.Text = _usuario.dataAtualizacao.ToString();

@@ -11,13 +11,15 @@ namespace ModuloCadastro.Context
 {
     public class UsuarioContext : ModuloCadastroContext
     {
+        private ModuloCadastro.Context.ModuloCadastroContext _db_context;
+        public UsuarioContext(ModuloCadastroContext db_context) => _db_context = db_context;
         public UsuarioEntity Get(int id)
         {
             return new ModuloCadastroContext().Usuarios.FirstOrDefault(x => x.id.Equals(id))!;
         }
         public List<UsuarioEntity> GetList()
         {
-            return new ModuloCadastroContext().Usuarios.ToList();
+            return _db_context.Usuarios.ToList();
         }
 
         public void Insert(UsuarioEntity usuarioEntity)

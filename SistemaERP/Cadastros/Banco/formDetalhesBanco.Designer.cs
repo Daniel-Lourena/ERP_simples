@@ -62,15 +62,10 @@
             label1 = new Label();
             txtNomeBanco = new TextBox();
             tpFinanceiro = new TabPage();
-            label13 = new Label();
-            nudLimite = new NumericUpDown();
-            label12 = new Label();
             btnSalvar = new Button();
             btnCancelar = new Button();
             tcBanco.SuspendLayout();
             tpDadosGerais.SuspendLayout();
-            tpFinanceiro.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nudLimite).BeginInit();
             SuspendLayout();
             // 
             // tcBanco
@@ -389,9 +384,6 @@
             // 
             // tpFinanceiro
             // 
-            tpFinanceiro.Controls.Add(label13);
-            tpFinanceiro.Controls.Add(nudLimite);
-            tpFinanceiro.Controls.Add(label12);
             tpFinanceiro.Location = new Point(104, 4);
             tpFinanceiro.Name = "tpFinanceiro";
             tpFinanceiro.Padding = new Padding(3);
@@ -399,34 +391,6 @@
             tpFinanceiro.TabIndex = 1;
             tpFinanceiro.Text = "Financeiro";
             tpFinanceiro.UseVisualStyleBackColor = true;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(115, 23);
-            label13.Name = "label13";
-            label13.Size = new Size(23, 15);
-            label13.TabIndex = 16;
-            label13.Text = "R$ ";
-            // 
-            // nudLimite
-            // 
-            nudLimite.DecimalPlaces = 2;
-            nudLimite.Location = new Point(6, 21);
-            nudLimite.Maximum = new decimal(new int[] { -727379968, 232, 0, 0 });
-            nudLimite.Name = "nudLimite";
-            nudLimite.Size = new Size(103, 23);
-            nudLimite.TabIndex = 15;
-            nudLimite.TextAlign = HorizontalAlignment.Right;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(6, 3);
-            label12.Name = "label12";
-            label12.Size = new Size(103, 15);
-            label12.TabIndex = 14;
-            label12.Text = "Limite disponível: ";
             // 
             // btnSalvar
             // 
@@ -469,9 +433,6 @@
             tcBanco.ResumeLayout(false);
             tpDadosGerais.ResumeLayout(false);
             tpDadosGerais.PerformLayout();
-            tpFinanceiro.ResumeLayout(false);
-            tpFinanceiro.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)nudLimite).EndInit();
             ResumeLayout(false);
         }
 
@@ -494,9 +455,6 @@
         private TextBox txtAgenciaDigito;
         private Label label9;
         private TextBox txtAgencia;
-        private Label label12;
-        private NumericUpDown nudLimite;
-        private Label label13;
         private Button btnSalvar;
         private Button btnCancelar;
         private Label label5;

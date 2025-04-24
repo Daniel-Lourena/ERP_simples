@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModuloCadastro.Context;
 
@@ -10,9 +11,10 @@ using ModuloCadastro.Context;
 namespace ModuloCadastro.Migrations
 {
     [DbContext(typeof(ModuloCadastroContext))]
-    partial class ModuloCadastroContextModelSnapshot : ModelSnapshot
+    [Migration("20250424041742_db_24_04_2025")]
+    partial class db_24_04_2025
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

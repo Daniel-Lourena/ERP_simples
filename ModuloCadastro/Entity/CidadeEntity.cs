@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Entity
 {
-    [Table("tb_cidade")]
+    [Table("tb_cidades")]
     public class CidadeEntity : BaseEntity<CidadeEntity>
     {
         [Key,Display(Name = "ID",Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]

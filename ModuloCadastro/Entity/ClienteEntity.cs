@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Entity
 {
-    [Table("tb_cliente")]
+    [Table("tb_clientes")]
     public class ClienteEntity : BaseEntity<ClienteEntity>
     {
         [Key, Display(Name = "ID", Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]

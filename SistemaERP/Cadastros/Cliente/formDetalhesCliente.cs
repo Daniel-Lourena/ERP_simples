@@ -53,14 +53,7 @@ namespace SistemaERP.Cadastros.Cliente
 
             if (_id == 0)
             {
-                using (var autoNumeradorContext = new ModuloCadastro.Context.AutoNumeradorContext(new ModuloCadastroContext()))
-                {
-                    AutoNumeradorEntity numerador = autoNumeradorContext.Get();
-                    numerador.idCliente++;
-                    cliente.id = numerador.idCliente;
-                    new ModuloCadastro.Context.ClienteContext(new ModuloCadastroContext()).Insert(cliente);
-                    ContextMethods.UpdateParcial<AutoNumeradorEntity>(numerador,new List<string>() { nameof(AutoNumeradorEntity.idCliente) });
-                }
+                new ModuloCadastro.Context.ClienteContext(new ModuloCadastroContext()).Insert(cliente);
             }
             else
             {

@@ -25,11 +25,18 @@ namespace ModuloCadastro.Context
 
         public void Insert(ClienteEntity clienteEntity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.Clientes.Add(clienteEntity);
-            _context.SaveChanges();
+            using (var autoNumeradorContext = new ModuloCadastro.Context.AutoNumeradorContext(new ModuloCadastroContext()))
+            {
+                AutoNumeradorEntity numerador = autoNumeradorContext.Get();
+                numerador.idCliente++;
+                clienteEntity.id = numerador.idCliente;
+                var _context = new ModuloCadastroContext();
+                _context.Clientes.Add(clienteEntity);
+                _context.SaveChanges();
+                ContextMethods.UpdateParcial<AutoNumeradorEntity>(numerador, new List<string>() { nameof(AutoNumeradorEntity.idCliente) });
+            }
         }
-        
+
         public void Update(ClienteEntity clienteEntity)
         {
             var _context = new ModuloCadastroContext();

@@ -59,5 +59,21 @@ namespace SistemaERP
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();
         }
+
+        private void gerenciarBancosToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                if (f.GetType() == typeof(Cadastros.Banco.formGerenciarBancos))
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            Cadastros.Banco.formGerenciarBancos childForm = new(db_context);
+            childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
+            childForm.Show();
+        }
     }
 }

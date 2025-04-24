@@ -22,6 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Cadastros\Banco\formDetalhesBanco.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Cadastros\Banco\formGerenciarBancos.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Cadastros\Cliente\formDetalhesCliente.cs">
       <SubType>Form</SubType>
     </Compile>

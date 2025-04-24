@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Context
 {
-    public class ProdutoContext
+    public class ProdutoContext : IContext<ProdutoEntity>
     {
         private ModuloCadastro.Context.ModuloCadastroContext _db_context;
 
@@ -27,7 +27,7 @@ namespace ModuloCadastro.Context
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.idProduto++;
-                entity.id = numerador.idCliente;
+                entity.id = numerador.idProduto;
                 var _context = new ModuloCadastroContext();
                 _context.Produtos.Add(entity);
                 _context.SaveChanges();

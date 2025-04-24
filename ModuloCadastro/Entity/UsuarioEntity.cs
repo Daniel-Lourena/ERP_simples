@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Entity
 {
-    [Table("tb_usuario")]
+    [Table("tb_usuarios")]
     public class UsuarioEntity : BaseEntity<UsuarioEntity>
     {
         [Display(Name = "ID",Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)] 

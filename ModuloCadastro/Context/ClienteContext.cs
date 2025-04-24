@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ModuloCadastro.Context
 {
-    public class ClienteContext
+    public class ClienteContext : IContext<ClienteEntity>
     {
         ModuloCadastro.Context.ModuloCadastroContext _db_context;
 
@@ -44,7 +44,7 @@ namespace ModuloCadastro.Context
             _context.SaveChanges();
         }
 
-        public static void UpdateParcial(ClienteEntity entity, List<string> listaPropriedadesAtualizar)
+        public void UpdateParcial(ClienteEntity entity, List<string> listaPropriedadesAtualizar)
         {
             ContextMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
         }

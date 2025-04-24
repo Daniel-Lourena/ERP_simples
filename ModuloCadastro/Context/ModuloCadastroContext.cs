@@ -16,6 +16,7 @@ namespace ModuloCadastro.Context
         internal DbSet<CidadeEntity> Cidades { get; set; }
         internal DbSet<EstadoEntity> Estados { get; set; }
         internal DbSet<ProdutoEntity> Produtos { get; set; }
+        internal DbSet<BancoEntity> Bancos { get; set; }
         internal DbSet<CategoriaEntity> Categorias { get; set; }
         internal DbSet<SetorEstoqueEntity> SetoresEstoque { get; set; }
 
@@ -65,6 +66,11 @@ namespace ModuloCadastro.Context
             });
 
             modelBuilder.Entity<SetorEstoqueEntity>(entity =>
+            {
+                entity.HasKey(c => c.id);
+            });
+
+            modelBuilder.Entity<BancoEntity>(entity =>
             {
                 entity.HasKey(c => c.id);
             });

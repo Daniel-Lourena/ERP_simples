@@ -55,7 +55,7 @@ namespace SistemaERP.Cadastros.Cliente
         {
             if (MessageBox.Show("Deseja realmente excluir os clientes selecionados?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                ModuloCadastro.Context.ClienteContext.UpdateParcial(new ClienteEntity()
+                new ModuloCadastro.Context.ClienteContext(new ModuloCadastroContext()).UpdateParcial(new ClienteEntity()
                 {
                     dataExclusao = DateTime.Now,
                     excluido = true

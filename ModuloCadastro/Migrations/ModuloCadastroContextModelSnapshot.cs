@@ -31,6 +31,9 @@ namespace ModuloCadastro.Migrations
                     b.Property<int>("idCliente")
                         .HasColumnType("int");
 
+                    b.Property<int>("idPedido")
+                        .HasColumnType("int");
+
                     b.Property<int>("idProduto")
                         .HasColumnType("int");
 
@@ -145,6 +148,8 @@ namespace ModuloCadastro.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("cuf");
+
                     b.ToTable("tb_cidades");
                 });
 
@@ -200,6 +205,8 @@ namespace ModuloCadastro.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("end_cidade");
+
                     b.ToTable("tb_clientes");
                 });
 
@@ -219,6 +226,40 @@ namespace ModuloCadastro.Migrations
                     b.HasKey("cuf");
 
                     b.ToTable("tb_estados");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.PedidoEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("dataAtualizacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("dataCriacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("dataExclusao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("excluido")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("idCliente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idCriador")
+                        .HasColumnType("int");
+
+                    b.Property<int>("usuarioAtualizacao")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("idCliente");
+
+                    b.ToTable("tb_pedidos");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.ProdutoEntity", b =>
@@ -276,7 +317,38 @@ namespace ModuloCadastro.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("categoria");
+
+                    b.HasIndex("setorEstoque");
+
                     b.ToTable("tb_produtos");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.ProdutoPedidoEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("DadosProdutoid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PedidoEntityid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idPedido")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idProduto")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("DadosProdutoid");
+
+                    b.HasIndex("PedidoEntityid");
+
+                    b.ToTable("tb_produtospedido");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.SetorEstoqueEntity", b =>
@@ -321,6 +393,78 @@ namespace ModuloCadastro.Migrations
                     b.HasKey("id");
 
                     b.ToTable("tb_usuarios");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.CidadeEntity", b =>
+                {
+                    b.HasOne("ModuloCadastro.Entity.EstadoEntity", "DadosEstado")
+                        .WithMany()
+                        .HasForeignKey("cuf")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DadosEstado");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.ClienteEntity", b =>
+                {
+                    b.HasOne("ModuloCadastro.Entity.CidadeEntity", "DadosCidade")
+                        .WithMany()
+                        .HasForeignKey("end_cidade")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DadosCidade");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.PedidoEntity", b =>
+                {
+                    b.HasOne("ModuloCadastro.Entity.ClienteEntity", "DadosCliente")
+                        .WithMany()
+                        .HasForeignKey("idCliente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DadosCliente");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.ProdutoEntity", b =>
+                {
+                    b.HasOne("ModuloCadastro.Entity.CategoriaEntity", "DadosCategoria")
+                        .WithMany()
+                        .HasForeignKey("categoria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModuloCadastro.Entity.SetorEstoqueEntity", "DadosSetorEstoque")
+                        .WithMany()
+                        .HasForeignKey("setorEstoque")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DadosCategoria");
+
+                    b.Navigation("DadosSetorEstoque");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.ProdutoPedidoEntity", b =>
+                {
+                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "DadosProduto")
+                        .WithMany()
+                        .HasForeignKey("DadosProdutoid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModuloCadastro.Entity.PedidoEntity", null)
+                        .WithMany("listaProdutosPedido")
+                        .HasForeignKey("PedidoEntityid");
+
+                    b.Navigation("DadosProduto");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.PedidoEntity", b =>
+                {
+                    b.Navigation("listaProdutosPedido");
                 });
 #pragma warning restore 612, 618
         }

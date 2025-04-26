@@ -19,7 +19,8 @@ namespace ModuloCadastro.Context
         }
         public List<UsuarioEntity> GetList()
         {
-            return _db_context.Usuarios.ToList();
+            return _db_context.Usuarios
+                .AsNoTracking().ToList();
         }
 
         public void Insert(UsuarioEntity usuarioEntity)

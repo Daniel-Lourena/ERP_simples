@@ -39,7 +39,7 @@ namespace SistemaERP.Cadastros.Usuario
             UsuarioEntity usuario = new()
             {
                 nome = txtNome.Text,
-                cargo = Convert.ToInt32(cbCargo.SelectedValue),
+                cargo = (ECargo)cbCargo.SelectedValue,
                 dataCadastro = DateTime.Now,
                 dataAtualizacao = DateTime.Now
             };

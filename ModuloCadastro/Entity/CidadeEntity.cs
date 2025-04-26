@@ -20,5 +20,7 @@ namespace ModuloCadastro.Entity
         public string cmunicipio { get; set; }
         [Display(Name = "Nome", Description = ""), Column(TypeName = "varchar(50)")]
         public string dmunicipio { get; set; }
+
+        public EstadoEntity DadosEstado { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModuloCadastro.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -17,7 +18,7 @@ namespace ModuloCadastro.Entity
         [Display(Name = "Nome",Description = ""), Column(TypeName = "varchar(50)")] 
         public string nome { get; set; }
         [Display(Name = "Cargo",Description = ""), Column(TypeName = "int")] 
-        public int cargo { get; set; }
+        public ECargo cargo { get; set; }
         [Display(Name = "Dta. Cadastro", Description = ""), Column(TypeName = "datetime")] 
         public DateTime dataCadastro { get; set; }
         [Display(Name = "Dta. Atualização", Description = ""), Column(TypeName = "datetime")] 
@@ -25,6 +26,6 @@ namespace ModuloCadastro.Entity
         [Display(Name = "Excluído", Description = ""), Column(TypeName = "tinyint(1)")] 
         public bool excluido { get; set; }
         [Display(Name = "Dta. Exclusão", Description = ""), Column(TypeName = "datetime")]
-        public DateTime dataExclusao { get; set; }
+        public DateTime? dataExclusao { get; set; }
     }
 }

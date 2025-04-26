@@ -11,6 +11,19 @@ namespace SistemaERP.Cadastros.Extensions
 {
     public static class EnumExtensions
     {
+        public static string GetDescription(this Enum @enum)
+        {
+            if (@enum == null)
+                return null;
+
+            var field = @enum.GetType().GetField(@enum.ToString());
+            if (field == null)
+                return @enum.ToString();
+
+            var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
+            return attribute == null ? @enum.ToString() : attribute.Description;
+        }
+
         public static List<EnumItem> GetList<TEnum>() where TEnum : System.Enum
         {
             List<EnumItem> enumList = new();

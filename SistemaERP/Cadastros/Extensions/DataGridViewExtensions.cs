@@ -36,7 +36,17 @@ namespace SistemaERP.Cadastros.Extensions
 
             foreach (var item in listaDataSource)
             {
-                object[] valores = popularColunas.Select(col => item.GetType().GetProperty(col.nomeColuna).GetValue(item)).ToArray();
+                object[] valores = popularColunas.Select(col =>
+                {
+                    var propriedade = item.GetType().GetProperty(col.nomeColuna);
+                    var valor = propriedade?.GetValue(item);
+
+                    if (valor is Enum enumValor)
+                        return enumValor.GetDescription(); 
+
+                    return valor;
+                }).ToArray(); 
+                
                 dgvGenerico.Rows.Add(valores);
             }
 

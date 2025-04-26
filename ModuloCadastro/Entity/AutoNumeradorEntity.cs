@@ -21,5 +21,7 @@ namespace ModuloCadastro.Entity
         public int idProduto { get; set; }
         [Display(Name = "ID Banco", Description = ""), Column(TypeName = "int")]
         public int idBanco { get; set; }
+        [Display(Name = "ID Pedido", Description = ""), Column(TypeName = "int")]
+        public int idPedido { get; set; }
     }
 }

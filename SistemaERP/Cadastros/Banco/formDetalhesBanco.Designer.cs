@@ -421,11 +421,10 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(674, 368);
-            ControlBox = false;
             Controls.Add(btnSalvar);
             Controls.Add(btnCancelar);
             Controls.Add(tcBanco);
-            MinimizeBox = false;
+            MaximizeBox = false;
             Name = "formDetalhesBanco";
             StartPosition = FormStartPosition.CenterParent;
             Text = "[NOVO]";

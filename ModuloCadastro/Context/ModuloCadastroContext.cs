@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using ModuloCadastro.Entity;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace ModuloCadastro.Context
         internal DbSet<BancoEntity> Bancos { get; set; }
         internal DbSet<CategoriaEntity> Categorias { get; set; }
         internal DbSet<SetorEstoqueEntity> SetoresEstoque { get; set; }
+        internal DbSet<PedidoEntity> Pedidos { get; set; }
+        internal DbSet<ProdutoPedidoEntity> ProdutosPedidos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,22 +35,33 @@ namespace ModuloCadastro.Context
         {
             modelBuilder.Entity<AutoNumeradorEntity>(entity =>
             {
-                entity.HasKey(c => c.id);
+                entity.HasKey(a => a.id);
             });
 
             modelBuilder.Entity<UsuarioEntity>(entity =>
             {
-                entity.HasKey(c => c.id);
+                entity.HasKey(u => u.id);
+                entity.Property(u => u.cargo).HasConversion<int>();
             });
             
             modelBuilder.Entity<ClienteEntity>(entity =>
             {
                 entity.HasKey(c => c.id);
+
+                entity.HasOne(c => c.DadosCidade)
+                      .WithMany()
+                      .HasForeignKey(c => c.end_cidade)
+                      .HasPrincipalKey(key => new { key.id });
             });
 
             modelBuilder.Entity<CidadeEntity>(entity =>
             {
                 entity.HasKey(c => c.id);
+                
+                entity.HasOne(c => c.DadosEstado)
+                      .WithMany()
+                      .HasForeignKey(c => c.cuf)
+                      .HasPrincipalKey(key => new { key.cuf});
             });
 
             modelBuilder.Entity<EstadoEntity>(entity =>
@@ -57,7 +71,18 @@ namespace ModuloCadastro.Context
 
             modelBuilder.Entity<ProdutoEntity>(entity =>
             {
-                entity.HasKey(c => c.id);
+                entity.HasKey(p => p.id);
+                entity.Property(p => p.origem).HasConversion<int>();
+
+                entity.HasOne(p => p.DadosCategoria)
+                      .WithMany()
+                      .HasForeignKey(p => p.categoria)
+                      .HasPrincipalKey(key => new { key.id });
+                
+                entity.HasOne(p => p.DadosSetorEstoque)
+                      .WithMany()
+                      .HasForeignKey(p => p.setorEstoque)
+                      .HasPrincipalKey(key => new { key.id });
             });
 
             modelBuilder.Entity<CategoriaEntity>(entity =>
@@ -72,8 +97,30 @@ namespace ModuloCadastro.Context
 
             modelBuilder.Entity<BancoEntity>(entity =>
             {
-                entity.HasKey(c => c.id);
+                entity.HasKey(b => b.id);
+                entity.Property(b => b.tipoConta).HasConversion<int>();
+                entity.Property(b => b.pixTipoChave).HasConversion<int>();
             });
+
+            modelBuilder.Entity<PedidoEntity>(entity =>
+            {
+                entity.HasKey(p => p.id);
+
+                entity.HasOne(p => p.DadosCliente)
+                      .WithMany()
+                      .HasForeignKey(p => p.idCliente)
+                      .HasPrincipalKey(key => new { key.id });
+            });
+
+            //modelBuilder.Entity<ProdutoPedidoEntity>(entity =>
+            //{
+            //    entity.HasKey(c => c.id);
+                
+            //    entity.HasOne(p => p.DadosProduto)
+            //          .WithMany()
+            //          .HasForeignKey(p => p.DadosProduto.id)
+            //          .HasPrincipalKey(key => new { key.id });
+            //});
         }
     }
 }

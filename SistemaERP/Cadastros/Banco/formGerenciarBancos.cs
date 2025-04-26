@@ -30,7 +30,7 @@ namespace SistemaERP.Cadastros.Banco
 
         private void CarregaBancos()
         {
-            var listaDataSource = new ModuloCadastro.Context.BancoContext(_db_context).GetList().Select(x => new BancoEntity { id = x.id, nome = x.nome }).ToList();
+            var listaDataSource = new ModuloCadastro.Context.BancoContext(_db_context).GetList();
             dgvBancos.CriarColunasDataGridView(listaDataSource, new List<(string,bool)>()
             { 
                 (nameof(BancoEntity.id),true), (nameof(BancoEntity.nome),true),

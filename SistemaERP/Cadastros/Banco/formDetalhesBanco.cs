@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Context;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using SistemaERP.Cadastros.Extensions;
@@ -32,6 +33,27 @@ namespace SistemaERP.Cadastros.Banco
             _id = id;
         }
 
+        private void ConfigurarDataBinding()
+        {
+            _banco = _banco ?? new BancoEntity();
+            cbTipoConta.DataBindings.Add(nameof(cbTipoConta.SelectedValue), _banco, nameof(_banco.tipoConta));
+            txtAtualizacao.DataBindings.Add(nameof(txtAtualizacao.Text), _banco, nameof(_banco.dataAtualizacao));
+            txtCadastro.DataBindings.Add(nameof(txtCadastro.Text), _banco, nameof(_banco.dataCadastro));
+            txtNomeBanco.DataBindings.Add(nameof(txtNomeBanco.Text), _banco, nameof(_banco.nome));
+            txtCodigo.DataBindings.Add(nameof(txtCodigo.Text), _banco, nameof(_banco.codigo));
+            txtAgenciaDigito.DataBindings.Add(nameof(txtAgenciaDigito.Text), _banco, nameof(_banco.agenciaDigito));
+            txtAgencia.DataBindings.Add(nameof(txtAgencia.Text), _banco, nameof(_banco.agencia));
+            txtContaDigito.DataBindings.Add(nameof(txtContaDigito.Text), _banco, nameof(_banco.contaDigito));
+            txtConta.DataBindings.Add(nameof(txtConta.Text), _banco, nameof(_banco.conta));
+            txtNomeTitular.DataBindings.Add(nameof(txtNomeTitular.Text), _banco, nameof(_banco.titularNome));
+            txtTitularDocumento.DataBindings.Add(nameof(txtTitularDocumento.Text), _banco, nameof(_banco.titularDocumento));
+            cbTipoChavePix.DataBindings.Add(nameof(cbTipoChavePix.SelectedValue), _banco, nameof(_banco.pixTipoChave));
+            txtChavePix.DataBindings.Add(nameof(txtChavePix.Text), _banco, nameof(_banco.pixChave));
+            ckContaInternacional.DataBindings.Add(nameof(ckContaInternacional.Checked), _banco, nameof(_banco.contaInternacional));
+            ckInativo.DataBindings.Add(nameof(ckInativo.Checked), _banco, nameof(_banco.inativo));
+            txtIBAN.DataBindings.Add(nameof(txtIBAN.Text), _banco, nameof(_banco.iban));
+            txtSwift.DataBindings.Add(nameof(txtSwift.Text), _banco, nameof(_banco.swiftCode));
+        }
         private void CarregarTipoConta()
         {
             cbTipoConta.PreencherComboBoxEnum<ETipoContaBanco>();
@@ -43,41 +65,22 @@ namespace SistemaERP.Cadastros.Banco
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            BancoEntity banco = new()
-            {
-                nome = txtNomeBanco.Text,
-                codigo = txtCodigo.Text,
-                agencia = txtAgencia.Text,
-                agenciaDigito = txtAgenciaDigito.Text,
-                conta = txtConta.Text,
-                contaDigito = txtContaDigito.Text,
-                titularNome = txtNomeTitular.Text,
-                titularDocumento = txtTitularDocumento.Text,
-                inativo = ckInativo.Checked,
-                contaInternacional = ckContaInternacional.Checked,
-                dataCadastro = DateTime.Now,
-                dataAtualizacao = DateTime.Now,
-                tipoConta = (int)cbTipoConta.SelectedValue,
-                pixTipoChave = (int)cbTipoChavePix.SelectedValue,
-                pixChave = txtChavePix.Text,
-                iban = txtIBAN.Text,
-                swiftCode = txtSwift.Text
-            };
-
             if (_id == 0)
             {
-                new ModuloCadastro.Context.BancoContext(new ModuloCadastroContext()).Insert(banco);
+                new ModuloCadastro.Context.BancoContext(new ModuloCadastroContext()).Insert(_banco);
             }
             else
             {
-                banco.dataCadastro = _banco.dataCadastro;
-                new ModuloCadastro.Context.BancoContext(new ModuloCadastroContext()).Update(banco);
+                _banco.dataAtualizacao = DateTime.Now;
+                new ModuloCadastro.Context.BancoContext(new ModuloCadastroContext()).Update(_banco);
             }
         }
 
         private void formDetalhesBanco_Load(object sender, EventArgs e)
         {
             if (_id > 0) MostraBanco();
+
+            ConfigurarDataBinding();
         }
 
         private void MostraBanco()

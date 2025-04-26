@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModuloCadastro.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -31,7 +32,7 @@ namespace ModuloCadastro.Entity
         [Display(Name = "Est. Mínimo", Description = ""), Column(TypeName = "decimal(10,2)")]
         public decimal estoqueMinimo { get; set; }
         [Display(Name = "Origem", Description = ""), Column(TypeName = "int")]
-        public int origem { get; set; }
+        public EOrigemProduto origem { get; set; }
         [Display(Name = "CST/CSOSN", Description = ""), Column(TypeName = "varchar(5)")]
         public string cst_csosn { get; set; }
         [Display(Name = "Inativo", Description = ""), Column(TypeName = "tinyint(1)")]
@@ -42,5 +43,8 @@ namespace ModuloCadastro.Entity
         public DateTime dataCadastro { get; set; }
         [Display(Name = "Dta. Atualização", Description = ""), Column(TypeName = "datetime")]
         public DateTime dataAtualizacao { get; set; }
+
+        public CategoriaEntity DadosCategoria { get; set; }
+        public SetorEstoqueEntity DadosSetorEstoque { get; set; }
     }
 }

@@ -63,10 +63,10 @@ namespace SistemaERP.Cadastros.Produto
                 dataCadastro = DateTime.Now,
                 dataAtualizacao = DateTime.Now,
                 cst_csosn = cbCST.SelectedValue as string,
-                origem = (int)cbOrigem.SelectedValue,
+                origem = (EOrigemProduto)cbOrigem.SelectedValue,
                 categoria = (int)cbCategoria.SelectedValue,
                 setorEstoque = (int)cbSetorEstoque.SelectedValue,
-                inativo = ckeInativo.Checked,
+                inativo = ckeInativo.Checked
             };
 
             if (_id == 0)

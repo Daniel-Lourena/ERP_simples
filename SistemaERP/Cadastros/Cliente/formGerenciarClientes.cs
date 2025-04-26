@@ -30,11 +30,11 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void CarregaClientes()
         {
-            var listaDataSource = new ModuloCadastro.Context.ClienteContext(_db_context).GetList().Select(x => new ClienteEntity { id = x.id, fantasia = x.fantasia, end_cidade = x.end_cidade, end_uf = x.end_uf }).ToList();
+            var listaDataSource = new ModuloCadastro.Context.ClienteContext(_db_context).GetList().Select(x => new ClienteEntity { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade }).ToList();
             dgvClientes.CriarColunasDataGridView(listaDataSource, new List<(string,bool)>()
             { 
                 (nameof(ClienteEntity.id),true), (nameof(ClienteEntity.fantasia),true),
-                (nameof(ClienteEntity.end_cidade),true),(nameof(ClienteEntity.end_uf),true)
+                (nameof(ClienteEntity.DadosCidade.cuf),true),(nameof(ClienteEntity.DadosCidade.dmunicipio),true)
             });
         }
 

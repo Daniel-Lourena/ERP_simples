@@ -40,6 +40,8 @@ namespace ModuloCadastro.Entity
         [Display(Name = "Dta. Exclusão", Description = ""), Column(TypeName = "datetime")]
         public DateTime? dataExclusao { get; set; }
 
+        public CidadeEntity DadosCidade { get; set; }
+
         [NotMapped]
         public string enderecoCompleto
         {

@@ -20,7 +20,11 @@ namespace ModuloCadastro.Context
         }
         public List<ClienteEntity> GetList()
         {
-            return _db_context.Clientes.ToList();
+            return _db_context.Clientes
+                .Include(c => c.DadosCidade)
+                .ThenInclude(c => c.DadosEstado)
+                .AsNoTracking()
+                .ToList();
         }
 
         public void Insert(ClienteEntity clienteEntity)

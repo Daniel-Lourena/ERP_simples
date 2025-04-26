@@ -75,5 +75,9 @@ namespace SistemaERP
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();
         }
+
+        private void pedidosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
     }
 }

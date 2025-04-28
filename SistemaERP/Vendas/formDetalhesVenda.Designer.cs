@@ -1,6 +1,6 @@
 ﻿namespace SistemaERP.Vendas
 {
-    partial class formPedidos
+    partial class formDetalhesVenda
     {
         /// <summary>
         /// Required designer variable.
@@ -49,6 +49,11 @@
             txtNro = new TextBox();
             label7 = new Label();
             tpProdutos = new TabPage();
+            panel3 = new Panel();
+            groupBox3 = new GroupBox();
+            btnRemProduto = new Button();
+            btnAddProduto = new Button();
+            dgvProdutos = new DataGridView();
             tpFinanceiro = new TabPage();
             panel2 = new Panel();
             groupBox2 = new GroupBox();
@@ -61,22 +66,17 @@
             btnDinheiro = new Button();
             dgvRecebimentos = new DataGridView();
             panel1 = new Panel();
-            dgvProdutos = new DataGridView();
-            panel3 = new Panel();
-            groupBox3 = new GroupBox();
-            btnRemProduto = new Button();
-            btnAddProduto = new Button();
             tcPedidos.SuspendLayout();
             tpDadosGerais.SuspendLayout();
             groupBox1.SuspendLayout();
             tpProdutos.SuspendLayout();
+            panel3.SuspendLayout();
+            groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvProdutos).BeginInit();
             tpFinanceiro.SuspendLayout();
             panel2.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvProdutos).BeginInit();
-            panel3.SuspendLayout();
-            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // tcPedidos
@@ -284,6 +284,56 @@
             tpProdutos.Text = "Produtos";
             tpProdutos.UseVisualStyleBackColor = true;
             // 
+            // panel3
+            // 
+            panel3.Controls.Add(groupBox3);
+            panel3.Dock = DockStyle.Bottom;
+            panel3.Location = new Point(3, 254);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(786, 93);
+            panel3.TabIndex = 2;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(btnRemProduto);
+            groupBox3.Controls.Add(btnAddProduto);
+            groupBox3.Dock = DockStyle.Fill;
+            groupBox3.Location = new Point(0, 0);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(786, 93);
+            groupBox3.TabIndex = 0;
+            groupBox3.TabStop = false;
+            // 
+            // btnRemProduto
+            // 
+            btnRemProduto.Location = new Point(117, 27);
+            btnRemProduto.Name = "btnRemProduto";
+            btnRemProduto.Size = new Size(105, 50);
+            btnRemProduto.TabIndex = 4;
+            btnRemProduto.Text = "Remover";
+            btnRemProduto.UseVisualStyleBackColor = true;
+            // 
+            // btnAddProduto
+            // 
+            btnAddProduto.Location = new Point(6, 27);
+            btnAddProduto.Name = "btnAddProduto";
+            btnAddProduto.Size = new Size(105, 50);
+            btnAddProduto.TabIndex = 0;
+            btnAddProduto.Text = "Adicionar";
+            btnAddProduto.UseVisualStyleBackColor = true;
+            btnAddProduto.Click += btnAddProduto_Click;
+            // 
+            // dgvProdutos
+            // 
+            dgvProdutos.AllowUserToAddRows = false;
+            dgvProdutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProdutos.Dock = DockStyle.Fill;
+            dgvProdutos.Location = new Point(3, 3);
+            dgvProdutos.Name = "dgvProdutos";
+            dgvProdutos.RowTemplate.Height = 25;
+            dgvProdutos.Size = new Size(786, 344);
+            dgvProdutos.TabIndex = 0;
+            // 
             // tpFinanceiro
             // 
             tpFinanceiro.Controls.Add(panel2);
@@ -405,55 +455,6 @@
             panel1.Size = new Size(800, 72);
             panel1.TabIndex = 1;
             // 
-            // dgvProdutos
-            // 
-            dgvProdutos.AllowUserToAddRows = false;
-            dgvProdutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProdutos.Dock = DockStyle.Fill;
-            dgvProdutos.Location = new Point(3, 3);
-            dgvProdutos.Name = "dgvProdutos";
-            dgvProdutos.RowTemplate.Height = 25;
-            dgvProdutos.Size = new Size(786, 344);
-            dgvProdutos.TabIndex = 0;
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(groupBox3);
-            panel3.Dock = DockStyle.Bottom;
-            panel3.Location = new Point(3, 254);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(786, 93);
-            panel3.TabIndex = 2;
-            // 
-            // groupBox3
-            // 
-            groupBox3.Controls.Add(btnRemProduto);
-            groupBox3.Controls.Add(btnAddProduto);
-            groupBox3.Dock = DockStyle.Fill;
-            groupBox3.Location = new Point(0, 0);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(786, 93);
-            groupBox3.TabIndex = 0;
-            groupBox3.TabStop = false;
-            // 
-            // btnRemProduto
-            // 
-            btnRemProduto.Location = new Point(117, 27);
-            btnRemProduto.Name = "btnRemProduto";
-            btnRemProduto.Size = new Size(105, 50);
-            btnRemProduto.TabIndex = 4;
-            btnRemProduto.Text = "Remover";
-            btnRemProduto.UseVisualStyleBackColor = true;
-            // 
-            // btnAddProduto
-            // 
-            btnAddProduto.Location = new Point(6, 27);
-            btnAddProduto.Name = "btnAddProduto";
-            btnAddProduto.Size = new Size(105, 50);
-            btnAddProduto.TabIndex = 0;
-            btnAddProduto.Text = "Adicionar";
-            btnAddProduto.UseVisualStyleBackColor = true;
-            // 
             // formPedidos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -469,13 +470,13 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             tpProdutos.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvProdutos).EndInit();
             tpFinanceiro.ResumeLayout(false);
             panel2.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvProdutos).EndInit();
-            panel3.ResumeLayout(false);
-            groupBox3.ResumeLayout(false);
             ResumeLayout(false);
         }
 

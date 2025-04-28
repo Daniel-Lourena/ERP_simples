@@ -1,16 +1,17 @@
-﻿using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Context;
+using ModuloCadastro.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Context
+namespace ModuloCadastro.Service
 {
-    public class CategoriaContext
+    public class CategoriaService
     {
         private ModuloCadastroContext _db_context;
-        public CategoriaContext(ModuloCadastroContext db_context) => _db_context = db_context;
+        public CategoriaService(ModuloCadastroContext db_context) => _db_context = db_context;
 
         public List<CategoriaEntity> GetList()
         {

@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 
-namespace ModuloCadastro.Context
+namespace ModuloCadastro.Service
 {
-    public class PedidoVendaContext : IContext<PedidoVendaEntity>
+    public class PedidoVendaService : IService<PedidoVendaEntity>
     {
         private ModuloCadastroContext _db_context;
 
-        public PedidoVendaContext(ModuloCadastroContext db_context)
+        public PedidoVendaService(ModuloCadastroContext db_context)
         {
-            this._db_context = db_context;
+            _db_context = db_context;
         }
 
         public PedidoVendaEntity Get(int id)
@@ -24,7 +25,7 @@ namespace ModuloCadastro.Context
 
         public void Insert(PedidoVendaEntity entity)
         {
-            using (var autoNumeradorContext = new ModuloCadastro.Context.AutoNumeradorContext(new ModuloCadastroContext()))
+            using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.idPedidoVenda++;
@@ -32,7 +33,7 @@ namespace ModuloCadastro.Context
                 var _context = new ModuloCadastroContext();
                 _context.PedidosVendas.Add(entity);
                 _context.SaveChanges();
-                ContextMethods.UpdateParcial<AutoNumeradorEntity>(numerador, new List<string>() { nameof(AutoNumeradorEntity.idUsuario) });
+                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idUsuario) });
             }
         }
         public void Update(PedidoVendaEntity entity)
@@ -44,7 +45,7 @@ namespace ModuloCadastro.Context
 
         public void UpdateParcial(PedidoVendaEntity entity, List<string> listaPropriedadesAtualizar)
         {
-            ContextMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }
 }

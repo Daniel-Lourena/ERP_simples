@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Context
+namespace ModuloCadastro.Service
 {
-    public interface IContext<T>
+    public interface IService<T>
     {
         T Get(int id);
         List<T> GetList();

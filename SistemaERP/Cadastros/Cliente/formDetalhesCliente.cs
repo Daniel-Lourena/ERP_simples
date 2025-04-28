@@ -1,4 +1,5 @@
 ﻿using ModuloCadastro.Context;
+using ModuloCadastro.Service;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using SistemaERP.Cadastros.Helper;
@@ -53,12 +54,12 @@ namespace SistemaERP.Cadastros.Cliente
 
             if (_id == 0)
             {
-                new ModuloCadastro.Context.ClienteContext(new ModuloCadastroContext()).Insert(cliente);
+                new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Insert(cliente);
             }
             else
             {
                 cliente.dataCadastro = _cliente.dataCadastro;
-                new ModuloCadastro.Context.ClienteContext(new ModuloCadastroContext()).Update(cliente);
+                new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Update(cliente);
             }
         }
 
@@ -69,7 +70,7 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void MostraCliente()
         {
-            _cliente = new ClienteContext(new ModuloCadastroContext()).Get(_id);
+            _cliente = new ClienteService(new ModuloCadastroContext()).Get(_id);
             txtFantasia.Text = _cliente.fantasia;
             txtRazaoSocial.Text = _cliente.razaoSocial;
             txtLogradouro.Text = _cliente.end_logradouro;

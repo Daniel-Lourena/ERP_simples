@@ -1,4 +1,5 @@
 ﻿using ModuloCadastro.Context;
+using ModuloCadastro.Service;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using SistemaERP.Cadastros.Extensions;
@@ -42,7 +43,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void CarregaCategoria()
         {
-            List<CategoriaEntity> categorias = new ModuloCadastro.Context.CategoriaContext(new ModuloCadastroContext()).GetList();
+            List<CategoriaEntity> categorias = new ModuloCadastro.Service.CategoriaService(new ModuloCadastroContext()).GetList();
             cbCategoria.PreencherComboBoxList(categorias, nameof(CategoriaEntity.id), nameof(CategoriaEntity.descricao), true);
         }
 
@@ -65,12 +66,12 @@ namespace SistemaERP.Cadastros.Produto
 
             if (_id == 0)
             {
-                new ModuloCadastro.Context.ProdutoContext(new ModuloCadastroContext()).Insert(produto);
+                new ModuloCadastro.Service.ProdutoService(new ModuloCadastroContext()).Insert(produto);
             }
             else
             {
                 produto.dataCadastro = _produto.dataCadastro;
-                new ModuloCadastro.Context.ProdutoContext(new ModuloCadastroContext()).Update(produto);
+                new ModuloCadastro.Service.ProdutoService(new ModuloCadastroContext()).Update(produto);
             }
         }
 
@@ -81,7 +82,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void MostraProduto()
         {
-            _produto = new ProdutoContext(new ModuloCadastroContext()).Get(_id);
+            _produto = new ProdutoService(new ModuloCadastroContext()).Get(_id);
             txtCodigoSKU.Text = _produto.codigoEstoque_SKU;
             txtDescricao.Text = _produto.descricao;
             txtNCM.Text = _produto.ncm;

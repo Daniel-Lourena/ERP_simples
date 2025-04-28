@@ -1,17 +1,18 @@
-﻿using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Context;
+using ModuloCadastro.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Context
+namespace ModuloCadastro.Service
 {
-    public class ProdutoContext : IContext<ProdutoEntity>
+    public class ProdutoService : IService<ProdutoEntity>
     {
-        private ModuloCadastro.Context.ModuloCadastroContext _db_context;
+        private ModuloCadastroContext _db_context;
 
-        public ProdutoContext(ModuloCadastroContext db_context) => _db_context = db_context;
+        public ProdutoService(ModuloCadastroContext db_context) => _db_context = db_context;
         public ProdutoEntity Get(int id)
         {
             return new ModuloCadastroContext().Produtos.FirstOrDefault(x => x.id.Equals(id))!;
@@ -23,7 +24,7 @@ namespace ModuloCadastro.Context
 
         public void Insert(ProdutoEntity entity)
         {
-            using (var autoNumeradorContext = new ModuloCadastro.Context.AutoNumeradorContext(new ModuloCadastroContext()))
+            using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.idProduto++;
@@ -31,7 +32,7 @@ namespace ModuloCadastro.Context
                 var _context = new ModuloCadastroContext();
                 _context.Produtos.Add(entity);
                 _context.SaveChanges();
-                ContextMethods.UpdateParcial<AutoNumeradorEntity>(numerador, new List<string>() { nameof(AutoNumeradorEntity.idProduto) });
+                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idProduto) });
             }
         }
         public void Update(ProdutoEntity entity)
@@ -43,7 +44,7 @@ namespace ModuloCadastro.Context
 
         public void UpdateParcial(ProdutoEntity entity, List<string> listaPropriedadesAtualizar)
         {
-            ContextMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }
 }

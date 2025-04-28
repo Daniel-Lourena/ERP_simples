@@ -1,16 +1,17 @@
-﻿using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Context;
+using ModuloCadastro.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Context
+namespace ModuloCadastro.Service
 {
-    public class AutoNumeradorContext : IDisposable
+    public class AutoNumeradorService : IDisposable
     {
         ModuloCadastroContext _db_context;
-        public AutoNumeradorContext(ModuloCadastroContext db_context) => _db_context = db_context;
+        public AutoNumeradorService(ModuloCadastroContext db_context) => _db_context = db_context;
 
         public void Dispose()
         {

@@ -30,7 +30,7 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void CarregaClientes()
         {
-            var listaDataSource = new ModuloCadastro.Context.ClienteContext(_db_context).GetList().Select(x => new ClienteEntity { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade }).ToList();
+            var listaDataSource = new ModuloCadastro.Service.ClienteService(_db_context).GetList().Select(x => new ClienteEntity { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade }).ToList();
             dgvClientes.CriarColunasDataGridView(listaDataSource, new List<(string,bool)>()
             { 
                 (nameof(ClienteEntity.id),true), (nameof(ClienteEntity.fantasia),true),
@@ -55,7 +55,7 @@ namespace SistemaERP.Cadastros.Cliente
         {
             if (MessageBox.Show("Deseja realmente excluir os clientes selecionados?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                new ModuloCadastro.Context.ClienteContext(new ModuloCadastroContext()).UpdateParcial(new ClienteEntity()
+                new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).UpdateParcial(new ClienteEntity()
                 {
                     dataExclusao = DateTime.Now,
                     excluido = true

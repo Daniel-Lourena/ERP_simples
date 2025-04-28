@@ -30,7 +30,7 @@ namespace SistemaERP.Vendas
 
         private void CarregaVendas()
         {
-            var listaDataSource = new ModuloCadastro.Context.PedidoVendaContext(_db_context).GetList().Select(x => new PedidoVendaEntity { id = x.id, idCliente = x.idCliente, dataCriacao = x.dataCriacao }).ToList();
+            var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(_db_context).GetList().Select(x => new PedidoVendaEntity { id = x.id, idCliente = x.idCliente, dataCriacao = x.dataCriacao }).ToList();
 
             dgvVendas.CriarColunasDataGridView(listaDataSource, new List<(string, bool)>()
             {

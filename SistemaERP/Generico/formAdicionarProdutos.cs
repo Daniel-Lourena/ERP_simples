@@ -1,4 +1,5 @@
 ﻿using ModuloCadastro.Context;
+using ModuloCadastro.Service;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using ModuloCadastro.ViewModel;
@@ -30,7 +31,7 @@ namespace SistemaERP.Generico
 
         private void CarregarProdutos()
         {
-            var listaEstoque = new EstoqueContext().GetListEstoqueDisponivel();
+            var listaEstoque = new EstoqueService().GetListEstoqueDisponivel();
             dgvProdutos.CriarColunasDataGridView<EstoqueViewModel>
                 (
                     listaEstoque,
@@ -56,7 +57,7 @@ namespace SistemaERP.Generico
             switch (_tipoPedido)
             {
                 case ETipoPedido.VENDA:
-                    new ProdutoVendaContext().Insert
+                    new ProdutoVendaService().Insert
                         (
                             new ProdutoVendaEntity()
                             {

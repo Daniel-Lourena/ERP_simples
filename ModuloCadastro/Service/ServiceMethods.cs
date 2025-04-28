@@ -1,13 +1,14 @@
-﻿using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Context;
+using ModuloCadastro.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Context
+namespace ModuloCadastro.Service
 {
-    public static class ContextMethods
+    public static class ServiceMethods
     {
         public static void UpdateParcial<T>(T entity, List<string> listaPropriedadesAtualizar) where T : class
         {

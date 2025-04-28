@@ -30,7 +30,7 @@ namespace SistemaERP.Cadastros.Usuario
 
         private void CarregaUsuarios()
         {
-            var listaDataSource = new ModuloCadastro.Context.UsuarioContext(_db_context).GetList().Select(x => new UsuarioEntity { id = x.id, nome = x.nome, cargo = x.cargo }).ToList();
+            var listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList().Select(x => new UsuarioEntity { id = x.id, nome = x.nome, cargo = x.cargo }).ToList();
 
             dgvUsuarios.CriarColunasDataGridView(listaDataSource, new List<(string, bool)>()
             {
@@ -56,7 +56,7 @@ namespace SistemaERP.Cadastros.Usuario
         {
             if (MessageBox.Show("Deseja realmente excluir os usuários selecionados?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                new ModuloCadastro.Context.UsuarioContext(new ModuloCadastroContext()).UpdateParcial(new UsuarioEntity()
+                new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).UpdateParcial(new UsuarioEntity()
                 {
                     dataExclusao = DateTime.Now,
                     excluido = true

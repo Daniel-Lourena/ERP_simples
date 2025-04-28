@@ -37,12 +37,12 @@
             produtosToolStripMenuItem = new ToolStripMenuItem();
             gerenciarProdutosToolStripMenuItem = new ToolStripMenuItem();
             bancosToolStripMenuItem = new ToolStripMenuItem();
+            gerenciarBancosToolStripMenuItem1 = new ToolStripMenuItem();
             vendasToolStripMenuItem = new ToolStripMenuItem();
             pedidosToolStripMenuItem = new ToolStripMenuItem();
             pedidosFinalizadosToolStripMenuItem = new ToolStripMenuItem();
             financeiroToolStripMenuItem = new ToolStripMenuItem();
             movimentaçãoBancáriaToolStripMenuItem = new ToolStripMenuItem();
-            gerenciarBancosToolStripMenuItem1 = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -72,7 +72,7 @@
             // gerenciarUsuáriosToolStripMenuItem
             // 
             gerenciarUsuáriosToolStripMenuItem.Name = "gerenciarUsuáriosToolStripMenuItem";
-            gerenciarUsuáriosToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarUsuáriosToolStripMenuItem.Size = new Size(124, 22);
             gerenciarUsuáriosToolStripMenuItem.Text = "Gerenciar";
             gerenciarUsuáriosToolStripMenuItem.Click += gerenciarUsuariosToolStripMenuItem_Click;
             // 
@@ -86,7 +86,7 @@
             // gerenciarToolStripMenuItem
             // 
             gerenciarToolStripMenuItem.Name = "gerenciarToolStripMenuItem";
-            gerenciarToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarToolStripMenuItem.Size = new Size(124, 22);
             gerenciarToolStripMenuItem.Text = "Gerenciar";
             gerenciarToolStripMenuItem.Click += gerenciarClientesToolStripMenuItem_Click;
             // 
@@ -100,7 +100,7 @@
             // gerenciarProdutosToolStripMenuItem
             // 
             gerenciarProdutosToolStripMenuItem.Name = "gerenciarProdutosToolStripMenuItem";
-            gerenciarProdutosToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarProdutosToolStripMenuItem.Size = new Size(124, 22);
             gerenciarProdutosToolStripMenuItem.Text = "Gerenciar";
             gerenciarProdutosToolStripMenuItem.Click += gerenciarProdutosToolStripMenuItem_Click;
             // 
@@ -110,6 +110,13 @@
             bancosToolStripMenuItem.Name = "bancosToolStripMenuItem";
             bancosToolStripMenuItem.Size = new Size(180, 22);
             bancosToolStripMenuItem.Text = "Bancos";
+            // 
+            // gerenciarBancosToolStripMenuItem1
+            // 
+            gerenciarBancosToolStripMenuItem1.Name = "gerenciarBancosToolStripMenuItem1";
+            gerenciarBancosToolStripMenuItem1.Size = new Size(180, 22);
+            gerenciarBancosToolStripMenuItem1.Text = "Gerenciar";
+            gerenciarBancosToolStripMenuItem1.Click += gerenciarBancosToolStripMenuItem1_Click;
             // 
             // vendasToolStripMenuItem
             // 
@@ -123,6 +130,7 @@
             pedidosToolStripMenuItem.Name = "pedidosToolStripMenuItem";
             pedidosToolStripMenuItem.Size = new Size(180, 22);
             pedidosToolStripMenuItem.Text = "Pedidos";
+            pedidosToolStripMenuItem.Click += pedidosToolStripMenuItem_Click;
             // 
             // pedidosFinalizadosToolStripMenuItem
             // 
@@ -142,13 +150,6 @@
             movimentaçãoBancáriaToolStripMenuItem.Name = "movimentaçãoBancáriaToolStripMenuItem";
             movimentaçãoBancáriaToolStripMenuItem.Size = new Size(202, 22);
             movimentaçãoBancáriaToolStripMenuItem.Text = "Movimentação Bancária";
-            // 
-            // gerenciarBancosToolStripMenuItem1
-            // 
-            gerenciarBancosToolStripMenuItem1.Name = "gerenciarBancosToolStripMenuItem1";
-            gerenciarBancosToolStripMenuItem1.Size = new Size(180, 22);
-            gerenciarBancosToolStripMenuItem1.Text = "Gerenciar";
-            gerenciarBancosToolStripMenuItem1.Click += gerenciarBancosToolStripMenuItem1_Click;
             // 
             // TelaInicial
             // 

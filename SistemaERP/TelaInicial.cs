@@ -75,5 +75,21 @@ namespace SistemaERP
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();
         }
+
+        private void pedidosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                if (f.GetType() == typeof(Vendas.formGerenciarVendas))
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            Vendas.formGerenciarVendas childForm = new(db_context);
+            childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
+            childForm.Show();
+        }
     }
 }

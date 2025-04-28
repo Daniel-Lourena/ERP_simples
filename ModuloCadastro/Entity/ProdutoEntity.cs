@@ -17,10 +17,8 @@ namespace ModuloCadastro.Entity
         public int id { get; set; }
         [Display(Name = "Descrição", Description = ""), Column(TypeName = "varchar(150)")]
         public string descricao { get; set; }
-        [Display(Name = "UN", Description = ""), Column(TypeName = "varchar(10)")]
-        public string idUnidade { get; set; }
-        [Display(Name = "Setor Estoque", Description = ""), Column(TypeName = "int")]
-        public int setorEstoque { get; set; }
+        [Display(Name = "idUnidade", Description = ""), Column(TypeName = "int")]
+        public EUnidadeProduto idUnidade { get; set; }
         [Display(Name = "CEST", Description = ""), Column(TypeName = "varchar(7)")]
         public string cest { get; set; }
         [Display(Name = "NCM", Description = ""), Column(TypeName = "varchar(8)")]
@@ -45,6 +43,5 @@ namespace ModuloCadastro.Entity
         public DateTime dataAtualizacao { get; set; }
 
         public CategoriaEntity DadosCategoria { get; set; }
-        public SetorEstoqueEntity DadosSetorEstoque { get; set; }
     }
 }

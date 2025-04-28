@@ -31,12 +31,10 @@
             tcProduto = new TabControl();
             tpDadosGerais = new TabPage();
             ckeInativo = new CheckBox();
-            label13 = new Label();
-            cbSetorEstoque = new ComboBox();
             label11 = new Label();
             cbCategoria = new ComboBox();
             comboBox1 = new ComboBox();
-            nudLimite = new NumericUpDown();
+            nudEstoqueMinimo = new NumericUpDown();
             label12 = new Label();
             label8 = new Label();
             label5 = new Label();
@@ -60,7 +58,7 @@
             btnCancelar = new Button();
             tcProduto.SuspendLayout();
             tpDadosGerais.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nudLimite).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudEstoqueMinimo).BeginInit();
             tpFiscal.SuspendLayout();
             SuspendLayout();
             // 
@@ -83,12 +81,10 @@
             // tpDadosGerais
             // 
             tpDadosGerais.Controls.Add(ckeInativo);
-            tpDadosGerais.Controls.Add(label13);
-            tpDadosGerais.Controls.Add(cbSetorEstoque);
             tpDadosGerais.Controls.Add(label11);
             tpDadosGerais.Controls.Add(cbCategoria);
             tpDadosGerais.Controls.Add(comboBox1);
-            tpDadosGerais.Controls.Add(nudLimite);
+            tpDadosGerais.Controls.Add(nudEstoqueMinimo);
             tpDadosGerais.Controls.Add(label12);
             tpDadosGerais.Controls.Add(label8);
             tpDadosGerais.Controls.Add(label5);
@@ -110,34 +106,17 @@
             // ckeInativo
             // 
             ckeInativo.AutoSize = true;
-            ckeInativo.Location = new Point(536, 120);
+            ckeInativo.Location = new Point(6, 265);
             ckeInativo.Name = "ckeInativo";
             ckeInativo.Size = new Size(62, 19);
             ckeInativo.TabIndex = 39;
             ckeInativo.Text = "Inativo";
             ckeInativo.UseVisualStyleBackColor = true;
             // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(115, 100);
-            label13.Name = "label13";
-            label13.Size = new Size(82, 15);
-            label13.TabIndex = 38;
-            label13.Text = "Setor Estoque:";
-            // 
-            // cbSetorEstoque
-            // 
-            cbSetorEstoque.FormattingEnabled = true;
-            cbSetorEstoque.Location = new Point(115, 118);
-            cbSetorEstoque.Name = "cbSetorEstoque";
-            cbSetorEstoque.Size = new Size(140, 23);
-            cbSetorEstoque.TabIndex = 37;
-            // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(261, 100);
+            label11.Location = new Point(115, 99);
             label11.Name = "label11";
             label11.Size = new Size(61, 15);
             label11.TabIndex = 36;
@@ -146,7 +125,7 @@
             // cbCategoria
             // 
             cbCategoria.FormattingEnabled = true;
-            cbCategoria.Location = new Point(261, 118);
+            cbCategoria.Location = new Point(115, 117);
             cbCategoria.Name = "cbCategoria";
             cbCategoria.Size = new Size(183, 23);
             cbCategoria.TabIndex = 35;
@@ -154,20 +133,20 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(450, 118);
+            comboBox1.Location = new Point(304, 117);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(54, 23);
             comboBox1.TabIndex = 34;
             // 
-            // nudLimite
+            // nudEstoqueMinimo
             // 
-            nudLimite.DecimalPlaces = 2;
-            nudLimite.Location = new Point(6, 118);
-            nudLimite.Maximum = new decimal(new int[] { -727379968, 232, 0, 0 });
-            nudLimite.Name = "nudLimite";
-            nudLimite.Size = new Size(103, 23);
-            nudLimite.TabIndex = 33;
-            nudLimite.TextAlign = HorizontalAlignment.Right;
+            nudEstoqueMinimo.DecimalPlaces = 2;
+            nudEstoqueMinimo.Location = new Point(6, 118);
+            nudEstoqueMinimo.Maximum = new decimal(new int[] { -727379968, 232, 0, 0 });
+            nudEstoqueMinimo.Name = "nudEstoqueMinimo";
+            nudEstoqueMinimo.Size = new Size(103, 23);
+            nudEstoqueMinimo.TabIndex = 33;
+            nudEstoqueMinimo.TextAlign = HorizontalAlignment.Right;
             // 
             // label12
             // 
@@ -181,7 +160,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(450, 100);
+            label8.Location = new Point(304, 99);
             label8.Name = "label8";
             label8.Size = new Size(27, 15);
             label8.TabIndex = 27;
@@ -379,7 +358,7 @@
             tcProduto.ResumeLayout(false);
             tpDadosGerais.ResumeLayout(false);
             tpDadosGerais.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)nudLimite).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudEstoqueMinimo).EndInit();
             tpFiscal.ResumeLayout(false);
             tpFiscal.PerformLayout();
             ResumeLayout(false);
@@ -401,13 +380,11 @@
         private Label label8;
         private Button btnSalvar;
         private Button btnCancelar;
-        private NumericUpDown nudLimite;
+        private NumericUpDown nudEstoqueMinimo;
         private Label label12;
         private ComboBox comboBox1;
         private Label label11;
         private ComboBox cbCategoria;
-        private Label label13;
-        private ComboBox cbSetorEstoque;
         private CheckBox ckeInativo;
         private Label label9;
         private TextBox txtCEST;

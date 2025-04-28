@@ -20,8 +20,9 @@ namespace ModuloCadastro.Context
         internal DbSet<BancoEntity> Bancos { get; set; }
         internal DbSet<CategoriaEntity> Categorias { get; set; }
         internal DbSet<SetorEstoqueEntity> SetoresEstoque { get; set; }
-        internal DbSet<PedidoEntity> Pedidos { get; set; }
-        internal DbSet<ProdutoPedidoEntity> ProdutosPedidos { get; set; }
+        internal DbSet<PedidoVendaEntity> PedidosVendas { get; set; }
+        internal DbSet<ProdutoVendaEntity> ProdutosVendas { get; set; }
+        internal DbSet<EstoqueEntity> Estoques { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -73,15 +74,11 @@ namespace ModuloCadastro.Context
             {
                 entity.HasKey(p => p.id);
                 entity.Property(p => p.origem).HasConversion<int>();
+                entity.Property(p => p.idUnidade).HasConversion<int>();
 
                 entity.HasOne(p => p.DadosCategoria)
                       .WithMany()
                       .HasForeignKey(p => p.categoria)
-                      .HasPrincipalKey(key => new { key.id });
-                
-                entity.HasOne(p => p.DadosSetorEstoque)
-                      .WithMany()
-                      .HasForeignKey(p => p.setorEstoque)
                       .HasPrincipalKey(key => new { key.id });
             });
 
@@ -102,7 +99,7 @@ namespace ModuloCadastro.Context
                 entity.Property(b => b.pixTipoChave).HasConversion<int>();
             });
 
-            modelBuilder.Entity<PedidoEntity>(entity =>
+            modelBuilder.Entity<PedidoVendaEntity>(entity =>
             {
                 entity.HasKey(p => p.id);
 
@@ -112,15 +109,49 @@ namespace ModuloCadastro.Context
                       .HasPrincipalKey(key => new { key.id });
             });
 
-            //modelBuilder.Entity<ProdutoPedidoEntity>(entity =>
-            //{
-            //    entity.HasKey(c => c.id);
-                
-            //    entity.HasOne(p => p.DadosProduto)
-            //          .WithMany()
-            //          .HasForeignKey(p => p.DadosProduto.id)
-            //          .HasPrincipalKey(key => new { key.id });
-            //});
+            modelBuilder.Entity<EstoqueEntity>(entity =>
+            {
+                entity.HasKey(c => new { c.idProduto,c.setorEstoque });
+
+                entity.HasOne(e => e.DadosProduto)
+                      .WithMany()
+                      .HasForeignKey(e => e.idProduto)
+                      .HasPrincipalKey(key => new { key.id });
+
+                entity.HasOne(e => e.DadosSetorEstoque)
+                      .WithMany()
+                      .HasForeignKey(e => e.setorEstoque)
+                      .HasPrincipalKey(key => new { key.id });
+            });
+            
+            modelBuilder.Entity<PedidoVendaEntity>(entity =>
+            {
+                entity.HasKey(pe => pe.id);
+
+                entity.HasOne(pe => pe.DadosCliente)
+                      .WithMany()
+                      .HasForeignKey(pe => pe.idCliente)
+                      .HasPrincipalKey(key => new { key.id });
+
+                entity.HasMany(pe => pe.listaProdutosVenda)
+                      .WithOne(pp => pp.DadosPedidoVenda)
+                      .HasForeignKey(pp => pp.idPedido);
+            });
+            
+            modelBuilder.Entity<ProdutoVendaEntity>(entity =>
+            {
+                entity.HasKey(p => p.id);
+
+                entity.HasOne(p => p.DadosProduto)
+                      .WithMany()
+                      .HasForeignKey(p => p.idProduto)
+                      .HasPrincipalKey(key => new { key.id });
+
+                entity.HasOne(p => p.DadosPedidoVenda)
+                      .WithMany()
+                      .HasForeignKey(p => p.idPedido)
+                      .HasPrincipalKey(key => new { key.id });
+            });
         }
     }
 }

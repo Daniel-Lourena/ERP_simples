@@ -23,12 +23,13 @@ namespace SistemaERP.Cadastros.Extensions
                 var col = popularColunas.FirstOrDefault(x => x.nomeColuna.Equals(prop.Name));
                 if (!String.IsNullOrEmpty(col.nomeColuna))
                 {
+                    var atributoPropriedade = prop.GetCustomAttribute<DisplayAttribute>();
                     DataGridViewTextBoxColumn coluna = new()
                     {
                         DataPropertyName = prop.Name,
                         ReadOnly = col.readOnly,
                         Name = prop.Name,
-                        HeaderText = prop.GetCustomAttribute<DisplayAttribute>().Name ?? prop.Name
+                        HeaderText = atributoPropriedade == null ? prop.Name : atributoPropriedade.Name
                     };
                     dgvGenerico.Columns.Add(coluna);
                 }

@@ -22,7 +22,6 @@ namespace SistemaERP.Cadastros.Produto
         public formDetalhesProduto()
         {
             InitializeComponent();
-            CarregaSetorEstoque();
             CarregaOrigem();
             CarregaCST();
             CarregaCategoria();
@@ -32,11 +31,6 @@ namespace SistemaERP.Cadastros.Produto
             _id = id;
         }
 
-        private void CarregaSetorEstoque()
-        {
-            List<SetorEstoqueEntity> setoresEstoque = new ModuloCadastro.Context.SetorEstoqueContext().GetList();
-            cbSetorEstoque.PreencherComboBoxList(setoresEstoque, nameof(SetorEstoqueEntity.id), nameof(SetorEstoqueEntity.descricao),true);
-        }
         private void CarregaOrigem()
         {
             cbOrigem.PreencherComboBoxEnum<ModuloCadastro.Enum.EOrigemProduto>();
@@ -49,7 +43,7 @@ namespace SistemaERP.Cadastros.Produto
         private void CarregaCategoria()
         {
             List<CategoriaEntity> categorias = new ModuloCadastro.Context.CategoriaContext(new ModuloCadastroContext()).GetList();
-            cbCategoria.PreencherComboBoxList(categorias,nameof(CategoriaEntity.id), nameof(CategoriaEntity.descricao),true);
+            cbCategoria.PreencherComboBoxList(categorias, nameof(CategoriaEntity.id), nameof(CategoriaEntity.descricao), true);
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -65,8 +59,8 @@ namespace SistemaERP.Cadastros.Produto
                 cst_csosn = cbCST.SelectedValue as string,
                 origem = (EOrigemProduto)cbOrigem.SelectedValue,
                 categoria = (int)cbCategoria.SelectedValue,
-                setorEstoque = (int)cbSetorEstoque.SelectedValue,
-                inativo = ckeInativo.Checked
+                inativo = ckeInativo.Checked,
+                estoqueMinimo = nudEstoqueMinimo.Value
             };
 
             if (_id == 0)
@@ -97,8 +91,8 @@ namespace SistemaERP.Cadastros.Produto
             cbCST.SelectedValue = _produto.cst_csosn;
             cbOrigem.SelectedValue = _produto.origem;
             cbCategoria.SelectedValue = _produto.categoria;
-            cbSetorEstoque.SelectedValue = _produto.setorEstoque;
             ckeInativo.Checked = _produto.inativo;
+            nudEstoqueMinimo.Value = _produto.estoqueMinimo;
 
             this.Text = $"REGISTRO [{_produto.id}]";
         }

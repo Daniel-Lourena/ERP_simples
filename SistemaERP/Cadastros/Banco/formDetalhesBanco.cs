@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using ModuloCadastro.Service;
 using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
@@ -67,12 +68,12 @@ namespace SistemaERP.Cadastros.Banco
         {
             if (_id == 0)
             {
-                new ModuloCadastro.Context.BancoContext(new ModuloCadastroContext()).Insert(_banco);
+                new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Insert(_banco);
             }
             else
             {
                 _banco.dataAtualizacao = DateTime.Now;
-                new ModuloCadastro.Context.BancoContext(new ModuloCadastroContext()).Update(_banco);
+                new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Update(_banco);
             }
         }
 
@@ -85,7 +86,7 @@ namespace SistemaERP.Cadastros.Banco
 
         private void MostraBanco()
         {
-            _banco = new BancoContext(new ModuloCadastroContext()).Get(_id);
+            _banco = new BancoService(new ModuloCadastroContext()).Get(_id);
             txtNomeBanco.Text = _banco.nome;
             txtCodigo.Text = _banco.codigo;
             txtAgencia.Text = _banco.agencia;

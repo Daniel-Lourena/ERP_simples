@@ -1,13 +1,14 @@
-﻿using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Context;
+using ModuloCadastro.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Context
+namespace ModuloCadastro.Service
 {
-    public class EstadoContext
+    public class EstadoService
     {
         public EstadoEntity Get(int cuf)
         {

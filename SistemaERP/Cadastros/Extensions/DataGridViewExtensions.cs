@@ -11,7 +11,7 @@ namespace SistemaERP.Cadastros.Extensions
 {
     public static class DataGridViewExtensions
     {
-        public static void CriarColunasDataGridView<T>(this DataGridView dgvGenerico,List<T> listaDataSource, List<(string nomeColuna,bool readOnly)> popularColunas)
+        public static void CriarColunasDataGridView<T>(this DataGridView dgvGenerico,List<T> listaDataSource, List<(string nomeColuna,bool readOnly,bool visible)> popularColunas)
         {
             dgvGenerico.Columns.Clear();
             dgvGenerico.Refresh();
@@ -28,6 +28,7 @@ namespace SistemaERP.Cadastros.Extensions
                     {
                         DataPropertyName = prop.Name,
                         ReadOnly = col.readOnly,
+                        Visible = col.visible,
                         Name = prop.Name,
                         HeaderText = atributoPropriedade == null ? prop.Name : atributoPropriedade.Name
                     };

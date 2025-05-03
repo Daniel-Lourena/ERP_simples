@@ -47,7 +47,9 @@ namespace SistemaERP.Cadastros.Usuario
 
             if (_id == 0)
             {
-                new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).Insert(usuario);
+                usuario.id = new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).Insert(usuario);
+                _usuario = usuario;
+                this.Text = $"REGISTRO [{_usuario.id}]"; 
             }
             else
             {

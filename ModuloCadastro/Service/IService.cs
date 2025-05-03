@@ -12,7 +12,7 @@ namespace ModuloCadastro.Service
     {
         T Get(int id);
         List<T> GetList();
-        void Insert(T entity);
+        int Insert(T entity);
         void Update(T entity);
         void UpdateParcial(T entity, List<string> listaPropriedadesAtualizar);
     }

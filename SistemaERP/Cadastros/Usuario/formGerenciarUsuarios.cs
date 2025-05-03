@@ -30,18 +30,24 @@ namespace SistemaERP.Cadastros.Usuario
 
         private void CarregaUsuarios()
         {
-            var listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList().Select(x => new UsuarioEntity { id = x.id, nome = x.nome, cargo = x.cargo }).ToList();
+            var listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
+                .Where(x => !x.excluido)
+                .Select(x => new UsuarioEntity 
+                { id = x.id, nome = x.nome, cargo = x.cargo,dataCadastro = x.dataCadastro,dataAtualizacao = x.dataAtualizacao })
+                .ToList();
 
             dgvUsuarios.CriarColunasDataGridView(listaDataSource, new()
             {
                 (nameof(UsuarioEntity.id),true,true), (nameof(UsuarioEntity.nome),true,true),
-                (nameof(UsuarioEntity.cargo),true,true)
+                (nameof(UsuarioEntity.cargo),true,true),(nameof(UsuarioEntity.dataCadastro),true,true),
+                (nameof(UsuarioEntity.dataAtualizacao),true,true)
             });
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
             new formDetalhesUsuario().ShowDialog();
+            CarregaUsuarios();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -50,6 +56,7 @@ namespace SistemaERP.Cadastros.Usuario
             {
                 new formDetalhesUsuario(Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioEntity.id)].Value)).ShowDialog();
             }
+            CarregaUsuarios();
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
@@ -58,6 +65,7 @@ namespace SistemaERP.Cadastros.Usuario
             {
                 new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).UpdateParcial(new UsuarioEntity()
                 {
+                    id = Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioEntity.id)].Value),
                     dataExclusao = DateTime.Now,
                     excluido = true
                 }, new List<string>() { nameof(UsuarioEntity.dataExclusao), nameof(UsuarioEntity.excluido) });

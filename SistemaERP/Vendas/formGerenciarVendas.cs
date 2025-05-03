@@ -2,6 +2,7 @@
 using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
+using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
 using System;
 using System.Collections.Generic;
@@ -30,12 +31,14 @@ namespace SistemaERP.Vendas
 
         private void CarregaVendas()
         {
-            var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(_db_context).GetList().Select(x => new PedidoVendaEntity { id = x.id, idCliente = x.idCliente, dataCriacao = x.dataCriacao }).ToList();
+            var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(_db_context)
+                .GetList()
+                .Select(x => new PedidoVendaViewModel { id = x.id, idCliente = x.idCliente, dataCriacao = x.dataCriacao,nomeUsuarioCriador = x.DadosUsuarioCriador.nome }).ToList();
 
-            dgvVendas.CriarColunasDataGridView(listaDataSource, new List<(string, bool)>()
+            dgvVendas.CriarColunasDataGridView(listaDataSource, new()
             {
-                (nameof(PedidoVendaEntity.id),true), (nameof(PedidoVendaEntity.idCliente),true),
-                (nameof(PedidoVendaEntity.dataCriacao),true)
+                (nameof(PedidoVendaViewModel.id),true,true), (nameof(PedidoVendaViewModel.idCliente),true,true),
+                (nameof(PedidoVendaViewModel.dataCriacao),true,true),(nameof(PedidoVendaViewModel.nomeUsuarioCriador),true,true)
             });
         }
 
@@ -48,7 +51,7 @@ namespace SistemaERP.Vendas
         {
             if (dgvVendas.CurrentRow != null)
             {
-                new formDetalhesVenda(Convert.ToInt32(dgvVendas.CurrentRow.Cells[nameof(PedidoVendaEntity.id)].Value)).ShowDialog();
+                new formDetalhesVenda(Convert.ToInt32(dgvVendas.CurrentRow.Cells[nameof(PedidoVendaViewModel.id)].Value)).ShowDialog();
             }
         }
     }

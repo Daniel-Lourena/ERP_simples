@@ -12,9 +12,17 @@ namespace ModuloCadastro.Service
 {
     public class EstoqueService
     {
-        public List<EstoqueEntity> GetListEstoqueBruto()
+        public List<EstoqueViewModel> GetListEstoqueBruto()
         {
-            return new ModuloCadastroContext().Estoques.AsNoTracking().ToList();
+            return new ModuloCadastroContext().Estoques
+                .AsNoTracking()
+                .Select(x => new EstoqueViewModel
+            { 
+                idProduto = x.idProduto,
+                descricaoProduto = x.DadosProduto.descricao,
+                descricaoSetorEstoque = x.DadosSetorEstoque.descricao,
+                quantidadeEstoque = x.quantidade
+            }).ToList();
         }
 
         public List<EstoqueViewModel> GetListEstoqueDisponivel()

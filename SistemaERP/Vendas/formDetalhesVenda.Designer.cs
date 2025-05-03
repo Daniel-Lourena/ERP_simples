@@ -312,6 +312,7 @@
             btnRemProduto.TabIndex = 4;
             btnRemProduto.Text = "Remover";
             btnRemProduto.UseVisualStyleBackColor = true;
+            btnRemProduto.Click += btnRemProduto_Click;
             // 
             // btnAddProduto
             // 
@@ -455,7 +456,7 @@
             panel1.Size = new Size(800, 72);
             panel1.TabIndex = 1;
             // 
-            // formPedidos
+            // formDetalhesVenda
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -463,8 +464,9 @@
             Controls.Add(tcPedidos);
             Controls.Add(panel1);
             MaximizeBox = false;
-            Name = "formPedidos";
+            Name = "formDetalhesVenda";
             Text = "Pedido";
+            Load += formDetalhesVenda_Load;
             tcPedidos.ResumeLayout(false);
             tpDadosGerais.ResumeLayout(false);
             groupBox1.ResumeLayout(false);

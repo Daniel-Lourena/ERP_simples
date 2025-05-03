@@ -40,10 +40,10 @@ namespace ModuloCadastro.Service
             }
             return insert;
         }
-        public void Update(UsuarioEntity usuarioEntity)
+        public void Update(UsuarioEntity entity)
         {
             var _context = new ModuloCadastroContext();
-            _context.Usuarios.Update(usuarioEntity);
+            _context.Usuarios.Update(entity);
             _context.SaveChanges();
         }
 

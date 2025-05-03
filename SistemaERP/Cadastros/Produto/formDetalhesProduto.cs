@@ -25,7 +25,8 @@ namespace SistemaERP.Cadastros.Produto
             InitializeComponent();
             CarregaOrigem();
             CarregaCST();
-            CarregaCategoria();
+            CarregaCategoria(); 
+            CarregaUnidade();
         }
         public formDetalhesProduto(int id) : this()
         {
@@ -39,6 +40,10 @@ namespace SistemaERP.Cadastros.Produto
         private void CarregaCST()
         {
             cbCST.PreencherComboBoxEnum<ModuloCadastro.Enum.ECst>();
+        }
+        private void CarregaUnidade()
+        {
+            cbUnidade.PreencherComboBoxEnum<ModuloCadastro.Enum.EUnidadeProduto>();
         }
 
         private void CarregaCategoria()
@@ -57,9 +62,9 @@ namespace SistemaERP.Cadastros.Produto
                 cest = txtCEST.Text,
                 dataCadastro = DateTime.Now,
                 dataAtualizacao = DateTime.Now,
-                cst_csosn = cbCST.SelectedValue as string,
+                cst_csosn = cbCST.SelectedValue.ToString(),
                 origem = (EOrigemProduto)cbOrigem.SelectedValue,
-                categoria = (int)cbCategoria.SelectedValue,
+                categoria = cbCategoria.SelectedValue == null ? 0 : (int)cbCategoria.SelectedValue,
                 inativo = ckeInativo.Checked,
                 estoqueMinimo = nudEstoqueMinimo.Value
             };

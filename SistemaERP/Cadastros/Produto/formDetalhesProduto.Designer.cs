@@ -33,7 +33,7 @@
             ckeInativo = new CheckBox();
             label11 = new Label();
             cbCategoria = new ComboBox();
-            comboBox1 = new ComboBox();
+            cbUnidade = new ComboBox();
             nudEstoqueMinimo = new NumericUpDown();
             label12 = new Label();
             label8 = new Label();
@@ -83,7 +83,7 @@
             tpDadosGerais.Controls.Add(ckeInativo);
             tpDadosGerais.Controls.Add(label11);
             tpDadosGerais.Controls.Add(cbCategoria);
-            tpDadosGerais.Controls.Add(comboBox1);
+            tpDadosGerais.Controls.Add(cbUnidade);
             tpDadosGerais.Controls.Add(nudEstoqueMinimo);
             tpDadosGerais.Controls.Add(label12);
             tpDadosGerais.Controls.Add(label8);
@@ -130,13 +130,13 @@
             cbCategoria.Size = new Size(183, 23);
             cbCategoria.TabIndex = 35;
             // 
-            // comboBox1
+            // cbUnidade
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(304, 117);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(54, 23);
-            comboBox1.TabIndex = 34;
+            cbUnidade.FormattingEnabled = true;
+            cbUnidade.Location = new Point(304, 117);
+            cbUnidade.Name = "comboBox1";
+            cbUnidade.Size = new Size(54, 23);
+            cbUnidade.TabIndex = 34;
             // 
             // nudEstoqueMinimo
             // 
@@ -382,7 +382,7 @@
         private Button btnCancelar;
         private NumericUpDown nudEstoqueMinimo;
         private Label label12;
-        private ComboBox comboBox1;
+        private ComboBox cbUnidade;
         private Label label11;
         private ComboBox cbCategoria;
         private CheckBox ckeInativo;

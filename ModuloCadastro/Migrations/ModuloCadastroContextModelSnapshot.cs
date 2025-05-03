@@ -249,20 +249,19 @@ namespace ModuloCadastro.Migrations
             modelBuilder.Entity("ModuloCadastro.Entity.PedidoVendaEntity", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("dataAtualizacao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("dataCriacao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("dataExclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("dataFechamento")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<bool>("excluido")
                         .HasColumnType("tinyint(1)");
@@ -282,6 +281,12 @@ namespace ModuloCadastro.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("idCliente");
+
+                    b.HasIndex("idCriador");
+
+                    b.HasIndex("usuarioAtualizacao");
+
+                    b.HasIndex("usuarioFechamento");
 
                     b.ToTable("tb_vendas");
                 });
@@ -348,7 +353,7 @@ namespace ModuloCadastro.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("PedidoVendaEntityid")
+                    b.Property<int>("DadosProdutoid")
                         .HasColumnType("int");
 
                     b.Property<int>("idPedido")
@@ -358,15 +363,16 @@ namespace ModuloCadastro.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("quantidade")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("valor")
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("PedidoVendaEntityid");
+                    b.HasIndex("DadosProdutoid");
 
                     b.HasIndex("idPedido");
-
-                    b.HasIndex("idProduto");
 
                     b.ToTable("tb_produtosvenda");
                 });
@@ -420,7 +426,7 @@ namespace ModuloCadastro.Migrations
                     b.HasOne("ModuloCadastro.Entity.EstadoEntity", "DadosEstado")
                         .WithMany()
                         .HasForeignKey("cuf")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("DadosEstado");
@@ -431,7 +437,7 @@ namespace ModuloCadastro.Migrations
                     b.HasOne("ModuloCadastro.Entity.CidadeEntity", "DadosCidade")
                         .WithMany()
                         .HasForeignKey("end_cidade")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("DadosCidade");
@@ -442,13 +448,13 @@ namespace ModuloCadastro.Migrations
                     b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "DadosProduto")
                         .WithMany()
                         .HasForeignKey("idProduto")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ModuloCadastro.Entity.SetorEstoqueEntity", "DadosSetorEstoque")
                         .WithMany()
                         .HasForeignKey("setorEstoque")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("DadosProduto");
@@ -461,10 +467,34 @@ namespace ModuloCadastro.Migrations
                     b.HasOne("ModuloCadastro.Entity.ClienteEntity", "DadosCliente")
                         .WithMany()
                         .HasForeignKey("idCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "DadosUsuarioCriador")
+                        .WithMany()
+                        .HasForeignKey("idCriador")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "DadosUsuarioAtualizacao")
+                        .WithMany()
+                        .HasForeignKey("usuarioAtualizacao")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "DadosUsuarioFechamento")
+                        .WithMany()
+                        .HasForeignKey("usuarioFechamento")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("DadosCliente");
+
+                    b.Navigation("DadosUsuarioAtualizacao");
+
+                    b.Navigation("DadosUsuarioCriador");
+
+                    b.Navigation("DadosUsuarioFechamento");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.ProdutoEntity", b =>
@@ -472,7 +502,7 @@ namespace ModuloCadastro.Migrations
                     b.HasOne("ModuloCadastro.Entity.CategoriaEntity", "DadosCategoria")
                         .WithMany()
                         .HasForeignKey("categoria")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("DadosCategoria");
@@ -480,20 +510,16 @@ namespace ModuloCadastro.Migrations
 
             modelBuilder.Entity("ModuloCadastro.Entity.ProdutoVendaEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.PedidoVendaEntity", null)
-                        .WithMany("listaProdutosVenda")
-                        .HasForeignKey("PedidoVendaEntityid");
-
-                    b.HasOne("ModuloCadastro.Entity.PedidoVendaEntity", "DadosPedidoVenda")
+                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "DadosProduto")
                         .WithMany()
-                        .HasForeignKey("idPedido")
+                        .HasForeignKey("DadosProdutoid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "DadosProduto")
-                        .WithMany()
-                        .HasForeignKey("idProduto")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("ModuloCadastro.Entity.PedidoVendaEntity", "DadosPedidoVenda")
+                        .WithMany("listaProdutosVenda")
+                        .HasForeignKey("idPedido")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("DadosPedidoVenda");

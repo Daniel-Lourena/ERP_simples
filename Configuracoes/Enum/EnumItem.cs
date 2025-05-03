@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Enum
+namespace ModuloConfiguracoes.Enum
 {
     public class EnumItem
     {

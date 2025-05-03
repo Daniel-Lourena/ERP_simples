@@ -1,4 +1,4 @@
-﻿using ModuloCadastro.Enum;
+﻿using ModuloConfiguracoes.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,11 +7,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaERP.Cadastros.Extensions
+namespace ModuloConfiguracoes.Extensions
 {
     public static class EnumExtensions
     {
-        public static string GetDescription(this Enum @enum)
+        public static string GetDescription(this System.Enum @enum)
         {
             if (@enum == null)
                 return null;

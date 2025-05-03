@@ -1,4 +1,6 @@
 ﻿using ModuloCadastro.Enum;
+using ModuloConfiguracoes.Enum;
+using ModuloConfiguracoes.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

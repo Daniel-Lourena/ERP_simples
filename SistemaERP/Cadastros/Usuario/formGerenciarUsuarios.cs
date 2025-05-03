@@ -2,6 +2,7 @@
 using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
+using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
 using System;
 using System.Collections.Generic;
@@ -32,15 +33,15 @@ namespace SistemaERP.Cadastros.Usuario
         {
             var listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
                 .Where(x => !x.excluido)
-                .Select(x => new UsuarioEntity 
+                .Select(x => new UsuarioViewModel 
                 { id = x.id, nome = x.nome, cargo = x.cargo,dataCadastro = x.dataCadastro,dataAtualizacao = x.dataAtualizacao })
                 .ToList();
 
             dgvUsuarios.CriarColunasDataGridView(listaDataSource, new()
             {
-                (nameof(UsuarioEntity.id),true,true), (nameof(UsuarioEntity.nome),true,true),
-                (nameof(UsuarioEntity.cargo),true,true),(nameof(UsuarioEntity.dataCadastro),true,true),
-                (nameof(UsuarioEntity.dataAtualizacao),true,true)
+                (nameof(UsuarioViewModel.id),true,true), (nameof(UsuarioViewModel.nome),true,true),
+                (nameof(UsuarioViewModel.cargo),true,true),(nameof(UsuarioViewModel.dataCadastro),true,true),
+                (nameof(UsuarioViewModel.dataAtualizacao),true,true)
             });
         }
 
@@ -54,7 +55,7 @@ namespace SistemaERP.Cadastros.Usuario
         {
             if (dgvUsuarios.CurrentRow != null)
             {
-                new formDetalhesUsuario(Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioEntity.id)].Value)).ShowDialog();
+                new formDetalhesUsuario(Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioViewModel.id)].Value)).ShowDialog();
             }
             CarregaUsuarios();
         }
@@ -65,7 +66,7 @@ namespace SistemaERP.Cadastros.Usuario
             {
                 new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).UpdateParcial(new UsuarioEntity()
                 {
-                    id = Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioEntity.id)].Value),
+                    id = Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioViewModel.id)].Value),
                     dataExclusao = DateTime.Now,
                     excluido = true
                 }, new List<string>() { nameof(UsuarioEntity.dataExclusao), nameof(UsuarioEntity.excluido) });

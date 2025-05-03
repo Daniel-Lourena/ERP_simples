@@ -23,7 +23,7 @@ namespace ModuloCadastro.Entity
         public DateTime dataAtualizacao { get; set; }
         [Display(Name = "usuarioAtualizacao", Description = ""),Column(TypeName = "int")]
         public int usuarioAtualizacao { get; set; }
-        [Display(Name = "usuarioAtualizacao", Description = ""),Column(TypeName = "tinyint(1)")]
+        [Display(Name = "excluido", Description = ""),Column(TypeName = "tinyint(1)")]
         public bool excluido { get; set; }
         [Display(Name = "dataExclusao", Description = ""),Column(TypeName = "datetime")]
         public DateTime? dataExclusao { get; set; }
@@ -33,6 +33,9 @@ namespace ModuloCadastro.Entity
         public DateTime? dataFechamento { get; set; }
 
         public ClienteEntity DadosCliente { get; set; }
+        public UsuarioEntity DadosUsuarioCriador { get; set; }
+        public UsuarioEntity DadosUsuarioAtualizacao { get; set; }
+        public UsuarioEntity? DadosUsuarioFechamento { get; set; }
         public List<ProdutoVendaEntity> listaProdutosVenda { get; set; }
     }
 }

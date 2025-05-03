@@ -19,8 +19,9 @@ namespace ModuloCadastro.Service
         }
         public List<PedidoVendaEntity> GetList()
         {
-            return _db_context.PedidosVendas
-                .AsNoTracking().ToList();
+            return _db_context.PedidosVendas.AsNoTracking()
+                .Include(x => x.DadosUsuarioCriador)
+                .ToList();
         }
 
         public void Insert(PedidoVendaEntity entity)

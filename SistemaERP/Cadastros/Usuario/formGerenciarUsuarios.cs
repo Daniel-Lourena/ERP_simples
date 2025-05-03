@@ -32,10 +32,10 @@ namespace SistemaERP.Cadastros.Usuario
         {
             var listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList().Select(x => new UsuarioEntity { id = x.id, nome = x.nome, cargo = x.cargo }).ToList();
 
-            dgvUsuarios.CriarColunasDataGridView(listaDataSource, new List<(string, bool)>()
+            dgvUsuarios.CriarColunasDataGridView(listaDataSource, new()
             {
-                (nameof(UsuarioEntity.id),true), (nameof(UsuarioEntity.nome),true),
-                (nameof(UsuarioEntity.cargo),true)
+                (nameof(UsuarioEntity.id),true,true), (nameof(UsuarioEntity.nome),true,true),
+                (nameof(UsuarioEntity.cargo),true,true)
             });
         }
 

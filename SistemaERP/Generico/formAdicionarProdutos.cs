@@ -35,13 +35,13 @@ namespace SistemaERP.Generico
             dgvProdutos.CriarColunasDataGridView<EstoqueViewModel>
                 (
                     listaEstoque,
-                    new List<(string nomeColuna, bool readOnly)>()
+                    new()
                     {
-                        (nameof(EstoqueViewModel.idProduto),true),
-                        (nameof(EstoqueViewModel.descricaoProduto),true),
-                        (nameof(EstoqueViewModel.descricaoSetorEstoque),true),
-                        (nameof(EstoqueViewModel.quantidadePedidoVenda),true),
-                        (nameof(EstoqueViewModel.quantidadeEstoqueSaldoDisponivel),true)
+                        (nameof(EstoqueViewModel.idProduto),true,true),
+                        (nameof(EstoqueViewModel.descricaoProduto),true,true),
+                        (nameof(EstoqueViewModel.descricaoSetorEstoque),true,true),
+                        (nameof(EstoqueViewModel.quantidadePedidoVenda),true,true),
+                        (nameof(EstoqueViewModel.quantidadeEstoqueSaldoDisponivel),true,true)
                     }
                 );
         }

@@ -30,10 +30,10 @@ namespace SistemaERP.Cadastros.Produto
         private void CarregaProdutos()
         {
             var listaDataSource = new ModuloCadastro.Service.ProdutoService(_db_context).GetList().Select(x => new ProdutoEntity { id = x.id, descricao = x.descricao, categoria = x.categoria, idUnidade = x.idUnidade }).ToList();
-            dgvProdutos.CriarColunasDataGridView(listaDataSource, new List<(string, bool)>()
+            dgvProdutos.CriarColunasDataGridView(listaDataSource, new()
             {
-                (nameof(ProdutoEntity.id), true), (nameof(ProdutoEntity.descricao), true),
-                (nameof(ProdutoEntity.categoria), true), (nameof(ProdutoEntity.idUnidade), true)
+                (nameof(ProdutoEntity.id), true,true), (nameof(ProdutoEntity.descricao), true,true),
+                (nameof(ProdutoEntity.categoria), true,true), (nameof(ProdutoEntity.idUnidade), true,true)
             });
         }
 

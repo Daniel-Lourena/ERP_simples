@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +53,8 @@ namespace ModuloCadastro.Context
                 entity.HasOne(c => c.DadosCidade)
                       .WithMany()
                       .HasForeignKey(c => c.end_cidade)
-                      .HasPrincipalKey(key => new { key.id });
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<CidadeEntity>(entity =>
@@ -62,7 +64,8 @@ namespace ModuloCadastro.Context
                 entity.HasOne(c => c.DadosEstado)
                       .WithMany()
                       .HasForeignKey(c => c.cuf)
-                      .HasPrincipalKey(key => new { key.cuf});
+                      .HasPrincipalKey(key => new { key.cuf})
+                      .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<EstadoEntity>(entity =>
@@ -79,7 +82,8 @@ namespace ModuloCadastro.Context
                 entity.HasOne(p => p.DadosCategoria)
                       .WithMany()
                       .HasForeignKey(p => p.categoria)
-                      .HasPrincipalKey(key => new { key.id });
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<CategoriaEntity>(entity =>
@@ -106,7 +110,24 @@ namespace ModuloCadastro.Context
                 entity.HasOne(p => p.DadosCliente)
                       .WithMany()
                       .HasForeignKey(p => p.idCliente)
-                      .HasPrincipalKey(key => new { key.id });
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(p => p.DadosUsuarioCriador)
+                      .WithMany()
+                      .HasForeignKey(p => p.idCriador)
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
+                entity.HasOne(p => p.DadosUsuarioAtualizacao)
+                      .WithMany()
+                      .HasForeignKey(p => p.usuarioAtualizacao)
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
+                entity.HasOne(p => p.DadosUsuarioFechamento)
+                      .WithMany()
+                      .HasForeignKey(p => p.usuarioFechamento)
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<EstoqueEntity>(entity =>
@@ -116,12 +137,14 @@ namespace ModuloCadastro.Context
                 entity.HasOne(e => e.DadosProduto)
                       .WithMany()
                       .HasForeignKey(e => e.idProduto)
-                      .HasPrincipalKey(key => new { key.id });
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(e => e.DadosSetorEstoque)
                       .WithMany()
                       .HasForeignKey(e => e.setorEstoque)
-                      .HasPrincipalKey(key => new { key.id });
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
             });
             
             modelBuilder.Entity<PedidoVendaEntity>(entity =>
@@ -131,27 +154,31 @@ namespace ModuloCadastro.Context
                 entity.HasOne(pe => pe.DadosCliente)
                       .WithMany()
                       .HasForeignKey(pe => pe.idCliente)
-                      .HasPrincipalKey(key => new { key.id });
+                      .HasPrincipalKey(key => new { key.id })
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasMany(pe => pe.listaProdutosVenda)
                       .WithOne(pp => pp.DadosPedidoVenda)
-                      .HasForeignKey(pp => pp.idPedido);
+                      .HasForeignKey(pp => pp.idPedido)
+                      .OnDelete(DeleteBehavior.NoAction);
             });
             
-            modelBuilder.Entity<ProdutoVendaEntity>(entity =>
-            {
-                entity.HasKey(p => p.id);
+            //modelBuilder.Entity<ProdutoVendaEntity>(entity =>
+            //{
+            //    entity.HasKey(p => p.id);
 
-                entity.HasOne(p => p.DadosProduto)
-                      .WithMany()
-                      .HasForeignKey(p => p.idProduto)
-                      .HasPrincipalKey(key => new { key.id });
+            //    entity.HasOne(p => p.DadosProduto)
+            //          .WithMany()
+            //          .HasForeignKey(p => p.idProduto)
+            //          .HasPrincipalKey(key => new { key.id })
+            //          .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(p => p.DadosPedidoVenda)
-                      .WithMany()
-                      .HasForeignKey(p => p.idPedido)
-                      .HasPrincipalKey(key => new { key.id });
-            });
+            //    entity.HasOne(p => p.DadosPedidoVenda)
+            //          .WithMany()
+            //          .HasForeignKey(p => p.idPedido)
+            //          .HasPrincipalKey(key => new { key.id })
+            //          .OnDelete(DeleteBehavior.NoAction);
+            //});
         }
     }
 }

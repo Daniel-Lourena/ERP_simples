@@ -33,7 +33,9 @@
             panel2 = new Panel();
             btnEditar = new Button();
             btnNovo = new Button();
+            ckeOcultaInativos = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)dgvBancos).BeginInit();
+            panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -45,15 +47,17 @@
             dgvBancos.BackgroundColor = SystemColors.ActiveBorder;
             dgvBancos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvBancos.Location = new Point(12, 83);
-            dgvBancos.Name = "dgvClientes";
+            dgvBancos.Name = "dgvBancos";
             dgvBancos.ReadOnly = true;
             dgvBancos.RowTemplate.Height = 25;
             dgvBancos.Size = new Size(776, 285);
             dgvBancos.TabIndex = 0;
+            dgvBancos.RowPrePaint += dgvBancos_RowPrePaint;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.Controls.Add(ckeOcultaInativos);
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Size = new Size(776, 65);
@@ -97,7 +101,20 @@
             btnNovo.UseVisualStyleBackColor = false;
             btnNovo.Click += btnNovo_Click;
             // 
-            // formGerenciarClientes
+            // ckeOcultaInativos
+            // 
+            ckeOcultaInativos.AutoSize = true;
+            ckeOcultaInativos.Checked = true;
+            ckeOcultaInativos.CheckState = CheckState.Checked;
+            ckeOcultaInativos.Location = new Point(3, 3);
+            ckeOcultaInativos.Name = "ckeOcultaInativos";
+            ckeOcultaInativos.Size = new Size(162, 19);
+            ckeOcultaInativos.TabIndex = 3;
+            ckeOcultaInativos.Text = "Ocultar cadastros inativos";
+            ckeOcultaInativos.UseVisualStyleBackColor = true;
+            ckeOcultaInativos.CheckedChanged += ckeOcultaInativos_CheckedChanged;
+            // 
+            // formGerenciarBancos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -105,9 +122,11 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(dgvBancos);
-            Name = "formGerenciarClientes";
+            Name = "formGerenciarBancos";
             Text = "Gerenciar Clientes";
             ((System.ComponentModel.ISupportInitialize)dgvBancos).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -119,5 +138,6 @@
         private Panel panel2;
         private Button btnNovo;
         private Button btnEditar;
+        private CheckBox ckeOcultaInativos;
     }
 }

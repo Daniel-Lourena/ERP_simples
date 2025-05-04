@@ -26,7 +26,7 @@ namespace SistemaERP.Cadastros.Banco
         private void ConfigurarDataBinding()
         {
             _banco = _banco ?? new BancoViewModel();
-            cbTipoConta.DataBindings.Add(nameof(cbTipoConta.SelectedItem), _banco, nameof(_banco.tipoConta));
+            cbTipoConta.DataBindings.Add(nameof(cbTipoConta.SelectedValue), _banco, nameof(_banco.tipoConta));
             txtAtualizacao.DataBindings.Add(nameof(txtAtualizacao.Text), _banco, nameof(_banco.dataAtualizacao));
             txtCadastro.DataBindings.Add(nameof(txtCadastro.Text), _banco, nameof(_banco.dataCadastro));
             txtNomeBanco.DataBindings.Add(nameof(txtNomeBanco.Text), _banco, nameof(_banco.nome));
@@ -37,7 +37,7 @@ namespace SistemaERP.Cadastros.Banco
             txtConta.DataBindings.Add(nameof(txtConta.Text), _banco, nameof(_banco.conta));
             txtNomeTitular.DataBindings.Add(nameof(txtNomeTitular.Text), _banco, nameof(_banco.titularNome));
             txtTitularDocumento.DataBindings.Add(nameof(txtTitularDocumento.Text), _banco, nameof(_banco.titularDocumento));
-            cbTipoChavePix.DataBindings.Add(nameof(cbTipoChavePix.SelectedItem), _banco, nameof(_banco.pixTipoChave));
+            cbTipoChavePix.DataBindings.Add(nameof(cbTipoChavePix.SelectedValue), _banco, nameof(_banco.pixTipoChave));
             txtChavePix.DataBindings.Add(nameof(txtChavePix.Text), _banco, nameof(_banco.pixChave));
             ckContaInternacional.DataBindings.Add(nameof(ckContaInternacional.Checked), _banco, nameof(_banco.contaInternacional));
             ckInativo.DataBindings.Add(nameof(ckInativo.Checked), _banco, nameof(_banco.inativo));

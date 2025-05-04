@@ -26,14 +26,13 @@ namespace ModuloConfiguracoes.Extensions
             foreach (object value in System.Enum.GetValues(typeof(TEnum)))
             {
                 string name = value.ToString();
-                int intValue = (int)value;
 
                 FieldInfo fi = typeof(TEnum).GetField(name);
                 DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
                 string description = attributes.Length > 0 ? attributes[0].Description : name;
 
-                enumList.Add(new EnumItem { Name = name, Description = description, Value = intValue });
+                enumList.Add(new EnumItem { Name = name, Description = description, Value = value });
             }
 
             return enumList;

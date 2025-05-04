@@ -30,10 +30,12 @@
         {
             dgvProdutos = new DataGridView();
             panel1 = new Panel();
+            ckeOcultaInativos = new CheckBox();
             panel2 = new Panel();
             btnEditar = new Button();
             btnNovo = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProdutos).BeginInit();
+            panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -50,14 +52,29 @@
             dgvProdutos.RowTemplate.Height = 25;
             dgvProdutos.Size = new Size(776, 285);
             dgvProdutos.TabIndex = 0;
+            dgvProdutos.RowPrePaint += dgvProdutos_RowPrePaint;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.Controls.Add(ckeOcultaInativos);
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Size = new Size(776, 65);
             panel1.TabIndex = 1;
+            // 
+            // ckeOcultaInativos
+            // 
+            ckeOcultaInativos.AutoSize = true;
+            ckeOcultaInativos.Checked = true;
+            ckeOcultaInativos.CheckState = CheckState.Checked;
+            ckeOcultaInativos.Location = new Point(3, 3);
+            ckeOcultaInativos.Name = "ckeOcultaExcluidos";
+            ckeOcultaInativos.Size = new Size(162, 19);
+            ckeOcultaInativos.TabIndex = 2;
+            ckeOcultaInativos.Text = "Ocultar cadastros inativos";
+            ckeOcultaInativos.UseVisualStyleBackColor = true;
+            ckeOcultaInativos.CheckedChanged += ckeOcultaInativos_CheckedChanged;
             // 
             // panel2
             // 
@@ -108,6 +125,8 @@
             Name = "formGerenciarProdutos";
             Text = "Gerenciar Produtos";
             ((System.ComponentModel.ISupportInitialize)dgvProdutos).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -119,5 +138,6 @@
         private Panel panel2;
         private Button btnNovo;
         private Button btnEditar;
+        private CheckBox ckeOcultaInativos;
     }
 }

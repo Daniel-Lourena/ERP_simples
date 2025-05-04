@@ -134,8 +134,8 @@
             // 
             cbUnidade.FormattingEnabled = true;
             cbUnidade.Location = new Point(304, 117);
-            cbUnidade.Name = "comboBox1";
-            cbUnidade.Size = new Size(54, 23);
+            cbUnidade.Name = "cbUnidade";
+            cbUnidade.Size = new Size(161, 23);
             cbUnidade.TabIndex = 34;
             // 
             // nudEstoqueMinimo
@@ -272,7 +272,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(146, 57);
+            label9.Location = new Point(108, 57);
             label9.Name = "label9";
             label9.Size = new Size(36, 15);
             label9.TabIndex = 39;
@@ -280,9 +280,9 @@
             // 
             // txtCEST
             // 
-            txtCEST.Location = new Point(146, 75);
+            txtCEST.Location = new Point(108, 75);
             txtCEST.Name = "txtCEST";
-            txtCEST.Size = new Size(142, 23);
+            txtCEST.Size = new Size(99, 23);
             txtCEST.TabIndex = 38;
             // 
             // label7
@@ -298,13 +298,13 @@
             // 
             txtNCM.Location = new Point(6, 75);
             txtNCM.Name = "txtNCM";
-            txtNCM.Size = new Size(134, 23);
+            txtNCM.Size = new Size(96, 23);
             txtNCM.TabIndex = 36;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(294, 57);
+            label4.Location = new Point(213, 57);
             label4.Name = "label4";
             label4.Size = new Size(73, 15);
             label4.TabIndex = 33;
@@ -313,9 +313,9 @@
             // cbCST
             // 
             cbCST.FormattingEnabled = true;
-            cbCST.Location = new Point(294, 75);
+            cbCST.Location = new Point(213, 75);
             cbCST.Name = "cbCST";
-            cbCST.Size = new Size(73, 23);
+            cbCST.Size = new Size(388, 23);
             cbCST.TabIndex = 32;
             // 
             // btnSalvar
@@ -347,12 +347,13 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(720, 347);
-            ControlBox = false;
             Controls.Add(btnSalvar);
             Controls.Add(btnCancelar);
             Controls.Add(tcProduto);
-            MinimizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "formDetalhesProduto";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "[NOVO]";
             Load += formDetalhesProduto_Load;
             tcProduto.ResumeLayout(false);

@@ -11,7 +11,7 @@ namespace SistemaERP.Cadastros.Produto
     public partial class formDetalhesProduto : Form
     {
         private int _id = 0;
-        private ProdutoEntity _produto;
+        private ProdutoViewModel _produto;
 
         public formDetalhesProduto()
         {
@@ -24,6 +24,22 @@ namespace SistemaERP.Cadastros.Produto
         public formDetalhesProduto(int id) : this()
         {
             _id = id;
+        }
+
+        private void ConfigurarDataBinding()
+        {
+            _produto = _produto ?? new ProdutoViewModel();
+            txtCodigoSKU.DataBindings.Add(nameof(txtCodigoSKU.Text), _produto, nameof(_produto.codigoEstoque_SKU));
+            txtDescricao.DataBindings.Add(nameof(txtDescricao.Text), _produto, nameof(_produto.descricao));
+            txtNCM.DataBindings.Add(nameof(txtNCM.Text), _produto, nameof(_produto.ncm));
+            txtCEST.DataBindings.Add(nameof(txtCEST.Text), _produto, nameof(_produto.cest));
+            txtCadastro.DataBindings.Add(nameof(txtCadastro.Text), _produto, nameof(_produto.dataCadastro));
+            txtAtualizacao.DataBindings.Add(nameof(txtAtualizacao.Text), _produto, nameof(_produto.dataAtualizacao));
+            cbCST.DataBindings.Add(nameof(cbCST.SelectedValue), _produto, nameof(_produto.cst_csosn));
+            cbOrigem.DataBindings.Add(nameof(cbOrigem.SelectedValue), _produto, nameof(_produto.origem));
+            cbCategoria.DataBindings.Add(nameof(cbCategoria.SelectedValue), _produto, nameof(_produto.categoria));
+            ckeInativo.DataBindings.Add(nameof(ckeInativo.Checked), _produto, nameof(_produto.inativo));
+            nudEstoqueMinimo.DataBindings.Add(nameof(nudEstoqueMinimo.Value), _produto, nameof(_produto.estoqueMinimo));
         }
 
         private void CarregaOrigem()
@@ -47,52 +63,32 @@ namespace SistemaERP.Cadastros.Produto
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            ProdutoEntity produto = new()
-            {
-                codigoEstoque_SKU = txtCodigoSKU.Text,
-                descricao = txtDescricao.Text,
-                ncm = txtNCM.Text,
-                cest = txtCEST.Text,
-                dataCadastro = DateTime.Now,
-                dataAtualizacao = DateTime.Now,
-                cst_csosn = cbCST.SelectedValue.ToString(),
-                origem = (EOrigemProduto)cbOrigem.SelectedValue,
-                categoria = cbCategoria.SelectedValue == null ? 0 : (int)cbCategoria.SelectedValue,
-                inativo = ckeInativo.Checked,
-                estoqueMinimo = nudEstoqueMinimo.Value
-            };
-
             if (_id == 0)
             {
-                new ModuloCadastro.Service.ProdutoService(new ModuloCadastroContext()).Insert(produto);
+                _produto.dataCadastro = DateTime.Now;
+                _produto.dataAtualizacao = DateTime.Now;
+                _produto.id = new ModuloCadastro.Service.ProdutoService(new ModuloCadastroContext()).Insert(_produto.ToEntity());
+                _id = _produto.id;
+                this.Text = $"REGISTRO [{_produto.id}]";
             }
             else
             {
-                produto.dataCadastro = _produto.dataCadastro;
-                new ModuloCadastro.Service.ProdutoService(new ModuloCadastroContext()).Update(produto);
+                _produto.dataAtualizacao = _produto.dataAtualizacao;
+                new ModuloCadastro.Service.ProdutoService(new ModuloCadastroContext()).Update(_produto.ToEntity());
             }
+
+            MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void formDetalhesProduto_Load(object sender, EventArgs e)
         {
             if (_id > 0) MostraProduto();
+            ConfigurarDataBinding();
         }
 
         private void MostraProduto()
         {
-            _produto = new ProdutoService(new ModuloCadastroContext()).Get(_id);
-            txtCodigoSKU.Text = _produto.codigoEstoque_SKU;
-            txtDescricao.Text = _produto.descricao;
-            txtNCM.Text = _produto.ncm;
-            txtCEST.Text = _produto.cest;
-            txtCadastro.Text = _produto.dataCadastro.ToString();
-            txtAtualizacao.Text = _produto.dataAtualizacao.ToString();
-            cbCST.SelectedValue = _produto.cst_csosn;
-            cbOrigem.SelectedValue = _produto.origem;
-            cbCategoria.SelectedValue = _produto.categoria;
-            ckeInativo.Checked = _produto.inativo;
-            nudEstoqueMinimo.Value = _produto.estoqueMinimo;
-
+            _produto = new ProdutoService(new ModuloCadastroContext()).Get(_id).ToViewModel();
             this.Text = $"REGISTRO [{_produto.id}]";
         }
 

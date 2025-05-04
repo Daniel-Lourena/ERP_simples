@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 
 namespace ModuloCadastro.Service
@@ -14,7 +15,9 @@ namespace ModuloCadastro.Service
         }
         public List<ProdutoEntity> GetList()
         {
-            return _db_context.Produtos.ToList();
+            return _db_context.Produtos.AsNoTracking()
+                .Include(x => x.DadosCategoria)
+                .ToList();
         }
 
         public int Insert(ProdutoEntity entity)

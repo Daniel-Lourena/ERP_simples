@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace ModuloCadastro.Service
         }
         public List<BancoEntity> GetList()
         {
-            return _db_context.Bancos.ToList();
+            return _db_context.Bancos.AsNoTracking().ToList();
         }
 
         public int Insert(BancoEntity entity)

@@ -19,16 +19,28 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void CarregaClientes()
         {
-            var listaDataSource = new ModuloCadastro.Service.ClienteService(_db_context)
+            List<ClienteViewModel> listaDataSource = new();
+            if (ckeOcultaExcluidos.Checked)
+            {
+                listaDataSource = new ModuloCadastro.Service.ClienteService(_db_context)
                 .GetList()
                 .Where(x => !x.excluido)
                 .Select(x => new ClienteViewModel
-                { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade }).ToList();
+                { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade, excluido = x.excluido }).ToList();
+            }
+            else
+            {
+                listaDataSource = new ModuloCadastro.Service.ClienteService(_db_context)
+                .GetList()
+                .Select(x => new ClienteViewModel
+                { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade,excluido = x.excluido }).ToList();
+            }
 
             dgvClientes.CriarColunasDataGridView(listaDataSource, new()
             {
                 (nameof(ClienteViewModel.id),true,true), (nameof(ClienteViewModel.fantasia),true,true),
-                (nameof(ClienteViewModel.DadosCidade.cuf),true,true),(nameof(ClienteViewModel.DadosCidade.dmunicipio),true,true)
+                (nameof(ClienteViewModel.DadosCidade.cuf),true,true),(nameof(ClienteViewModel.DadosCidade.dmunicipio),true,true),
+                (nameof(ClienteViewModel.excluido),true,false)
             });
         }
 
@@ -65,6 +77,21 @@ namespace SistemaERP.Cadastros.Cliente
 
                 MessageBox.Show("Exclusão realizada", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CarregaClientes();
+            }
+        }
+
+        private void ckeOcultaExcluidos_CheckedChanged(object sender, EventArgs e)
+        {
+            CarregaClientes();
+        }
+
+        private void dgvClientes_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            ClienteViewModel row = dgvClientes.Rows[e.RowIndex].DataBoundItem as ClienteViewModel;
+
+            if (row.excluido)
+            {
+                dgvClientes.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSalmon;
             }
         }
     }

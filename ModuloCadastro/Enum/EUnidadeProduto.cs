@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace ModuloCadastro.Enum
 {
@@ -20,6 +15,6 @@ namespace ModuloCadastro.Enum
         [Description("Cen")]
         CENTO = 4,
         [Description("Mts")]
-        METRO = 5 
+        METRO = 5
     }
 }

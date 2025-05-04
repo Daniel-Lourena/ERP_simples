@@ -1,19 +1,7 @@
-﻿using ModuloCadastro.Context;
-using ModuloCadastro.Entity;
-using ModuloCadastro.Enum;
+﻿using ModuloCadastro.Enum;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
 using SistemaERP.Generico;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SistemaERP.Vendas
 {
@@ -33,8 +21,8 @@ namespace SistemaERP.Vendas
             dgvProdutos.CriarColunasDataGridView<ProdutoVendaViewModel>
                 (
                     new ModuloCadastro.Service.ProdutoVendaService().GetListProdutosPedido(_idPedido),
-                    new() 
-                    { 
+                    new()
+                    {
                         (nameof(ProdutoVendaViewModel.idProduto),true,true),(nameof(ProdutoVendaViewModel.descricaoProduto),true, true),
                         (nameof(ProdutoVendaViewModel.descricaoProduto), true,true),(nameof(ProdutoVendaViewModel.quantidade), false,true),
                         (nameof(ProdutoVendaViewModel.valor), false,true),(nameof(ProdutoVendaViewModel.id), false,false)
@@ -51,9 +39,9 @@ namespace SistemaERP.Vendas
         {
             if (dgvProdutos.CurrentRow == null) return;
 
-            if (MessageBox.Show($"Deseja excluir o item {dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.idProduto)].Value} - {dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.descricaoProduto)].Value} do pedido?",String.Empty,MessageBoxButtons.YesNo,MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show($"Deseja excluir o item {dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.idProduto)].Value} - {dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.descricaoProduto)].Value} do pedido?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
-          
+
             new ModuloCadastro.Service.ProdutoVendaService().Delete(Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.id)].Value));
         }
 

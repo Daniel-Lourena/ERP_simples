@@ -2,11 +2,6 @@
 using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuloCadastro.Service
 {
@@ -57,7 +52,7 @@ namespace ModuloCadastro.Service
         {
             using (var _context = new ModuloCadastroContext())
             {
-                _context.ProdutosVendas.Remove(new ProdutoVendaEntity { id = id});
+                _context.ProdutosVendas.Remove(new ProdutoVendaEntity { id = id });
                 _context.SaveChanges();
             }
         }

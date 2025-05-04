@@ -1,20 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ModuloCadastro.Context;
+﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
-using ModuloCadastro.Enum;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SistemaERP.Cadastros.Usuario
 {
@@ -33,8 +21,8 @@ namespace SistemaERP.Cadastros.Usuario
         {
             var listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
                 .Where(x => !x.excluido)
-                .Select(x => new UsuarioViewModel 
-                { id = x.id, nome = x.nome, cargo = x.cargo,dataCadastro = x.dataCadastro,dataAtualizacao = x.dataAtualizacao })
+                .Select(x => new UsuarioViewModel
+                { id = x.id, nome = x.nome, cargo = x.cargo, dataCadastro = x.dataCadastro, dataAtualizacao = x.dataAtualizacao })
                 .ToList();
 
             dgvUsuarios.CriarColunasDataGridView(listaDataSource, new()

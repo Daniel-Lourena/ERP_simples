@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Entity;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
 namespace ModuloCadastro.ViewModel
@@ -17,28 +11,28 @@ namespace ModuloCadastro.ViewModel
         private string _descricao;
 
         [Display(Name = "ID", Description = "")]
-        public int id 
+        public int id
         {
             get => _id;
-            set 
-            { 
+            set
+            {
                 if (_id != value)
                 {
                     _id = value;
                     OnPropertyChanged();
                 }
-            } 
+            }
         }
 
         [Display(Name = "Descrição", Description = "")]
-        public string? descricao 
+        public string? descricao
         {
             get => _descricao;
             set
             {
                 if (_descricao != value)
                 {
-                    _descricao= value;
+                    _descricao = value;
                     OnPropertyChanged();
                 }
             }

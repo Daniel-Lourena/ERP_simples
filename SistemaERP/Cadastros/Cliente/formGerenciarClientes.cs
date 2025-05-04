@@ -26,7 +26,7 @@ namespace SistemaERP.Cadastros.Cliente
                 { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade }).ToList();
 
             dgvClientes.CriarColunasDataGridView(listaDataSource, new()
-            { 
+            {
                 (nameof(ClienteViewModel.id),true,true), (nameof(ClienteViewModel.fantasia),true,true),
                 (nameof(ClienteViewModel.DadosCidade.cuf),true,true),(nameof(ClienteViewModel.DadosCidade.dmunicipio),true,true)
             });

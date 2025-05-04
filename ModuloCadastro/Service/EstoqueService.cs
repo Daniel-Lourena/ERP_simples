@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModuloCadastro.Context;
-using ModuloCadastro.Entity;
 using ModuloCadastro.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuloCadastro.Service
 {
@@ -17,12 +11,12 @@ namespace ModuloCadastro.Service
             return new ModuloCadastroContext().Estoques
                 .AsNoTracking()
                 .Select(x => new EstoqueViewModel
-            { 
-                idProduto = x.idProduto,
-                descricaoProduto = x.DadosProduto.descricao,
-                descricaoSetorEstoque = x.DadosSetorEstoque.descricao,
-                quantidadeEstoque = x.quantidade
-            }).ToList();
+                {
+                    idProduto = x.idProduto,
+                    descricaoProduto = x.DadosProduto.descricao,
+                    descricaoSetorEstoque = x.DadosSetorEstoque.descricao,
+                    quantidadeEstoque = x.quantidade
+                }).ToList();
         }
 
         public List<EstoqueViewModel> GetListEstoqueDisponivel()
@@ -32,15 +26,15 @@ namespace ModuloCadastro.Service
             var listaConsultaEstoque = (from estoque in _context.Estoques
                                         join resultado in
                                         from produtospedido in _context.ProdutosVendas
-                                         join pedidos in _context.PedidosVendas on produtospedido.idPedido equals pedidos.id
-                                         where pedidos.dataFechamento == null
-                                         group produtospedido by produtospedido.idProduto into produtospedidoAgrupamento
-                                         select new
-                                         {
-                                             idProduto = produtospedidoAgrupamento.Key,
-                                             quantidadeVenda = produtospedidoAgrupamento.Sum(x => x.quantidade)
-                                         }
-                                        
+                                        join pedidos in _context.PedidosVendas on produtospedido.idPedido equals pedidos.id
+                                        where pedidos.dataFechamento == null
+                                        group produtospedido by produtospedido.idProduto into produtospedidoAgrupamento
+                                        select new
+                                        {
+                                            idProduto = produtospedidoAgrupamento.Key,
+                                            quantidadeVenda = produtospedidoAgrupamento.Sum(x => x.quantidade)
+                                        }
+
                                         on estoque.idProduto equals resultado.idProduto
                                         join infoProduto in _context.Produtos on estoque.idProduto equals infoProduto.id
                                         select new EstoqueViewModel

@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using ModuloCadastro.Enum;
+﻿using ModuloCadastro.Enum;
 using ModuloCadastro.ViewModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModuloCadastro.Entity
 {
@@ -35,7 +35,7 @@ namespace ModuloCadastro.Entity
         [Column(TypeName = "tinyint(1)")]
         public bool contaInternacional { get; set; }
         [Column(TypeName = "tinyint(1)")]
-        public bool  inativo { get; set; }
+        public bool inativo { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime dataCadastro { get; set; }
         [Column(TypeName = "datetime")]

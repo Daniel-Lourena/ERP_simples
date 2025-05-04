@@ -1,8 +1,8 @@
-﻿using ModuloCadastro.Service;
-using ModuloCadastro.Context;
+﻿using ModuloCadastro.Context;
 using ModuloCadastro.Enum;
-using SistemaERP.Cadastros.Extensions;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
+using SistemaERP.Cadastros.Extensions;
 
 namespace SistemaERP.Cadastros.Banco
 {

@@ -1,18 +1,8 @@
 ﻿using ModuloCadastro.Context;
-using ModuloCadastro.Service;
 using ModuloCadastro.Entity;
-using ModuloCadastro.Enum;
-using SistemaERP.Cadastros.Extensions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
+using SistemaERP.Cadastros.Extensions;
 
 namespace SistemaERP.Cadastros.Usuario
 {
@@ -34,10 +24,10 @@ namespace SistemaERP.Cadastros.Usuario
         private void ConfigurarDataBinding()
         {
             _usuario = _usuario ?? new UsuarioViewModel();
-            txtNome.DataBindings.Add(nameof(txtNome.Text),_usuario,nameof(_usuario.nome));
-            txtCadastro.DataBindings.Add(nameof(txtCadastro.Text),_usuario,nameof(_usuario.dataCadastro));
+            txtNome.DataBindings.Add(nameof(txtNome.Text), _usuario, nameof(_usuario.nome));
+            txtCadastro.DataBindings.Add(nameof(txtCadastro.Text), _usuario, nameof(_usuario.dataCadastro));
             txtAtualizacao.DataBindings.Add(nameof(txtAtualizacao.Text), _usuario, nameof(_usuario.dataAtualizacao));
-            cbCargo.DataBindings.Add(nameof(cbCargo.SelectedValue),_usuario,nameof(_usuario.cargo));
+            cbCargo.DataBindings.Add(nameof(cbCargo.SelectedValue), _usuario, nameof(_usuario.cargo));
         }
 
         private void CarregaCargo()

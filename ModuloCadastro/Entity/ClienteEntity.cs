@@ -1,18 +1,13 @@
 ﻿using ModuloCadastro.ViewModel;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuloCadastro.Entity
 {
     [Table("tb_clientes")]
     public class ClienteEntity : BaseEntity<ClienteEntity>
     {
-        [Key,Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key, Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
         [Column(TypeName = "varchar(255)")]
         public string razaoSocial { get; set; }

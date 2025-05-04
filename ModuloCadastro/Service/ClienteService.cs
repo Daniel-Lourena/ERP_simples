@@ -22,9 +22,9 @@ namespace ModuloCadastro.Service
         public List<ClienteEntity> GetList()
         {
             return _db_context.Clientes
+                .AsNoTracking()
                 .Include(c => c.DadosCidade)
                 .ThenInclude(c => c.DadosEstado)
-                .AsNoTracking()
                 .ToList();
         }
 

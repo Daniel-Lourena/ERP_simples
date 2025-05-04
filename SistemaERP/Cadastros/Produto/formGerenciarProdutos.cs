@@ -1,5 +1,6 @@
 ﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
 using System.Data;
 
@@ -18,24 +19,28 @@ namespace SistemaERP.Cadastros.Produto
 
         private void CarregaProdutos()
         {
-            var listaDataSource = new ModuloCadastro.Service.ProdutoService(_db_context).GetList().Select(x => new ProdutoEntity { id = x.id, descricao = x.descricao, categoria = x.categoria, idUnidade = x.idUnidade }).ToList();
+            var listaDataSource = new ModuloCadastro.Service.ProdutoService(_db_context).GetList()
+                .Select(x => new ProdutoViewModel
+                { id = x.id, descricao = x.descricao, DadosCategoria = x.DadosCategoria, idUnidade = x.idUnidade }).ToList();
             dgvProdutos.CriarColunasDataGridView(listaDataSource, new()
             {
-                (nameof(ProdutoEntity.id), true,true), (nameof(ProdutoEntity.descricao), true,true),
-                (nameof(ProdutoEntity.categoria), true,true), (nameof(ProdutoEntity.idUnidade), true,true)
+                (nameof(ProdutoViewModel.id), true,true), (nameof(ProdutoViewModel.descricao), true,true),
+                (nameof(ProdutoViewModel.descricaoCategoria), true,true), (nameof(ProdutoViewModel.descricaoUnidade), true,true)
             });
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
             new formDetalhesProduto().ShowDialog();
+            CarregaProdutos();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (dgvProdutos.CurrentRow != null)
             {
-                new formDetalhesProduto(Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(ProdutoEntity.id)].Value)).ShowDialog();
+                new formDetalhesProduto(Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(ProdutoViewModel.id)].Value)).ShowDialog();
+                CarregaProdutos();
             }
         }
     }

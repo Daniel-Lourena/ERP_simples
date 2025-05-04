@@ -30,11 +30,13 @@
         {
             dgvUsuarios = new DataGridView();
             panel1 = new Panel();
+            ckeOcultaExcluidos = new CheckBox();
             panel2 = new Panel();
             btnExcluir = new Button();
             btnEditar = new Button();
             btnNovo = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
+            panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -51,14 +53,29 @@
             dgvUsuarios.RowTemplate.Height = 25;
             dgvUsuarios.Size = new Size(776, 285);
             dgvUsuarios.TabIndex = 0;
+            dgvUsuarios.RowPrePaint += dgvUsuarios_RowPrePaint;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.Controls.Add(ckeOcultaExcluidos);
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Size = new Size(776, 65);
             panel1.TabIndex = 1;
+            // 
+            // ckeOcultaExcluidos
+            // 
+            ckeOcultaExcluidos.AutoSize = true;
+            ckeOcultaExcluidos.Checked = true;
+            ckeOcultaExcluidos.CheckState = CheckState.Checked;
+            ckeOcultaExcluidos.Location = new Point(3, 3);
+            ckeOcultaExcluidos.Name = "ckeOcultaExcluidos";
+            ckeOcultaExcluidos.Size = new Size(171, 19);
+            ckeOcultaExcluidos.TabIndex = 0;
+            ckeOcultaExcluidos.Text = "Ocultar cadastros excluidos";
+            ckeOcultaExcluidos.UseVisualStyleBackColor = true;
+            ckeOcultaExcluidos.CheckedChanged += ckeOcultaExcluidos_CheckedChanged;
             // 
             // panel2
             // 
@@ -125,6 +142,8 @@
             Name = "formGerenciarUsuarios";
             Text = "Gerenciar Usuários";
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -137,5 +156,6 @@
         private Button btnNovo;
         private Button btnExcluir;
         private Button btnEditar;
+        private CheckBox ckeOcultaExcluidos;
     }
 }

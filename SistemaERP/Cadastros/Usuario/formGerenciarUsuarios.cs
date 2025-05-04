@@ -19,17 +19,29 @@ namespace SistemaERP.Cadastros.Usuario
 
         private void CarregaUsuarios()
         {
-            var listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
+            List<UsuarioViewModel> listaDataSource = new();
+            if (ckeOcultaExcluidos.Checked)
+            {
+                listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
                 .Where(x => !x.excluido)
                 .Select(x => new UsuarioViewModel
-                { id = x.id, nome = x.nome, cargo = x.cargo, dataCadastro = x.dataCadastro, dataAtualizacao = x.dataAtualizacao })
+                { id = x.id, nome = x.nome, cargo = x.cargo, dataCadastro = x.dataCadastro, dataAtualizacao = x.dataAtualizacao, excluido = x.excluido })
                 .ToList();
+            }
+            else
+            {
+                listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
+                .Select(x => new UsuarioViewModel
+                { id = x.id, nome = x.nome, cargo = x.cargo, dataCadastro = x.dataCadastro, dataAtualizacao = x.dataAtualizacao,excluido = x.excluido })
+                .ToList();
+            }
+
 
             dgvUsuarios.CriarColunasDataGridView(listaDataSource, new()
             {
                 (nameof(UsuarioViewModel.id),true,true), (nameof(UsuarioViewModel.nome),true,true),
                 (nameof(UsuarioViewModel.cargo),true,true),(nameof(UsuarioViewModel.dataCadastro),true,true),
-                (nameof(UsuarioViewModel.dataAtualizacao),true,true)
+                (nameof(UsuarioViewModel.dataAtualizacao),true,true),(nameof(UsuarioViewModel.excluido),true,false)
             });
         }
 
@@ -60,6 +72,21 @@ namespace SistemaERP.Cadastros.Usuario
                 }, new List<string>() { nameof(UsuarioEntity.dataExclusao), nameof(UsuarioEntity.excluido) });
 
                 CarregaUsuarios();
+            }
+        }
+
+        private void ckeOcultaExcluidos_CheckedChanged(object sender, EventArgs e)
+        {
+            CarregaUsuarios();
+        }
+
+        private void dgvUsuarios_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            UsuarioViewModel row = dgvUsuarios.Rows[e.RowIndex].DataBoundItem as UsuarioViewModel;
+
+            if (row.excluido)
+            {
+                dgvUsuarios.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSalmon;
             }
         }
     }

@@ -70,6 +70,7 @@ namespace ModuloCadastro.Context
             {
                 entity.HasKey(p => p.id);
                 entity.Property(p => p.origem).HasConversion<int>();
+                entity.Property(p => p.cst_csosn).HasConversion<int>();
                 entity.Property(p => p.idUnidade).HasConversion<int>();
 
                 entity.HasOne(p => p.DadosCategoria)

@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
-using ModuloCadastro.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuloCadastro.Service
 {
@@ -28,7 +22,7 @@ namespace ModuloCadastro.Service
             {
                 _context.Categorias.Add(entity);
                 _context.SaveChanges();
-            } 
+            }
         }
 
         public void Update(CategoriaEntity entity)

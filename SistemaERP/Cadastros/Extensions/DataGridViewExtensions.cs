@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using ModuloConfiguracoes.Extensions;
-using System.ComponentModel;
 
 namespace SistemaERP.Cadastros.Extensions
 {
     public static class DataGridViewExtensions
     {
-        public static void CriarColunasDataGridView<T>(this DataGridView dgvGenerico,List<T> listaDataSource, List<(string nomeColuna,bool readOnly,bool visible)> popularColunas)
+        public static void CriarColunasDataGridView<T>(this DataGridView dgvGenerico, List<T> listaDataSource, List<(string nomeColuna, bool readOnly, bool visible)> popularColunas)
         {
             dgvGenerico.AutoGenerateColumns = false;
 

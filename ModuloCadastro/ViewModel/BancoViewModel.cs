@@ -272,7 +272,7 @@ namespace ModuloCadastro.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propriedade));
         }
 
-        public BancoEntity ToEntity() 
+        public BancoEntity ToEntity()
         {
             return new BancoEntity
             {

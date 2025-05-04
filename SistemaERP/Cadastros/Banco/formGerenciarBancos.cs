@@ -18,9 +18,9 @@ namespace SistemaERP.Cadastros.Banco
         private void CarregaBancos()
         {
             var listaDataSource = new ModuloCadastro.Service.BancoService(_db_context).GetList()
-                .Select(x => new BancoViewModel { id = x.id, nome = x.nome}).ToList();
+                .Select(x => new BancoViewModel { id = x.id, nome = x.nome }).ToList();
             dgvBancos.CriarColunasDataGridView(listaDataSource, new()
-            { 
+            {
                 (nameof(BancoViewModel.id),true,true), (nameof(BancoViewModel.nome),true,true),
             });
         }

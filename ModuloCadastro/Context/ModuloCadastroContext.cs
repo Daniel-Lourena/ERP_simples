@@ -1,12 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using ModuloCadastro.Entity;
-using ModuloCadastro.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuloCadastro.Context
 {
@@ -45,7 +38,7 @@ namespace ModuloCadastro.Context
                 entity.HasKey(u => u.id);
                 entity.Property(u => u.cargo).HasConversion<int>();
             });
-            
+
             modelBuilder.Entity<ClienteEntity>(entity =>
             {
                 entity.HasKey(c => c.id);
@@ -60,11 +53,11 @@ namespace ModuloCadastro.Context
             modelBuilder.Entity<CidadeEntity>(entity =>
             {
                 entity.HasKey(c => c.id);
-                
+
                 entity.HasOne(c => c.DadosEstado)
                       .WithMany()
                       .HasForeignKey(c => c.cuf)
-                      .HasPrincipalKey(key => new { key.cuf})
+                      .HasPrincipalKey(key => new { key.cuf })
                       .OnDelete(DeleteBehavior.NoAction);
             });
 
@@ -132,7 +125,7 @@ namespace ModuloCadastro.Context
 
             modelBuilder.Entity<EstoqueEntity>(entity =>
             {
-                entity.HasKey(c => new { c.idProduto,c.setorEstoque });
+                entity.HasKey(c => new { c.idProduto, c.setorEstoque });
 
                 entity.HasOne(e => e.DadosProduto)
                       .WithMany()
@@ -146,7 +139,7 @@ namespace ModuloCadastro.Context
                       .HasPrincipalKey(key => new { key.id })
                       .OnDelete(DeleteBehavior.NoAction);
             });
-            
+
             modelBuilder.Entity<PedidoVendaEntity>(entity =>
             {
                 entity.HasKey(pe => pe.id);
@@ -162,7 +155,7 @@ namespace ModuloCadastro.Context
                       .HasForeignKey(pp => pp.idPedido)
                       .OnDelete(DeleteBehavior.NoAction);
             });
-            
+
             //modelBuilder.Entity<ProdutoVendaEntity>(entity =>
             //{
             //    entity.HasKey(p => p.id);

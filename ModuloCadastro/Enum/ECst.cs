@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace ModuloCadastro.Enum
 {
@@ -29,7 +24,7 @@ namespace ModuloCadastro.Enum
         Item60 = 60,
         [Description("70 – Com redução de base de cálculo e cobrança do ICMS por substituição tributária")]
         Item70 = 70,
-        [Description("90 – Outras")] 
+        [Description("90 – Outras")]
         Item90 = 90
     }
 }

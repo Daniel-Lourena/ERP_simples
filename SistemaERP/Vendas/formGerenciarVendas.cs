@@ -1,20 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ModuloCadastro.Context;
-using ModuloCadastro.Entity;
-using ModuloCadastro.Enum;
+﻿using ModuloCadastro.Context;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SistemaERP.Vendas
 {
@@ -33,7 +20,7 @@ namespace SistemaERP.Vendas
         {
             var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(_db_context)
                 .GetList()
-                .Select(x => new PedidoVendaViewModel { id = x.id, idCliente = x.idCliente, dataCriacao = x.dataCriacao,nomeUsuarioCriador = x.DadosUsuarioCriador.nome }).ToList();
+                .Select(x => new PedidoVendaViewModel { id = x.id, idCliente = x.idCliente, dataCriacao = x.dataCriacao, nomeUsuarioCriador = x.DadosUsuarioCriador.nome }).ToList();
 
             dgvVendas.CriarColunasDataGridView(listaDataSource, new()
             {

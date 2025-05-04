@@ -1,19 +1,8 @@
-﻿using ModuloCadastro.Context;
-using ModuloCadastro.Service;
-using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
-using SistemaERP.Cadastros.Produto;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SistemaERP.Generico
 {

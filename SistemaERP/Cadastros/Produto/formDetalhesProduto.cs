@@ -1,18 +1,10 @@
 ﻿using ModuloCadastro.Context;
-using ModuloCadastro.Service;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
-using SistemaERP.Cadastros.Extensions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
+using SistemaERP.Cadastros.Extensions;
+using System.Data;
 
 namespace SistemaERP.Cadastros.Produto
 {
@@ -26,7 +18,7 @@ namespace SistemaERP.Cadastros.Produto
             InitializeComponent();
             CarregaOrigem();
             CarregaCST();
-            CarregaCategoria(); 
+            CarregaCategoria();
             CarregaUnidade();
         }
         public formDetalhesProduto(int id) : this()
@@ -49,7 +41,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void CarregaCategoria()
         {
-            List<CategoriaViewModel> categorias = new ModuloCadastro.Service.CategoriaService(new ModuloCadastroContext()).GetList().Select(x => new CategoriaViewModel { id = x.id,descricao = x.descricao}).ToList();
+            List<CategoriaViewModel> categorias = new ModuloCadastro.Service.CategoriaService(new ModuloCadastroContext()).GetList().Select(x => new CategoriaViewModel { id = x.id, descricao = x.descricao }).ToList();
             cbCategoria.PreencherComboBoxList(categorias, nameof(CategoriaViewModel.id), nameof(CategoriaViewModel.descricao), true);
         }
 

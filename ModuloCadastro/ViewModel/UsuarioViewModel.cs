@@ -1,14 +1,8 @@
-﻿using ModuloCadastro.Enum;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ModuloCadastro.Entity;
+using ModuloCadastro.Enum;
 using ModuloConfiguracoes.Extensions;
-using ModuloCadastro.Entity;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
 namespace ModuloCadastro.ViewModel
@@ -62,6 +56,6 @@ namespace ModuloCadastro.ViewModel
                 excluido = excluido
             };
         }
-        
+
     }
 }

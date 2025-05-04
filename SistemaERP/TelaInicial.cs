@@ -1,7 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using SistemaERP.Cadastros.Produto;
-using SistemaERP.Cadastros.Usuario;
-
 namespace SistemaERP
 {
     public partial class TelaInicial : Form

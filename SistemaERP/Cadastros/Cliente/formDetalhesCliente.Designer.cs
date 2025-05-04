@@ -190,7 +190,7 @@
             cbEstados.Name = "cbEstados";
             cbEstados.Size = new Size(183, 23);
             cbEstados.TabIndex = 22;
-            cbEstados.SelectedIndexChanged+= cbEstado_SelectedIndexChanged;
+            cbEstados.SelectedIndexChanged += cbEstado_SelectedIndexChanged;
             // 
             // label5
             // 
@@ -367,13 +367,13 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(720, 355);
-            ControlBox = false;
             Controls.Add(lblDataExclusao);
             Controls.Add(txtExclusao);
             Controls.Add(btnSalvar);
             Controls.Add(btnCancelar);
             Controls.Add(tcCliente);
-            MinimizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "formDetalhesCliente";
             StartPosition = FormStartPosition.CenterParent;
             Text = "[NOVO]";

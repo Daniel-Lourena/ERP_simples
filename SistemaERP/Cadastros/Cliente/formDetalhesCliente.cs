@@ -12,13 +12,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ModuloCadastro.ViewModel;
 
 namespace SistemaERP.Cadastros.Cliente
 {
     public partial class formDetalhesCliente : Form
     {
         private int _id = 0;
-        private ClienteEntity _cliente;
+        private ClienteViewModel _cliente;
 
         public formDetalhesCliente()
         {
@@ -30,64 +31,61 @@ namespace SistemaERP.Cadastros.Cliente
             _id = id;
         }
 
-        public void CarregaEstado()
+        private void ConfigurarDataBinding()
+        {
+            _cliente = _cliente ?? new ClienteViewModel();
+            txtFantasia.DataBindings.Add(nameof(txtFantasia.Text), _cliente, nameof(_cliente.fantasia));
+            txtRazaoSocial.DataBindings.Add(nameof(txtRazaoSocial.Text), _cliente, nameof(_cliente.razaoSocial));
+            txtLogradouro.DataBindings.Add(nameof(txtLogradouro.Text), _cliente, nameof(_cliente.end_logradouro));
+            txtRua.DataBindings.Add(nameof(txtRua.Text), _cliente, nameof(_cliente.end_nomeRua));
+            txtNro.DataBindings.Add(nameof(txtNro.Text), _cliente, nameof(_cliente.end_numero));
+            txtBairro.DataBindings.Add(nameof(txtBairro.Text), _cliente, nameof(_cliente.end_bairro));
+            txtCadastro.DataBindings.Add(nameof(txtCadastro.Text), _cliente, nameof(_cliente.dataCadastro));
+            txtAtualizacao.DataBindings.Add(nameof(txtAtualizacao.Text), _cliente, nameof(_cliente.dataAtualizacao));
+            cbEstados.DataBindings.Add(nameof(cbEstados.SelectedValue), _cliente, nameof(_cliente.end_uf));
+            cbCidades.DataBindings.Add(nameof(cbCidades.SelectedValue), _cliente, nameof(_cliente.end_cidade));
+        }
+
+        private void CarregaEstado()
         {
             cbEstados.GetListEstados();
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            ClienteEntity cliente = new()
-            {
-                fantasia = txtFantasia.Text,
-                razaoSocial = txtRazaoSocial.Text,
-                end_logradouro = txtLogradouro.Text,
-                end_numero = txtNro.Text,
-                end_nomeRua = txtRua.Text,
-                end_bairro = txtBairro.Text,
-                end_cidade = (int)cbCidades.SelectedValue,
-                end_uf = (int)cbEstados.SelectedValue,
-                dataCadastro = DateTime.Now,
-                dataAtualizacao = DateTime.Now,
-                limiteCredito = nudLimite.Value
-            };
-
             if (_id == 0)
             {
-                new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Insert(cliente);
+                _cliente.dataCadastro = DateTime.Now;
+                _cliente.dataAtualizacao = DateTime.Now;
+                _cliente.id = new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Insert(_cliente.ToEntity());
+                _id = _cliente.id;
+                this.Text = $"REGISTRO [{_cliente.id}]";
             }
             else
             {
-                cliente.dataCadastro = _cliente.dataCadastro;
-                new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Update(cliente);
+                _cliente.dataAtualizacao = DateTime.Now;
+                new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Update(_cliente.ToEntity());
             }
+
+            MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void formDetalhesCliente_Load(object sender, EventArgs e)
         {
             if (_id > 0) MostraCliente();
+            ConfigurarDataBinding();
         }
 
         private void MostraCliente()
         {
-            _cliente = new ClienteService(new ModuloCadastroContext()).Get(_id);
-            txtFantasia.Text = _cliente.fantasia;
-            txtRazaoSocial.Text = _cliente.razaoSocial;
-            txtLogradouro.Text = _cliente.end_logradouro;
-            txtRua.Text = _cliente.end_nomeRua;
-            txtNro.Text = _cliente.end_numero;
-            txtBairro.Text = _cliente.end_bairro;
-            txtCadastro.Text = _cliente.dataCadastro.ToString();
-            txtAtualizacao.Text = _cliente.dataAtualizacao.ToString();
-            cbEstados.SelectedValue = _cliente.end_uf;
-            cbCidades.SelectedValue = _cliente.end_cidade;
+            _cliente = new ClienteService(new ModuloCadastroContext()).Get(_id).ToViewModel();
 
             if (_cliente.excluido)
             {
                 lblDataExclusao.Visible = true;
                 txtExclusao.Visible = true;
-                txtExclusao.Text = _cliente.dataExclusao.ToString();
             }
+
             this.Text = $"REGISTRO [{_cliente.id}]";
         }
 
@@ -117,7 +115,8 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void cbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cbCidades.GetListCidades((int)cbEstados.SelectedValue);
+            if (cbEstados.SelectedValue != null)
+                cbCidades.GetListCidades((int)cbEstados.SelectedValue);
         }
     }
 }

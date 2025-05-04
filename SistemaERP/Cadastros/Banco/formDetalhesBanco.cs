@@ -57,6 +57,8 @@ namespace SistemaERP.Cadastros.Banco
         {
             if (_id == 0)
             {
+                _banco.dataCadastro = DateTime.Now;
+                _banco.dataAtualizacao = DateTime.Now;
                 _banco.id = new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Insert(_banco.ToEntity());
                 _id = _banco.id;
                 this.Text = $"REGISTRO [{_banco.id}]";
@@ -66,7 +68,7 @@ namespace SistemaERP.Cadastros.Banco
                 _banco.dataAtualizacao = DateTime.Now;
                 new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Update(_banco.ToEntity());
             }
-            MessageBox.Show("Salvo com sucesso","Sistema ERP",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void formDetalhesBanco_Load(object sender, EventArgs e)

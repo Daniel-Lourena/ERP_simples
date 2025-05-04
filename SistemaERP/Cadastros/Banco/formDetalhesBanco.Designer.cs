@@ -424,6 +424,7 @@
             Controls.Add(btnSalvar);
             Controls.Add(btnCancelar);
             Controls.Add(tcBanco);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             Name = "formDetalhesBanco";
             StartPosition = FormStartPosition.CenterParent;

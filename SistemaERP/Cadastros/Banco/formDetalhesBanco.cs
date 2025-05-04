@@ -1,26 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ModuloCadastro.Service;
+﻿using ModuloCadastro.Service;
 using ModuloCadastro.Context;
-using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using SistemaERP.Cadastros.Extensions;
-using SistemaERP.Cadastros.Helper;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using ModuloCadastro.ViewModel;
 
 namespace SistemaERP.Cadastros.Banco
 {
     public partial class formDetalhesBanco : Form
     {
         private int _id = 0;
-        private BancoEntity _banco;
+        private BancoViewModel _banco;
 
         public formDetalhesBanco()
         {
@@ -36,8 +25,8 @@ namespace SistemaERP.Cadastros.Banco
 
         private void ConfigurarDataBinding()
         {
-            _banco = _banco ?? new BancoEntity();
-            cbTipoConta.DataBindings.Add(nameof(cbTipoConta.SelectedValue), _banco, nameof(_banco.tipoConta));
+            _banco = _banco ?? new BancoViewModel();
+            cbTipoConta.DataBindings.Add(nameof(cbTipoConta.SelectedItem), _banco, nameof(_banco.tipoConta));
             txtAtualizacao.DataBindings.Add(nameof(txtAtualizacao.Text), _banco, nameof(_banco.dataAtualizacao));
             txtCadastro.DataBindings.Add(nameof(txtCadastro.Text), _banco, nameof(_banco.dataCadastro));
             txtNomeBanco.DataBindings.Add(nameof(txtNomeBanco.Text), _banco, nameof(_banco.nome));
@@ -48,7 +37,7 @@ namespace SistemaERP.Cadastros.Banco
             txtConta.DataBindings.Add(nameof(txtConta.Text), _banco, nameof(_banco.conta));
             txtNomeTitular.DataBindings.Add(nameof(txtNomeTitular.Text), _banco, nameof(_banco.titularNome));
             txtTitularDocumento.DataBindings.Add(nameof(txtTitularDocumento.Text), _banco, nameof(_banco.titularDocumento));
-            cbTipoChavePix.DataBindings.Add(nameof(cbTipoChavePix.SelectedValue), _banco, nameof(_banco.pixTipoChave));
+            cbTipoChavePix.DataBindings.Add(nameof(cbTipoChavePix.SelectedItem), _banco, nameof(_banco.pixTipoChave));
             txtChavePix.DataBindings.Add(nameof(txtChavePix.Text), _banco, nameof(_banco.pixChave));
             ckContaInternacional.DataBindings.Add(nameof(ckContaInternacional.Checked), _banco, nameof(_banco.contaInternacional));
             ckInativo.DataBindings.Add(nameof(ckInativo.Checked), _banco, nameof(_banco.inativo));
@@ -68,13 +57,16 @@ namespace SistemaERP.Cadastros.Banco
         {
             if (_id == 0)
             {
-                new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Insert(_banco);
+                _banco.id = new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Insert(_banco.ToEntity());
+                _id = _banco.id;
+                this.Text = $"REGISTRO [{_banco.id}]";
             }
             else
             {
                 _banco.dataAtualizacao = DateTime.Now;
-                new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Update(_banco);
+                new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Update(_banco.ToEntity());
             }
+            MessageBox.Show("Salvo com sucesso","Sistema ERP",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
 
         private void formDetalhesBanco_Load(object sender, EventArgs e)
@@ -86,25 +78,7 @@ namespace SistemaERP.Cadastros.Banco
 
         private void MostraBanco()
         {
-            _banco = new BancoService(new ModuloCadastroContext()).Get(_id);
-            txtNomeBanco.Text = _banco.nome;
-            txtCodigo.Text = _banco.codigo;
-            txtAgencia.Text = _banco.agencia;
-            txtAgenciaDigito.Text = _banco.agenciaDigito;
-            txtConta.Text = _banco.conta;
-            txtContaDigito.Text = _banco.contaDigito;
-            txtNomeTitular.Text = _banco.titularNome;
-            txtTitularDocumento.Text = _banco.titularDocumento;
-            ckInativo.Checked = _banco.inativo;
-            ckContaInternacional.Checked = _banco.contaInternacional;
-            txtCadastro.Text = _banco.dataCadastro.ToString();
-            txtAtualizacao.Text = _banco.dataAtualizacao.ToString();
-            cbTipoConta.SelectedValue = _banco.tipoConta;
-            cbTipoChavePix.SelectedValue = _banco.pixTipoChave;
-            txtChavePix.Text = _banco.pixChave;
-            txtIBAN.Text = _banco.iban;
-            txtSwift.Text = _banco.swiftCode;
-
+            _banco = new BancoService(new ModuloCadastroContext()).Get(_id).ToViewModel();
             this.Text = $"REGISTRO [{_banco.id}]";
         }
 

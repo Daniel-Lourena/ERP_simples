@@ -1,20 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ModuloCadastro.Context;
-using ModuloCadastro.Entity;
-using ModuloCadastro.Enum;
+﻿using ModuloCadastro.Context;
+using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SistemaERP.Cadastros.Banco
 {
@@ -30,10 +17,11 @@ namespace SistemaERP.Cadastros.Banco
 
         private void CarregaBancos()
         {
-            var listaDataSource = new ModuloCadastro.Service.BancoService(_db_context).GetList();
+            var listaDataSource = new ModuloCadastro.Service.BancoService(_db_context).GetList()
+                .Select(x => new BancoViewModel { id = x.id, nome = x.nome}).ToList();
             dgvBancos.CriarColunasDataGridView(listaDataSource, new()
             { 
-                (nameof(BancoEntity.id),true,true), (nameof(BancoEntity.nome),true,true),
+                (nameof(BancoViewModel.id),true,true), (nameof(BancoViewModel.nome),true,true),
             });
         }
 
@@ -46,7 +34,7 @@ namespace SistemaERP.Cadastros.Banco
         {
             if (dgvBancos.CurrentRow != null)
             {
-                new formDetalhesBanco(Convert.ToInt32(dgvBancos.CurrentRow.Cells[nameof(BancoEntity.id)].Value)).ShowDialog();
+                new formDetalhesBanco(Convert.ToInt32(dgvBancos.CurrentRow.Cells[nameof(BancoViewModel.id)].Value)).ShowDialog();
             }
         }
     }

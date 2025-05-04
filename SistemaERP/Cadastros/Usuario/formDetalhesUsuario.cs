@@ -59,9 +59,10 @@ namespace SistemaERP.Cadastros.Usuario
             else
             {
                 _usuario.dataAtualizacao = DateTime.Now;
-                UsuarioEntity usuario = _usuario.ToEntity();
-                new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).Update(usuario);
+                new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).Update(_usuario.ToEntity());
+
             }
+            MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void formDetalhesUsuario_Load(object sender, EventArgs e)

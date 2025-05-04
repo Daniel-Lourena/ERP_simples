@@ -1,4 +1,6 @@
 ﻿using ModuloCadastro.Enum;
+using ModuloConfiguracoes.Enum;
+using ModuloConfiguracoes.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +23,13 @@ namespace SistemaERP.Cadastros.Extensions
         }
         public static void PreencherComboBoxEnum<E>(this ComboBox comboBox, bool selecionarPrimeiro = false) where E : Enum
         {
-            List<EnumItem> dataSource = EnumExtensions.GetList<E>();
+            //List<EnumItem> dataSource = EnumExtensions.GetList<E>();
 
-            comboBox.ValueMember = nameof(EnumItem.Value);
-            comboBox.DisplayMember = nameof(EnumItem.Description);
-            comboBox.DataSource = dataSource;
+            //comboBox.ValueMember = nameof(EnumItem.Value);
+            //comboBox.DisplayMember = nameof(EnumItem.Description);
+            //comboBox.DataSource = dataSource;
+
+            comboBox.DataSource = Enum.GetValues(typeof(E));
 
             if (selecionarPrimeiro && comboBox.Items.Count > 0)
                 comboBox.SelectedIndex = 0;

@@ -1,4 +1,5 @@
 ﻿using ModuloCadastro.Enum;
+using ModuloCadastro.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,12 +21,27 @@ namespace ModuloCadastro.Entity
         [Display(Name = "Cargo",Description = ""), Column(TypeName = "int")] 
         public ECargo cargo { get; set; }
         [Display(Name = "Dta. Cadastro", Description = ""), Column(TypeName = "datetime")] 
-        public DateTime dataCadastro { get; set; }
+        public DateTime? dataCadastro { get; set; }
         [Display(Name = "Dta. Atualização", Description = ""), Column(TypeName = "datetime")] 
-        public DateTime dataAtualizacao { get; set; }
+        public DateTime? dataAtualizacao { get; set; }
         [Display(Name = "Excluído", Description = ""), Column(TypeName = "tinyint(1)")] 
         public bool excluido { get; set; }
         [Display(Name = "Dta. Exclusão", Description = ""), Column(TypeName = "datetime")]
         public DateTime? dataExclusao { get; set; }
+
+
+        public UsuarioViewModel ToViewModel()
+        {
+            return new UsuarioViewModel
+            {
+                id = this.id,
+                nome = this.nome,
+                cargo = this.cargo,
+                dataCadastro = this.dataCadastro,
+                dataAtualizacao = this.dataAtualizacao,
+                dataExclusao = this.dataExclusao,
+                excluido = this.excluido
+            };
+        }
     }
 }

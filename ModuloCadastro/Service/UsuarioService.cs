@@ -24,23 +24,26 @@ namespace ModuloCadastro.Service
                 .AsNoTracking().ToList();
         }
 
-        public void Insert(UsuarioEntity usuarioEntity)
+        public int Insert(UsuarioEntity entity)
         {
+            int insert = 0;
             using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.idUsuario++;
-                usuarioEntity.id = numerador.idUsuario;
+                entity.id = numerador.idUsuario;
                 var _context = new ModuloCadastroContext();
-                _context.Usuarios.Add(usuarioEntity);
+                _context.Usuarios.Add(entity);
                 _context.SaveChanges();
                 ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idUsuario) });
+                insert = entity.id;
             }
+            return insert;
         }
-        public void Update(UsuarioEntity usuarioEntity)
+        public void Update(UsuarioEntity entity)
         {
             var _context = new ModuloCadastroContext();
-            _context.Usuarios.Update(usuarioEntity);
+            _context.Usuarios.Update(entity);
             _context.SaveChanges();
         }
 

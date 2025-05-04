@@ -22,8 +22,9 @@ namespace ModuloCadastro.Service
             return _db_context.Produtos.ToList();
         }
 
-        public void Insert(ProdutoEntity entity)
+        public int Insert(ProdutoEntity entity)
         {
+            int insert = 0;
             using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
@@ -33,7 +34,9 @@ namespace ModuloCadastro.Service
                 _context.Produtos.Add(entity);
                 _context.SaveChanges();
                 ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idProduto) });
+                insert = entity.id;
             }
+            return insert;
         }
         public void Update(ProdutoEntity entity)
         {

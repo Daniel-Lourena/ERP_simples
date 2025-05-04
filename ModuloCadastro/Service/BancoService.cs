@@ -22,8 +22,9 @@ namespace ModuloCadastro.Service
             return _db_context.Bancos.ToList();
         }
 
-        public void Insert(BancoEntity entity)
+        public int Insert(BancoEntity entity)
         {
+            int insert = 0;
             using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
@@ -33,7 +34,9 @@ namespace ModuloCadastro.Service
                 _context.Bancos.Add(entity);
                 _context.SaveChanges();
                 ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idBanco) });
+                insert = entity.id;
             }
+            return insert;
         }
         public void Update(BancoEntity entity)
         {

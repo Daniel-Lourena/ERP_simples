@@ -28,18 +28,21 @@ namespace ModuloCadastro.Service
                 .ToList();
         }
 
-        public void Insert(ClienteEntity clienteEntity)
+        public int Insert(ClienteEntity entity)
         {
+            int insert = 0;
             using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.idCliente++;
-                clienteEntity.id = numerador.idCliente;
+                entity.id = numerador.idCliente;
                 var _context = new ModuloCadastroContext();
-                _context.Clientes.Add(clienteEntity);
+                _context.Clientes.Add(entity);
                 _context.SaveChanges();
                 ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idCliente) });
+                insert = entity.id;
             }
+            return insert;
         }
 
         public void Update(ClienteEntity clienteEntity)

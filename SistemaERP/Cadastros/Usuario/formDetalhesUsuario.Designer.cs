@@ -114,6 +114,7 @@
             // 
             // cbCargo
             // 
+            cbCargo.DropDownStyle = ComboBoxStyle.DropDownList;
             cbCargo.FormattingEnabled = true;
             cbCargo.Location = new Point(86, 120);
             cbCargo.Name = "cbCargo";
@@ -177,12 +178,13 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(644, 209);
-            ControlBox = false;
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MainMenuStrip = menuStrip1;
-            MinimizeBox = false;
+            MaximizeBox = false;
             Name = "formDetalhesUsuario";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "[NOVO]";
             Load += formDetalhesUsuario_Load;
             menuStrip1.ResumeLayout(false);

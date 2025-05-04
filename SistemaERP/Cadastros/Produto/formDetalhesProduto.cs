@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ModuloCadastro.ViewModel;
 
 namespace SistemaERP.Cadastros.Produto
 {
@@ -48,8 +49,8 @@ namespace SistemaERP.Cadastros.Produto
 
         private void CarregaCategoria()
         {
-            List<CategoriaEntity> categorias = new ModuloCadastro.Service.CategoriaService(new ModuloCadastroContext()).GetList();
-            cbCategoria.PreencherComboBoxList(categorias, nameof(CategoriaEntity.id), nameof(CategoriaEntity.descricao), true);
+            List<CategoriaViewModel> categorias = new ModuloCadastro.Service.CategoriaService(new ModuloCadastroContext()).GetList().Select(x => new CategoriaViewModel { id = x.id,descricao = x.descricao}).ToList();
+            cbCategoria.PreencherComboBoxList(categorias, nameof(CategoriaViewModel.id), nameof(CategoriaViewModel.descricao), true);
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)

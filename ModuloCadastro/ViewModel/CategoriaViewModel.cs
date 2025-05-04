@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ModuloCadastro.Entity;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace ModuloCadastro.ViewModel
+{
+    public class CategoriaViewModel : INotifyPropertyChanged
+    {
+        private int _id;
+        private string _descricao;
+
+        [Display(Name = "ID", Description = "")]
+        public int id 
+        {
+            get => _id;
+            set 
+            { 
+                if (_id != value)
+                {
+                    _id = value;
+                    OnPropertyChanged();
+                }
+            } 
+        }
+
+        [Display(Name = "Descrição", Description = "")]
+        public string? descricao 
+        {
+            get => _descricao;
+            set
+            {
+                if (_descricao != value)
+                {
+                    _descricao= value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propriedade = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propriedade));
+        }
+
+        public CategoriaEntity ToEntity()
+        {
+            return new CategoriaEntity
+            {
+                id = this.id,
+                descricao = this.descricao
+            };
+        }
+    }
+}

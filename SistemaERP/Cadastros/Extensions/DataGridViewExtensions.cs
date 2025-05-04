@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ModuloConfiguracoes.Extensions;
+using System.ComponentModel;
 
 namespace SistemaERP.Cadastros.Extensions
 {
@@ -14,45 +15,33 @@ namespace SistemaERP.Cadastros.Extensions
     {
         public static void CriarColunasDataGridView<T>(this DataGridView dgvGenerico,List<T> listaDataSource, List<(string nomeColuna,bool readOnly,bool visible)> popularColunas)
         {
-            dgvGenerico.Columns.Clear();
-            dgvGenerico.Refresh();
+            dgvGenerico.AutoGenerateColumns = false;
 
             PropertyInfo[]? propriedades = typeof(T).GetProperties().Where(x => x.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
 
-            foreach (var prop in propriedades)
+            if (dgvGenerico.Columns.Count == 0)
             {
-                var col = popularColunas.FirstOrDefault(x => x.nomeColuna.Equals(prop.Name));
-                if (!String.IsNullOrEmpty(col.nomeColuna))
+                foreach (var prop in propriedades)
                 {
-                    var atributoPropriedade = prop.GetCustomAttribute<DisplayAttribute>();
-                    DataGridViewTextBoxColumn coluna = new()
+                    var col = popularColunas.FirstOrDefault(x => x.nomeColuna.Equals(prop.Name));
+                    if (!String.IsNullOrEmpty(col.nomeColuna))
                     {
-                        DataPropertyName = prop.Name,
-                        ReadOnly = col.readOnly,
-                        Visible = col.visible,
-                        Name = prop.Name,
-                        HeaderText = atributoPropriedade == null ? prop.Name : atributoPropriedade.Name
-                    };
-                    dgvGenerico.Columns.Add(coluna);
+                        var atributoPropriedade = prop.GetCustomAttribute<DisplayAttribute>();
+                        DataGridViewTextBoxColumn coluna = new()
+                        {
+                            DataPropertyName = prop.Name,
+                            ReadOnly = col.readOnly,
+                            Visible = col.visible,
+                            Name = prop.Name,
+                            HeaderText = atributoPropriedade == null ? prop.Name : atributoPropriedade.Name
+                        };
+                        dgvGenerico.Columns.Add(coluna);
+                    }
                 }
             }
 
-            foreach (var item in listaDataSource)
-            {
-                object[] valores = popularColunas.Select(col =>
-                {
-                    var propriedade = item.GetType().GetProperty(col.nomeColuna);
-                    var valor = propriedade?.GetValue(item);
-
-                    if (valor is Enum enumValor)
-                        return enumValor.GetDescription(); 
-
-                    return valor;
-                }).ToArray(); 
-                
-                dgvGenerico.Rows.Add(valores);
-            }
-
+            dgvGenerico.DataSource = null;
+            dgvGenerico.DataSource = new BindingList<T>(listaDataSource);
             dgvGenerico.Refresh();
         }
     }

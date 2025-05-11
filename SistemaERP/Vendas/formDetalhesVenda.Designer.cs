@@ -30,13 +30,18 @@
         {
             tcPedidos = new TabControl();
             tpDadosGerais = new TabPage();
+            label6 = new Label();
+            txtAtualizacao = new TextBox();
+            label9 = new Label();
+            txtCadastro = new TextBox();
             groupBox1 = new GroupBox();
-            textBox3 = new TextBox();
+            btnProcurarCliente = new Button();
+            txtIdCliente = new TextBox();
             label4 = new Label();
             label3 = new Label();
-            textBox2 = new TextBox();
+            txtUF = new TextBox();
             label2 = new Label();
-            textBox1 = new TextBox();
+            txtCidade = new TextBox();
             txtRua = new TextBox();
             label10 = new Label();
             txtFantasia = new TextBox();
@@ -66,6 +71,7 @@
             btnDinheiro = new Button();
             dgvRecebimentos = new DataGridView();
             panel1 = new Panel();
+            btnSalvar = new Button();
             tcPedidos.SuspendLayout();
             tpDadosGerais.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -77,6 +83,7 @@
             panel2.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // tcPedidos
@@ -93,6 +100,10 @@
             // 
             // tpDadosGerais
             // 
+            tpDadosGerais.Controls.Add(label6);
+            tpDadosGerais.Controls.Add(txtAtualizacao);
+            tpDadosGerais.Controls.Add(label9);
+            tpDadosGerais.Controls.Add(txtCadastro);
             tpDadosGerais.Controls.Add(groupBox1);
             tpDadosGerais.Location = new Point(4, 24);
             tpDadosGerais.Name = "tpDadosGerais";
@@ -102,14 +113,51 @@
             tpDadosGerais.Text = "Dados Gerais";
             tpDadosGerais.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(524, 9);
+            label6.Name = "label6";
+            label6.Size = new Size(74, 15);
+            label6.TabIndex = 48;
+            label6.Text = "Atualização: ";
+            // 
+            // txtAtualizacao
+            // 
+            txtAtualizacao.BackColor = SystemColors.Menu;
+            txtAtualizacao.Location = new Point(604, 6);
+            txtAtualizacao.Name = "txtAtualizacao";
+            txtAtualizacao.ReadOnly = true;
+            txtAtualizacao.Size = new Size(167, 23);
+            txtAtualizacao.TabIndex = 47;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(259, 9);
+            label9.Name = "label9";
+            label9.Size = new Size(53, 15);
+            label9.TabIndex = 46;
+            label9.Text = "Criação: ";
+            // 
+            // txtCadastro
+            // 
+            txtCadastro.BackColor = SystemColors.Menu;
+            txtCadastro.Location = new Point(325, 6);
+            txtCadastro.Name = "txtCadastro";
+            txtCadastro.ReadOnly = true;
+            txtCadastro.Size = new Size(167, 23);
+            txtCadastro.TabIndex = 45;
+            // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(textBox3);
+            groupBox1.Controls.Add(btnProcurarCliente);
+            groupBox1.Controls.Add(txtIdCliente);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(textBox2);
+            groupBox1.Controls.Add(txtUF);
             groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(txtCidade);
             groupBox1.Controls.Add(txtRua);
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(txtFantasia);
@@ -121,20 +169,30 @@
             groupBox1.Controls.Add(txtLogradouro);
             groupBox1.Controls.Add(txtNro);
             groupBox1.Controls.Add(label7);
-            groupBox1.Location = new Point(23, 26);
+            groupBox1.Location = new Point(23, 47);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(748, 154);
             groupBox1.TabIndex = 44;
             groupBox1.TabStop = false;
             groupBox1.Text = "Cliente";
             // 
-            // textBox3
+            // btnProcurarCliente
             // 
-            textBox3.Location = new Point(21, 54);
-            textBox3.Name = "textBox3";
-            textBox3.ReadOnly = true;
-            textBox3.Size = new Size(40, 23);
-            textBox3.TabIndex = 48;
+            btnProcurarCliente.Location = new Point(67, 55);
+            btnProcurarCliente.Name = "btnProcurarCliente";
+            btnProcurarCliente.Size = new Size(24, 22);
+            btnProcurarCliente.TabIndex = 2;
+            btnProcurarCliente.Text = "...";
+            btnProcurarCliente.UseVisualStyleBackColor = true;
+            btnProcurarCliente.Click += btnProcurarCliente_Click;
+            // 
+            // txtIdCliente
+            // 
+            txtIdCliente.Location = new Point(21, 54);
+            txtIdCliente.Name = "txtIdCliente";
+            txtIdCliente.ReadOnly = true;
+            txtIdCliente.Size = new Size(40, 23);
+            txtIdCliente.TabIndex = 48;
             // 
             // label4
             // 
@@ -154,13 +212,13 @@
             label3.TabIndex = 47;
             label3.Text = "UF:";
             // 
-            // textBox2
+            // txtUF
             // 
-            textBox2.Location = new Point(667, 103);
-            textBox2.Name = "textBox2";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(63, 23);
-            textBox2.TabIndex = 46;
+            txtUF.Location = new Point(667, 103);
+            txtUF.Name = "txtUF";
+            txtUF.ReadOnly = true;
+            txtUF.Size = new Size(63, 23);
+            txtUF.TabIndex = 46;
             // 
             // label2
             // 
@@ -171,13 +229,13 @@
             label2.TabIndex = 45;
             label2.Text = "Cidade:";
             // 
-            // textBox1
+            // txtCidade
             // 
-            textBox1.Location = new Point(481, 103);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(180, 23);
-            textBox1.TabIndex = 44;
+            txtCidade.Location = new Point(481, 103);
+            txtCidade.Name = "txtCidade";
+            txtCidade.ReadOnly = true;
+            txtCidade.Size = new Size(180, 23);
+            txtCidade.TabIndex = 44;
             // 
             // txtRua
             // 
@@ -198,10 +256,10 @@
             // 
             // txtFantasia
             // 
-            txtFantasia.Location = new Point(67, 54);
+            txtFantasia.Location = new Point(97, 54);
             txtFantasia.Name = "txtFantasia";
             txtFantasia.ReadOnly = true;
-            txtFantasia.Size = new Size(193, 23);
+            txtFantasia.Size = new Size(189, 23);
             txtFantasia.TabIndex = 32;
             // 
             // txtBairro
@@ -215,7 +273,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(67, 36);
+            label1.Location = new Point(97, 36);
             label1.Name = "label1";
             label1.Size = new Size(56, 15);
             label1.TabIndex = 33;
@@ -223,16 +281,16 @@
             // 
             // txtRazaoSocial
             // 
-            txtRazaoSocial.Location = new Point(266, 54);
+            txtRazaoSocial.Location = new Point(292, 54);
             txtRazaoSocial.Name = "txtRazaoSocial";
             txtRazaoSocial.ReadOnly = true;
-            txtRazaoSocial.Size = new Size(383, 23);
+            txtRazaoSocial.Size = new Size(369, 23);
             txtRazaoSocial.TabIndex = 34;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(265, 39);
+            label5.Location = new Point(292, 36);
             label5.Name = "label5";
             label5.Size = new Size(77, 15);
             label5.TabIndex = 35;
@@ -241,7 +299,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(655, 36);
+            label8.Location = new Point(667, 36);
             label8.Name = "label8";
             label8.Size = new Size(27, 15);
             label8.TabIndex = 39;
@@ -257,10 +315,10 @@
             // 
             // txtNro
             // 
-            txtNro.Location = new Point(655, 54);
+            txtNro.Location = new Point(667, 54);
             txtNro.Name = "txtNro";
             txtNro.ReadOnly = true;
-            txtNro.Size = new Size(75, 23);
+            txtNro.Size = new Size(63, 23);
             txtNro.TabIndex = 38;
             // 
             // label7
@@ -274,8 +332,8 @@
             // 
             // tpProdutos
             // 
-            tpProdutos.Controls.Add(panel3);
             tpProdutos.Controls.Add(dgvProdutos);
+            tpProdutos.Controls.Add(panel3);
             tpProdutos.Location = new Point(4, 24);
             tpProdutos.Name = "tpProdutos";
             tpProdutos.Padding = new Padding(3);
@@ -332,7 +390,7 @@
             dgvProdutos.Location = new Point(3, 3);
             dgvProdutos.Name = "dgvProdutos";
             dgvProdutos.RowTemplate.Height = 25;
-            dgvProdutos.Size = new Size(786, 344);
+            dgvProdutos.Size = new Size(786, 251);
             dgvProdutos.TabIndex = 0;
             // 
             // tpFinanceiro
@@ -450,11 +508,22 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnSalvar);
             panel1.Dock = DockStyle.Bottom;
             panel1.Location = new Point(0, 378);
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 72);
             panel1.TabIndex = 1;
+            // 
+            // btnSalvar
+            // 
+            btnSalvar.Location = new Point(7, 10);
+            btnSalvar.Name = "btnSalvar";
+            btnSalvar.Size = new Size(81, 50);
+            btnSalvar.TabIndex = 1;
+            btnSalvar.Text = "SALVAR";
+            btnSalvar.UseVisualStyleBackColor = true;
+            btnSalvar.Click += btnSalvar_Click;
             // 
             // formDetalhesVenda
             // 
@@ -465,10 +534,12 @@
             Controls.Add(panel1);
             MaximizeBox = false;
             Name = "formDetalhesVenda";
-            Text = "Pedido";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "[NOVO]";
             Load += formDetalhesVenda_Load;
             tcPedidos.ResumeLayout(false);
             tpDadosGerais.ResumeLayout(false);
+            tpDadosGerais.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             tpProdutos.ResumeLayout(false);
@@ -479,6 +550,7 @@
             panel2.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -501,10 +573,10 @@
         private TextBox txtFantasia;
         private GroupBox groupBox1;
         private Label label3;
-        private TextBox textBox2;
+        private TextBox txtUF;
         private Label label2;
-        private TextBox textBox1;
-        private TextBox textBox3;
+        private TextBox txtCidade;
+        private TextBox txtIdCliente;
         private Label label4;
         private TabPage tpFinanceiro;
         private Panel panel2;
@@ -522,5 +594,11 @@
         private GroupBox groupBox3;
         private Button btnRemProduto;
         private Button btnAddProduto;
+        private Button btnSalvar;
+        private Button btnProcurarCliente;
+        private Label label6;
+        private TextBox txtAtualizacao;
+        private Label label9;
+        private TextBox txtCadastro;
     }
 }

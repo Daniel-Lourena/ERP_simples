@@ -47,13 +47,13 @@ namespace ModuloCadastro.ViewModel
         {
             return new UsuarioEntity
             {
-                id = id,
-                nome = nome,
-                cargo = cargo,
-                dataCadastro = dataCadastro,
-                dataAtualizacao = dataAtualizacao,
-                dataExclusao = dataExclusao,
-                excluido = excluido
+                Id = id,
+                Nome = nome,
+                Cargo = cargo,
+                DataCadastro = dataCadastro,
+                DataAtualizacao = dataAtualizacao,
+                DataExclusao = dataExclusao,
+                Excluido = excluido
             };
         }
 

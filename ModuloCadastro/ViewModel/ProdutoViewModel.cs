@@ -64,7 +64,7 @@ namespace ModuloCadastro.ViewModel
         [Display(Name = "Unidade", Description = "")]
         public string descricaoUnidade => idUnidade.GetDescription();
         [Display(Name = "Categoria", Description = "")]
-        public string? descricaoCategoria => DadosCategoria.descricao;
+        public string? descricaoCategoria => DadosCategoria.Descricao;
 
         public CategoriaEntity DadosCategoria { get => _DadosCategoria; set { if (_DadosCategoria != value) { _DadosCategoria = value; OnPropertyChanged(); } } }
 
@@ -80,21 +80,21 @@ namespace ModuloCadastro.ViewModel
         {
             return new ProdutoEntity
             {
-                id = this.id,
-                descricao = this.descricao,
-                idUnidade = this.idUnidade,
-                cest = this.cest,
-                ncm = this.ncm,
-                codigoEstoque_SKU = this.codigoEstoque_SKU,
-                categoria = this.categoria,
-                estoqueMinimo = this.estoqueMinimo,
-                origem = this.origem,
-                cst_csosn = this.cst_csosn,
-                inativo = this.inativo,
-                usuarioCadastro = this.usuarioCadastro,
-                dataCadastro = this.dataCadastro,
-                dataAtualizacao = this.dataAtualizacao,
-                DadosCategoria = this.DadosCategoria
+                Id = this.id,
+                Descricao = this.descricao,
+                UnidadeId = this.idUnidade,
+                Cest = this.cest,
+                Ncm = this.ncm,
+                CodigoEstoque_SKU = this.codigoEstoque_SKU,
+                CategoriaId = this.categoria,
+                EstoqueMinimo = this.estoqueMinimo,
+                Origem = this.origem,
+                Cst_csosn = this.cst_csosn,
+                Inativo = this.inativo,
+                UsuarioCadastroId = this.usuarioCadastro,
+                DataCadastro = this.dataCadastro,
+                DataAtualizacao = this.dataAtualizacao,
+                Categoria = this.DadosCategoria
             };
         }
     }

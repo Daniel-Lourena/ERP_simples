@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ModuloCadastro.ViewModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModuloCadastro.Entity
@@ -6,31 +7,43 @@ namespace ModuloCadastro.Entity
     [Table("tb_vendas")]
     public class PedidoVendaEntity : BaseEntity<PedidoVendaEntity>
     {
-        [Key, Display(Name = "id", Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id { get; set; }
-        [Display(Name = "idCliente", Description = ""), Column(TypeName = "int")]
-        public int idCliente { get; set; }
-        [Display(Name = "idCriador", Description = ""), Column(TypeName = "int")]
-        public int idCriador { get; set; }
-        [Display(Name = "dataCriacao", Description = ""), Column(TypeName = "datetime")]
-        public DateTime dataCriacao { get; set; }
-        [Display(Name = "dataAtualizacao", Description = ""), Column(TypeName = "datetime")]
-        public DateTime dataAtualizacao { get; set; }
-        [Display(Name = "usuarioAtualizacao", Description = ""), Column(TypeName = "int")]
-        public int usuarioAtualizacao { get; set; }
-        [Display(Name = "excluido", Description = ""), Column(TypeName = "tinyint(1)")]
-        public bool excluido { get; set; }
-        [Display(Name = "dataExclusao", Description = ""), Column(TypeName = "datetime")]
-        public DateTime? dataExclusao { get; set; }
-        [Display(Name = "usuarioFechamento", Description = ""), Column(TypeName = "int")]
-        public int usuarioFechamento { get; set; }
-        [Display(Name = "dataFechamento", Description = ""), Column(TypeName = "datetime")]
-        public DateTime? dataFechamento { get; set; }
+        [Key, Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        [Column(TypeName = "int")]
+        public int ClienteId { get; set; }
+        [Column(TypeName = "int")]
+        public int UsuarioCriacaoId { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? DataCriacao { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? DataAtualizacao { get; set; }
+        [Column(TypeName = "int")]
+        public int UsuarioAtualizacaoId { get; set; }
+        [Column(TypeName = "tinyint(1)")]
+        public bool Excluido { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? DataExclusao { get; set; }
+        [Column(TypeName = "int")]
+        public int? UsuarioFechamentoId { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? DataFechamento { get; set; }
 
-        public ClienteEntity DadosCliente { get; set; }
-        public UsuarioEntity DadosUsuarioCriador { get; set; }
-        public UsuarioEntity DadosUsuarioAtualizacao { get; set; }
-        public UsuarioEntity? DadosUsuarioFechamento { get; set; }
-        public List<ProdutoVendaEntity> listaProdutosVenda { get; set; }
+        public ClienteEntity Cliente { get; set; }
+        public UsuarioEntity UsuarioCriacao { get; set; }
+        public UsuarioEntity UsuarioAtualizacao { get; set; }
+        public UsuarioEntity? UsuarioFechamento { get; set; }
+        public List<ProdutoVendaEntity> ListaProdutosVenda { get; set; }
+
+        public PedidoVendaViewModel ToViewModel()
+        {
+            return new PedidoVendaViewModel
+            {
+                id = this.Id,
+                idCliente = this.ClienteId,
+                idCriador = this.UsuarioCriacaoId,
+                dataCriacao = this.DataCriacao, 
+                dataAtualizacao = this.DataAtualizacao,
+            };
+        }
     }
 }

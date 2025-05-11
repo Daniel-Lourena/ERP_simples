@@ -10,56 +10,56 @@ namespace ModuloCadastro.Entity
     public class ProdutoEntity : BaseEntity<ProdutoEntity>
     {
         [Key, Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "varchar(150)")]
-        public string descricao { get; set; }
+        public string Descricao { get; set; }
         [Column(TypeName = "int")]
-        public EUnidadeProduto idUnidade { get; set; }
+        public EUnidadeProduto UnidadeId { get; set; }
         [Column(TypeName = "varchar(7)")]
-        public string cest { get; set; }
+        public string Cest { get; set; }
         [Column(TypeName = "varchar(8)")]
-        public string ncm { get; set; }
+        public string Ncm { get; set; }
         [Column(TypeName = "varchar(100)")]
-        public string codigoEstoque_SKU { get; set; }
+        public string CodigoEstoque_SKU { get; set; }
         [Column(TypeName = "int")]
-        public int categoria { get; set; }
+        public int CategoriaId { get; set; }
         [Column(TypeName = "decimal(10,2)")]
-        public decimal estoqueMinimo { get; set; }
+        public decimal EstoqueMinimo { get; set; }
         [Column(TypeName = "int")]
-        public EOrigemProduto origem { get; set; }
+        public EOrigemProduto Origem { get; set; }
         [Column(TypeName = "varchar(5)")]
-        public ECst cst_csosn { get; set; }
+        public ECst Cst_csosn { get; set; }
         [Column(TypeName = "tinyint(1)")]
-        public bool inativo { get; set; }
+        public bool Inativo { get; set; }
         [Column(TypeName = "int")]
-        public int usuarioCadastro { get; set; }
+        public int UsuarioCadastroId { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? dataCadastro { get; set; }
+        public DateTime? DataCadastro { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? dataAtualizacao { get; set; }
+        public DateTime? DataAtualizacao { get; set; }
 
-        public CategoriaEntity DadosCategoria { get; set; }
+        public CategoriaEntity Categoria { get; set; }
 
 
         public ProdutoViewModel ToViewModel()
         {
             return new ProdutoViewModel
             {
-                id = this.id,
-                descricao = this.descricao,
-                idUnidade = this.idUnidade,
-                cest = this.cest,
-                ncm = this.ncm,
-                codigoEstoque_SKU = this.codigoEstoque_SKU,
-                categoria = this.categoria,
-                estoqueMinimo = this.estoqueMinimo,
-                origem = this.origem,
-                cst_csosn = this.cst_csosn,
-                inativo = this.inativo,
-                usuarioCadastro = this.usuarioCadastro,
-                dataCadastro = this.dataCadastro,
-                dataAtualizacao = this.dataAtualizacao,
-                DadosCategoria = this.DadosCategoria
+                id = this.Id,
+                descricao = this.Descricao,
+                idUnidade = this.UnidadeId,
+                cest = this.Cest,
+                ncm = this.Ncm,
+                codigoEstoque_SKU = this.CodigoEstoque_SKU,
+                categoria = this.CategoriaId,
+                estoqueMinimo = this.EstoqueMinimo,
+                origem = this.Origem,
+                cst_csosn = this.Cst_csosn,
+                inativo = this.Inativo,
+                usuarioCadastro = this.UsuarioCadastroId,
+                dataCadastro = this.DataCadastro,
+                dataAtualizacao = this.DataAtualizacao,
+                DadosCategoria = this.Categoria
             };
         }
     }

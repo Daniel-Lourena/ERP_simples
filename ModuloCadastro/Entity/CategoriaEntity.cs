@@ -7,8 +7,8 @@ namespace ModuloCadastro.Entity
     public class CategoriaEntity : BaseEntity<CategoriaEntity>
     {
         [Key, Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "varchar(100)")]
-        public string? descricao { get; set; }
+        public string? Descricao { get; set; }
     }
 }

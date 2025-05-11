@@ -7,17 +7,17 @@ namespace SistemaERP.Cadastros.Helper
     {
         public static void GetListEstados(this ComboBox cbEstados)
         {
-            List<EstadoEntity> estados = new ModuloCadastro.Service.EstadoService().GetList().OrderBy(x => x.nome).ToList();
+            List<EstadoEntity> estados = new ModuloCadastro.Service.EstadoService().GetList().OrderBy(x => x.Nome).ToList();
             ComboBoxExtensions.PreencherComboBoxList(
-                    cbEstados, estados, nameof(EstadoEntity.cuf),
-                    nameof(EstadoEntity.nome), true);
+                    cbEstados, estados, nameof(EstadoEntity.Cuf),
+                    nameof(EstadoEntity.Nome), true);
         }
         public static void GetListCidades(this ComboBox cbCidades, int estado)
         {
-            List<CidadeEntity> cidades = new ModuloCadastro.Service.CidadeService().GetListByEstado(estado).OrderBy(x => x.dmunicipio).ToList();
+            List<CidadeEntity> cidades = new ModuloCadastro.Service.CidadeService().GetListByEstado(estado).OrderBy(x => x.Dmunicipio).ToList();
             ComboBoxExtensions.PreencherComboBoxList(
-                    cbCidades, cidades, nameof(CidadeEntity.id),
-                    nameof(CidadeEntity.dmunicipio), true);
+                    cbCidades, cidades, nameof(CidadeEntity.Id),
+                    nameof(CidadeEntity.Dmunicipio), true);
         }
         public static void GetList<T>(this ComboBox comboBox, List<T> dataSource, string valueMember, string displayMember, bool selecionarPrimeiro = false) where T : class
         {

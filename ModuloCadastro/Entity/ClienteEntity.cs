@@ -8,55 +8,55 @@ namespace ModuloCadastro.Entity
     public class ClienteEntity : BaseEntity<ClienteEntity>
     {
         [Key, Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "varchar(255)")]
-        public string razaoSocial { get; set; }
+        public string RazaoSocial { get; set; }
         [Column(TypeName = "varchar(100)")]
-        public string fantasia { get; set; }
+        public string Fantasia { get; set; }
         [Column(TypeName = "decimal(10,2)")]
-        public decimal limiteCredito { get; set; }
+        public decimal LimiteCredito { get; set; }
         [Column(TypeName = "varchar(255)")]
-        public string end_nomeRua { get; set; }
+        public string End_nomeRua { get; set; }
         [Column(TypeName = "varchar(100)")]
-        public string end_bairro { get; set; }
+        public string End_bairro { get; set; }
         [Column(TypeName = "varchar(20)")]
-        public string end_numero { get; set; }
+        public string End_numero { get; set; }
         [Column(TypeName = "varchar(10)")]
-        public string end_logradouro { get; set; }
+        public string End_logradouro { get; set; }
         [Column(TypeName = "int")]
-        public int end_uf { get; set; }
+        public int EstadoId { get; set; }
         [Column(TypeName = "int")]
-        public int end_cidade { get; set; }
+        public int CidadeId { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? dataCadastro { get; set; }
+        public DateTime? DataCadastro { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? dataAtualizacao { get; set; }
+        public DateTime? DataAtualizacao { get; set; }
         [Column(TypeName = "tinyint(1)")]
-        public bool excluido { get; set; }
+        public bool Excluido { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? dataExclusao { get; set; }
+        public DateTime? DataExclusao { get; set; }
 
-        public CidadeEntity DadosCidade { get; set; }
+        public CidadeEntity Cidade { get; set; }
 
         public ClienteViewModel ToViewModel()
         {
             return new ClienteViewModel
             {
-                id = this.id,
-                razaoSocial = this.razaoSocial,
-                fantasia = this.fantasia,
-                limiteCredito = this.limiteCredito,
-                end_nomeRua = this.end_nomeRua,
-                end_bairro = this.end_bairro,
-                end_numero = this.end_numero,
-                end_logradouro = this.end_logradouro,
-                end_uf = this.end_uf,
-                end_cidade = this.end_cidade,
-                dataCadastro = this.dataCadastro,
-                dataAtualizacao = this.dataAtualizacao,
-                excluido = this.excluido,
-                dataExclusao = this.dataExclusao,
-                DadosCidade = this.DadosCidade
+                id = this.Id,
+                razaoSocial = this.RazaoSocial,
+                fantasia = this.Fantasia,
+                limiteCredito = this.LimiteCredito,
+                end_nomeRua = this.End_nomeRua,
+                end_bairro = this.End_bairro,
+                end_numero = this.End_numero,
+                end_logradouro = this.End_logradouro,
+                end_uf = this.EstadoId,
+                end_cidade = this.CidadeId,
+                dataCadastro = this.DataCadastro,
+                dataAtualizacao = this.DataAtualizacao,
+                excluido = this.Excluido,
+                dataExclusao = this.DataExclusao,
+                DadosCidade = this.Cidade
             };
         }
     }

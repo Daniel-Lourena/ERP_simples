@@ -15,7 +15,7 @@ namespace ModuloCadastro.Service
 
         public AutoNumeradorEntity Get()
         {
-            return _db_context.AutoNumeradores.FirstOrDefault(x => x.id.Equals(1));
+            return _db_context.AutoNumeradores.FirstOrDefault(x => x.Id.Equals(1));
         }
     }
 }

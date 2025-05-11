@@ -21,7 +21,7 @@ namespace SistemaERP.Cadastros.Usuario
             _id = id;
         }
 
-        private void ConfigurarDataBinding()
+        private void ConfigurarDataBindings()
         {
             _usuario = _usuario ?? new UsuarioViewModel();
             txtNome.DataBindings.Add(nameof(txtNome.Text), _usuario, nameof(_usuario.nome));
@@ -58,7 +58,7 @@ namespace SistemaERP.Cadastros.Usuario
         private void formDetalhesUsuario_Load(object sender, EventArgs e)
         {
             if (_id > 0) MostraUsuario();
-            ConfigurarDataBinding();
+            ConfigurarDataBindings();
         }
 
         private void MostraUsuario()

@@ -11,8 +11,8 @@ using ModuloCadastro.Context;
 namespace ModuloCadastro.Migrations
 {
     [DbContext(typeof(ModuloCadastroContext))]
-    [Migration("20250428021220_db_27_04_2025")]
-    partial class db_27_04_2025
+    [Migration("20250511055823_db_11_05_2025_6")]
+    partial class db_11_05_2025_6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,396 +23,399 @@ namespace ModuloCadastro.Migrations
 
             modelBuilder.Entity("ModuloCadastro.Entity.AutoNumeradorEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("idBanco")
+                    b.Property<int>("IdBanco")
                         .HasColumnType("int");
 
-                    b.Property<int>("idCliente")
+                    b.Property<int>("IdCliente")
                         .HasColumnType("int");
 
-                    b.Property<int>("idPedidoVenda")
+                    b.Property<int>("IdPedidoVenda")
                         .HasColumnType("int");
 
-                    b.Property<int>("idProduto")
+                    b.Property<int>("IdProduto")
                         .HasColumnType("int");
 
-                    b.Property<int>("idUsuario")
+                    b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("tb_autonumerador");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.BancoEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("agencia")
+                    b.Property<string>("Agencia")
                         .IsRequired()
                         .HasColumnType("varchar(5)");
 
-                    b.Property<string>("agenciaDigito")
+                    b.Property<string>("AgenciaDigito")
                         .IsRequired()
                         .HasColumnType("varchar(1)");
 
-                    b.Property<string>("codigo")
+                    b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("varchar(5)");
 
-                    b.Property<string>("conta")
+                    b.Property<string>("Conta")
                         .IsRequired()
                         .HasColumnType("varchar(5)");
 
-                    b.Property<string>("contaDigito")
+                    b.Property<string>("ContaDigito")
                         .IsRequired()
                         .HasColumnType("varchar(1)");
 
-                    b.Property<bool>("contaInternacional")
+                    b.Property<bool>("ContaInternacional")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("dataAtualizacao")
+                    b.Property<DateTime>("DataAtualizacao")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("dataCadastro")
+                    b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("iban")
+                    b.Property<string>("Iban")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<bool>("inativo")
+                    b.Property<bool>("Inativo")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("nome")
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("pixChave")
+                    b.Property<string>("PixChave")
+                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("pixTipoChave")
+                    b.Property<int>("PixTipoChave")
                         .HasColumnType("int");
 
-                    b.Property<string>("swiftCode")
+                    b.Property<string>("SwiftCode")
                         .IsRequired()
                         .HasColumnType("varchar(15)");
 
-                    b.Property<int>("tipoConta")
+                    b.Property<int>("TipoConta")
                         .HasColumnType("int");
 
-                    b.Property<string>("titularDocumento")
+                    b.Property<string>("TitularDocumento")
                         .IsRequired()
                         .HasColumnType("varchar(14)");
 
-                    b.Property<string>("titularNome")
+                    b.Property<string>("TitularNome")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("tb_bancos");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.CategoriaEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("descricao")
+                    b.Property<string>("Descricao")
                         .HasColumnType("varchar(100)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("tb_categoria");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.CidadeEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("cmunicipio")
+                    b.Property<string>("Cmunicipio")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
-                    b.Property<int>("cuf")
+                    b.Property<int>("Cuf")
                         .HasColumnType("int");
 
-                    b.Property<string>("dmunicipio")
+                    b.Property<string>("Dmunicipio")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("cuf");
+                    b.HasIndex("Cuf");
 
                     b.ToTable("tb_cidades");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.ClienteEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("dataAtualizacao")
+                    b.Property<int>("CidadeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("dataCadastro")
+                    b.Property<DateTime?>("DataCadastro")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("dataExclusao")
+                    b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("end_bairro")
+                    b.Property<string>("End_bairro")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("end_cidade")
-                        .HasColumnType("int");
-
-                    b.Property<string>("end_logradouro")
+                    b.Property<string>("End_logradouro")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
-                    b.Property<string>("end_nomeRua")
+                    b.Property<string>("End_nomeRua")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("end_numero")
+                    b.Property<string>("End_numero")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("end_uf")
+                    b.Property<int>("EstadoId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("excluido")
+                    b.Property<bool>("Excluido")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("fantasia")
+                    b.Property<string>("Fantasia")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<decimal>("limiteCredito")
+                    b.Property<decimal>("LimiteCredito")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("razaoSocial")
+                    b.Property<string>("RazaoSocial")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("end_cidade");
+                    b.HasIndex("CidadeId");
 
                     b.ToTable("tb_clientes");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.EstadoEntity", b =>
                 {
-                    b.Property<int>("cuf")
+                    b.Property<int>("Cuf")
                         .HasColumnType("int");
 
-                    b.Property<string>("nome")
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("uf")
+                    b.Property<string>("Uf")
                         .IsRequired()
                         .HasColumnType("varchar(2)");
 
-                    b.HasKey("cuf");
+                    b.HasKey("Cuf");
 
                     b.ToTable("tb_estados");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.EstoqueEntity", b =>
                 {
-                    b.Property<int>("idProduto")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("setorEstoque")
+                    b.Property<int>("SetorEstoqueId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("quantidade")
+                    b.Property<decimal>("Quantidade")
                         .HasColumnType("decimal(10,2)");
 
-                    b.HasKey("idProduto", "setorEstoque");
+                    b.HasKey("ProdutoId", "SetorEstoqueId");
 
-                    b.HasIndex("setorEstoque");
+                    b.HasIndex("SetorEstoqueId");
 
                     b.ToTable("tb_estoque");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.PedidoVendaEntity", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("dataAtualizacao")
-                        .HasColumnType("datetime(6)");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("dataCriacao")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("dataExclusao")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime?>("DataCriacao")
+                        .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("dataFechamento")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime?>("DataExclusao")
+                        .HasColumnType("datetime");
 
-                    b.Property<bool>("excluido")
+                    b.Property<DateTime?>("DataFechamento")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool>("Excluido")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("idCliente")
+                    b.Property<int>("UsuarioAtualizacaoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("idCriador")
+                    b.Property<int>("UsuarioCriacaoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("usuarioAtualizacao")
+                    b.Property<int?>("UsuarioFechamentoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("usuarioFechamento")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.HasKey("id");
+                    b.HasIndex("ClienteId");
 
-                    b.HasIndex("idCliente");
+                    b.HasIndex("UsuarioAtualizacaoId");
+
+                    b.HasIndex("UsuarioCriacaoId");
+
+                    b.HasIndex("UsuarioFechamentoId");
 
                     b.ToTable("tb_vendas");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.ProdutoEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("categoria")
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("cest")
+                    b.Property<string>("Cest")
                         .IsRequired()
                         .HasColumnType("varchar(7)");
 
-                    b.Property<string>("codigoEstoque_SKU")
+                    b.Property<string>("CodigoEstoque_SKU")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("cst_csosn")
+                    b.Property<string>("Cst_csosn")
                         .IsRequired()
                         .HasColumnType("varchar(5)");
 
-                    b.Property<DateTime>("dataAtualizacao")
+                    b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("dataCadastro")
+                    b.Property<DateTime?>("DataCadastro")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("descricao")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<decimal>("estoqueMinimo")
+                    b.Property<decimal>("EstoqueMinimo")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("idUnidade")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("inativo")
+                    b.Property<bool>("Inativo")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("ncm")
+                    b.Property<string>("Ncm")
                         .IsRequired()
                         .HasColumnType("varchar(8)");
 
-                    b.Property<int>("origem")
+                    b.Property<int>("Origem")
                         .HasColumnType("int");
 
-                    b.Property<int>("usuarioCadastro")
+                    b.Property<int>("UnidadeId")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.Property<int>("UsuarioCadastroId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("categoria");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("tb_produtos");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.ProdutoVendaEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("PedidoVendaEntityid")
+                    b.Property<int>("PedidoVendaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("idPedido")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("idProduto")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantidade")
+                        .HasColumnType("decimal(10,2)");
 
-                    b.Property<decimal>("quantidade")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(10,2)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("PedidoVendaEntityid");
+                    b.HasIndex("PedidoVendaId");
 
-                    b.HasIndex("idPedido");
-
-                    b.HasIndex("idProduto");
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("tb_produtosvenda");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.SetorEstoqueEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("descricao")
-                        .IsRequired()
+                    b.Property<string>("Descricao")
                         .HasColumnType("varchar(100)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("tb_setorestoque");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.UsuarioEntity", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("cargo")
+                    b.Property<int>("Cargo")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("dataAtualizacao")
+                    b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("dataCadastro")
+                    b.Property<DateTime?>("DataCadastro")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("dataExclusao")
+                    b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime");
 
-                    b.Property<bool>("excluido")
+                    b.Property<bool>("Excluido")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("nome")
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("tb_usuarios");
                 });
@@ -421,8 +424,8 @@ namespace ModuloCadastro.Migrations
                 {
                     b.HasOne("ModuloCadastro.Entity.EstadoEntity", "DadosEstado")
                         .WithMany()
-                        .HasForeignKey("cuf")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("Cuf")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("DadosEstado");
@@ -430,82 +433,101 @@ namespace ModuloCadastro.Migrations
 
             modelBuilder.Entity("ModuloCadastro.Entity.ClienteEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.CidadeEntity", "DadosCidade")
+                    b.HasOne("ModuloCadastro.Entity.CidadeEntity", "Cidade")
                         .WithMany()
-                        .HasForeignKey("end_cidade")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CidadeId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("DadosCidade");
+                    b.Navigation("Cidade");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.EstoqueEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "DadosProduto")
+                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "Produto")
                         .WithMany()
-                        .HasForeignKey("idProduto")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.SetorEstoqueEntity", "DadosSetorEstoque")
+                    b.HasOne("ModuloCadastro.Entity.SetorEstoqueEntity", "SetorEstoque")
                         .WithMany()
-                        .HasForeignKey("setorEstoque")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("SetorEstoqueId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("DadosProduto");
+                    b.Navigation("Produto");
 
-                    b.Navigation("DadosSetorEstoque");
+                    b.Navigation("SetorEstoque");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.PedidoVendaEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.ClienteEntity", "DadosCliente")
+                    b.HasOne("ModuloCadastro.Entity.ClienteEntity", "Cliente")
                         .WithMany()
-                        .HasForeignKey("idCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("DadosCliente");
+                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "UsuarioAtualizacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioAtualizacaoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "UsuarioCriacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCriacaoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "UsuarioFechamento")
+                        .WithMany()
+                        .HasForeignKey("UsuarioFechamentoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("UsuarioAtualizacao");
+
+                    b.Navigation("UsuarioCriacao");
+
+                    b.Navigation("UsuarioFechamento");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.ProdutoEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.CategoriaEntity", "DadosCategoria")
+                    b.HasOne("ModuloCadastro.Entity.CategoriaEntity", "Categoria")
                         .WithMany()
-                        .HasForeignKey("categoria")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("DadosCategoria");
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.ProdutoVendaEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.PedidoVendaEntity", null)
-                        .WithMany("listaProdutosVenda")
-                        .HasForeignKey("PedidoVendaEntityid");
+                    b.HasOne("ModuloCadastro.Entity.PedidoVendaEntity", "PedidoVenda")
+                        .WithMany("ListaProdutosVenda")
+                        .HasForeignKey("PedidoVendaId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.PedidoVendaEntity", "DadosPedidoVenda")
+                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "Produto")
                         .WithMany()
-                        .HasForeignKey("idPedido")
+                        .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "DadosProduto")
-                        .WithMany()
-                        .HasForeignKey("idProduto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("PedidoVenda");
 
-                    b.Navigation("DadosPedidoVenda");
-
-                    b.Navigation("DadosProduto");
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.PedidoVendaEntity", b =>
                 {
-                    b.Navigation("listaProdutosVenda");
+                    b.Navigation("ListaProdutosVenda");
                 });
 #pragma warning restore 612, 618
         }

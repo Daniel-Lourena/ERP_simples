@@ -10,7 +10,7 @@ namespace ModuloCadastro.Service
         public UsuarioService(ModuloCadastroContext db_context) => _db_context = db_context;
         public UsuarioEntity Get(int id)
         {
-            return new ModuloCadastroContext().Usuarios.FirstOrDefault(x => x.id.Equals(id))!;
+            return new ModuloCadastroContext().Usuarios.FirstOrDefault(x => x.Id.Equals(id))!;
         }
         public List<UsuarioEntity> GetList()
         {
@@ -24,13 +24,13 @@ namespace ModuloCadastro.Service
             using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
-                numerador.idUsuario++;
-                entity.id = numerador.idUsuario;
+                numerador.IdUsuario++;
+                entity.Id = numerador.IdUsuario;
                 var _context = new ModuloCadastroContext();
                 _context.Usuarios.Add(entity);
                 _context.SaveChanges();
-                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idUsuario) });
-                insert = entity.id;
+                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdUsuario) });
+                insert = entity.Id;
             }
             return insert;
         }

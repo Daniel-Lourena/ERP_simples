@@ -15,12 +15,15 @@ namespace ModuloCadastro.Service
 
         public PedidoVendaEntity Get(int id)
         {
-            return new ModuloCadastroContext().PedidosVendas.FirstOrDefault(x => x.id.Equals(id))!;
+            return new ModuloCadastroContext().PedidosVendas
+                .Include(x => x.Cliente)
+                .ThenInclude(x => x.Cidade).ThenInclude(x => x.DadosEstado)
+                .FirstOrDefault(x => x.Id.Equals(id))!;
         }
         public List<PedidoVendaEntity> GetList()
         {
             return _db_context.PedidosVendas.AsNoTracking()
-                .Include(x => x.DadosUsuarioCriador)
+                .Include(x => x.UsuarioCriacao)
                 .ToList();
         }
 
@@ -30,13 +33,13 @@ namespace ModuloCadastro.Service
             using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
-                numerador.idPedidoVenda++;
-                entity.id = numerador.idUsuario;
+                numerador.IdPedidoVenda++;
+                entity.Id = numerador.IdPedidoVenda;
                 var _context = new ModuloCadastroContext();
                 _context.PedidosVendas.Add(entity);
                 _context.SaveChanges();
-                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idUsuario) });
-                insert = entity.id;
+                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdPedidoVenda) });
+                insert = entity.Id;
             }
             return insert;
         }

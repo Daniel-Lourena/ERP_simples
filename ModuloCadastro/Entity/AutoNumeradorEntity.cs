@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModuloCadastro.Entity
@@ -7,16 +8,16 @@ namespace ModuloCadastro.Entity
     public class AutoNumeradorEntity : BaseEntity<AutoNumeradorEntity>
     {
         [Key, Display(Name = "ID", Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
+        public int Id { get; set; }
         [Display(Name = "ID Cliente", Description = ""), Column(TypeName = "int")]
-        public int idCliente { get; set; }
+        public int IdCliente { get; set; }
         [Display(Name = "ID Usuário", Description = ""), Column(TypeName = "int")]
-        public int idUsuario { get; set; }
+        public int IdUsuario { get; set; }
         [Display(Name = "ID Produto", Description = ""), Column(TypeName = "int")]
-        public int idProduto { get; set; }
+        public int IdProduto { get; set; }
         [Display(Name = "ID Banco", Description = ""), Column(TypeName = "int")]
-        public int idBanco { get; set; }
+        public int IdBanco { get; set; }
         [Display(Name = "ID Pedido Venda", Description = ""), Column(TypeName = "int")]
-        public int idPedidoVenda { get; set; }
+        public int IdPedidoVenda { get; set; }
     }
 }

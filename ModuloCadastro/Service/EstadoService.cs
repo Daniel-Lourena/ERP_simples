@@ -7,11 +7,11 @@ namespace ModuloCadastro.Service
     {
         public EstadoEntity Get(int cuf)
         {
-            return new ModuloCadastroContext().Estados.FirstOrDefault(x => x.cuf.Equals(cuf))!;
+            return new ModuloCadastroContext().Estados.FirstOrDefault(x => x.Cuf.Equals(cuf))!;
         }
         public EstadoEntity Get(string uf)
         {
-            return new ModuloCadastroContext().Estados.FirstOrDefault(x => x.uf.Equals(uf))!;
+            return new ModuloCadastroContext().Estados.FirstOrDefault(x => x.Uf.Equals(uf))!;
         }
         public List<EstadoEntity> GetList()
         {

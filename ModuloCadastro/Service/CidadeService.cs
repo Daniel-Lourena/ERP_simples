@@ -7,7 +7,7 @@ namespace ModuloCadastro.Service
     {
         public CidadeEntity Get(int id)
         {
-            return new ModuloCadastroContext().Cidades.FirstOrDefault(x => x.id.Equals(id))!;
+            return new ModuloCadastroContext().Cidades.FirstOrDefault(x => x.Id.Equals(id))!;
         }
         public List<CidadeEntity> GetList()
         {
@@ -15,7 +15,7 @@ namespace ModuloCadastro.Service
         }
         public List<CidadeEntity> GetListByEstado(int cuf)
         {
-            return new ModuloCadastroContext().Cidades.ToList().Where(x => x.cuf.Equals(cuf)).ToList();
+            return new ModuloCadastroContext().Cidades.ToList().Where(x => x.Cuf.Equals(cuf)).ToList();
         }
     }
 }

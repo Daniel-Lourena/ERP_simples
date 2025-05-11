@@ -29,6 +29,7 @@ namespace SistemaERP.Generico
                         (nameof(EstoqueViewModel.idProduto),true,true),
                         (nameof(EstoqueViewModel.descricaoProduto),true,true),
                         (nameof(EstoqueViewModel.descricaoSetorEstoque),true,true),
+                        (nameof(EstoqueViewModel.quantidadeEstoque),true,true),
                         (nameof(EstoqueViewModel.quantidadePedidoVenda),true,true),
                         (nameof(EstoqueViewModel.quantidadeEstoqueSaldoDisponivel),true,true)
                     }
@@ -50,15 +51,18 @@ namespace SistemaERP.Generico
                         (
                             new ProdutoVendaEntity()
                             {
-                                idProduto = Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.idProduto)].Value),
-                                idPedido = _idPedido,
-                                quantidade = nudQtd.Value
+                                ProdutoId = Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.idProduto)].Value),
+                                PedidoVendaId = _idPedido,
+                                Quantidade = nudQtd.Value
                             }
                         );
                     break;
                 case ETipoPedido.COMPRA:
                     break;
             }
+            
+            panelProduto.Visible = false;
+            CarregarProdutos();
         }
 
         private void dgvProdutos_DoubleClick(object sender, EventArgs e)
@@ -82,6 +86,7 @@ namespace SistemaERP.Generico
             if (e.KeyCode == Keys.Escape)
             {
                 panelProduto.Visible = false;
+                nudQtd.Value = 0;
             }
         }
     }

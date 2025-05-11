@@ -37,10 +37,16 @@
     <Compile Update="Cadastros\Produto\Categoria\formGerenciarCategoriasProduto.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Cadastros\Produto\Estoque\formGerenciar.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Cadastros\Produto\formDetalhesProduto.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Cadastros\Produto\formGerenciarProdutos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Generico\formAdicionarClientes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">

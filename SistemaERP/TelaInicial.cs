@@ -103,5 +103,21 @@ namespace SistemaERP
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();
         }
+
+        private void estoqueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                if (f.GetType() == typeof(Cadastros.Produto.Categoria.formGerenciarCategoriasProduto))
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            Cadastros.Produto.Estoque.formGerenciar childForm = new(db_context);
+            childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
+            childForm.Show();
+        }
     }
 }

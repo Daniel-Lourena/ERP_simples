@@ -15,6 +15,7 @@ namespace SistemaERP.Cadastros.Usuario
             _db_context = db_context;
             InitializeComponent();
             CarregaUsuarios();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregaUsuarios()

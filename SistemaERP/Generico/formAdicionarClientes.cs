@@ -13,6 +13,7 @@ namespace SistemaERP.Generico
         {
             InitializeComponent();
             CarregarClientes();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregarClientes()

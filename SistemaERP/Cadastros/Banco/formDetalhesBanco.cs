@@ -16,6 +16,7 @@ namespace SistemaERP.Cadastros.Banco
             InitializeComponent();
             CarregarTipoConta();
             CarregarTipoChavePix();
+            this.ConfiguraTabIndex();
         }
 
         public formDetalhesBanco(int id) : this()

@@ -13,6 +13,7 @@ namespace SistemaERP.Cadastros.Banco
             _db_context = db_context;
             InitializeComponent();
             CarregaBancos();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregaBancos()

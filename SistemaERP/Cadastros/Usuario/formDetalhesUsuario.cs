@@ -14,6 +14,7 @@ namespace SistemaERP.Cadastros.Usuario
         {
             InitializeComponent();
             CarregaCargo();
+            this.ConfiguraTabIndex();
         }
 
         public formDetalhesUsuario(int id) : this()

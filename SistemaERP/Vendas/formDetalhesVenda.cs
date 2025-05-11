@@ -16,6 +16,7 @@ namespace SistemaERP.Vendas
         public formDetalhesVenda()
         {
             InitializeComponent();
+            this.ConfiguraTabIndex();
         }
         public formDetalhesVenda(int idPedido) : this()
         {

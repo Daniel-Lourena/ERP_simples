@@ -20,6 +20,7 @@ namespace SistemaERP.Cadastros.Produto
             CarregaCST();
             CarregaCategoria();
             CarregaUnidade();
+            this.ConfiguraTabIndex();
         }
         public formDetalhesProduto(int id) : this()
         {

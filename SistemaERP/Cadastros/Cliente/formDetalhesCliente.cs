@@ -1,6 +1,7 @@
 ﻿using ModuloCadastro.Context;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
+using SistemaERP.Cadastros.Extensions;
 using SistemaERP.Cadastros.Helper;
 
 namespace SistemaERP.Cadastros.Cliente
@@ -14,6 +15,7 @@ namespace SistemaERP.Cadastros.Cliente
         {
             InitializeComponent();
             CarregaEstado();
+            this.ConfiguraTabIndex();
         }
         public formDetalhesCliente(int id) : this()
         {

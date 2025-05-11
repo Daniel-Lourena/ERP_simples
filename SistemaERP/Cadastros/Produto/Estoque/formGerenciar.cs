@@ -15,6 +15,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             _db_context = db_context;
             InitializeComponent();
             CarregaEstoque();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregaEstoque()

@@ -15,6 +15,7 @@ namespace SistemaERP.Cadastros.Cliente
             _db_context = db_context;
             InitializeComponent();
             CarregaClientes();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregaClientes()

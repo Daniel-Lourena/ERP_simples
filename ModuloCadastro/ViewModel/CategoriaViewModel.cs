@@ -49,8 +49,8 @@ namespace ModuloCadastro.ViewModel
         {
             return new CategoriaEntity
             {
-                id = this.id,
-                descricao = this.descricao
+                Id = this.id,
+                Descricao = this.descricao
             };
         }
     }

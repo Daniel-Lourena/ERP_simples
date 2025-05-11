@@ -65,20 +65,20 @@ namespace ModuloCadastro.ViewModel
         {
             return new ClienteEntity
             {
-                id = this.id,
-                razaoSocial = this.razaoSocial,
-                fantasia = this.fantasia,
-                limiteCredito = this.limiteCredito,
-                end_nomeRua = this.end_nomeRua,
-                end_bairro = this.end_bairro,
-                end_numero = this.end_numero,
-                end_logradouro = this.end_logradouro,
-                end_uf = this.end_uf,
-                end_cidade = this.end_cidade,
-                dataCadastro = this.dataCadastro,
-                dataAtualizacao = this.dataAtualizacao,
-                excluido = this.excluido,
-                dataExclusao = this.dataExclusao
+                Id = this.id,
+                RazaoSocial = this.razaoSocial,
+                Fantasia = this.fantasia,
+                LimiteCredito = this.limiteCredito,
+                End_nomeRua = this.end_nomeRua,
+                End_bairro = this.end_bairro,
+                End_numero = this.end_numero,
+                End_logradouro = this.end_logradouro,
+                EstadoId = this.end_uf,
+                CidadeId = this.end_cidade,
+                DataCadastro = this.dataCadastro,
+                DataAtualizacao = this.dataAtualizacao,
+                Excluido = this.excluido,
+                DataExclusao = this.dataExclusao
             };
         }
 

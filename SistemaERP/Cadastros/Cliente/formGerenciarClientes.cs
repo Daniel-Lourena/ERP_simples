@@ -24,22 +24,22 @@ namespace SistemaERP.Cadastros.Cliente
             {
                 listaDataSource = new ModuloCadastro.Service.ClienteService(_db_context)
                 .GetList()
-                .Where(x => !x.excluido)
+                .Where(x => !x.Excluido)
                 .Select(x => new ClienteViewModel
-                { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade, excluido = x.excluido }).ToList();
+                { id = x.Id, fantasia = x.Fantasia, DadosCidade = x.Cidade, excluido = x.Excluido }).ToList();
             }
             else
             {
                 listaDataSource = new ModuloCadastro.Service.ClienteService(_db_context)
                 .GetList()
                 .Select(x => new ClienteViewModel
-                { id = x.id, fantasia = x.fantasia, DadosCidade = x.DadosCidade,excluido = x.excluido }).ToList();
+                { id = x.Id, fantasia = x.Fantasia, DadosCidade = x.Cidade,excluido = x.Excluido }).ToList();
             }
 
             dgvClientes.CriarColunasDataGridView(listaDataSource, new()
             {
                 (nameof(ClienteViewModel.id),true,true), (nameof(ClienteViewModel.fantasia),true,true),
-                (nameof(ClienteViewModel.DadosCidade.cuf),true,true),(nameof(ClienteViewModel.DadosCidade.dmunicipio),true,true),
+                (nameof(ClienteViewModel.DadosCidade.Cuf),true,true),(nameof(ClienteViewModel.DadosCidade.Dmunicipio),true,true),
                 (nameof(ClienteViewModel.excluido),true,false)
             });
         }
@@ -69,9 +69,9 @@ namespace SistemaERP.Cadastros.Cliente
                 {
                     new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).UpdateParcial(new ClienteEntity
                     {
-                        id = cliente.id,
-                        dataExclusao = DateTime.Now,
-                        excluido = true
+                        Id = cliente.id,
+                        DataExclusao = DateTime.Now,
+                        Excluido = true
                     }, new List<string>() { nameof(ClienteViewModel.dataExclusao), nameof(ClienteViewModel.excluido) });
                 }
 

@@ -21,8 +21,8 @@ namespace SistemaERP.Cadastros.Produto.Categoria
             List<CategoriaViewModel> _listaDataSource = new List<CategoriaViewModel>(new ModuloCadastro.Service.CategoriaService(_db_context).GetList()
             .Select(x => new CategoriaViewModel
             {
-                id = x.id,
-                descricao = x.descricao
+                id = x.Id,
+                descricao = x.Descricao
             }).ToList());
 
             dgvCategorias.CriarColunasDataGridView(_listaDataSource, new()

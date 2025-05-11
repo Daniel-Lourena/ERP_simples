@@ -23,16 +23,16 @@ namespace SistemaERP.Cadastros.Usuario
             if (ckeOcultaExcluidos.Checked)
             {
                 listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
-                .Where(x => !x.excluido)
+                .Where(x => !x.Excluido)
                 .Select(x => new UsuarioViewModel
-                { id = x.id, nome = x.nome, cargo = x.cargo, dataCadastro = x.dataCadastro, dataAtualizacao = x.dataAtualizacao, excluido = x.excluido })
+                { id = x.Id, nome = x.Nome, cargo = x.Cargo, dataCadastro = x.DataCadastro, dataAtualizacao = x.DataAtualizacao, excluido = x.Excluido })
                 .ToList();
             }
             else
             {
                 listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
                 .Select(x => new UsuarioViewModel
-                { id = x.id, nome = x.nome, cargo = x.cargo, dataCadastro = x.dataCadastro, dataAtualizacao = x.dataAtualizacao,excluido = x.excluido })
+                { id = x.Id, nome = x.Nome, cargo = x.Cargo, dataCadastro = x.DataCadastro, dataAtualizacao = x.DataAtualizacao,excluido = x.Excluido })
                 .ToList();
             }
 
@@ -66,10 +66,10 @@ namespace SistemaERP.Cadastros.Usuario
             {
                 new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).UpdateParcial(new UsuarioEntity()
                 {
-                    id = Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioViewModel.id)].Value),
-                    dataExclusao = DateTime.Now,
-                    excluido = true
-                }, new List<string>() { nameof(UsuarioEntity.dataExclusao), nameof(UsuarioEntity.excluido) });
+                    Id = Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioViewModel.id)].Value),
+                    DataExclusao = DateTime.Now,
+                    Excluido = true
+                }, new List<string>() { nameof(UsuarioEntity.DataExclusao), nameof(UsuarioEntity.Excluido) });
 
                 CarregaUsuarios();
             }

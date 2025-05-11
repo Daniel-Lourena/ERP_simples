@@ -187,7 +187,9 @@
             Controls.Add(panel1);
             MaximizeBox = false;
             Name = "formAdicionarProdutosPedido";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "formAdicionarProdutos";
+            KeyPreview = true;
             KeyDown += formAdicionarProdutos_KeyDown;
             ((System.ComponentModel.ISupportInitialize)dgvProdutos).EndInit();
             panelProduto.ResumeLayout(false);

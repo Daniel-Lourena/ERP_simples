@@ -9,64 +9,64 @@ namespace ModuloCadastro.Entity
     public class BancoEntity : BaseEntity<BancoEntity>
     {
         [Key, Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "varchar(100)")]
-        public string nome { get; set; }
+        public string Nome { get; set; }
         [Column(TypeName = "varchar(5)")]
-        public string codigo { get; set; }
+        public string Codigo { get; set; }
         [Column(TypeName = "varchar(5)")]
-        public string agencia { get; set; }
+        public string Agencia { get; set; }
         [Column(TypeName = "varchar(1)")]
-        public string agenciaDigito { get; set; }
+        public string AgenciaDigito { get; set; }
         [Column(TypeName = "varchar(5)")]
-        public string conta { get; set; }
+        public string Conta { get; set; }
         [Column(TypeName = "varchar(1)")]
-        public string contaDigito { get; set; }
+        public string ContaDigito { get; set; }
         [Column(TypeName = "int")]
-        public ETipoContaBanco tipoConta { get; set; }
+        public ETipoContaBanco TipoConta { get; set; }
         [Column(TypeName = "varchar(100)")]
-        public string titularNome { get; set; }
+        public string TitularNome { get; set; }
         [Column(TypeName = "varchar(14)")]
-        public string titularDocumento { get; set; }
+        public string TitularDocumento { get; set; }
         [Column(TypeName = "varchar(100)")]
-        public string pixChave { get; set; }
+        public string PixChave { get; set; }
         [Column(TypeName = "int")]
-        public ETipoChavePix pixTipoChave { get; set; }
+        public ETipoChavePix PixTipoChave { get; set; }
         [Column(TypeName = "tinyint(1)")]
-        public bool contaInternacional { get; set; }
+        public bool ContaInternacional { get; set; }
         [Column(TypeName = "tinyint(1)")]
-        public bool inativo { get; set; }
+        public bool Inativo { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime dataCadastro { get; set; }
+        public DateTime DataCadastro { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime dataAtualizacao { get; set; }
+        public DateTime DataAtualizacao { get; set; }
         [Column(TypeName = "varchar(50)")]
-        public string iban { get; set; }
+        public string Iban { get; set; }
         [Column(TypeName = "varchar(15)")]
-        public string swiftCode { get; set; }
+        public string SwiftCode { get; set; }
 
         public BancoViewModel ToViewModel()
         {
             return new BancoViewModel
             {
-                id = this.id,
-                nome = this.nome,
-                codigo = this.codigo,
-                agencia = this.agencia,
-                agenciaDigito = this.agenciaDigito,
-                conta = this.conta,
-                contaDigito = this.contaDigito,
-                tipoConta = this.tipoConta,
-                titularNome = this.titularNome,
-                titularDocumento = this.titularDocumento,
-                pixChave = this.pixChave,
-                pixTipoChave = this.pixTipoChave,
-                contaInternacional = this.contaInternacional,
-                inativo = this.inativo,
-                dataCadastro = this.dataCadastro,
-                dataAtualizacao = this.dataAtualizacao,
-                iban = this.iban,
-                swiftCode = this.swiftCode
+                id = this.Id,
+                nome = this.Nome,
+                codigo = this.Codigo,
+                agencia = this.Agencia,
+                agenciaDigito = this.AgenciaDigito,
+                conta = this.Conta,
+                contaDigito = this.ContaDigito,
+                tipoConta = this.TipoConta,
+                titularNome = this.TitularNome,
+                titularDocumento = this.TitularDocumento,
+                pixChave = this.PixChave,
+                pixTipoChave = this.PixTipoChave,
+                contaInternacional = this.ContaInternacional,
+                inativo = this.Inativo,
+                dataCadastro = this.DataCadastro,
+                dataAtualizacao = this.DataAtualizacao,
+                iban = this.Iban,
+                swiftCode = this.SwiftCode
             };
         }
     }

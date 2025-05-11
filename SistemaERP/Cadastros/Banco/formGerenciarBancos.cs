@@ -21,13 +21,13 @@ namespace SistemaERP.Cadastros.Banco
             if (ckeOcultaInativos.Checked)
             {
                 listaDataSource = new ModuloCadastro.Service.BancoService(_db_context).GetList()
-                .Where(x => !x.inativo)
-                .Select(x => new BancoViewModel { id = x.id, nome = x.nome,inativo = x.inativo }).ToList();
+                .Where(x => !x.Inativo)
+                .Select(x => new BancoViewModel { id = x.Id, nome = x.Nome,inativo = x.Inativo }).ToList();
             }
             else
             {
                 listaDataSource = new ModuloCadastro.Service.BancoService(_db_context).GetList()
-                .Select(x => new BancoViewModel { id = x.id, nome = x.nome, inativo = x.inativo }).ToList();
+                .Select(x => new BancoViewModel { id = x.Id, nome = x.Nome, inativo = x.Inativo }).ToList();
             }
                 dgvBancos.CriarColunasDataGridView(listaDataSource, new()
             {

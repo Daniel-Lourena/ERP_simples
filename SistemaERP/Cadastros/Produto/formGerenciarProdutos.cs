@@ -23,15 +23,15 @@ namespace SistemaERP.Cadastros.Produto
             if (ckeOcultaInativos.Checked)
             {
                 listaDataSource = new ModuloCadastro.Service.ProdutoService(_db_context).GetList()
-                .Where(x => !x.inativo)
+                .Where(x => !x.Inativo)
                 .Select(x => new ProdutoViewModel
-                { id = x.id, descricao = x.descricao, DadosCategoria = x.DadosCategoria, idUnidade = x.idUnidade, inativo = x.inativo }).ToList();
+                { id = x.Id, descricao = x.Descricao, DadosCategoria = x.Categoria, idUnidade = x.UnidadeId, inativo = x.Inativo }).ToList();
             }
             else
             {
                 listaDataSource = new ModuloCadastro.Service.ProdutoService(_db_context).GetList()
                .Select(x => new ProdutoViewModel
-               { id = x.id, descricao = x.descricao, DadosCategoria = x.DadosCategoria, idUnidade = x.idUnidade, inativo = x.inativo }).ToList();
+               { id = x.Id, descricao = x.Descricao, DadosCategoria = x.Categoria, idUnidade = x.UnidadeId, inativo = x.Inativo }).ToList();
             }
 
             dgvProdutos.CriarColunasDataGridView(listaDataSource, new()

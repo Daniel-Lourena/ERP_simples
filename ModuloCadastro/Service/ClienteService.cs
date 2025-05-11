@@ -12,13 +12,16 @@ namespace ModuloCadastro.Service
 
         public ClienteEntity Get(int id)
         {
-            return _db_context.Clientes.FirstOrDefault(x => x.id.Equals(id))!;
+            return _db_context.Clientes.AsNoTracking()
+                .Include(c => c.Cidade)
+                .ThenInclude(c => c.DadosEstado)
+                .FirstOrDefault(x => x.Id.Equals(id))!;
         }
         public List<ClienteEntity> GetList()
         {
             return _db_context.Clientes
                 .AsNoTracking()
-                .Include(c => c.DadosCidade)
+                .Include(c => c.Cidade)
                 .ThenInclude(c => c.DadosEstado)
                 .ToList();
         }
@@ -29,13 +32,13 @@ namespace ModuloCadastro.Service
             using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
-                numerador.idCliente++;
-                entity.id = numerador.idCliente;
+                numerador.IdCliente++;
+                entity.Id = numerador.IdCliente;
                 var _context = new ModuloCadastroContext();
                 _context.Clientes.Add(entity);
                 _context.SaveChanges();
-                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.idCliente) });
-                insert = entity.id;
+                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdCliente) });
+                insert = entity.Id;
             }
             return insert;
         }

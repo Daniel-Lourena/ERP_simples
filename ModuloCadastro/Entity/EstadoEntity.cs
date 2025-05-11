@@ -7,10 +7,10 @@ namespace ModuloCadastro.Entity
     public class EstadoEntity
     {
         [Key, Display(Name = "Cód. UF", Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int cuf { get; set; }
+        public int Cuf { get; set; }
         [Display(Name = "UF", Description = ""), Column(TypeName = "varchar(2)")]
-        public string uf { get; set; }
+        public string Uf { get; set; }
         [Display(Name = "Nome", Description = ""), Column(TypeName = "varchar(50)")]
-        public string nome { get; set; }
+        public string Nome { get; set; }
     }
 }

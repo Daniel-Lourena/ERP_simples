@@ -30,147 +30,136 @@ namespace ModuloCadastro.Context
         {
             modelBuilder.Entity<AutoNumeradorEntity>(entity =>
             {
-                entity.HasKey(a => a.id);
+                entity.HasKey(a => a.Id);
             });
 
             modelBuilder.Entity<UsuarioEntity>(entity =>
             {
-                entity.HasKey(u => u.id);
-                entity.Property(u => u.cargo).HasConversion<int>();
+                entity.HasKey(u => u.Id);
+                entity.Property(u => u.Cargo).HasConversion<int>();
             });
 
             modelBuilder.Entity<ClienteEntity>(entity =>
             {
-                entity.HasKey(c => c.id);
+                entity.HasKey(c => c.Id);
 
-                entity.HasOne(c => c.DadosCidade)
+                entity.HasOne(c => c.Cidade)
                       .WithMany()
-                      .HasForeignKey(c => c.end_cidade)
-                      .HasPrincipalKey(key => new { key.id })
+                      .HasForeignKey(c => c.CidadeId)
+                      .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<CidadeEntity>(entity =>
             {
-                entity.HasKey(c => c.id);
+                entity.HasKey(c => c.Id);
 
                 entity.HasOne(c => c.DadosEstado)
                       .WithMany()
-                      .HasForeignKey(c => c.cuf)
-                      .HasPrincipalKey(key => new { key.cuf })
+                      .HasForeignKey(c => c.Cuf)
+                      .HasPrincipalKey(key => new { key.Cuf })
                       .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<EstadoEntity>(entity =>
             {
-                entity.HasKey(c => c.cuf);
+                entity.HasKey(c => c.Cuf);
             });
 
             modelBuilder.Entity<ProdutoEntity>(entity =>
             {
-                entity.HasKey(p => p.id);
-                entity.Property(p => p.origem).HasConversion<int>();
-                entity.Property(p => p.cst_csosn).HasConversion<int>();
-                entity.Property(p => p.idUnidade).HasConversion<int>();
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.Origem).HasConversion<int>();
+                entity.Property(p => p.Cst_csosn).HasConversion<int>();
+                entity.Property(p => p.UnidadeId).HasConversion<int>();
 
-                entity.HasOne(p => p.DadosCategoria)
+                entity.HasOne(p => p.Categoria)
                       .WithMany()
-                      .HasForeignKey(p => p.categoria)
-                      .HasPrincipalKey(key => new { key.id })
+                      .HasForeignKey(p => p.CategoriaId)
+                      .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<CategoriaEntity>(entity =>
             {
-                entity.HasKey(c => c.id);
+                entity.HasKey(c => c.Id);
             });
 
             modelBuilder.Entity<SetorEstoqueEntity>(entity =>
             {
-                entity.HasKey(c => c.id);
+                entity.HasKey(c => c.Id);
             });
 
             modelBuilder.Entity<BancoEntity>(entity =>
             {
-                entity.HasKey(b => b.id);
-                entity.Property(b => b.tipoConta).HasConversion<int>();
-                entity.Property(b => b.pixTipoChave).HasConversion<int>();
+                entity.HasKey(b => b.Id);
+                entity.Property(b => b.TipoConta).HasConversion<int>();
+                entity.Property(b => b.PixTipoChave).HasConversion<int>();
             });
 
             modelBuilder.Entity<PedidoVendaEntity>(entity =>
             {
-                entity.HasKey(p => p.id);
+                entity.HasKey(p => p.Id);
 
-                entity.HasOne(p => p.DadosCliente)
+                entity.HasOne(p => p.Cliente)
                       .WithMany()
-                      .HasForeignKey(p => p.idCliente)
-                      .HasPrincipalKey(key => new { key.id })
+                      .HasForeignKey(p => p.ClienteId)
+                      .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(p => p.DadosUsuarioCriador)
+                entity.HasOne(p => p.UsuarioCriacao)
                       .WithMany()
-                      .HasForeignKey(p => p.idCriador)
-                      .HasPrincipalKey(key => new { key.id })
+                      .HasForeignKey(p => p.UsuarioCriacaoId)
+                      .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
-                entity.HasOne(p => p.DadosUsuarioAtualizacao)
+                entity.HasOne(p => p.UsuarioAtualizacao)
                       .WithMany()
-                      .HasForeignKey(p => p.usuarioAtualizacao)
-                      .HasPrincipalKey(key => new { key.id })
+                      .HasForeignKey(p => p.UsuarioAtualizacaoId)
+                      .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
-                entity.HasOne(p => p.DadosUsuarioFechamento)
+                entity.HasOne(p => p.UsuarioFechamento)
                       .WithMany()
-                      .HasForeignKey(p => p.usuarioFechamento)
-                      .HasPrincipalKey(key => new { key.id })
+                      .HasForeignKey(p => p.UsuarioFechamentoId)
+                      .HasPrincipalKey(key => new { key.Id })
+                      .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasMany(pe => pe.ListaProdutosVenda)
+                      .WithOne(pp => pp.PedidoVenda)
+                      .HasForeignKey(pp => pp.PedidoVendaId)
                       .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<EstoqueEntity>(entity =>
             {
-                entity.HasKey(c => new { c.idProduto, c.setorEstoque });
+                entity.HasKey(c => new { c.ProdutoId, c.SetorEstoqueId });
 
-                entity.HasOne(e => e.DadosProduto)
+                entity.HasOne(e => e.Produto)
                       .WithMany()
-                      .HasForeignKey(e => e.idProduto)
-                      .HasPrincipalKey(key => new { key.id })
+                      .HasForeignKey(e => e.ProdutoId)
+                      .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(e => e.DadosSetorEstoque)
+                entity.HasOne(e => e.SetorEstoque)
                       .WithMany()
-                      .HasForeignKey(e => e.setorEstoque)
-                      .HasPrincipalKey(key => new { key.id })
-                      .OnDelete(DeleteBehavior.NoAction);
-            });
-
-            modelBuilder.Entity<PedidoVendaEntity>(entity =>
-            {
-                entity.HasKey(pe => pe.id);
-
-                entity.HasOne(pe => pe.DadosCliente)
-                      .WithMany()
-                      .HasForeignKey(pe => pe.idCliente)
-                      .HasPrincipalKey(key => new { key.id })
-                      .OnDelete(DeleteBehavior.NoAction);
-
-                entity.HasMany(pe => pe.listaProdutosVenda)
-                      .WithOne(pp => pp.DadosPedidoVenda)
-                      .HasForeignKey(pp => pp.idPedido)
+                      .HasForeignKey(e => e.SetorEstoqueId)
+                      .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
             });
 
             //modelBuilder.Entity<ProdutoVendaEntity>(entity =>
             //{
-            //    entity.HasKey(p => p.id);
+            //    entity.HasKey(p => p.Id);
 
-            //    entity.HasOne(p => p.DadosProduto)
+            //    entity.HasOne(p => p.Produto)
             //          .WithMany()
-            //          .HasForeignKey(p => p.idProduto)
-            //          .HasPrincipalKey(key => new { key.id })
+            //          .HasForeignKey(p => p.IdProduto)
+            //          .HasPrincipalKey(key => new { key.Id })
             //          .OnDelete(DeleteBehavior.NoAction);
 
-            //    entity.HasOne(p => p.DadosPedidoVenda)
+            //    entity.HasOne(p => p.PedidoVenda)
             //          .WithMany()
-            //          .HasForeignKey(p => p.idPedido)
-            //          .HasPrincipalKey(key => new { key.id })
+            //          .HasForeignKey(p => p.PedidoVendaId)
+            //          .HasPrincipalKey(key => new { key.Id })
             //          .OnDelete(DeleteBehavior.NoAction);
             //});
         }

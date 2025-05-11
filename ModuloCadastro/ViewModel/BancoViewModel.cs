@@ -250,7 +250,7 @@ namespace ModuloCadastro.ViewModel
                     OnPropertyChanged();
                 }
             }
-        }// Se for conta no exterior
+        }// Se for Conta no exterior
         [Display(Name = "SWIFT/BIC", Description = "")]
         public string swiftCode
         {
@@ -276,24 +276,24 @@ namespace ModuloCadastro.ViewModel
         {
             return new BancoEntity
             {
-                id = this.id,
-                nome = this.nome,
-                codigo = this.codigo,
-                agencia = this.agencia,
-                agenciaDigito = this.agenciaDigito,
-                conta = this.conta,
-                contaDigito = this.contaDigito,
-                tipoConta = this.tipoConta,
-                titularNome = this.titularNome,
-                titularDocumento = this.titularDocumento,
-                pixChave = this.pixChave,
-                pixTipoChave = this.pixTipoChave,
-                contaInternacional = this.contaInternacional,
-                inativo = this.inativo,
-                dataCadastro = this.dataCadastro,
-                dataAtualizacao = this.dataAtualizacao,
-                iban = this.iban,
-                swiftCode = this.swiftCode
+                Id = this.id,
+                Nome = this.nome,
+                Codigo = this.codigo,
+                Agencia = this.agencia,
+                AgenciaDigito = this.agenciaDigito,
+                Conta = this.conta,
+                ContaDigito = this.contaDigito,
+                TipoConta = this.tipoConta,
+                TitularNome = this.titularNome,
+                TitularDocumento = this.titularDocumento,
+                PixChave = this.pixChave,
+                PixTipoChave = this.pixTipoChave,
+                ContaInternacional = this.contaInternacional,
+                Inativo = this.inativo,
+                DataCadastro = this.dataCadastro,
+                DataAtualizacao = this.dataAtualizacao,
+                Iban = this.iban,
+                SwiftCode = this.swiftCode
             };
         }
     }

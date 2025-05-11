@@ -7,13 +7,13 @@ namespace ModuloCadastro.Entity
     public class CidadeEntity : BaseEntity<CidadeEntity>
     {
         [Key, Display(Name = "ID", Description = ""), Column(TypeName = "int"), DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id { get; set; }
+        public int Id { get; set; }
         [Display(Name = "UF", Description = ""), Column(TypeName = "int")]
-        public int cuf { get; set; }
+        public int Cuf { get; set; }
         [Display(Name = "Cód. Município", Description = ""), Column(TypeName = "varchar(10)")]
-        public string cmunicipio { get; set; }
+        public string Cmunicipio { get; set; }
         [Display(Name = "Nome", Description = ""), Column(TypeName = "varchar(50)")]
-        public string dmunicipio { get; set; }
+        public string Dmunicipio { get; set; }
 
         public EstadoEntity DadosEstado { get; set; }
     }

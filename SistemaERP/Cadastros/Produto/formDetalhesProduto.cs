@@ -57,7 +57,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void CarregaCategoria()
         {
-            List<CategoriaViewModel> categorias = new ModuloCadastro.Service.CategoriaService(new ModuloCadastroContext()).GetList().Select(x => new CategoriaViewModel { id = x.id, descricao = x.descricao }).ToList();
+            List<CategoriaViewModel> categorias = new ModuloCadastro.Service.CategoriaService(new ModuloCadastroContext()).GetList().Select(x => new CategoriaViewModel { id = x.Id, descricao = x.Descricao }).ToList();
             cbCategoria.PreencherComboBoxList(categorias, nameof(CategoriaViewModel.id), nameof(CategoriaViewModel.descricao), true);
         }
 

@@ -20,7 +20,7 @@ namespace SistemaERP.Vendas
         {
             var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(_db_context)
                 .GetList()
-                .Select(x => new PedidoVendaViewModel { id = x.id, idCliente = x.idCliente, dataCriacao = x.dataCriacao, nomeUsuarioCriador = x.DadosUsuarioCriador.nome }).ToList();
+                .Select(x => new PedidoVendaViewModel { id = x.Id, idCliente = x.ClienteId, dataCriacao = x.DataCriacao, nomeUsuarioCriador = x.UsuarioCriacao.Nome }).ToList();
 
             dgvVendas.CriarColunasDataGridView(listaDataSource, new()
             {

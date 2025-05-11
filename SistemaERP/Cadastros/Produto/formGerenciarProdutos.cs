@@ -15,6 +15,7 @@ namespace SistemaERP.Cadastros.Produto
             _db_context = db_context;
             InitializeComponent();
             CarregaProdutos();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregaProdutos()

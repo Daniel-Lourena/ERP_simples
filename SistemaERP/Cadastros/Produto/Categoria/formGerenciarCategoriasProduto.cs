@@ -14,6 +14,7 @@ namespace SistemaERP.Cadastros.Produto.Categoria
             _db_context = db_context;
             InitializeComponent();
             CarregaCategorias();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregaCategorias()

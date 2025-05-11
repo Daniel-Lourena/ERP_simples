@@ -14,6 +14,7 @@ namespace SistemaERP.Vendas
             _db_context = db_context;
             InitializeComponent();
             CarregaVendas();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregaVendas()

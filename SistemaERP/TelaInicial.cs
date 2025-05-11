@@ -1,3 +1,5 @@
+using SistemaERP.Cadastros.Extensions;
+
 namespace SistemaERP
 {
     public partial class TelaInicial : Form
@@ -6,6 +8,7 @@ namespace SistemaERP
         public TelaInicial()
         {
             InitializeComponent();
+            this.ConfiguraTabIndex();
         }
 
         private void gerenciarProdutosToolStripMenuItem_Click(object sender, EventArgs e)

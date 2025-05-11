@@ -16,6 +16,7 @@ namespace SistemaERP.Generico
             _idPedido = idPedido;
             InitializeComponent();
             CarregarProdutos();
+            this.ConfiguraTabIndex();
         }
 
         private void CarregarProdutos()

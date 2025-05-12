@@ -21,13 +21,19 @@ namespace SistemaERP.Cadastros.Extensions
                     if (!String.IsNullOrEmpty(col.nomeColuna))
                     {
                         var atributoPropriedade = prop.GetCustomAttribute<DisplayAttribute>();
+                        var atributoDisplayPropriedade = prop.GetCustomAttribute<DisplayFormatAttribute>();
                         DataGridViewTextBoxColumn coluna = new()
                         {
                             DataPropertyName = prop.Name,
                             ReadOnly = col.readOnly,
                             Visible = col.visible,
                             Name = prop.Name,
-                            HeaderText = atributoPropriedade == null ? prop.Name : atributoPropriedade.Name
+                            HeaderText = atributoPropriedade == null ? prop.Name : atributoPropriedade.Name,
+                            DefaultCellStyle = new DataGridViewCellStyle
+                            {
+                                Format = atributoDisplayPropriedade != null ? 
+                                    atributoDisplayPropriedade.DataFormatString.Replace("{0:", "").Replace("}", "") : String.Empty
+                            }
                         };
                         dgvGenerico.Columns.Add(coluna);
                     }

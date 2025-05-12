@@ -49,6 +49,10 @@ namespace ModuloCadastro.Service
                 _context.SaveChanges();
             }
         }
+        public void UpdateParcial(ProdutoVendaEntity entity, List<string> listaPropriedadesAtualizar)
+        {
+            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+        }
 
         public void Delete(int id)
         {

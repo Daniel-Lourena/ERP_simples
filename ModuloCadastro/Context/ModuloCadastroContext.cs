@@ -122,6 +122,11 @@ namespace ModuloCadastro.Context
                       .HasForeignKey(p => p.UsuarioFechamentoId)
                       .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
+                entity.HasOne(p => p.UsuarioExclusao)
+                      .WithMany()
+                      .HasForeignKey(p => p.UsuarioExclusaoId)
+                      .HasPrincipalKey(key => new { key.Id })
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasMany(pe => pe.ListaProdutosVenda)
                       .WithOne(pp => pp.PedidoVenda)

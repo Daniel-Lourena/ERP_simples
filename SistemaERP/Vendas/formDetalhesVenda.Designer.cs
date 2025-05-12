@@ -54,11 +54,11 @@
             txtNro = new TextBox();
             label7 = new Label();
             tpProdutos = new TabPage();
+            dgvProdutos = new DataGridView();
             panel3 = new Panel();
             groupBox3 = new GroupBox();
             btnRemProduto = new Button();
             btnAddProduto = new Button();
-            dgvProdutos = new DataGridView();
             tpFinanceiro = new TabPage();
             panel2 = new Panel();
             groupBox2 = new GroupBox();
@@ -72,13 +72,14 @@
             dgvRecebimentos = new DataGridView();
             panel1 = new Panel();
             btnSalvar = new Button();
+            btnExcluirPedido = new Button();
             tcPedidos.SuspendLayout();
             tpDadosGerais.SuspendLayout();
             groupBox1.SuspendLayout();
             tpProdutos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvProdutos).BeginInit();
             panel3.SuspendLayout();
             groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProdutos).BeginInit();
             tpFinanceiro.SuspendLayout();
             panel2.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -342,6 +343,18 @@
             tpProdutos.Text = "Produtos";
             tpProdutos.UseVisualStyleBackColor = true;
             // 
+            // dgvProdutos
+            // 
+            dgvProdutos.AllowUserToAddRows = false;
+            dgvProdutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProdutos.Dock = DockStyle.Fill;
+            dgvProdutos.Location = new Point(3, 3);
+            dgvProdutos.Name = "dgvProdutos";
+            dgvProdutos.RowTemplate.Height = 25;
+            dgvProdutos.Size = new Size(786, 251);
+            dgvProdutos.TabIndex = 0;
+            dgvProdutos.CellEndEdit += dgvProdutos_CellEndEdit;
+            // 
             // panel3
             // 
             panel3.Controls.Add(groupBox3);
@@ -381,17 +394,6 @@
             btnAddProduto.Text = "Adicionar";
             btnAddProduto.UseVisualStyleBackColor = true;
             btnAddProduto.Click += btnAddProduto_Click;
-            // 
-            // dgvProdutos
-            // 
-            dgvProdutos.AllowUserToAddRows = false;
-            dgvProdutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProdutos.Dock = DockStyle.Fill;
-            dgvProdutos.Location = new Point(3, 3);
-            dgvProdutos.Name = "dgvProdutos";
-            dgvProdutos.RowTemplate.Height = 25;
-            dgvProdutos.Size = new Size(786, 251);
-            dgvProdutos.TabIndex = 0;
             // 
             // tpFinanceiro
             // 
@@ -508,6 +510,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnExcluirPedido);
             panel1.Controls.Add(btnSalvar);
             panel1.Dock = DockStyle.Bottom;
             panel1.Location = new Point(0, 378);
@@ -524,6 +527,18 @@
             btnSalvar.Text = "SALVAR";
             btnSalvar.UseVisualStyleBackColor = true;
             btnSalvar.Click += btnSalvar_Click;
+            // 
+            // btnExcluirPedido
+            // 
+            btnExcluirPedido.BackColor = Color.IndianRed;
+            btnExcluirPedido.ForeColor = SystemColors.ButtonHighlight;
+            btnExcluirPedido.Location = new Point(124, 10);
+            btnExcluirPedido.Name = "btnExcluirPedido";
+            btnExcluirPedido.Size = new Size(81, 50);
+            btnExcluirPedido.TabIndex = 2;
+            btnExcluirPedido.Text = "EXCLUIR";
+            btnExcluirPedido.UseVisualStyleBackColor = false;
+            btnExcluirPedido.Click += btnExcluirPedido_Click;
             // 
             // formDetalhesVenda
             // 
@@ -543,9 +558,9 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             tpProdutos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvProdutos).EndInit();
             panel3.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProdutos).EndInit();
             tpFinanceiro.ResumeLayout(false);
             panel2.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
@@ -600,5 +615,6 @@
         private TextBox txtAtualizacao;
         private Label label9;
         private TextBox txtCadastro;
+        private Button btnExcluirPedido;
     }
 }

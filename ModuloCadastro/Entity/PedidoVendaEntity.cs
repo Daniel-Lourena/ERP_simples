@@ -19,6 +19,8 @@ namespace ModuloCadastro.Entity
         public DateTime? DataAtualizacao { get; set; }
         [Column(TypeName = "int")]
         public int UsuarioAtualizacaoId { get; set; }
+        [Column(TypeName = "int")]
+        public int UsuarioExclusaoId { get; set; }
         [Column(TypeName = "tinyint(1)")]
         public bool Excluido { get; set; }
         [Column(TypeName = "datetime")]
@@ -32,6 +34,7 @@ namespace ModuloCadastro.Entity
         public UsuarioEntity UsuarioCriacao { get; set; }
         public UsuarioEntity UsuarioAtualizacao { get; set; }
         public UsuarioEntity? UsuarioFechamento { get; set; }
+        public UsuarioEntity? UsuarioExclusao { get; set; }
         public List<ProdutoVendaEntity> ListaProdutosVenda { get; set; }
 
         public PedidoVendaViewModel ToViewModel()

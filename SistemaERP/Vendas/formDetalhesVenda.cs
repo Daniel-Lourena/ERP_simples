@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
@@ -80,6 +81,7 @@ namespace SistemaERP.Vendas
                 return;
 
             new ModuloCadastro.Service.ProdutoVendaService().Delete(Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.id)].Value));
+            CarregarProdutos();
         }
 
         private void formDetalhesVenda_Load(object sender, EventArgs e)
@@ -137,6 +139,21 @@ namespace SistemaERP.Vendas
             txtBairro.Text = _pedido.Cliente.End_bairro;
             txtCidade.Text = _pedido.Cliente.Cidade.Dmunicipio;
             txtUF.Text = _pedido.Cliente.Cidade.DadosEstado.Uf;
+        }
+
+        
+        private void dgvProdutos_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            ProdutoVendaViewModel row = dgvProdutos.Rows[e.RowIndex].DataBoundItem as ProdutoVendaViewModel;
+
+            new ModuloCadastro.Service.ProdutoVendaService()
+                .UpdateParcial(new ProdutoVendaEntity
+                {
+                    Id = row.id,
+                    Quantidade = row.quantidade,
+                    Valor = row.valor
+                }, new() { nameof(ProdutoVendaEntity.Quantidade) ,nameof(ProdutoVendaEntity.Valor) });
+            CarregarProdutos();
         }
     }
 }

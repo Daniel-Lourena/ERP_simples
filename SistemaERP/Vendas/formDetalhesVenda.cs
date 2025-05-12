@@ -130,6 +130,7 @@ namespace SistemaERP.Vendas
                 _pedido.ClienteId = form._idClienteSelecionado;
             };
             if (_pedido.ClienteId == 0) return;
+
             _pedido.Cliente = new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Get(_pedido.ClienteId);
             txtFantasia.Text = _pedido.Cliente.Fantasia;
             txtRazaoSocial.Text = _pedido.Cliente.RazaoSocial;
@@ -141,7 +142,25 @@ namespace SistemaERP.Vendas
             txtUF.Text = _pedido.Cliente.Cidade.DadosEstado.Uf;
         }
 
-        
+        private void btnExcluirPedido_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Deseja realmente excluir o pedido?", "Sistema ERP", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return ;
+
+            _pedido.DataExclusao = DateTime.Now;
+            _pedido.UsuarioExclusaoId = 1; // PROVISÓRIO;
+            _pedido.Excluido = true;
+            new ModuloCadastro.Service.PedidoVendaService(new ModuloCadastroContext())
+                .UpdateParcial(_pedido, new()
+                {
+                    nameof(PedidoVendaEntity.Excluido),nameof(PedidoVendaEntity.UsuarioExclusaoId),nameof(PedidoVendaEntity.DataExclusao)
+                });
+            MessageBox.Show("Pedido excluído", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            this.Close();
+        }
+
         private void dgvProdutos_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             ProdutoVendaViewModel row = dgvProdutos.Rows[e.RowIndex].DataBoundItem as ProdutoVendaViewModel;

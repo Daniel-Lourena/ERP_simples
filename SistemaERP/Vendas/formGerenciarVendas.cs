@@ -21,6 +21,7 @@ namespace SistemaERP.Vendas
         {
             var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(_db_context)
                 .GetList()
+                .Where(x => !x.Excluido)
                 .Select(x => new PedidoVendaViewModel { id = x.Id, idCliente = x.ClienteId, dataCriacao = x.DataCriacao, nomeUsuarioCriador = x.UsuarioCriacao.Nome }).ToList();
 
             dgvVendas.CriarColunasDataGridView(listaDataSource, new()
@@ -33,6 +34,7 @@ namespace SistemaERP.Vendas
         private void btnNovo_Click(object sender, EventArgs e)
         {
             new formDetalhesVenda().ShowDialog();
+            CarregaVendas();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -40,6 +42,7 @@ namespace SistemaERP.Vendas
             if (dgvVendas.CurrentRow != null)
             {
                 new formDetalhesVenda(Convert.ToInt32(dgvVendas.CurrentRow.Cells[nameof(PedidoVendaViewModel.id)].Value)).ShowDialog();
+                CarregaVendas();
             }
         }
     }

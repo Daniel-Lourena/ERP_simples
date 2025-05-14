@@ -5,16 +5,22 @@ namespace ModuloCadastro.ViewModel
     public class EstoqueViewModel
     {
         [Display(Name = "ID Produto", Description = "")]
-        public int idProduto { get; set; }
+        public int IdProduto { get; set; }
         [Display(Name = "Descrição", Description = "")]
-        public string descricaoProduto { get; set; }
+        public string Codigo_SKU { get; set; }
+        [Display(Name = "Descrição", Description = "")]
+        public string DescricaoProduto { get; set; }
         [Display(Name = "Estoque", Description = "")]
-        public decimal quantidadeEstoque { get; set; } 
+        public decimal QuantidadeEstoque { get; set; } 
         [Display(Name = "Qtd. Venda", Description = "")]
-        public decimal quantidadePedidoVenda { get; set; }
+        public decimal QuantidadePedidoVenda { get; set; }
         [Display(Name = "Saldo", Description = "")]
-        public decimal quantidadeEstoqueSaldoDisponivel => quantidadeEstoque - quantidadePedidoVenda;
+        public decimal QuantidadeEstoqueSaldoDisponivel => QuantidadeEstoque - QuantidadePedidoVenda;
         [Display(Name = "Setor Estoque", Description = "")]
-        public string descricaoSetorEstoque { get; set; }
+        public string DescricaoSetorEstoque { get; set; }
+        [Display(Name = "ID Setor Estoque", Description = "")]
+        public int IdSetorEstoque { get; set; }
+        [Display(Name = "Inativo", Description = "")]
+        public bool inativo { get; set; }
     }
 }

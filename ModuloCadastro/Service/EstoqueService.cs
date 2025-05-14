@@ -4,6 +4,7 @@ using ModuloCadastro.Entity;
 using ModuloCadastro.ViewModel;
 using ModuloConfiguracoes.Extensions;
 using MySqlConnector;
+using System.Text;
 
 namespace ModuloCadastro.Service
 {
@@ -13,12 +14,14 @@ namespace ModuloCadastro.Service
         {
             return new ModuloCadastroContext().Estoques
                 .AsNoTracking()
+                .Include(x => x.SetorEstoque)
+                .Include(x => x.Produto)
                 .Select(x => new EstoqueViewModel
                 {
-                    idProduto = x.ProdutoId,
-                    descricaoProduto = x.Produto.Descricao,
-                    descricaoSetorEstoque = x.SetorEstoque.Descricao,
-                    quantidadeEstoque = x.Quantidade
+                    IdProduto = x.ProdutoId,
+                    DescricaoProduto = x.Produto.Descricao,
+                    DescricaoSetorEstoque = x.SetorEstoque.Descricao,
+                    QuantidadeEstoque = x.Quantidade
                 }).ToList();
         }
 
@@ -30,11 +33,14 @@ namespace ModuloCadastro.Service
 
             string sql = @$"
                     SELECT  
-                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} AS {nameof(EstoqueViewModel.idProduto)},
-                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Descricao)} AS {nameof(EstoqueViewModel.descricaoProduto)},
-                        IFNULL({SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Descricao)},'SEM SETOR') AS {nameof(EstoqueViewModel.descricaoSetorEstoque)},
-                        IFNULL({tb_estoque}.{nameof(EstoqueEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.quantidadeEstoque)},
-                        IFNULL({tb_produtosvenda}.{nameof(ProdutoVendaEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.quantidadePedidoVenda)}
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} AS {nameof(EstoqueViewModel.IdProduto)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.CodigoEstoque_SKU)} AS {nameof(EstoqueViewModel.Codigo_SKU)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Descricao)} AS {nameof(EstoqueViewModel.DescricaoProduto)},
+                        IFNULL({SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)},0) AS {nameof(EstoqueViewModel.IdSetorEstoque)},
+                        IFNULL({SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Descricao)},'SEM SETOR') AS {nameof(EstoqueViewModel.DescricaoSetorEstoque)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Inativo)} AS {nameof(EstoqueViewModel.inativo)},
+                        IFNULL({tb_estoque}.{nameof(EstoqueEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.QuantidadeEstoque)},
+                        IFNULL({tb_produtosvenda}.{nameof(ProdutoVendaEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.QuantidadePedidoVenda)}
     
                     FROM {ProdutoEntity.Table}
                     LEFT JOIN 
@@ -80,6 +86,147 @@ namespace ModuloCadastro.Service
             }
 
             return produtosEstoque;
+        }
+        public List<EstoqueViewModel> GetListEstoquePosicaoItem()
+        {
+            List<EstoqueViewModel> produtosEstoque = new();
+            string tb_estoque = "estoque";
+            string tb_produtosvenda = "produtosvenda";
+
+            string sql = @$"
+                    SELECT  
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} AS {nameof(EstoqueViewModel.IdProduto)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.CodigoEstoque_SKU)} AS {nameof(EstoqueViewModel.Codigo_SKU)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Descricao)} AS {nameof(EstoqueViewModel.DescricaoProduto)},
+                        IFNULL({SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)},0) AS {nameof(EstoqueViewModel.IdSetorEstoque)},
+                        IFNULL({SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Descricao)},'SEM SETOR') AS {nameof(EstoqueViewModel.DescricaoSetorEstoque)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Inativo)} AS {nameof(EstoqueViewModel.inativo)},
+                        IFNULL({tb_estoque}.{nameof(EstoqueEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.QuantidadeEstoque)},
+                        IFNULL({tb_produtosvenda}.{nameof(ProdutoVendaEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.QuantidadePedidoVenda)}
+    
+                    FROM {ProdutoEntity.Table}
+                    LEFT JOIN 
+                    (
+                        SELECT 
+                            {EstoqueEntity.Table}.{nameof(EstoqueEntity.ProdutoId)},
+                            {EstoqueEntity.Table}.{nameof(EstoqueEntity.SetorEstoqueId)},
+                            SUM(IFNULL({EstoqueEntity.Table}.{nameof(EstoqueEntity.Quantidade)},0)) AS {nameof(EstoqueEntity.Quantidade)}
+                        FROM {EstoqueEntity.Table}
+                        GROUP BY {EstoqueEntity.Table}.{nameof(EstoqueEntity.ProdutoId)},{EstoqueEntity.Table}.{nameof(EstoqueEntity.SetorEstoqueId)}
+                    ) AS {tb_estoque} ON {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} = {tb_estoque}.{nameof(EstoqueEntity.ProdutoId)}
+                    LEFT JOIN
+                    (
+                        SELECT 
+                            {ProdutoVendaEntity.Table}.{nameof(ProdutoVendaEntity.ProdutoId)},
+                            SUM(IFNULL({ProdutoVendaEntity.Table}.{nameof(ProdutoVendaEntity.Quantidade)},0)) AS {nameof(ProdutoVendaEntity.Quantidade)}
+                        FROM {ProdutoVendaEntity.Table},{PedidoVendaEntity.Table}
+                        WHERE {PedidoVendaEntity.Table}.{nameof(PedidoVendaEntity.Id)} = {ProdutoVendaEntity.Table}.{nameof(ProdutoVendaEntity.PedidoVendaId)}
+                        AND {PedidoVendaEntity.Table}.{nameof(PedidoVendaEntity.DataFechamento)} IS NULL 
+                        AND {PedidoVendaEntity.Table}.{nameof(PedidoVendaEntity.Excluido)} IS FALSE 
+                        GROUP BY {ProdutoVendaEntity.Table}.{nameof(ProdutoVendaEntity.ProdutoId)}
+                    ) AS {tb_produtosvenda} ON  {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} = {tb_produtosvenda}.{nameof(ProdutoVendaEntity.ProdutoId)}
+                    LEFT JOIN 
+                    (
+                        SELECT {nameof(SetorEstoqueEntity.Id)},{nameof(SetorEstoqueEntity.Descricao)} 
+                        FROM {SetorEstoqueEntity.Table}
+                    ) AS {SetorEstoqueEntity.Table} ON {SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)} = {tb_estoque}.{nameof(EstoqueEntity.SetorEstoqueId)};";
+
+            using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB)})
+            {
+                comando.CommandText = sql;
+                using (comando.Connection)
+                {
+                    comando.Connection.Open();
+                    using (MySqlDataReader reader = comando.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            produtosEstoque.Add(reader.MapTo<EstoqueViewModel>());
+                        }
+                    }
+                }
+            }
+
+            return produtosEstoque;
+        }
+        public EstoqueViewModel Get(string _idProduto ,string _setorEstoque )
+        {
+            EstoqueViewModel produtoEstoque = new();
+            string tb_estoque = "estoque";
+            string tb_produtosvenda = "produtosvenda";
+            StringBuilder sql = new StringBuilder();
+            
+            sql.Append(@$"
+                    SELECT  
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} AS {nameof(EstoqueViewModel.IdProduto)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.CodigoEstoque_SKU)} AS {nameof(EstoqueViewModel.Codigo_SKU)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Descricao)} AS {nameof(EstoqueViewModel.DescricaoProduto)},
+                        IFNULL({SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)},0) AS {nameof(EstoqueViewModel.IdSetorEstoque)},
+                        IFNULL({SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Descricao)},'SEM SETOR') AS {nameof(EstoqueViewModel.DescricaoSetorEstoque)},
+                        {ProdutoEntity.Table}.{nameof(ProdutoEntity.Inativo)} AS {nameof(EstoqueViewModel.inativo)},
+                        IFNULL({tb_estoque}.{nameof(EstoqueEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.QuantidadeEstoque)},
+                        IFNULL({tb_produtosvenda}.{nameof(ProdutoVendaEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.QuantidadePedidoVenda)}
+    
+                    FROM {ProdutoEntity.Table}
+                    INNER JOIN 
+                    (
+                        SELECT 
+                            {EstoqueEntity.Table}.{nameof(EstoqueEntity.ProdutoId)},
+                            {EstoqueEntity.Table}.{nameof(EstoqueEntity.SetorEstoqueId)},
+                            SUM(IFNULL({EstoqueEntity.Table}.{nameof(EstoqueEntity.Quantidade)},0)) AS {nameof(EstoqueEntity.Quantidade)}
+                        FROM {EstoqueEntity.Table}
+                        GROUP BY {EstoqueEntity.Table}.{nameof(EstoqueEntity.ProdutoId)},{EstoqueEntity.Table}.{nameof(EstoqueEntity.SetorEstoqueId)}
+                    ) AS {tb_estoque} ON {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} = {tb_estoque}.{nameof(EstoqueEntity.ProdutoId)}
+                    LEFT JOIN
+                    (
+                        SELECT 
+                            {ProdutoVendaEntity.Table}.{nameof(ProdutoVendaEntity.ProdutoId)},
+                            SUM(IFNULL({ProdutoVendaEntity.Table}.{nameof(ProdutoVendaEntity.Quantidade)},0)) AS {nameof(ProdutoVendaEntity.Quantidade)}
+                        FROM {ProdutoVendaEntity.Table},{PedidoVendaEntity.Table}
+                        WHERE {PedidoVendaEntity.Table}.{nameof(PedidoVendaEntity.Id)} = {ProdutoVendaEntity.Table}.{nameof(ProdutoVendaEntity.PedidoVendaId)}
+                        AND {PedidoVendaEntity.Table}.{nameof(PedidoVendaEntity.DataFechamento)} IS NULL 
+                        AND {PedidoVendaEntity.Table}.{nameof(PedidoVendaEntity.Excluido)} IS FALSE 
+                        GROUP BY {ProdutoVendaEntity.Table}.{nameof(ProdutoVendaEntity.ProdutoId)}
+                    ) AS {tb_produtosvenda} ON  {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} = {tb_produtosvenda}.{nameof(ProdutoVendaEntity.ProdutoId)}
+                    LEFT JOIN 
+                    (
+                        SELECT {nameof(SetorEstoqueEntity.Id)},{nameof(SetorEstoqueEntity.Descricao)} 
+                        FROM {SetorEstoqueEntity.Table}
+                    ) AS {SetorEstoqueEntity.Table} ON {SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)} = {tb_estoque}.{nameof(EstoqueEntity.SetorEstoqueId)}
+                    WHERE {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} = @{ProdutoEntity.Table}{nameof(ProdutoEntity.Id)}
+                    AND {SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)} = @{SetorEstoqueEntity.Table}{nameof(SetorEstoqueEntity.Id)};");
+
+            using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB)})
+            {
+                comando.Parameters.Add($"@{ProdutoEntity.Table}{nameof(ProdutoEntity.Id)}", MySqlDbType.Int32).Value = Convert.ToInt32(_idProduto);
+                comando.Parameters.Add($"@{SetorEstoqueEntity.Table}{nameof(SetorEstoqueEntity.Id)}", MySqlDbType.Int32).Value = Convert.ToInt32(_setorEstoque);
+
+                comando.CommandText = sql.ToString();
+                using (comando.Connection)
+                {
+                    comando.Connection.Open();
+                    using (MySqlDataReader reader = comando.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            produtoEstoque = reader.MapTo<EstoqueViewModel>();
+                        }
+                    }
+                }
+            }
+
+            return produtoEstoque;
+        }
+
+        public void Insert(EstoqueEntity entity)
+        {
+            var _context = new ModuloCadastroContext();
+            _context.Estoques.Add(entity);
+            _context.SaveChanges();
+        }
+        public void UpdateParcial(EstoqueEntity entity, List<string> listaPropriedadesAtualizar)
+        {
+            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }
 }

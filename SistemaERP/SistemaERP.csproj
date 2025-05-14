@@ -40,6 +40,9 @@
     <Compile Update="Cadastros\Produto\Estoque\formGerenciar.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Cadastros\Produto\Estoque\formAdicionarEstoque.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Cadastros\Produto\formDetalhesProduto.cs">
       <SubType>Form</SubType>
     </Compile>

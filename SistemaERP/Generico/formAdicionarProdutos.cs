@@ -27,12 +27,13 @@ namespace SistemaERP.Generico
                     listaEstoque,
                     new()
                     {
-                        (nameof(EstoqueViewModel.idProduto),true,true),
-                        (nameof(EstoqueViewModel.descricaoProduto),true,true),
-                        (nameof(EstoqueViewModel.descricaoSetorEstoque),true,true),
-                        (nameof(EstoqueViewModel.quantidadeEstoque),true,true),
-                        (nameof(EstoqueViewModel.quantidadePedidoVenda),true,true),
-                        (nameof(EstoqueViewModel.quantidadeEstoqueSaldoDisponivel),true,true)
+                        (nameof(EstoqueViewModel.IdProduto),true,true),
+                        (nameof(EstoqueViewModel.Codigo_SKU),true,true),
+                        (nameof(EstoqueViewModel.DescricaoProduto),true,true),
+                        (nameof(EstoqueViewModel.DescricaoSetorEstoque),true,true),
+                        (nameof(EstoqueViewModel.QuantidadeEstoque),true,true),
+                        (nameof(EstoqueViewModel.QuantidadePedidoVenda),true,true),
+                        (nameof(EstoqueViewModel.QuantidadeEstoqueSaldoDisponivel),true,true)
                     }
                 );
         }
@@ -52,7 +53,7 @@ namespace SistemaERP.Generico
                         (
                             new ProdutoVendaEntity()
                             {
-                                ProdutoId = Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.idProduto)].Value),
+                                ProdutoId = Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.IdProduto)].Value),
                                 PedidoVendaId = _idPedido,
                                 Quantidade = nudQtd.Value
                             }
@@ -75,10 +76,10 @@ namespace SistemaERP.Generico
 
             if (dgvProdutos.CurrentRow != null)
             {
-                lblProduto.Text = dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.idProduto)].Value.ToString();
-                txtEstoque.Text = dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.quantidadeEstoque)].Value.ToString();
-                txtPedido.Text = dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.quantidadePedidoVenda)].Value.ToString();
-                txtSaldo.Text = dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.quantidadeEstoqueSaldoDisponivel)].Value.ToString();
+                lblProduto.Text = dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.IdProduto)].Value.ToString();
+                txtEstoque.Text = dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.QuantidadeEstoque)].Value.ToString();
+                txtPedido.Text = dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.QuantidadePedidoVenda)].Value.ToString();
+                txtSaldo.Text = dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.QuantidadeEstoqueSaldoDisponivel)].Value.ToString();
             }
         }
 

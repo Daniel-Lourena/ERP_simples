@@ -149,7 +149,7 @@ namespace SistemaERP.Vendas
                 return ;
 
             _pedido.DataExclusao = DateTime.Now;
-            _pedido.UsuarioExclusaoId = 1; // PROVISÓRIO;
+            _pedido.UsuarioExclusaoId = 1; // PROVISÓRIO
             _pedido.Excluido = true;
             new ModuloCadastro.Service.PedidoVendaService(new ModuloCadastroContext())
                 .UpdateParcial(_pedido, new()

@@ -117,7 +117,7 @@ namespace SistemaERP
                     return;
                 }
             }
-            Cadastros.Produto.Estoque.formGerenciar childForm = new(db_context);
+            Cadastros.Produto.Estoque.formGerenciar childForm = new();
             childForm.MdiParent = this;
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();

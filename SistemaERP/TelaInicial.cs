@@ -1,4 +1,5 @@
 using SistemaERP.Cadastros.Extensions;
+using SistemaERP.Cadastros.Produto.SetorEstoque;
 
 namespace SistemaERP
 {
@@ -118,6 +119,22 @@ namespace SistemaERP
                 }
             }
             Cadastros.Produto.Estoque.formGerenciar childForm = new();
+            childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
+            childForm.Show();
+        }
+
+        private void setoresEstoqueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                if (f.GetType() == typeof(Cadastros.Produto.SetorEstoque.formGerenciarSetorEstoqueProduto))
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            Cadastros.Produto.SetorEstoque.formGerenciarSetorEstoqueProduto childForm = new();
             childForm.MdiParent = this;
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();

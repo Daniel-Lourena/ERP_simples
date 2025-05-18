@@ -41,7 +41,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
                 return;
 
             var produtoEstoque = new EstoqueService()
-                .Get(_produto.IdProduto.ToString(), _produto.IdSetorEstoque.ToString());
+                .Get(_produto.IdProduto, _produto.IdSetorEstoque);
 
             if (_funcao == "+")
             {
@@ -55,13 +55,24 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             }
             else if (_funcao == "-")
             {
-                new EstoqueService().UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
+                if ((produtoEstoque.QuantidadeEstoque - nudQtd.Value) == 0)
                 {
-                    ProdutoId = produtoEstoque.IdProduto,
-                    SetorEstoqueId = produtoEstoque.IdSetorEstoque,
-                    Quantidade = produtoEstoque.QuantidadeEstoque - nudQtd.Value
-                },
-                new() { nameof(EstoqueEntity.Quantidade) });
+                    new EstoqueService().Delete(new ModuloCadastro.Entity.EstoqueEntity
+                    {
+                        ProdutoId = produtoEstoque.IdProduto,
+                        SetorEstoqueId = produtoEstoque.IdSetorEstoque,
+                    });
+                }
+                else
+                {
+                    new EstoqueService().UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
+                    {
+                        ProdutoId = produtoEstoque.IdProduto,
+                        SetorEstoqueId = produtoEstoque.IdSetorEstoque,
+                        Quantidade = produtoEstoque.QuantidadeEstoque - nudQtd.Value
+                    },
+                    new() { nameof(EstoqueEntity.Quantidade) });
+                }
             }
 
             this.Close();

@@ -37,6 +37,9 @@
     <Compile Update="Cadastros\Produto\Categoria\formGerenciarCategoriasProduto.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Cadastros\Produto\Estoque\formTransferenciaEstoque.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Cadastros\Produto\Estoque\formGerenciar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -47,6 +50,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Cadastros\Produto\formGerenciarProdutos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Cadastros\Produto\SetorEstoque\formGerenciarSetorEstoqueProduto.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Generico\formAdicionarClientes.cs">

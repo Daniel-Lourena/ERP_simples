@@ -119,7 +119,7 @@
             MaximizeBox = false;
             Name = "formAdicionarEstoque";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Modificar Estoque";
+            Text = "Incluir Estoque";
             ((System.ComponentModel.ISupportInitialize)nudQtd).EndInit();
             ResumeLayout(false);
             PerformLayout();

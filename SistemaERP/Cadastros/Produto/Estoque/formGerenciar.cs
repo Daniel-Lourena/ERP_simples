@@ -61,10 +61,20 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             //}
         }
 
-        private void btnNovo_Click(object sender, EventArgs e)
+        private void btnIncluir_Click(object sender, EventArgs e)
         {
             new formAdicionarEstoque().ShowDialog();
             CarregaEstoque();
+        }
+
+        private void btnTransferir_Click(object sender, EventArgs e)
+        {
+            if (dgvProdutos.CurrentRow != null)
+            {
+                EstoqueViewModel produto = dgvProdutos.CurrentRow.DataBoundItem as EstoqueViewModel;
+                new formTransferenciaEstoque(produto).ShowDialog();
+                CarregaEstoque();
+            }
         }
     }
 }

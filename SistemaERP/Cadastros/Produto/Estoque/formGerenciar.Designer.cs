@@ -31,10 +31,10 @@
             dgvProdutos = new DataGridView();
             panel1 = new Panel();
             panel2 = new Panel();
+            btnIncluir = new Button();
             btnTransferir = new Button();
             btnSubtrair = new Button();
             btnAdicionar = new Button();
-            btnNovo = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProdutos).BeginInit();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -65,7 +65,7 @@
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel2.Controls.Add(btnNovo);
+            panel2.Controls.Add(btnIncluir);
             panel2.Controls.Add(btnTransferir);
             panel2.Controls.Add(btnSubtrair);
             panel2.Controls.Add(btnAdicionar);
@@ -73,6 +73,21 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(776, 65);
             panel2.TabIndex = 2;
+            // 
+            // btnIncluir
+            // 
+            btnIncluir.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnIncluir.BackColor = Color.WhiteSmoke;
+            btnIncluir.FlatAppearance.BorderColor = Color.Black;
+            btnIncluir.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnIncluir.ForeColor = Color.Black;
+            btnIncluir.Location = new Point(13, 11);
+            btnIncluir.Name = "btnIncluir";
+            btnIncluir.Size = new Size(102, 44);
+            btnIncluir.TabIndex = 3;
+            btnIncluir.Text = "INCLUIR";
+            btnIncluir.UseVisualStyleBackColor = false;
+            btnIncluir.Click += btnIncluir_Click;
             // 
             // btnTransferir
             // 
@@ -87,6 +102,7 @@
             btnTransferir.TabIndex = 2;
             btnTransferir.Text = "TRANSFERIR";
             btnTransferir.UseVisualStyleBackColor = false;
+            btnTransferir.Click += btnTransferir_Click;
             // 
             // btnSubtrair
             // 
@@ -118,21 +134,6 @@
             btnAdicionar.UseVisualStyleBackColor = false;
             btnAdicionar.Click += btnAdicionar_Click;
             // 
-            // btnNovo
-            // 
-            btnNovo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnNovo.BackColor = Color.WhiteSmoke;
-            btnNovo.FlatAppearance.BorderColor = Color.Black;
-            btnNovo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnNovo.ForeColor = Color.Black;
-            btnNovo.Location = new Point(13, 11);
-            btnNovo.Name = "btnNovo";
-            btnNovo.Size = new Size(102, 44);
-            btnNovo.TabIndex = 3;
-            btnNovo.Text = "NOVO";
-            btnNovo.UseVisualStyleBackColor = false;
-            btnNovo.Click += btnNovo_Click;
-            // 
             // formGerenciar
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -156,6 +157,6 @@
         private Button btnAdicionar;
         private Button btnSubtrair;
         private Button btnTransferir;
-        private Button btnNovo;
+        private Button btnIncluir;
     }
 }

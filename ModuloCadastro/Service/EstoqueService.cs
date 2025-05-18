@@ -105,7 +105,7 @@ namespace ModuloCadastro.Service
                         IFNULL({tb_produtosvenda}.{nameof(ProdutoVendaEntity.Quantidade)},0) AS {nameof(EstoqueViewModel.QuantidadePedidoVenda)}
     
                     FROM {ProdutoEntity.Table}
-                    LEFT JOIN 
+                    INNER JOIN 
                     (
                         SELECT 
                             {EstoqueEntity.Table}.{nameof(EstoqueEntity.ProdutoId)},
@@ -149,7 +149,7 @@ namespace ModuloCadastro.Service
 
             return produtosEstoque;
         }
-        public EstoqueViewModel Get(string _idProduto ,string _setorEstoque )
+        public EstoqueViewModel Get(int _idProduto ,int _setorEstoque )
         {
             EstoqueViewModel produtoEstoque = new();
             string tb_estoque = "estoque";
@@ -198,8 +198,8 @@ namespace ModuloCadastro.Service
 
             using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB)})
             {
-                comando.Parameters.Add($"@{ProdutoEntity.Table}{nameof(ProdutoEntity.Id)}", MySqlDbType.Int32).Value = Convert.ToInt32(_idProduto);
-                comando.Parameters.Add($"@{SetorEstoqueEntity.Table}{nameof(SetorEstoqueEntity.Id)}", MySqlDbType.Int32).Value = Convert.ToInt32(_setorEstoque);
+                comando.Parameters.Add($"@{ProdutoEntity.Table}{nameof(ProdutoEntity.Id)}", MySqlDbType.Int32).Value = _idProduto;
+                comando.Parameters.Add($"@{SetorEstoqueEntity.Table}{nameof(SetorEstoqueEntity.Id)}", MySqlDbType.Int32).Value = _setorEstoque;
 
                 comando.CommandText = sql.ToString();
                 using (comando.Connection)
@@ -227,6 +227,14 @@ namespace ModuloCadastro.Service
         public void UpdateParcial(EstoqueEntity entity, List<string> listaPropriedadesAtualizar)
         {
             ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+        }
+        public void Delete(EstoqueEntity entity)
+        {
+            using (var _context = new ModuloCadastroContext())
+            {
+                _context.Estoques.Remove(new EstoqueEntity { ProdutoId = entity.ProdutoId, SetorEstoqueId = entity.SetorEstoqueId });
+                _context.SaveChanges();
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ namespace ModuloCadastro.ViewModel
     {
         [Display(Name = "ID Produto", Description = "")]
         public int IdProduto { get; set; }
-        [Display(Name = "Descrição", Description = "")]
+        [Display(Name = "Código SKU", Description = "")]
         public string Codigo_SKU { get; set; }
         [Display(Name = "Descrição", Description = "")]
         public string DescricaoProduto { get; set; }

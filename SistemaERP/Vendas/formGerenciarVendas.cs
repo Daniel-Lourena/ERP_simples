@@ -1,4 +1,5 @@
 ﻿using ModuloCadastro.Context;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
 using System.Data;
@@ -33,6 +34,12 @@ namespace SistemaERP.Vendas
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
+            if (new ClienteService(new ModuloCadastroContext()).GetList().Count() == 0)
+            {
+                MessageBox.Show("Para seguir com a criação do pedido, cadastre um cliente", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             new formDetalhesVenda().ShowDialog();
             CarregaVendas();
         }

@@ -28,15 +28,15 @@ namespace SistemaERP.Vendas
         {
             _pedido = _pedido ?? new PedidoVendaEntity();
             BindingSource clienteSource = new();
-            clienteSource.DataSource = _pedido.Cliente;
+            clienteSource.DataSource = _pedido.Cliente ?? new ClienteEntity();
             BindingSource cidadeSource = new();
-            cidadeSource.DataSource = _pedido.Cliente.Cidade;
+            cidadeSource.DataSource = _pedido.Cliente?.Cidade ?? new CidadeEntity();
             BindingSource estadoSource = new();
-            estadoSource.DataSource = _pedido.Cliente.Cidade.DadosEstado;
+            estadoSource.DataSource = _pedido.Cliente?.Cidade?.DadosEstado ?? new EstadoEntity();
 
             txtIdCliente.DataBindings.Add(nameof(txtIdCliente.Text), _pedido, nameof(_pedido.ClienteId));
-            txtCadastro.DataBindings.Add(nameof(txtCadastro.Text), _pedido, nameof(_pedido.DataCriacao));
-            txtAtualizacao.DataBindings.Add(nameof(txtAtualizacao.Text), _pedido, nameof(_pedido.DataAtualizacao));
+            txtCriacao.DataBindings.Add(nameof(txtCriacao.Text), _pedido, nameof(_pedido.DataCriacao));
+            txtAtualizacao.DataBindings.Add(nameof(txtAtualizacao.Text), _pedido, nameof(_pedido.Cliente.DataAtualizacao));
             txtFantasia.DataBindings.Add(nameof(txtFantasia.Text), clienteSource, nameof(_pedido.Cliente.Fantasia));
             txtRazaoSocial.DataBindings.Add(nameof(txtRazaoSocial.Text), clienteSource, nameof(_pedido.Cliente.RazaoSocial));
             txtLogradouro.DataBindings.Add(nameof(txtLogradouro.Text), clienteSource, nameof(_pedido.Cliente.End_logradouro));
@@ -132,6 +132,7 @@ namespace SistemaERP.Vendas
             if (_pedido.ClienteId == 0) return;
 
             _pedido.Cliente = new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Get(_pedido.ClienteId);
+            txtIdCliente.Text = _pedido.Cliente.Id.ToString();
             txtFantasia.Text = _pedido.Cliente.Fantasia;
             txtRazaoSocial.Text = _pedido.Cliente.RazaoSocial;
             txtLogradouro.Text = _pedido.Cliente.End_logradouro;

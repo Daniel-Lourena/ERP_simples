@@ -33,7 +33,7 @@
             label6 = new Label();
             txtAtualizacao = new TextBox();
             label9 = new Label();
-            txtCadastro = new TextBox();
+            txtCriacao = new TextBox();
             groupBox1 = new GroupBox();
             btnProcurarCliente = new Button();
             txtIdCliente = new TextBox();
@@ -104,7 +104,7 @@
             tpDadosGerais.Controls.Add(label6);
             tpDadosGerais.Controls.Add(txtAtualizacao);
             tpDadosGerais.Controls.Add(label9);
-            tpDadosGerais.Controls.Add(txtCadastro);
+            tpDadosGerais.Controls.Add(txtCriacao);
             tpDadosGerais.Controls.Add(groupBox1);
             tpDadosGerais.Location = new Point(4, 24);
             tpDadosGerais.Name = "tpDadosGerais";
@@ -141,14 +141,14 @@
             label9.TabIndex = 46;
             label9.Text = "Criação: ";
             // 
-            // txtCadastro
+            // txtCriacao
             // 
-            txtCadastro.BackColor = SystemColors.Menu;
-            txtCadastro.Location = new Point(325, 6);
-            txtCadastro.Name = "txtCadastro";
-            txtCadastro.ReadOnly = true;
-            txtCadastro.Size = new Size(167, 23);
-            txtCadastro.TabIndex = 45;
+            txtCriacao.BackColor = SystemColors.Menu;
+            txtCriacao.Location = new Point(325, 6);
+            txtCriacao.Name = "txtCriacao";
+            txtCriacao.ReadOnly = true;
+            txtCriacao.Size = new Size(167, 23);
+            txtCriacao.TabIndex = 45;
             // 
             // groupBox1
             // 
@@ -614,7 +614,7 @@
         private Label label6;
         private TextBox txtAtualizacao;
         private Label label9;
-        private TextBox txtCadastro;
+        private TextBox txtCriacao;
         private Button btnExcluirPedido;
     }
 }

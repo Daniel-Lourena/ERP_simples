@@ -12,7 +12,8 @@ namespace ModuloCadastro.Service
 
         public ClienteEntity Get(int id)
         {
-            return _db_context.Clientes.AsNoTracking()
+            return _db_context.Clientes
+                .AsNoTracking()
                 .Include(c => c.Cidade)
                 .ThenInclude(c => c.DadosEstado)
                 .FirstOrDefault(x => x.Id.Equals(id))!;

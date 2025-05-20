@@ -36,6 +36,12 @@ namespace SistemaERP.Cadastros.Produto.Estoque
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            if (nudQtd.Value <= 0)
+            {
+                MessageBox.Show($"Quantidade inválida.", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (MessageBox.Show($"Deseja {btnModificar.Text} (Qtd: {nudQtd.Value}) no estoque do item ?", "Sistema ERP",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;

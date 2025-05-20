@@ -37,9 +37,9 @@ namespace SistemaERP.Cadastros.Produto.Estoque
 
         private void btnTransferir_Click(object sender, EventArgs e)
         {
-            if (nudQtd.Value == 0)
+            if (nudQtd.Value <= 0)
             {
-                MessageBox.Show($"Quantidade a transferir não pode ser zerada", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Quantidade inválida", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

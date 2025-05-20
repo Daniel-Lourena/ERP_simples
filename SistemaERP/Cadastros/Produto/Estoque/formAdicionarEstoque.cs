@@ -39,6 +39,12 @@ namespace SistemaERP.Cadastros.Produto.Estoque
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            if(nudQtd.Value <= 0)
+            {
+                MessageBox.Show($"Quantidade inválida.", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (MessageBox.Show($"Deseja incluir estoque para o item {cbProdutos.Text} - {cbSetores.Text} (Qtd: {nudQtd.Value}) ?", "Sistema ERP",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;

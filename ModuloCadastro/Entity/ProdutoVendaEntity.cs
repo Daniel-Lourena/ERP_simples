@@ -16,7 +16,10 @@ namespace ModuloCadastro.Entity
         public decimal Quantidade { get; set; } = 0;
         [Display(Name = "Valor", Description = ""), Column(TypeName = "decimal(10,2)")]
         public decimal Valor { get; set; }
+        [Display(Name = "ID Setor Estoque", Description = ""), Column(TypeName = "int")]
+        public int SetorEstoqueId { get; set; }
 
+        public SetorEstoqueEntity SetorEstoque { get; set; }
         public ProdutoEntity Produto { get; set; }
         public PedidoVendaEntity PedidoVenda { get; set; }
     }

@@ -150,23 +150,6 @@ namespace ModuloCadastro.Context
                       .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
             });
-
-            //modelBuilder.Entity<ProdutoVendaEntity>(entity =>
-            //{
-            //    entity.HasKey(p => p.Id);
-
-            //    entity.HasOne(p => p.Produto)
-            //          .WithMany()
-            //          .HasForeignKey(p => p.IdProduto)
-            //          .HasPrincipalKey(key => new { key.Id })
-            //          .OnDelete(DeleteBehavior.NoAction);
-
-            //    entity.HasOne(p => p.PedidoVenda)
-            //          .WithMany()
-            //          .HasForeignKey(p => p.PedidoVendaId)
-            //          .HasPrincipalKey(key => new { key.Id })
-            //          .OnDelete(DeleteBehavior.NoAction);
-            //});
         }
     }
 }

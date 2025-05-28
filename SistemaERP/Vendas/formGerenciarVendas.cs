@@ -1,4 +1,5 @@
 ﻿using ModuloCadastro.Context;
+using ModuloCadastro.Entity;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
@@ -8,11 +9,8 @@ namespace SistemaERP.Vendas
 {
     public partial class formGerenciarVendas : Form
     {
-        private ModuloCadastro.Context.ModuloCadastroContext _db_context;
-
-        public formGerenciarVendas(ModuloCadastroContext db_context)
+        public formGerenciarVendas()
         {
-            _db_context = db_context;
             InitializeComponent();
             CarregaVendas();
             this.ConfiguraTabIndex();
@@ -20,14 +18,14 @@ namespace SistemaERP.Vendas
 
         private void CarregaVendas()
         {
-            var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(_db_context)
+            var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(new ModuloCadastroContext())
                 .GetList()
                 .Where(x => !x.Excluido)
-                .Select(x => new PedidoVendaViewModel { id = x.Id, idCliente = x.ClienteId, dataCriacao = x.DataCriacao, nomeUsuarioCriador = x.UsuarioCriacao.Nome }).ToList();
+                .Select(x => new PedidoVendaViewModel { id = x.Id, clienteFantasia = x.Cliente.Fantasia, dataCriacao = x.DataCriacao, nomeUsuarioCriador = x.UsuarioCriacao.Nome }).ToList();
 
             dgvVendas.CriarColunasDataGridView(listaDataSource, new()
             {
-                (nameof(PedidoVendaViewModel.id),true,true), (nameof(PedidoVendaViewModel.idCliente),true,true),
+                (nameof(PedidoVendaViewModel.id),true,true), (nameof(PedidoVendaViewModel.clienteFantasia),true,true),
                 (nameof(PedidoVendaViewModel.dataCriacao),true,true),(nameof(PedidoVendaViewModel.nomeUsuarioCriador),true,true)
             });
         }
@@ -48,7 +46,7 @@ namespace SistemaERP.Vendas
         {
             if (dgvVendas.CurrentRow != null)
             {
-                new formDetalhesVenda(Convert.ToInt32(dgvVendas.CurrentRow.Cells[nameof(PedidoVendaViewModel.id)].Value)).ShowDialog();
+                new formDetalhesVenda(Convert.ToInt32(dgvVendas.CurrentRow.Cells[nameof(PedidoVendaEntity.Id)].Value)).ShowDialog();
                 CarregaVendas();
             }
         }

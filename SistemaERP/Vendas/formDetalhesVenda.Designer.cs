@@ -71,8 +71,9 @@
             btnDinheiro = new Button();
             dgvRecebimentos = new DataGridView();
             panel1 = new Panel();
-            btnSalvar = new Button();
             btnExcluirPedido = new Button();
+            btnSalvar = new Button();
+            btnFecharPedido = new Button();
             tcPedidos.SuspendLayout();
             tpDadosGerais.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -510,6 +511,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnFecharPedido);
             panel1.Controls.Add(btnExcluirPedido);
             panel1.Controls.Add(btnSalvar);
             panel1.Dock = DockStyle.Bottom;
@@ -517,16 +519,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 72);
             panel1.TabIndex = 1;
-            // 
-            // btnSalvar
-            // 
-            btnSalvar.Location = new Point(7, 10);
-            btnSalvar.Name = "btnSalvar";
-            btnSalvar.Size = new Size(81, 50);
-            btnSalvar.TabIndex = 1;
-            btnSalvar.Text = "SALVAR";
-            btnSalvar.UseVisualStyleBackColor = true;
-            btnSalvar.Click += btnSalvar_Click;
             // 
             // btnExcluirPedido
             // 
@@ -539,6 +531,26 @@
             btnExcluirPedido.Text = "EXCLUIR";
             btnExcluirPedido.UseVisualStyleBackColor = false;
             btnExcluirPedido.Click += btnExcluirPedido_Click;
+            // 
+            // btnSalvar
+            // 
+            btnSalvar.Location = new Point(12, 10);
+            btnSalvar.Name = "btnSalvar";
+            btnSalvar.Size = new Size(81, 50);
+            btnSalvar.TabIndex = 1;
+            btnSalvar.Text = "SALVAR";
+            btnSalvar.UseVisualStyleBackColor = true;
+            btnSalvar.Click += btnSalvar_Click;
+            // 
+            // btnFecharPedido
+            // 
+            btnFecharPedido.Location = new Point(707, 10);
+            btnFecharPedido.Name = "btnFecharPedido";
+            btnFecharPedido.Size = new Size(81, 50);
+            btnFecharPedido.TabIndex = 3;
+            btnFecharPedido.Text = "FECHAR PEDIDO";
+            btnFecharPedido.UseVisualStyleBackColor = true;
+            btnFecharPedido.Click += btnFecharPedido_Click;
             // 
             // formDetalhesVenda
             // 
@@ -616,5 +628,6 @@
         private Label label9;
         private TextBox txtCriacao;
         private Button btnExcluirPedido;
+        private Button btnFecharPedido;
     }
 }

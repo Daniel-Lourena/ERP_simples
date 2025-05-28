@@ -16,13 +16,16 @@ namespace ModuloCadastro.Service
         public PedidoVendaEntity Get(int id)
         {
             return new ModuloCadastroContext().PedidosVendas
-                .Include(x => x.Cliente)
-                .ThenInclude(x => x.Cidade).ThenInclude(x => x.DadosEstado)
+                .AsNoTracking()
+                .Include(x => x.UsuarioCriacao)
+                .Include(x => x.UsuarioAtualizacao)
+                .Include(x => x.Cliente).ThenInclude(x => x.Cidade).ThenInclude(x => x.DadosEstado)
                 .FirstOrDefault(x => x.Id.Equals(id))!;
         }
         public List<PedidoVendaEntity> GetList()
         {
             return _db_context.PedidosVendas.AsNoTracking()
+                .Include(x => x.Cliente)
                 .Include(x => x.UsuarioCriacao)
                 .ToList();
         }

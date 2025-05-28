@@ -13,12 +13,14 @@ namespace ModuloCadastro.Service
                 .AsNoTracking()
                 .Include(pp => pp.PedidoVenda)
                 .Include(pp => pp.Produto)
+                .Include(pp => pp.SetorEstoque)
                 .Where(pp => pp.PedidoVenda.Id == id)
                 .Select(x => new ProdutoVendaViewModel
                 {
                     id = x.Id,
                     idPedido = x.PedidoVendaId,
                     idProduto = x.ProdutoId,
+                    idSetorEstoque = x.SetorEstoqueId,
                     descricaoProduto = x.Produto.Descricao,
                     quantidade = Convert.ToDecimal(x.Quantidade),
                     valor = x.Valor

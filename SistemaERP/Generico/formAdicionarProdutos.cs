@@ -30,6 +30,7 @@ namespace SistemaERP.Generico
                         (nameof(EstoqueViewModel.IdProduto),true,true),
                         (nameof(EstoqueViewModel.Codigo_SKU),true,true),
                         (nameof(EstoqueViewModel.DescricaoProduto),true,true),
+                        (nameof(EstoqueViewModel.IdSetorEstoque),false,false),
                         (nameof(EstoqueViewModel.DescricaoSetorEstoque),true,true),
                         (nameof(EstoqueViewModel.QuantidadeEstoque),true,true),
                         (nameof(EstoqueViewModel.QuantidadePedidoVenda),true,true),
@@ -55,7 +56,8 @@ namespace SistemaERP.Generico
                             {
                                 ProdutoId = Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.IdProduto)].Value),
                                 PedidoVendaId = _idPedido,
-                                Quantidade = nudQtd.Value
+                                Quantidade = nudQtd.Value,
+                                SetorEstoqueId = Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(EstoqueViewModel.IdSetorEstoque)].Value)
                             }
                         );
                     break;

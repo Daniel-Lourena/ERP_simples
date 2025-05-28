@@ -46,6 +46,16 @@ namespace ModuloCadastro.Entity
                 idCriador = this.UsuarioCriacaoId,
                 dataCriacao = this.DataCriacao, 
                 dataAtualizacao = this.DataAtualizacao,
+                clienteFantasia = this.Cliente.Fantasia,
+                clienteRazaoSocial = this.Cliente.RazaoSocial,
+                nomeUsuarioCriador = this.UsuarioCriacao.Nome,
+                nomeUsuarioAtualizacao = this.UsuarioAtualizacao.Nome,
+                clienteEndNro = this.Cliente.End_numero,
+                clienteEndNomeRua = this.Cliente.End_nomeRua,
+                clienteEndBairro = this.Cliente.End_bairro,
+                clienteEndCidade = this.Cliente.Cidade.Dmunicipio,
+                clienteEndLogradouro = this.Cliente.End_logradouro,
+                clienteEndEstado = this.Cliente.Cidade.DadosEstado.Uf
             };
         }
     }

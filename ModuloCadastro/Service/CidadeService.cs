@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 
 namespace ModuloCadastro.Service
@@ -7,15 +8,15 @@ namespace ModuloCadastro.Service
     {
         public CidadeEntity Get(int id)
         {
-            return new ModuloCadastroContext().Cidades.FirstOrDefault(x => x.Id.Equals(id))!;
+            return new ModuloCadastroContext().Cidades.AsNoTracking().FirstOrDefault(x => x.Id.Equals(id))!;
         }
         public List<CidadeEntity> GetList()
         {
-            return new ModuloCadastroContext().Cidades.ToList();
+            return new ModuloCadastroContext().Cidades.AsNoTracking().ToList();
         }
         public List<CidadeEntity> GetListByEstado(int cuf)
         {
-            return new ModuloCadastroContext().Cidades.ToList().Where(x => x.Cuf.Equals(cuf)).ToList();
+            return new ModuloCadastroContext().Cidades.AsNoTracking().ToList().Where(x => x.Cuf.Equals(cuf)).ToList();
         }
     }
 }

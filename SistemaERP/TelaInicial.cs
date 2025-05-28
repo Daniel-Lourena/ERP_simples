@@ -86,7 +86,7 @@ namespace SistemaERP
                     return;
                 }
             }
-            Vendas.formGerenciarVendas childForm = new(db_context);
+            Vendas.formGerenciarVendas childForm = new();
             childForm.MdiParent = this;
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();

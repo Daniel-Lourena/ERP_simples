@@ -17,6 +17,7 @@ namespace ModuloCadastro.Context
         internal DbSet<PedidoVendaEntity> PedidosVendas { get; set; }
         internal DbSet<ProdutoVendaEntity> ProdutosVendas { get; set; }
         internal DbSet<EstoqueEntity> Estoques { get; set; }
+        internal DbSet<RecebimentoVendaEntity> RecebimentosVenda { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -149,6 +150,12 @@ namespace ModuloCadastro.Context
                       .HasForeignKey(e => e.SetorEstoqueId)
                       .HasPrincipalKey(key => new { key.Id })
                       .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.Entity<RecebimentoVendaEntity>(entity =>
+            {
+                entity.HasKey(r => r.Id );
+                entity.Property(r => r.Especie).HasConversion<int>();
             });
         }
     }

@@ -80,13 +80,13 @@ namespace SistemaERP
         {
             foreach (Form f in this.MdiChildren)
             {
-                if (f.GetType() == typeof(Vendas.formGerenciarVendas))
+                if (f.GetType() == typeof(Venda.formGerenciarVendas))
                 {
                     f.Activate();
                     return;
                 }
             }
-            Vendas.formGerenciarVendas childForm = new();
+            Venda.formGerenciarVendas childForm = new();
             childForm.MdiParent = this;
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();

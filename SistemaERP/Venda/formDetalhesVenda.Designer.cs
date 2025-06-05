@@ -1,4 +1,4 @@
-﻿namespace SistemaERP.Vendas
+﻿namespace SistemaERP.Venda
 {
     partial class formDetalhesVenda
     {
@@ -66,14 +66,18 @@
             btnCartaoDebito = new Button();
             btnBoleto = new Button();
             btnCheque = new Button();
-            button2 = new Button();
+            btnTransferencia = new Button();
             btnCreditoLoja = new Button();
             btnDinheiro = new Button();
             dgvRecebimentos = new DataGridView();
             panel1 = new Panel();
+            btnFecharPedido = new Button();
             btnExcluirPedido = new Button();
             btnSalvar = new Button();
-            btnFecharPedido = new Button();
+            label11 = new Label();
+            textBox1 = new TextBox();
+            label12 = new Label();
+            textBox2 = new TextBox();
             tcPedidos.SuspendLayout();
             tpDadosGerais.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -423,7 +427,7 @@
             groupBox2.Controls.Add(btnCartaoDebito);
             groupBox2.Controls.Add(btnBoleto);
             groupBox2.Controls.Add(btnCheque);
-            groupBox2.Controls.Add(button2);
+            groupBox2.Controls.Add(btnTransferencia);
             groupBox2.Controls.Add(btnCreditoLoja);
             groupBox2.Controls.Add(btnDinheiro);
             groupBox2.Dock = DockStyle.Fill;
@@ -442,6 +446,7 @@
             btnCartaoCredito.TabIndex = 6;
             btnCartaoCredito.Text = "Cartão crédito";
             btnCartaoCredito.UseVisualStyleBackColor = true;
+            btnCartaoCredito.Click += btnCartaoCredito_Click;
             // 
             // btnCartaoDebito
             // 
@@ -451,6 +456,7 @@
             btnCartaoDebito.TabIndex = 5;
             btnCartaoDebito.Text = "Cartão débito";
             btnCartaoDebito.UseVisualStyleBackColor = true;
+            btnCartaoDebito.Click += btnCartaoDebito_Click;
             // 
             // btnBoleto
             // 
@@ -460,6 +466,7 @@
             btnBoleto.TabIndex = 4;
             btnBoleto.Text = "Boleto";
             btnBoleto.UseVisualStyleBackColor = true;
+            btnBoleto.Click += btnBoleto_Click;
             // 
             // btnCheque
             // 
@@ -469,15 +476,17 @@
             btnCheque.TabIndex = 3;
             btnCheque.Text = "Cheque";
             btnCheque.UseVisualStyleBackColor = true;
+            btnCheque.Click += btnCheque_Click;
             // 
-            // button2
+            // btnTransferencia
             // 
-            button2.Location = new Point(450, 34);
-            button2.Name = "button2";
-            button2.Size = new Size(105, 50);
-            button2.TabIndex = 2;
-            button2.Text = "Transferência";
-            button2.UseVisualStyleBackColor = true;
+            btnTransferencia.Location = new Point(450, 34);
+            btnTransferencia.Name = "btnTransferencia";
+            btnTransferencia.Size = new Size(105, 50);
+            btnTransferencia.TabIndex = 2;
+            btnTransferencia.Text = "Transferência";
+            btnTransferencia.UseVisualStyleBackColor = true;
+            btnTransferencia.Click += btnTransferencia_Click;
             // 
             // btnCreditoLoja
             // 
@@ -487,6 +496,7 @@
             btnCreditoLoja.TabIndex = 1;
             btnCreditoLoja.Text = "Crédito loja";
             btnCreditoLoja.UseVisualStyleBackColor = true;
+            btnCreditoLoja.Click += btnCreditoLoja_Click;
             // 
             // btnDinheiro
             // 
@@ -496,6 +506,7 @@
             btnDinheiro.TabIndex = 0;
             btnDinheiro.Text = "Dinheiro";
             btnDinheiro.UseVisualStyleBackColor = true;
+            btnDinheiro.Click += btnDinheiro_Click;
             // 
             // dgvRecebimentos
             // 
@@ -511,7 +522,11 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(label12);
+            panel1.Controls.Add(textBox2);
+            panel1.Controls.Add(label11);
             panel1.Controls.Add(btnFecharPedido);
+            panel1.Controls.Add(textBox1);
             panel1.Controls.Add(btnExcluirPedido);
             panel1.Controls.Add(btnSalvar);
             panel1.Dock = DockStyle.Bottom;
@@ -519,6 +534,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 72);
             panel1.TabIndex = 1;
+            // 
+            // btnFecharPedido
+            // 
+            btnFecharPedido.Location = new Point(707, 10);
+            btnFecharPedido.Name = "btnFecharPedido";
+            btnFecharPedido.Size = new Size(81, 50);
+            btnFecharPedido.TabIndex = 3;
+            btnFecharPedido.Text = "FECHAR PEDIDO";
+            btnFecharPedido.UseVisualStyleBackColor = true;
+            btnFecharPedido.Click += btnFecharPedido_Click;
             // 
             // btnExcluirPedido
             // 
@@ -542,15 +567,39 @@
             btnSalvar.UseVisualStyleBackColor = true;
             btnSalvar.Click += btnSalvar_Click;
             // 
-            // btnFecharPedido
+            // label11
             // 
-            btnFecharPedido.Location = new Point(707, 10);
-            btnFecharPedido.Name = "btnFecharPedido";
-            btnFecharPedido.Size = new Size(81, 50);
-            btnFecharPedido.TabIndex = 3;
-            btnFecharPedido.Text = "FECHAR PEDIDO";
-            btnFecharPedido.UseVisualStyleBackColor = true;
-            btnFecharPedido.Click += btnFecharPedido_Click;
+            label11.AutoSize = true;
+            label11.Location = new Point(538, 18);
+            label11.Name = "label11";
+            label11.Size = new Size(62, 15);
+            label11.TabIndex = 51;
+            label11.Text = "Recebido: ";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(606, 10);
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new Size(82, 23);
+            textBox1.TabIndex = 50;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(536, 45);
+            label12.Name = "label12";
+            label12.Size = new Size(64, 15);
+            label12.TabIndex = 53;
+            label12.Text = "Valor Total:";
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(606, 37);
+            textBox2.Name = "textBox2";
+            textBox2.ReadOnly = true;
+            textBox2.Size = new Size(82, 23);
+            textBox2.TabIndex = 52;
             // 
             // formDetalhesVenda
             // 
@@ -578,6 +627,7 @@
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).EndInit();
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -611,7 +661,7 @@
         private GroupBox groupBox2;
         private Button btnBoleto;
         private Button btnCheque;
-        private Button button2;
+        private Button btnTransferencia;
         private Button btnCreditoLoja;
         private Button btnDinheiro;
         private Button btnCartaoCredito;
@@ -629,5 +679,9 @@
         private TextBox txtCriacao;
         private Button btnExcluirPedido;
         private Button btnFecharPedido;
+        private Label label12;
+        private TextBox textBox2;
+        private Label label11;
+        private TextBox textBox1;
     }
 }

@@ -12,19 +12,14 @@ namespace ModuloCadastro.Service
 
         public ClienteEntity Get(int id)
         {
-            return _db_context.Clientes
-                .AsNoTracking()
-                .Include(c => c.Cidade)
-                .ThenInclude(c => c.DadosEstado)
+            return _db_context.Clientes.AsNoTracking()
+                .Include(c => c.Cidade).ThenInclude(c => c.DadosEstado)
                 .FirstOrDefault(x => x.Id.Equals(id))!;
         }
-        public List<ClienteEntity> GetList()
+        public IQueryable<ClienteEntity> GetList()
         {
-            return _db_context.Clientes
-                .AsNoTracking()
-                .Include(c => c.Cidade)
-                .ThenInclude(c => c.DadosEstado)
-                .ToList();
+            return _db_context.Clientes.AsNoTracking()
+                .Include(c => c.Cidade).ThenInclude(c => c.DadosEstado);
         }
 
         public int Insert(ClienteEntity entity)

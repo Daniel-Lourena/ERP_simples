@@ -1,4 +1,4 @@
-﻿namespace SistemaERP.Vendas
+﻿namespace SistemaERP.Venda
 {
     partial class formGerenciarVendas
     {

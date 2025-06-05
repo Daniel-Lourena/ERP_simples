@@ -41,9 +41,9 @@ namespace ModuloCadastro.Entity
         [Column(TypeName = "datetime")]
         public DateTime DataAtualizacao { get; set; }
         [Column(TypeName = "varchar(50)")]
-        public string Iban { get; set; }
+        public string? Iban { get; set; }
         [Column(TypeName = "varchar(15)")]
-        public string SwiftCode { get; set; }
+        public string? SwiftCode { get; set; }
 
         public BancoViewModel ToViewModel()
         {

@@ -63,7 +63,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Vendas\formGerenciarVendas.cs">
+    <Compile Update="Venda\formGerenciarVendas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Venda\Recebimento\formBoleto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Venda\Recebimento\formDinheiro.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

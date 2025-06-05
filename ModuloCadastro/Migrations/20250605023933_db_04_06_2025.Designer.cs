@@ -11,8 +11,8 @@ using ModuloCadastro.Context;
 namespace ModuloCadastro.Migrations
 {
     [DbContext(typeof(ModuloCadastroContext))]
-    [Migration("20250512233540_db_12_05_2025")]
-    partial class db_12_05_2025
+    [Migration("20250605023933_db_04_06_2025")]
+    partial class db_04_06_2025
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,7 +82,6 @@ namespace ModuloCadastro.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Iban")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<bool>("Inativo")
@@ -100,7 +99,6 @@ namespace ModuloCadastro.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SwiftCode")
-                        .IsRequired()
                         .HasColumnType("varchar(15)");
 
                     b.Property<int>("TipoConta")
@@ -370,6 +368,9 @@ namespace ModuloCadastro.Migrations
                     b.Property<decimal>("Quantidade")
                         .HasColumnType("decimal(10,2)");
 
+                    b.Property<int>("SetorEstoqueId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(10,2)");
 
@@ -379,7 +380,41 @@ namespace ModuloCadastro.Migrations
 
                     b.HasIndex("ProdutoId");
 
+                    b.HasIndex("SetorEstoqueId");
+
                     b.ToTable("tb_produtosvenda");
+                });
+
+            modelBuilder.Entity("ModuloCadastro.Entity.RecebimentoVendaEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("Especie")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NroParcela")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PedidoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalParcela")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<DateTime>("Vencimento")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tb_recebimento_venda");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.SetorEstoqueEntity", b =>
@@ -533,9 +568,17 @@ namespace ModuloCadastro.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ModuloCadastro.Entity.SetorEstoqueEntity", "SetorEstoque")
+                        .WithMany()
+                        .HasForeignKey("SetorEstoqueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("PedidoVenda");
 
                     b.Navigation("Produto");
+
+                    b.Navigation("SetorEstoque");
                 });
 
             modelBuilder.Entity("ModuloCadastro.Entity.PedidoVendaEntity", b =>

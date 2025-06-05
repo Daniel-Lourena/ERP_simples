@@ -13,11 +13,10 @@ namespace ModuloCadastro.Service
         {
             return new ModuloCadastroContext().Produtos.FirstOrDefault(x => x.Id.Equals(id))!;
         }
-        public List<ProdutoEntity> GetList()
+        public IQueryable<ProdutoEntity> GetList()
         {
             return _db_context.Produtos.AsNoTracking()
-                .Include(x => x.Categoria)
-                .ToList();
+                .Include(x => x.Categoria);
         }
 
         public int Insert(ProdutoEntity entity)

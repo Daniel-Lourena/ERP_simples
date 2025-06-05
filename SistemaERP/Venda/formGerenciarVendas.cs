@@ -5,7 +5,7 @@ using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Extensions;
 using System.Data;
 
-namespace SistemaERP.Vendas
+namespace SistemaERP.Venda
 {
     public partial class formGerenciarVendas : Form
     {

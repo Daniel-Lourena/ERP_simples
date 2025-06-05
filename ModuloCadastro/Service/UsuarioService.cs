@@ -12,10 +12,9 @@ namespace ModuloCadastro.Service
         {
             return new ModuloCadastroContext().Usuarios.FirstOrDefault(x => x.Id.Equals(id))!;
         }
-        public List<UsuarioEntity> GetList()
+        public IQueryable<UsuarioEntity> GetList()
         {
-            return _db_context.Usuarios
-                .AsNoTracking().ToList();
+            return _db_context.Usuarios.AsNoTracking();
         }
 
         public int Insert(UsuarioEntity entity)

@@ -7,7 +7,7 @@ using SistemaERP.Cadastros.Extensions;
 using SistemaERP.Generico;
 using System.ComponentModel;
 
-namespace SistemaERP.Vendas
+namespace SistemaERP.Venda
 {
     public partial class formDetalhesVenda : Form
     {
@@ -49,8 +49,22 @@ namespace SistemaERP.Vendas
                     {
                         (nameof(ProdutoVendaViewModel.idProduto),true,true),(nameof(ProdutoVendaViewModel.descricaoProduto),true, true),
                         (nameof(ProdutoVendaViewModel.descricaoProduto), true,true),(nameof(ProdutoVendaViewModel.quantidade), false,true),
-                        (nameof(ProdutoVendaViewModel.valor), false,true),(nameof(ProdutoVendaViewModel.id), false,false)
-                        ,(nameof(ProdutoVendaViewModel.idSetorEstoque), false,false)
+                        (nameof(ProdutoVendaViewModel.valor), false,true),(nameof(ProdutoVendaViewModel.id), false,false),
+                        (nameof(ProdutoVendaViewModel.idSetorEstoque), false,false)
+                    }
+                );
+        }
+
+        private void CarregaRecebimentos()
+        {
+            dgvRecebimentos.CriarColunasDataGridView<RecebimentoVendaEntity>
+                (
+                    new ModuloCadastro.Service.RecebimentosVendaService().GetList().Where(x => x.PedidoId == _idPedido).ToList(),
+                    new()
+                    {
+                        (nameof(RecebimentoVendaEntity.Especie), false,true),(nameof(RecebimentoVendaEntity.Valor), false,true),
+                        (nameof(RecebimentoVendaEntity.NroParcela), false,true),(nameof(RecebimentoVendaEntity.TotalParcela), false,true),
+                        (nameof(RecebimentoVendaEntity.Vencimento), false,true)
                     }
                 );
         }
@@ -81,9 +95,11 @@ namespace SistemaERP.Vendas
         private void formDetalhesVenda_Load(object sender, EventArgs e)
         {
             CarregarProdutos();
+            CarregaRecebimentos();
 
             if (_idPedido > 0) MostraPedido();
             ConfiguraDataBindings();
+
 
             if (_idPedido == 0)
             {
@@ -123,7 +139,8 @@ namespace SistemaERP.Vendas
             {
                 form.ShowDialog();
                 _pedido.idCliente = form._idClienteSelecionado;
-            };
+            }
+            ;
             if (_pedido.idCliente == 0) return;
 
             var cliente = new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Get(_pedido.idCliente);
@@ -181,7 +198,7 @@ namespace SistemaERP.Vendas
 
             foreach (var row in produtos)
             {
-                var estoqueAtual = new ModuloCadastro.Service.EstoqueService().Get(row.idProduto,row.idSetorEstoque);
+                var estoqueAtual = new ModuloCadastro.Service.EstoqueService().Get(row.idProduto, row.idSetorEstoque);
                 estoqueAtual.QuantidadeEstoque -= row.quantidade;
 
                 if (estoqueAtual.QuantidadeEstoque == 0)
@@ -225,6 +242,44 @@ namespace SistemaERP.Vendas
             MessageBox.Show("Pedido finalizado!", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             this.Close();
+        }
+
+
+        private void btnDinheiro_Click(object sender, EventArgs e)
+        {
+            new Venda.Recebimento.formDinheiro(_pedido.id).ShowDialog();
+            CarregaRecebimentos();
+        }
+
+        private void btnBoleto_Click(object sender, EventArgs e)
+        {
+            new Venda.Recebimento.formBoleto(_pedido.id).ShowDialog();
+            CarregaRecebimentos();
+        }
+
+        private void btnCheque_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCreditoLoja_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnTransferencia_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCartaoDebito_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCartaoCredito_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

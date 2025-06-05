@@ -22,12 +22,11 @@ namespace ModuloCadastro.Service
                 .Include(x => x.Cliente).ThenInclude(x => x.Cidade).ThenInclude(x => x.DadosEstado)
                 .FirstOrDefault(x => x.Id.Equals(id))!;
         }
-        public List<PedidoVendaEntity> GetList()
+        public IQueryable<PedidoVendaEntity> GetList()
         {
             return _db_context.PedidosVendas.AsNoTracking()
                 .Include(x => x.Cliente)
-                .Include(x => x.UsuarioCriacao)
-                .ToList();
+                .Include(x => x.UsuarioCriacao);
         }
 
         public int Insert(PedidoVendaEntity entity)

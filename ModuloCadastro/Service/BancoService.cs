@@ -13,9 +13,9 @@ namespace ModuloCadastro.Service
         {
             return new ModuloCadastroContext().Bancos.FirstOrDefault(x => x.Id.Equals(id))!;
         }
-        public List<BancoEntity> GetList()
+        public IQueryable<BancoEntity> GetList()
         {
-            return _db_context.Bancos.AsNoTracking().ToList();
+            return _db_context.Bancos.AsNoTracking();
         }
 
         public int Insert(BancoEntity entity)

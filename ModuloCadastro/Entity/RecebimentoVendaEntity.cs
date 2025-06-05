@@ -28,5 +28,30 @@ namespace ModuloCadastro.Entity
         public string? Descricao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Vencimento { get; set; }
+
+
+        [Column(TypeName = "int")]
+        public int? BancoId { get; set; }
+
+        [Column(TypeName = "varchar(100)")]
+        public string? NomeEmissor { get; set; }
+
+        [Column(TypeName = "varchar(100)")]
+        public string? NroDocumento { get; set; }
+
+        [Column(TypeName = "varchar(10)")]
+        public string? Agencia { get; set; }
+
+        [Column(TypeName = "varchar(1)")]
+        public string? DigitoAgencia { get; set; }
+
+        [Column(TypeName = "varchar(100)")]
+        public string? ContaCorrente { get; set; }
+
+        [Column(TypeName = "varchar(1)")]
+        public string? DigitoContaCorrente { get; set; }
+
+        [Column(TypeName = "datetime")]
+        public DateTime? DataEmissaoDocumento { get; set; }
     }
 }

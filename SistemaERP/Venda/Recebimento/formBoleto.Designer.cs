@@ -52,7 +52,7 @@
             // 
             // btnAdicionar
             // 
-            btnAdicionar.Location = new Point(186, 221);
+            btnAdicionar.Location = new Point(167, 221);
             btnAdicionar.Name = "btnAdicionar";
             btnAdicionar.Size = new Size(76, 28);
             btnAdicionar.TabIndex = 13;
@@ -95,7 +95,7 @@
             txtObs.Multiline = true;
             txtObs.Name = "txtObs";
             txtObs.ScrollBars = ScrollBars.Vertical;
-            txtObs.Size = new Size(250, 46);
+            txtObs.Size = new Size(229, 46);
             txtObs.TabIndex = 20;
             // 
             // label1
@@ -204,7 +204,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(274, 269);
+            ClientSize = new Size(254, 264);
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(label5);

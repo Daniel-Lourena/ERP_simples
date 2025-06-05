@@ -259,7 +259,8 @@ namespace SistemaERP.Venda
 
         private void btnCheque_Click(object sender, EventArgs e)
         {
-
+            new Venda.Recebimento.formCheque(_pedido.id).ShowDialog();
+            CarregaRecebimentos();
         }
 
         private void btnCreditoLoja_Click(object sender, EventArgs e)

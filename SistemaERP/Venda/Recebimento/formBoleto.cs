@@ -63,6 +63,7 @@ namespace SistemaERP.Venda.Recebimento
                     PedidoId = _idPedido,
                     Vencimento = dataParcela,
                     Valor = valorParcela,
+                    BancoId = Convert.ToInt32(cbBanco.SelectedValue),
                     Descricao = txtObs.Text
                 });
 

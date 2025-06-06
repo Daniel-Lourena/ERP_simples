@@ -27,11 +27,11 @@ namespace ModuloCadastro.Entity
         [Column(TypeName = "varchar(100)")]
         public string? Descricao { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime Vencimento { get; set; }
+        public DateTime Vencimento { get; set; } = DateTime.Now;
 
 
         [Column(TypeName = "int")]
-        public int? BancoId { get; set; }
+        public int BancoId { get; set; }
 
         [Column(TypeName = "varchar(100)")]
         public string? NomeEmissor { get; set; }

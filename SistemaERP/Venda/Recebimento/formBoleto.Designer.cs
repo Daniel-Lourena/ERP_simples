@@ -1,4 +1,5 @@
-﻿namespace SistemaERP.Venda.Recebimento
+﻿
+namespace SistemaERP.Venda.Recebimento
 {
     partial class formBoleto
     {
@@ -44,6 +45,8 @@
             nudDemaisParcelas = new NumericUpDown();
             label6 = new Label();
             label7 = new Label();
+            dtpVencimento = new DateTimePicker();
+            label8 = new Label();
             ((System.ComponentModel.ISupportInitialize)nudValor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudParcelas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudPrimeiraParcela).BeginInit();
@@ -52,7 +55,7 @@
             // 
             // btnAdicionar
             // 
-            btnAdicionar.Location = new Point(167, 221);
+            btnAdicionar.Location = new Point(167, 272);
             btnAdicionar.Name = "btnAdicionar";
             btnAdicionar.Size = new Size(76, 28);
             btnAdicionar.TabIndex = 13;
@@ -63,7 +66,7 @@
             // lblValor
             // 
             lblValor.AutoSize = true;
-            lblValor.Location = new Point(12, 228);
+            lblValor.Location = new Point(12, 279);
             lblValor.Name = "lblValor";
             lblValor.Size = new Size(52, 15);
             lblValor.TabIndex = 19;
@@ -72,7 +75,7 @@
             // nudValor
             // 
             nudValor.DecimalPlaces = 2;
-            nudValor.Location = new Point(70, 226);
+            nudValor.Location = new Point(70, 277);
             nudValor.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             nudValor.Name = "nudValor";
             nudValor.Size = new Size(69, 23);
@@ -91,7 +94,7 @@
             // 
             // txtObs
             // 
-            txtObs.Location = new Point(12, 169);
+            txtObs.Location = new Point(12, 220);
             txtObs.Multiline = true;
             txtObs.Name = "txtObs";
             txtObs.ScrollBars = ScrollBars.Vertical;
@@ -101,7 +104,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 151);
+            label1.Location = new Point(12, 202);
             label1.Name = "label1";
             label1.Size = new Size(31, 15);
             label1.TabIndex = 21;
@@ -200,11 +203,30 @@
             label7.TabIndex = 31;
             label7.Text = "dias";
             // 
+            // dtpVencimento
+            // 
+            dtpVencimento.Format = DateTimePickerFormat.Short;
+            dtpVencimento.Location = new Point(12, 167);
+            dtpVencimento.Name = "dtpVencimento";
+            dtpVencimento.Size = new Size(95, 23);
+            dtpVencimento.TabIndex = 32;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(12, 149);
+            label8.Name = "label8";
+            label8.Size = new Size(121, 15);
+            label8.TabIndex = 33;
+            label8.Text = "Primeiro vencimento:";
+            // 
             // formBoleto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(254, 264);
+            ClientSize = new Size(254, 317);
+            Controls.Add(label8);
+            Controls.Add(dtpVencimento);
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -226,6 +248,7 @@
             Name = "formBoleto";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Recebimento";
+            Load += formBoleto_Load;
             ((System.ComponentModel.ISupportInitialize)nudValor).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudParcelas).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudPrimeiraParcela).EndInit();
@@ -233,7 +256,6 @@
             ResumeLayout(false);
             PerformLayout();
         }
-
         #endregion
 
         private Button btnAdicionar;
@@ -252,5 +274,7 @@
         private NumericUpDown nudDemaisParcelas;
         private Label label6;
         private Label label7;
+        private DateTimePicker dtpVencimento;
+        private Label label8;
     }
 }

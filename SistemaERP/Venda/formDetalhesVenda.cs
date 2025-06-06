@@ -282,5 +282,22 @@ namespace SistemaERP.Venda
         {
 
         }
+
+        private void dgvRecebimentos_DoubleClick(object sender, EventArgs e)
+        {
+            if (dgvRecebimentos.CurrentRow == null) return;
+
+            RecebimentoVendaEntity row = dgvRecebimentos.CurrentRow.DataBoundItem as RecebimentoVendaEntity;
+
+            row = new RecebimentosVendaService().Get(row.Id);
+            Form form = row.Especie switch
+            {
+                ERecebimentoEspecie.DINHEIRO => new Venda.Recebimento.formDinheiro(row),
+                ERecebimentoEspecie.BOLETO => new Venda.Recebimento.formBoleto(row),
+                ERecebimentoEspecie.CHEQUE => new Venda.Recebimento.formCheque(row),
+                _ => null
+            };
+            form.ShowDialog();
+        }
     }
 }

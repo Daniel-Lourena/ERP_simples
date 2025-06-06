@@ -17,11 +17,41 @@ namespace SistemaERP.Venda.Recebimento
     public partial class formCheque : Form
     {
         private int _idPedido;
-        public formCheque(int idPedido)
+        private RecebimentoVendaEntity _recebimento;
+        public formCheque()
         {
             InitializeComponent();
             CarregaBancos();
+        }
+
+        public formCheque(int idPedido) : this()
+        {
             _idPedido = idPedido;
+        }
+        public formCheque(RecebimentoVendaEntity recebimento) : this()
+        {
+            _recebimento = recebimento;
+        }
+        private void ConfiguraDataBindings()
+        {
+            _recebimento = _recebimento ?? new RecebimentoVendaEntity();
+
+            cbBanco.DataBindings.Add(nameof(cbBanco.SelectedValue), _recebimento, nameof(_recebimento.BancoId));
+            dtpDataEmissao.DataBindings.Add(nameof(dtpDataEmissao.Value), _recebimento, nameof(_recebimento.DataEmissaoDocumento));
+            dtpBomPara.DataBindings.Add(nameof(dtpBomPara.Value), _recebimento, nameof(_recebimento.Vencimento));
+            txtNroCheque.DataBindings.Add(nameof(txtNroCheque.Text), _recebimento, nameof(_recebimento.NroDocumento));
+            nudValor.DataBindings.Add(nameof(nudValor.Value), _recebimento, nameof(_recebimento.Valor));
+            txtObs.DataBindings.Add(nameof(txtObs.Text), _recebimento, nameof(_recebimento.Descricao));
+            txtAgencia.DataBindings.Add(nameof(txtAgencia.Text), _recebimento, nameof(_recebimento.Agencia));
+            txtDigitoAgencia.DataBindings.Add(nameof(txtDigitoAgencia.Text), _recebimento, nameof(_recebimento.DigitoAgencia));
+            txtContaCorrente.DataBindings.Add(nameof(txtContaCorrente.Text), _recebimento, nameof(_recebimento.ContaCorrente));
+            txtDigitoContaCorrente.DataBindings.Add(nameof(txtDigitoContaCorrente.Text), _recebimento, nameof(_recebimento.DigitoContaCorrente));
+            txtEmissor.DataBindings.Add(nameof(txtEmissor.Text), _recebimento, nameof(_recebimento.NomeEmissor));
+
+            if (_recebimento.Id == 0)
+            {
+                cbBanco.SelectedIndex = 0;
+            }
         }
 
         private void CarregaBancos()
@@ -41,27 +71,60 @@ namespace SistemaERP.Venda.Recebimento
                 return;
             }
 
-            new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
+            if (_recebimento.Id == 0)
             {
-                Especie = ModuloCadastro.Enum.ERecebimentoEspecie.CHEQUE,
-                NroParcela = 1,
-                TotalParcela = 1,
-                PedidoId = _idPedido,
-                DataEmissaoDocumento = dtpDataEmissao.Value.Date,
-                Vencimento = dtpBomPara.Value.Date,
-                Valor = nudValor.Value,
-                NroDocumento = txtNroCheque.Text,
-                NomeEmissor = txtEmissor.Text,
-                BancoId = Convert.ToInt32(cbBanco.SelectedValue),
-                Agencia = txtAgencia.Text,
-                DigitoAgencia = txtDigitoAgencia.Text,
-                ContaCorrente = txtContaCorrente.Text,
-                DigitoContaCorrente = txtDigitoContaCorrente.Text,
-                Descricao = txtObs.Text
-            });
+                new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
+                {
+                    Especie = ModuloCadastro.Enum.ERecebimentoEspecie.CHEQUE,
+                    NroParcela = 1,
+                    TotalParcela = 1,
+                    PedidoId = _idPedido,
+                    DataEmissaoDocumento = dtpDataEmissao.Value.Date,
+                    Vencimento = dtpBomPara.Value.Date,
+                    Valor = nudValor.Value,
+                    NroDocumento = txtNroCheque.Text,
+                    NomeEmissor = txtEmissor.Text,
+                    BancoId = Convert.ToInt32(cbBanco.SelectedValue),
+                    Agencia = txtAgencia.Text,
+                    DigitoAgencia = txtDigitoAgencia.Text,
+                    ContaCorrente = txtContaCorrente.Text,
+                    DigitoContaCorrente = txtDigitoContaCorrente.Text,
+                    Descricao = txtObs.Text
+                });
+            }
+            else
+            {
+                new RecebimentosVendaService().Update(new RecebimentoVendaEntity()
+                {
+                    Especie = ModuloCadastro.Enum.ERecebimentoEspecie.CHEQUE,
+                    NroParcela = 1,
+                    TotalParcela = 1,
+                    PedidoId = _idPedido,
+                    DataEmissaoDocumento = dtpDataEmissao.Value.Date,
+                    Vencimento = dtpBomPara.Value.Date,
+                    Valor = nudValor.Value,
+                    NroDocumento = txtNroCheque.Text,
+                    NomeEmissor = txtEmissor.Text,
+                    BancoId = Convert.ToInt32(cbBanco.SelectedValue),
+                    Agencia = txtAgencia.Text,
+                    DigitoAgencia = txtDigitoAgencia.Text,
+                    ContaCorrente = txtContaCorrente.Text,
+                    DigitoContaCorrente = txtDigitoContaCorrente.Text,
+                    Descricao = txtObs.Text
+                });
+            }
 
             this.Close();
         }
 
+        private void formCheque_Load(object sender, EventArgs e)
+        {
+            ConfiguraDataBindings();
+            if (_recebimento.Id > 0)
+            {
+                btnAdicionar.Text = "SALVAR";
+                nudValor.ReadOnly = true;
+            }
+        }
     }
 }

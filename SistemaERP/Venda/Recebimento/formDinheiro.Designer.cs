@@ -1,4 +1,5 @@
-﻿namespace SistemaERP.Venda.Recebimento
+﻿
+namespace SistemaERP.Venda.Recebimento
 {
     partial class formDinheiro
     {
@@ -110,11 +111,11 @@
             Name = "formDinheiro";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Recebimento";
+            Load += formDinheiro_Load;
             ((System.ComponentModel.ISupportInitialize)nudValor).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
-
         #endregion
 
         private Button btnAdicionar;

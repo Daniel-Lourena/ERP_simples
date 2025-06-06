@@ -277,6 +277,7 @@
             Name = "formCheque";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Recebimento";
+            Load += formCheque_Load;
             ((System.ComponentModel.ISupportInitialize)nudValor).EndInit();
             ResumeLayout(false);
             PerformLayout();

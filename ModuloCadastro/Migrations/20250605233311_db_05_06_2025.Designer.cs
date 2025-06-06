@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModuloCadastro.Context;
 
@@ -10,9 +11,10 @@ using ModuloCadastro.Context;
 namespace ModuloCadastro.Migrations
 {
     [DbContext(typeof(ModuloCadastroContext))]
-    partial class ModuloCadastroContextModelSnapshot : ModelSnapshot
+    [Migration("20250605233311_db_05_06_2025")]
+    partial class db_05_06_2025
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,9 +399,6 @@ namespace ModuloCadastro.Migrations
 
                     b.Property<string>("ContaCorrente")
                         .HasColumnType("varchar(100)");
-
-                    b.Property<DateTime?>("DataEmissaoDocumento")
-                        .HasColumnType("datetime");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("varchar(100)");

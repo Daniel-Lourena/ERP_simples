@@ -17,13 +17,37 @@ namespace SistemaERP.Venda.Recebimento
     public partial class formBoleto : Form
     {
         private int _idPedido;
-        public formBoleto(int idPedido)
+        private RecebimentoVendaEntity _recebimento;
+        public formBoleto()
         {
             InitializeComponent();
             CarregaBancos();
+        }
+        public formBoleto(int idPedido) : this()
+        {
             _idPedido = idPedido;
         }
+        public formBoleto(RecebimentoVendaEntity recebimento) : this()
+        {
+            _recebimento = recebimento;
+            _idPedido = recebimento.PedidoId;
+        }
 
+        private void ConfiguraDataBindings()
+        {
+            _recebimento = _recebimento ?? new RecebimentoVendaEntity();
+
+            cbBanco.DataBindings.Add(nameof(cbBanco.SelectedValue), _recebimento, nameof(_recebimento.BancoId));
+            nudParcelas.DataBindings.Add(nameof(nudParcelas.Value), _recebimento, nameof(_recebimento.TotalParcela));
+            nudValor.DataBindings.Add(nameof(nudValor.Value), _recebimento, nameof(_recebimento.Valor));
+            txtObs.DataBindings.Add(nameof(txtObs.Text), _recebimento, nameof(_recebimento.Descricao));
+
+            if (_recebimento.Id == 0)
+            {
+                nudParcelas.Value = 1;
+                cbBanco.SelectedIndex = 0;
+            }
+        }
         private void CarregaBancos()
         {
             cbBanco.PreencherComboBoxList(
@@ -41,32 +65,51 @@ namespace SistemaERP.Venda.Recebimento
                 return;
             }
 
-            DateTime dataParcela = DateTime.Now.Date;
-            decimal valorTotal = nudValor.Value;
-
-            for (int i = 1; i <= nudParcelas.Value; i++)
+            if (_recebimento.Id == 0)
             {
-                if (i == 1)
-                    dataParcela = dataParcela.AddDays(Convert.ToInt32(nudPrimeiraParcela.Value));
-                else
-                    dataParcela = dataParcela.AddDays(Convert.ToInt32(nudDemaisParcelas.Value));
+                DateTime dataParcela = DateTime.Now.Date;
+                decimal valorTotal = nudValor.Value;
 
-                var valorParcela = Math.Round(nudValor.Value / nudParcelas.Value);
-
-                if ((valorTotal - valorParcela) < 0 || nudParcelas.Value == i) valorParcela = valorTotal;
-
-                new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
+                for (int i = 1; i <= nudParcelas.Value; i++)
                 {
+                    if (i == 1)
+                        dataParcela = dataParcela.AddDays(Convert.ToInt32(nudPrimeiraParcela.Value));
+                    else
+                        dataParcela = dataParcela.AddDays(Convert.ToInt32(nudDemaisParcelas.Value));
+
+                    var valorParcela = Math.Round(nudValor.Value / nudParcelas.Value);
+
+                    if ((valorTotal - valorParcela) < 0 || nudParcelas.Value == i) valorParcela = valorTotal;
+
+                    new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
+                    {
+                        Especie = ModuloCadastro.Enum.ERecebimentoEspecie.BOLETO,
+                        NroParcela = i,
+                        TotalParcela = Convert.ToInt32(nudParcelas.Value),
+                        PedidoId = _idPedido,
+                        Vencimento = dataParcela,
+                        Valor = valorParcela,
+                        BancoId = Convert.ToInt32(cbBanco.SelectedValue),
+                        Descricao = txtObs.Text
+                    });
+
+                    valorTotal -= valorParcela;
+                }
+            }
+            else
+            {
+                new RecebimentosVendaService().Update(new RecebimentoVendaEntity()
+                {
+                    Id = _recebimento.Id,
                     Especie = ModuloCadastro.Enum.ERecebimentoEspecie.BOLETO,
-                    NroParcela = i,
-                    TotalParcela = Convert.ToInt32(nudParcelas.Value),
+                    NroParcela = _recebimento.NroParcela,
+                    TotalParcela = _recebimento.TotalParcela,
                     PedidoId = _idPedido,
-                    Vencimento = dataParcela,
-                    Valor = valorParcela,
+                    Vencimento = _recebimento.Vencimento.Date,
+                    Valor = _recebimento.Valor,
+                    BancoId = Convert.ToInt32(cbBanco.SelectedValue),
                     Descricao = txtObs.Text
                 });
-
-                valorTotal -= valorParcela;
             }
 
             this.Close();
@@ -76,6 +119,17 @@ namespace SistemaERP.Venda.Recebimento
         {
             if (nudParcelas.Value > 1) nudDemaisParcelas.Enabled = true;
             else nudDemaisParcelas.Enabled = false;
+        }
+        private void formBoleto_Load(object sender, EventArgs e)
+        {
+            ConfiguraDataBindings();
+            if (_recebimento.Id > 0) 
+            {
+                btnAdicionar.Text = "SALVAR";
+                nudParcelas.ReadOnly = true;
+                nudPrimeiraParcela.ReadOnly = true;
+                nudValor.ReadOnly = true;
+            }
         }
     }
 }

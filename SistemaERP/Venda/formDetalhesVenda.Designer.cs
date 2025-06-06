@@ -1,4 +1,5 @@
-﻿namespace SistemaERP.Venda
+﻿
+namespace SistemaERP.Venda
 {
     partial class formDetalhesVenda
     {
@@ -71,13 +72,13 @@
             btnDinheiro = new Button();
             dgvRecebimentos = new DataGridView();
             panel1 = new Panel();
-            btnFecharPedido = new Button();
-            btnExcluirPedido = new Button();
-            btnSalvar = new Button();
-            label11 = new Label();
-            textBox1 = new TextBox();
             label12 = new Label();
             textBox2 = new TextBox();
+            label11 = new Label();
+            btnFecharPedido = new Button();
+            textBox1 = new TextBox();
+            btnExcluirPedido = new Button();
+            btnSalvar = new Button();
             tcPedidos.SuspendLayout();
             tpDadosGerais.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -519,6 +520,7 @@
             dgvRecebimentos.RowTemplate.Height = 25;
             dgvRecebimentos.Size = new Size(786, 344);
             dgvRecebimentos.TabIndex = 0;
+            dgvRecebimentos.DoubleClick += dgvRecebimentos_DoubleClick;
             // 
             // panel1
             // 
@@ -535,6 +537,32 @@
             panel1.Size = new Size(800, 72);
             panel1.TabIndex = 1;
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(536, 45);
+            label12.Name = "label12";
+            label12.Size = new Size(64, 15);
+            label12.TabIndex = 53;
+            label12.Text = "Valor Total:";
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(606, 37);
+            textBox2.Name = "textBox2";
+            textBox2.ReadOnly = true;
+            textBox2.Size = new Size(82, 23);
+            textBox2.TabIndex = 52;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(538, 18);
+            label11.Name = "label11";
+            label11.Size = new Size(62, 15);
+            label11.TabIndex = 51;
+            label11.Text = "Recebido: ";
+            // 
             // btnFecharPedido
             // 
             btnFecharPedido.Location = new Point(707, 10);
@@ -544,6 +572,14 @@
             btnFecharPedido.Text = "FECHAR PEDIDO";
             btnFecharPedido.UseVisualStyleBackColor = true;
             btnFecharPedido.Click += btnFecharPedido_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(606, 10);
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new Size(82, 23);
+            textBox1.TabIndex = 50;
             // 
             // btnExcluirPedido
             // 
@@ -566,40 +602,6 @@
             btnSalvar.Text = "SALVAR";
             btnSalvar.UseVisualStyleBackColor = true;
             btnSalvar.Click += btnSalvar_Click;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(538, 18);
-            label11.Name = "label11";
-            label11.Size = new Size(62, 15);
-            label11.TabIndex = 51;
-            label11.Text = "Recebido: ";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(606, 10);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(82, 23);
-            textBox1.TabIndex = 50;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(536, 45);
-            label12.Name = "label12";
-            label12.Size = new Size(64, 15);
-            label12.TabIndex = 53;
-            label12.Text = "Valor Total:";
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(606, 37);
-            textBox2.Name = "textBox2";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(82, 23);
-            textBox2.TabIndex = 52;
             // 
             // formDetalhesVenda
             // 
@@ -630,7 +632,6 @@
             panel1.PerformLayout();
             ResumeLayout(false);
         }
-
         #endregion
 
         private TabControl tcPedidos;

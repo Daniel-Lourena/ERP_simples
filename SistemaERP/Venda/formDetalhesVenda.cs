@@ -259,7 +259,8 @@ namespace SistemaERP.Venda
 
         private void btnCheque_Click(object sender, EventArgs e)
         {
-
+            new Venda.Recebimento.formCheque(_pedido.id).ShowDialog();
+            CarregaRecebimentos();
         }
 
         private void btnCreditoLoja_Click(object sender, EventArgs e)
@@ -280,6 +281,23 @@ namespace SistemaERP.Venda
         private void btnCartaoCredito_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgvRecebimentos_DoubleClick(object sender, EventArgs e)
+        {
+            if (dgvRecebimentos.CurrentRow == null) return;
+
+            RecebimentoVendaEntity row = dgvRecebimentos.CurrentRow.DataBoundItem as RecebimentoVendaEntity;
+
+            row = new RecebimentosVendaService().Get(row.Id);
+            Form form = row.Especie switch
+            {
+                ERecebimentoEspecie.DINHEIRO => new Venda.Recebimento.formDinheiro(row),
+                ERecebimentoEspecie.BOLETO => new Venda.Recebimento.formBoleto(row),
+                ERecebimentoEspecie.CHEQUE => new Venda.Recebimento.formCheque(row),
+                _ => null
+            };
+            form.ShowDialog();
         }
     }
 }

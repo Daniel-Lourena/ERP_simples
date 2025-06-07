@@ -3,7 +3,7 @@ using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
-using SistemaERP.Cadastros.Extensions;
+using SistemaERP.Extensions;
 using System.Data;
 
 namespace SistemaERP.Cadastros.Produto

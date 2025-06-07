@@ -403,8 +403,8 @@ namespace SistemaERP.Venda
             // 
             // tpFinanceiro
             // 
-            tpFinanceiro.Controls.Add(panel2);
             tpFinanceiro.Controls.Add(dgvRecebimentos);
+            tpFinanceiro.Controls.Add(panel2);
             tpFinanceiro.Location = new Point(4, 24);
             tpFinanceiro.Name = "tpFinanceiro";
             tpFinanceiro.Padding = new Padding(3);
@@ -518,7 +518,8 @@ namespace SistemaERP.Venda
             dgvRecebimentos.Location = new Point(3, 3);
             dgvRecebimentos.Name = "dgvRecebimentos";
             dgvRecebimentos.RowTemplate.Height = 25;
-            dgvRecebimentos.Size = new Size(786, 344);
+            dgvRecebimentos.ScrollBars = ScrollBars.Vertical;
+            dgvRecebimentos.Size = new Size(786, 251);
             dgvRecebimentos.TabIndex = 0;
             dgvRecebimentos.DoubleClick += dgvRecebimentos_DoubleClick;
             // 

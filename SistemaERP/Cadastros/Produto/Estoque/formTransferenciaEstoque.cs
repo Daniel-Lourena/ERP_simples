@@ -2,7 +2,7 @@
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using MySqlConnector;
-using SistemaERP.Cadastros.Extensions;
+using SistemaERP.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

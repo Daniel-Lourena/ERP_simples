@@ -18,7 +18,7 @@ namespace ModuloCadastro.Entity
         public int PedidoId { get; set; }
         [Column(TypeName = "int")]
         public ERecebimentoEspecie Especie { get; set; }
-        [Column(TypeName = "decimal(10,2)")]
+        [Column(TypeName = "decimal(10,2)"), DisplayFormat(DataFormatString = "{0:N2}")]
         public decimal Valor { get; set; }
         [Column(TypeName = "int")]
         public int NroParcela { get; set; }
@@ -26,7 +26,7 @@ namespace ModuloCadastro.Entity
         public int TotalParcela { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string? Descricao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "datetime"), DisplayFormat(DataFormatString = "dd/MM/yyyy")]
         public DateTime Vencimento { get; set; } = DateTime.Now;
 
 

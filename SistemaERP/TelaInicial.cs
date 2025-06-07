@@ -1,5 +1,5 @@
-using SistemaERP.Cadastros.Extensions;
 using SistemaERP.Cadastros.Produto.SetorEstoque;
+using SistemaERP.Extensions;
 
 namespace SistemaERP
 {

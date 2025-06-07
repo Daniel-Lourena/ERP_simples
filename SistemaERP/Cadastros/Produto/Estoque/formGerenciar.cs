@@ -1,7 +1,7 @@
 ﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.ViewModel;
-using SistemaERP.Cadastros.Extensions;
+using SistemaERP.Extensions;
 using System.Data;
 
 namespace SistemaERP.Cadastros.Produto.Estoque

@@ -1,5 +1,5 @@
 ﻿using ModuloCadastro.Entity;
-using SistemaERP.Cadastros.Extensions;
+using SistemaERP.Extensions;
 
 namespace SistemaERP.Cadastros.Helper
 {
@@ -18,16 +18,6 @@ namespace SistemaERP.Cadastros.Helper
             ComboBoxExtensions.PreencherComboBoxList(
                     cbCidades, cidades, nameof(CidadeEntity.Id),
                     nameof(CidadeEntity.Dmunicipio), true);
-        }
-        public static void GetList<T>(this ComboBox comboBox, List<T> dataSource, string valueMember, string displayMember, bool selecionarPrimeiro = false) where T : class
-        {
-            ComboBoxExtensions.PreencherComboBoxList(
-                    comboBox, dataSource, valueMember,
-                    displayMember, selecionarPrimeiro);
-        }
-        public static void GetListEnum<E>(this ComboBox comboBox) where E : Enum
-        {
-            ComboBoxExtensions.PreencherComboBoxEnum<E>(comboBox);
         }
     }
 }

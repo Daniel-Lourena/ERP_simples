@@ -1,8 +1,8 @@
 ﻿using ModuloCadastro.Context;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
-using SistemaERP.Cadastros.Extensions;
 using SistemaERP.Cadastros.Helper;
+using SistemaERP.Extensions;
 
 namespace SistemaERP.Cadastros.Cliente
 {

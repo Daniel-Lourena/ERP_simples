@@ -2,7 +2,7 @@
 using ModuloCadastro.Entity;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
-using SistemaERP.Cadastros.Extensions;
+using SistemaERP.Extensions;
 using System.Data;
 
 namespace SistemaERP.Venda

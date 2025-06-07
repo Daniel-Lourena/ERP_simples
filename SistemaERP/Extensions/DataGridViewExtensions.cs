@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using SistemaERP.Extensions.Personalizado.ColunasDataGridView;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
-namespace SistemaERP.Cadastros.Extensions
+namespace SistemaERP.Extensions
 {
     public static class DataGridViewExtensions
     {
@@ -18,23 +19,33 @@ namespace SistemaERP.Cadastros.Extensions
                 foreach (var prop in propriedades)
                 {
                     var col = popularColunas.FirstOrDefault(x => x.nomeColuna.Equals(prop.Name));
-                    if (!String.IsNullOrEmpty(col.nomeColuna))
+                    if (!string.IsNullOrEmpty(col.nomeColuna))
                     {
                         var atributoPropriedade = prop.GetCustomAttribute<DisplayAttribute>();
                         var atributoDisplayPropriedade = prop.GetCustomAttribute<DisplayFormatAttribute>();
-                        DataGridViewTextBoxColumn coluna = new()
+
+                        DataGridViewColumn coluna;
+
+                        if (col.readOnly is false && (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?)))
                         {
-                            DataPropertyName = prop.Name,
-                            ReadOnly = col.readOnly,
-                            Visible = col.visible,
-                            Name = prop.Name,
-                            HeaderText = atributoPropriedade == null ? prop.Name : atributoPropriedade.Name,
-                            DefaultCellStyle = new DataGridViewCellStyle
-                            {
-                                Format = atributoDisplayPropriedade != null ? 
-                                    atributoDisplayPropriedade.DataFormatString.Replace("{0:", "").Replace("}", "") : String.Empty
-                            }
+                            coluna = new CalendarioColuna();
+                        }
+                        else
+                        {
+                            coluna = new DataGridViewTextBoxColumn();
+                        }
+
+                        coluna.DataPropertyName = prop.Name;
+                        coluna.ReadOnly = col.readOnly;
+                        coluna.Visible = col.visible;
+                        coluna.Name = prop.Name;
+                        coluna.HeaderText = atributoPropriedade == null ? prop.Name : atributoPropriedade.Name;
+                        coluna.DefaultCellStyle = new DataGridViewCellStyle
+                        {
+                            Format = atributoDisplayPropriedade != null ?
+                                atributoDisplayPropriedade.DataFormatString.Replace("{0:", "").Replace("}", "") : string.Empty
                         };
+
                         dgvGenerico.Columns.Add(coluna);
                     }
                 }

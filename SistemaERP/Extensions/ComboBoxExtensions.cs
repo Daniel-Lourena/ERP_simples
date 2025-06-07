@@ -1,7 +1,7 @@
 ﻿using ModuloConfiguracoes.Enum;
 using ModuloConfiguracoes.Extensions;
 
-namespace SistemaERP.Cadastros.Extensions
+namespace SistemaERP.Extensions
 {
     public static class ComboBoxExtensions
     {

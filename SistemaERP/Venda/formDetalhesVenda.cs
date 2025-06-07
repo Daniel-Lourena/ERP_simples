@@ -3,7 +3,7 @@ using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
-using SistemaERP.Cadastros.Extensions;
+using SistemaERP.Extensions;
 using SistemaERP.Generico;
 using System.ComponentModel;
 
@@ -62,9 +62,9 @@ namespace SistemaERP.Venda
                     new ModuloCadastro.Service.RecebimentosVendaService().GetList().Where(x => x.PedidoId == _idPedido).ToList(),
                     new()
                     {
-                        (nameof(RecebimentoVendaEntity.Especie), false,true),(nameof(RecebimentoVendaEntity.Valor), false,true),
-                        (nameof(RecebimentoVendaEntity.NroParcela), false,true),(nameof(RecebimentoVendaEntity.TotalParcela), false,true),
-                        (nameof(RecebimentoVendaEntity.Vencimento), false,true)
+                        (nameof(RecebimentoVendaEntity.Especie), true,true),(nameof(RecebimentoVendaEntity.Valor), true,true),
+                        (nameof(RecebimentoVendaEntity.NroParcela), true,true),(nameof(RecebimentoVendaEntity.TotalParcela), true,true),
+                        (nameof(RecebimentoVendaEntity.Vencimento), true,true)
                     }
                 );
         }

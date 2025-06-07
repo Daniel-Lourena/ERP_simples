@@ -47,15 +47,18 @@ namespace SistemaERP.Venda.Recebimento
             label7 = new Label();
             dtpVencimento = new DateTimePicker();
             label8 = new Label();
+            dgvParcelas = new DataGridView();
+            btnCalcularParcelas = new Button();
             ((System.ComponentModel.ISupportInitialize)nudValor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudParcelas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudPrimeiraParcela).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudDemaisParcelas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvParcelas).BeginInit();
             SuspendLayout();
             // 
             // btnAdicionar
             // 
-            btnAdicionar.Location = new Point(167, 272);
+            btnAdicionar.Location = new Point(399, 339);
             btnAdicionar.Name = "btnAdicionar";
             btnAdicionar.Size = new Size(76, 28);
             btnAdicionar.TabIndex = 13;
@@ -66,7 +69,7 @@ namespace SistemaERP.Venda.Recebimento
             // lblValor
             // 
             lblValor.AutoSize = true;
-            lblValor.Location = new Point(12, 279);
+            lblValor.Location = new Point(146, 100);
             lblValor.Name = "lblValor";
             lblValor.Size = new Size(52, 15);
             lblValor.TabIndex = 19;
@@ -75,7 +78,7 @@ namespace SistemaERP.Venda.Recebimento
             // nudValor
             // 
             nudValor.DecimalPlaces = 2;
-            nudValor.Location = new Point(70, 277);
+            nudValor.Location = new Point(146, 118);
             nudValor.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             nudValor.Name = "nudValor";
             nudValor.Size = new Size(69, 23);
@@ -94,17 +97,17 @@ namespace SistemaERP.Venda.Recebimento
             // 
             // txtObs
             // 
-            txtObs.Location = new Point(12, 220);
+            txtObs.Location = new Point(14, 321);
             txtObs.Multiline = true;
             txtObs.Name = "txtObs";
             txtObs.ScrollBars = ScrollBars.Vertical;
-            txtObs.Size = new Size(229, 46);
+            txtObs.Size = new Size(344, 46);
             txtObs.TabIndex = 20;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 202);
+            label1.Location = new Point(14, 303);
             label1.Name = "label1";
             label1.Size = new Size(31, 15);
             label1.TabIndex = 21;
@@ -113,7 +116,7 @@ namespace SistemaERP.Venda.Recebimento
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(191, 45);
+            label2.Location = new Point(205, 46);
             label2.Name = "label2";
             label2.Size = new Size(50, 15);
             label2.TabIndex = 23;
@@ -121,7 +124,7 @@ namespace SistemaERP.Venda.Recebimento
             // 
             // nudParcelas
             // 
-            nudParcelas.Location = new Point(191, 63);
+            nudParcelas.Location = new Point(205, 64);
             nudParcelas.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             nudParcelas.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudParcelas.Name = "nudParcelas";
@@ -151,7 +154,7 @@ namespace SistemaERP.Venda.Recebimento
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(12, 96);
+            label4.Location = new Point(275, 46);
             label4.Name = "label4";
             label4.Size = new Size(95, 15);
             label4.TabIndex = 27;
@@ -159,17 +162,19 @@ namespace SistemaERP.Venda.Recebimento
             // 
             // nudPrimeiraParcela
             // 
-            nudPrimeiraParcela.Location = new Point(12, 114);
-            nudPrimeiraParcela.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+            nudPrimeiraParcela.Location = new Point(275, 64);
+            nudPrimeiraParcela.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
+            nudPrimeiraParcela.Minimum = new decimal(new int[] { 9999999, 0, 0, int.MinValue });
             nudPrimeiraParcela.Name = "nudPrimeiraParcela";
             nudPrimeiraParcela.Size = new Size(52, 23);
             nudPrimeiraParcela.TabIndex = 26;
             nudPrimeiraParcela.TextAlign = HorizontalAlignment.Right;
+            nudPrimeiraParcela.ValueChanged += nudPrimeiraParcela_ValueChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(133, 96);
+            label5.Location = new Point(379, 46);
             label5.Name = "label5";
             label5.Size = new Size(95, 15);
             label5.TabIndex = 29;
@@ -178,7 +183,7 @@ namespace SistemaERP.Venda.Recebimento
             // nudDemaisParcelas
             // 
             nudDemaisParcelas.Enabled = false;
-            nudDemaisParcelas.Location = new Point(133, 114);
+            nudDemaisParcelas.Location = new Point(379, 63);
             nudDemaisParcelas.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             nudDemaisParcelas.Name = "nudDemaisParcelas";
             nudDemaisParcelas.Size = new Size(52, 23);
@@ -188,7 +193,7 @@ namespace SistemaERP.Venda.Recebimento
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(70, 122);
+            label6.Location = new Point(333, 72);
             label6.Name = "label6";
             label6.Size = new Size(28, 15);
             label6.TabIndex = 30;
@@ -197,7 +202,7 @@ namespace SistemaERP.Venda.Recebimento
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(191, 122);
+            label7.Location = new Point(437, 72);
             label7.Name = "label7";
             label7.Size = new Size(28, 15);
             label7.TabIndex = 31;
@@ -206,25 +211,49 @@ namespace SistemaERP.Venda.Recebimento
             // dtpVencimento
             // 
             dtpVencimento.Format = DateTimePickerFormat.Short;
-            dtpVencimento.Location = new Point(12, 167);
+            dtpVencimento.Location = new Point(12, 118);
             dtpVencimento.Name = "dtpVencimento";
             dtpVencimento.Size = new Size(95, 23);
             dtpVencimento.TabIndex = 32;
+            dtpVencimento.ValueChanged += dtpVencimento_ValueChanged;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(12, 149);
+            label8.Location = new Point(12, 100);
             label8.Name = "label8";
             label8.Size = new Size(121, 15);
             label8.TabIndex = 33;
             label8.Text = "Primeiro vencimento:";
             // 
+            // dgvParcelas
+            // 
+            dgvParcelas.AllowUserToAddRows = false;
+            dgvParcelas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvParcelas.Location = new Point(12, 159);
+            dgvParcelas.Name = "dgvParcelas";
+            dgvParcelas.RowTemplate.Height = 25;
+            dgvParcelas.ScrollBars = ScrollBars.Vertical;
+            dgvParcelas.Size = new Size(463, 134);
+            dgvParcelas.TabIndex = 34;
+            // 
+            // btnCalcularParcelas
+            // 
+            btnCalcularParcelas.Location = new Point(399, 117);
+            btnCalcularParcelas.Name = "btnCalcularParcelas";
+            btnCalcularParcelas.Size = new Size(76, 28);
+            btnCalcularParcelas.TabIndex = 35;
+            btnCalcularParcelas.Text = "Calcular";
+            btnCalcularParcelas.UseVisualStyleBackColor = true;
+            btnCalcularParcelas.Click += btnCalcularParcelas_Click;
+            // 
             // formBoleto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(254, 317);
+            ClientSize = new Size(488, 379);
+            Controls.Add(btnCalcularParcelas);
+            Controls.Add(dgvParcelas);
             Controls.Add(label8);
             Controls.Add(dtpVencimento);
             Controls.Add(label7);
@@ -253,6 +282,7 @@ namespace SistemaERP.Venda.Recebimento
             ((System.ComponentModel.ISupportInitialize)nudParcelas).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudPrimeiraParcela).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudDemaisParcelas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvParcelas).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -276,5 +306,7 @@ namespace SistemaERP.Venda.Recebimento
         private Label label7;
         private DateTimePicker dtpVencimento;
         private Label label8;
+        private DataGridView dgvParcelas;
+        private Button btnCalcularParcelas;
     }
 }

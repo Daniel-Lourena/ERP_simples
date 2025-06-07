@@ -156,6 +156,7 @@ namespace ModuloCadastro.Context
             {
                 entity.HasKey(r => r.Id );
                 entity.Property(r => r.Especie).HasConversion<int>();
+                entity.Property(r => r.TipoTransferencia).HasConversion<int>();
             });
         }
     }

@@ -3,6 +3,7 @@ using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
+using SistemaERP.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,32 +16,41 @@ using System.Windows.Forms;
 
 namespace SistemaERP.Venda.Recebimento
 {
-    public partial class formDinheiro : Form
+    public partial class formEspecie : Form
     {
+        private RecebimentoVendaEntity _recebimento;
         private int _idPedido;
-        public RecebimentoVendaEntity _recebimento;
+        private EFormaPagamento _formaPagamento;
 
-        public formDinheiro()
+        public formEspecie()
         {
             InitializeComponent();
+            CarregarTipoTransferencia();
         }
 
-        public formDinheiro(int idPedido, RecebimentoVendaEntity recebimento = null) : this()
+        public formEspecie(EFormaPagamento formaPagamento,int idPedido) : this()
         {
+            _formaPagamento = formaPagamento;
             _idPedido = idPedido;
         }
-
-        public formDinheiro(RecebimentoVendaEntity recebimento = null) : this()
+        public formEspecie(RecebimentoVendaEntity recebimento) : this()
         {
             _recebimento = recebimento;
+            _formaPagamento = recebimento.Especie;
+            _idPedido = recebimento.PedidoId;
         }
 
         private void ConfiguraDataBindings()
         {
             _recebimento = _recebimento ?? new RecebimentoVendaEntity();
 
+            cbTipoTransferencia.DataBindings.Add(nameof(cbTipoTransferencia.SelectedValue), _recebimento, nameof(_recebimento.TipoTransferencia));
             txtObs.DataBindings.Add(nameof(txtObs.Text), _recebimento, nameof(_recebimento.Descricao));
             nudValor.DataBindings.Add(nameof(nudValor.Value), _recebimento, nameof(_recebimento.Valor));
+        }
+        private void CarregarTipoTransferencia()
+        {
+            cbTipoTransferencia.PreencherComboBoxEnum<ETipoTransferencia>(true);
         }
 
         private void btnAdicionar_Click(object sender, EventArgs e)
@@ -55,7 +65,8 @@ namespace SistemaERP.Venda.Recebimento
             {
                 new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
                 {
-                    Especie = ModuloCadastro.Enum.ERecebimentoEspecie.DINHEIRO,
+                    Especie = _formaPagamento,
+                    TipoTransferencia = _formaPagamento == EFormaPagamento.TRANSFERENCIA ? (ETipoTransferencia)Convert.ToInt32(cbTipoTransferencia.SelectedValue) : 0,
                     NroParcela = 1,
                     TotalParcela = 1,
                     PedidoId = _idPedido,
@@ -69,7 +80,8 @@ namespace SistemaERP.Venda.Recebimento
                 new RecebimentosVendaService().Update(new RecebimentoVendaEntity()
                 {
                     Id = _recebimento.Id,
-                    Especie = ModuloCadastro.Enum.ERecebimentoEspecie.DINHEIRO,
+                    Especie = _recebimento.Especie,
+                    TipoTransferencia = _recebimento.TipoTransferencia,
                     NroParcela = 1,
                     TotalParcela = 1,
                     PedidoId = _idPedido,
@@ -83,11 +95,20 @@ namespace SistemaERP.Venda.Recebimento
         }
 
 
-        private void formDinheiro_Load(object sender, EventArgs e)
+        private void formEspecie_Load(object sender, EventArgs e)
         {
             ConfiguraDataBindings();
+            if(_formaPagamento == EFormaPagamento.DINHEIRO)
+            {
+                cbTipoTransferencia.Visible = false;
+            }
+            else
+            {
+                cbTipoTransferencia.Visible = true;
+                lblEspecie.Text = "TRANSFERÊNCIA";
+            }
+
             if (_recebimento.Id > 0) btnAdicionar.Text = "SALVAR";
         }
-
     }
 }

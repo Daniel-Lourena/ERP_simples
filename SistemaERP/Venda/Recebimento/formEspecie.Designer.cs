@@ -1,7 +1,7 @@
 ﻿
 namespace SistemaERP.Venda.Recebimento
 {
-    partial class formDinheiro
+    partial class formEspecie
     {
         /// <summary>
         /// Required designer variable.
@@ -32,15 +32,16 @@ namespace SistemaERP.Venda.Recebimento
             btnAdicionar = new Button();
             lblValor = new Label();
             nudValor = new NumericUpDown();
-            label = new Label();
+            lblEspecie = new Label();
             txtObs = new TextBox();
             label1 = new Label();
+            cbTipoTransferencia = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)nudValor).BeginInit();
             SuspendLayout();
             // 
             // btnAdicionar
             // 
-            btnAdicionar.Location = new Point(186, 113);
+            btnAdicionar.Location = new Point(226, 120);
             btnAdicionar.Name = "btnAdicionar";
             btnAdicionar.Size = new Size(76, 28);
             btnAdicionar.TabIndex = 13;
@@ -51,7 +52,7 @@ namespace SistemaERP.Venda.Recebimento
             // lblValor
             // 
             lblValor.AutoSize = true;
-            lblValor.Location = new Point(12, 120);
+            lblValor.Location = new Point(12, 127);
             lblValor.Name = "lblValor";
             lblValor.Size = new Size(52, 15);
             lblValor.TabIndex = 19;
@@ -60,58 +61,67 @@ namespace SistemaERP.Venda.Recebimento
             // nudValor
             // 
             nudValor.DecimalPlaces = 2;
-            nudValor.Location = new Point(70, 118);
+            nudValor.Location = new Point(70, 125);
             nudValor.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             nudValor.Name = "nudValor";
             nudValor.Size = new Size(69, 23);
             nudValor.TabIndex = 15;
             nudValor.TextAlign = HorizontalAlignment.Right;
             // 
-            // label
+            // lblEspecie
             // 
-            label.AutoSize = true;
-            label.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label.Location = new Point(12, 9);
-            label.Name = "label";
-            label.Size = new Size(77, 21);
-            label.TabIndex = 14;
-            label.Text = "Dinheiro";
+            lblEspecie.AutoSize = true;
+            lblEspecie.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblEspecie.Location = new Point(12, 9);
+            lblEspecie.Name = "lblEspecie";
+            lblEspecie.Size = new Size(71, 21);
+            lblEspecie.TabIndex = 14;
+            lblEspecie.Text = "ESPÉCIE";
             // 
             // txtObs
             // 
-            txtObs.Location = new Point(12, 61);
+            txtObs.Location = new Point(12, 68);
             txtObs.Multiline = true;
             txtObs.Name = "txtObs";
             txtObs.ScrollBars = ScrollBars.Vertical;
-            txtObs.Size = new Size(250, 46);
+            txtObs.Size = new Size(290, 46);
             txtObs.TabIndex = 20;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 43);
+            label1.Location = new Point(12, 50);
             label1.Name = "label1";
             label1.Size = new Size(31, 15);
             label1.TabIndex = 21;
             label1.Text = "Obs:";
             // 
-            // formDinheiro
+            // cbTipoTransferencia
+            // 
+            cbTipoTransferencia.FormattingEnabled = true;
+            cbTipoTransferencia.Location = new Point(181, 8);
+            cbTipoTransferencia.Name = "cbTipoTransferencia";
+            cbTipoTransferencia.Size = new Size(121, 23);
+            cbTipoTransferencia.TabIndex = 22;
+            // 
+            // formEspecie
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(274, 157);
+            ClientSize = new Size(314, 161);
+            Controls.Add(cbTipoTransferencia);
             Controls.Add(label1);
             Controls.Add(txtObs);
             Controls.Add(btnAdicionar);
             Controls.Add(lblValor);
             Controls.Add(nudValor);
-            Controls.Add(label);
+            Controls.Add(lblEspecie);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            Name = "formDinheiro";
+            Name = "formEspecie";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Recebimento";
-            Load += formDinheiro_Load;
+            Load += formEspecie_Load;
             ((System.ComponentModel.ISupportInitialize)nudValor).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -121,8 +131,9 @@ namespace SistemaERP.Venda.Recebimento
         private Button btnAdicionar;
         private Label lblValor;
         private NumericUpDown nudValor;
-        private Label label;
+        private Label lblEspecie;
         private TextBox txtObs;
         private Label label1;
+        private ComboBox cbTipoTransferencia;
     }
 }

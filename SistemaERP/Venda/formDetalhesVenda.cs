@@ -62,9 +62,9 @@ namespace SistemaERP.Venda
                     new ModuloCadastro.Service.RecebimentosVendaService().GetList().Where(x => x.PedidoId == _idPedido).ToList(),
                     new()
                     {
-                        (nameof(RecebimentoVendaEntity.Especie), true,true),(nameof(RecebimentoVendaEntity.Valor), true,true),
+                        (nameof(RecebimentoVendaEntity.PedidoId), false,false),(nameof(RecebimentoVendaEntity.Valor), true,true),
                         (nameof(RecebimentoVendaEntity.NroParcela), true,true),(nameof(RecebimentoVendaEntity.TotalParcela), true,true),
-                        (nameof(RecebimentoVendaEntity.Vencimento), true,true)
+                        (nameof(RecebimentoVendaEntity.Vencimento), true,true),(nameof(RecebimentoVendaEntity.Especie), true,true)
                     }
                 );
         }
@@ -247,7 +247,7 @@ namespace SistemaERP.Venda
 
         private void btnDinheiro_Click(object sender, EventArgs e)
         {
-            new Venda.Recebimento.formDinheiro(_pedido.id).ShowDialog();
+            new Venda.Recebimento.formEspecie(EFormaPagamento.DINHEIRO, _pedido.id).ShowDialog();
             CarregaRecebimentos();
         }
 
@@ -270,7 +270,8 @@ namespace SistemaERP.Venda
 
         private void btnTransferencia_Click(object sender, EventArgs e)
         {
-
+            new Venda.Recebimento.formEspecie(EFormaPagamento.TRANSFERENCIA,_pedido.id).ShowDialog();
+            CarregaRecebimentos();
         }
 
         private void btnCartaoDebito_Click(object sender, EventArgs e)
@@ -292,9 +293,10 @@ namespace SistemaERP.Venda
             row = new RecebimentosVendaService().Get(row.Id);
             Form form = row.Especie switch
             {
-                ERecebimentoEspecie.DINHEIRO => new Venda.Recebimento.formDinheiro(row),
-                ERecebimentoEspecie.BOLETO => new Venda.Recebimento.formBoleto(row),
-                ERecebimentoEspecie.CHEQUE => new Venda.Recebimento.formCheque(row),
+                EFormaPagamento.DINHEIRO => new Venda.Recebimento.formEspecie(row),
+                EFormaPagamento.BOLETO => new Venda.Recebimento.formBoleto(row),
+                EFormaPagamento.CHEQUE => new Venda.Recebimento.formCheque(row),
+                EFormaPagamento.TRANSFERENCIA => new Venda.Recebimento.formEspecie(row),
                 _ => null
             };
             form.ShowDialog();

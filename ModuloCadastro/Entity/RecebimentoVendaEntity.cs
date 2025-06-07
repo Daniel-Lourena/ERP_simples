@@ -17,7 +17,7 @@ namespace ModuloCadastro.Entity
         [Column(TypeName = "int")]
         public int PedidoId { get; set; }
         [Column(TypeName = "int")]
-        public ERecebimentoEspecie Especie { get; set; }
+        public EFormaPagamento Especie { get; set; }
         [Column(TypeName = "decimal(10,2)"), DisplayFormat(DataFormatString = "{0:N2}")]
         public decimal Valor { get; set; }
         [Column(TypeName = "int")]
@@ -28,30 +28,23 @@ namespace ModuloCadastro.Entity
         public string? Descricao { get; set; }
         [Column(TypeName = "datetime"), DisplayFormat(DataFormatString = "dd/MM/yyyy")]
         public DateTime Vencimento { get; set; } = DateTime.Now;
-
-
         [Column(TypeName = "int")]
         public int BancoId { get; set; }
-
         [Column(TypeName = "varchar(100)")]
         public string? NomeEmissor { get; set; }
-
         [Column(TypeName = "varchar(100)")]
         public string? NroDocumento { get; set; }
-
         [Column(TypeName = "varchar(10)")]
         public string? Agencia { get; set; }
-
         [Column(TypeName = "varchar(1)")]
         public string? DigitoAgencia { get; set; }
-
         [Column(TypeName = "varchar(100)")]
         public string? ContaCorrente { get; set; }
-
         [Column(TypeName = "varchar(1)")]
         public string? DigitoContaCorrente { get; set; }
-
         [Column(TypeName = "datetime")]
         public DateTime? DataEmissaoDocumento { get; set; }
+        [Column(TypeName = "int")]
+        public ETipoTransferencia TipoTransferencia { get; set; }
     }
 }

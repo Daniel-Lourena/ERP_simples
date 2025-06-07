@@ -17,6 +17,8 @@ namespace ModuloCadastro.Enum
         [Description("CARTÃO DÉDITO")]
         CARTAO_DEBITO = 6,
         [Description("CARTÃO CRÉDITO")]
-        CARTAO_CREDITO = 7
+        CARTAO_CREDITO = 7,
+        [Description("DEPÓSITO")]
+        DEPOSITO = 8
     }
 }

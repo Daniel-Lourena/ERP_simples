@@ -1,4 +1,5 @@
 ﻿using ModuloCadastro.Entity;
+using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
@@ -66,7 +67,7 @@ namespace SistemaERP.Venda.Recebimento
             {
                 new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
                 {
-                    Especie = ModuloCadastro.Enum.ERecebimentoEspecie.BOLETO,
+                    Especie = EFormaPagamento.BOLETO,
                     NroParcela = row.NroParcela,
                     TotalParcela = Convert.ToInt32(nudParcelas.Value),
                     PedidoId = _idPedido,

@@ -1,4 +1,5 @@
 ﻿using ModuloCadastro.Entity;
+using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
@@ -75,7 +76,7 @@ namespace SistemaERP.Venda.Recebimento
             {
                 new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
                 {
-                    Especie = ModuloCadastro.Enum.ERecebimentoEspecie.CHEQUE,
+                    Especie = EFormaPagamento.CHEQUE,
                     NroParcela = 1,
                     TotalParcela = 1,
                     PedidoId = _idPedido,
@@ -96,7 +97,7 @@ namespace SistemaERP.Venda.Recebimento
             {
                 new RecebimentosVendaService().Update(new RecebimentoVendaEntity()
                 {
-                    Especie = ModuloCadastro.Enum.ERecebimentoEspecie.CHEQUE,
+                    Especie = EFormaPagamento.CHEQUE,
                     NroParcela = 1,
                     TotalParcela = 1,
                     PedidoId = _idPedido,

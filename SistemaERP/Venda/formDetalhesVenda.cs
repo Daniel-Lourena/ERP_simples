@@ -270,7 +270,7 @@ namespace SistemaERP.Venda
 
         private void btnTransferencia_Click(object sender, EventArgs e)
         {
-            new Venda.Recebimento.formEspecie(EFormaPagamento.TRANSFERENCIA,_pedido.id).ShowDialog();
+            new Venda.Recebimento.formEspecie(EFormaPagamento.TRANSFERENCIA, _pedido.id).ShowDialog();
             CarregaRecebimentos();
         }
 
@@ -282,6 +282,29 @@ namespace SistemaERP.Venda
         private void btnCartaoCredito_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgvRecebimentos_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                DeletarRecebimentos();
+                e.Handled = true;
+            }
+        }
+        private void DeletarRecebimentos()
+        {
+            if (dgvRecebimentos.RowCount == 0
+                || MessageBox.Show("Deseja excluir a(s) linha(s) selecionada(s)?", "Sistema ERP", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
+
+            foreach (DataGridViewRow row in dgvRecebimentos.SelectedRows)
+            {
+                new RecebimentosVendaService().Delete(row.DataBoundItem as RecebimentoVendaEntity);
+            }
+            CarregaRecebimentos();
         }
 
         private void dgvRecebimentos_DoubleClick(object sender, EventArgs e)
@@ -300,6 +323,11 @@ namespace SistemaERP.Venda
                 _ => null
             };
             form.ShowDialog();
+        }
+
+        private void dgvRecebimentos_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            
         }
     }
 }

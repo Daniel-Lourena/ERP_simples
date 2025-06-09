@@ -43,5 +43,13 @@ namespace ModuloCadastro.Service
         {
             ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
         }
+        public void Delete(RecebimentoVendaEntity entity)
+        {
+            using (var _context = new ModuloCadastroContext())
+            {
+                _context.RecebimentosVenda.Remove(new RecebimentoVendaEntity { Id = entity.Id });
+                _context.SaveChanges();
+            }
+        }
     }
 }

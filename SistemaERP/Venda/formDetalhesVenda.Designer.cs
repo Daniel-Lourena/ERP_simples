@@ -61,6 +61,7 @@ namespace SistemaERP.Venda
             btnRemProduto = new Button();
             btnAddProduto = new Button();
             tpFinanceiro = new TabPage();
+            dgvRecebimentos = new DataGridView();
             panel2 = new Panel();
             groupBox2 = new GroupBox();
             btnCartaoCredito = new Button();
@@ -70,7 +71,6 @@ namespace SistemaERP.Venda
             btnTransferencia = new Button();
             btnCreditoLoja = new Button();
             btnDinheiro = new Button();
-            dgvRecebimentos = new DataGridView();
             panel1 = new Panel();
             label12 = new Label();
             textBox2 = new TextBox();
@@ -87,9 +87,9 @@ namespace SistemaERP.Venda
             panel3.SuspendLayout();
             groupBox3.SuspendLayout();
             tpFinanceiro.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).BeginInit();
             panel2.SuspendLayout();
             groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -413,6 +413,21 @@ namespace SistemaERP.Venda
             tpFinanceiro.Text = "Financeiro";
             tpFinanceiro.UseVisualStyleBackColor = true;
             // 
+            // dgvRecebimentos
+            // 
+            dgvRecebimentos.AllowUserToAddRows = false;
+            dgvRecebimentos.AllowUserToOrderColumns = true;
+            dgvRecebimentos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRecebimentos.Dock = DockStyle.Fill;
+            dgvRecebimentos.Location = new Point(3, 3);
+            dgvRecebimentos.Name = "dgvRecebimentos";
+            dgvRecebimentos.RowTemplate.Height = 25;
+            dgvRecebimentos.ScrollBars = ScrollBars.Vertical;
+            dgvRecebimentos.Size = new Size(786, 251);
+            dgvRecebimentos.TabIndex = 0;
+            dgvRecebimentos.KeyDown += dgvRecebimentos_KeyDown;
+            dgvRecebimentos.DoubleClick += dgvRecebimentos_DoubleClick;
+            // 
             // panel2
             // 
             panel2.Controls.Add(groupBox2);
@@ -508,20 +523,6 @@ namespace SistemaERP.Venda
             btnDinheiro.Text = "Dinheiro";
             btnDinheiro.UseVisualStyleBackColor = true;
             btnDinheiro.Click += btnDinheiro_Click;
-            // 
-            // dgvRecebimentos
-            // 
-            dgvRecebimentos.AllowUserToAddRows = false;
-            dgvRecebimentos.AllowUserToOrderColumns = true;
-            dgvRecebimentos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvRecebimentos.Dock = DockStyle.Fill;
-            dgvRecebimentos.Location = new Point(3, 3);
-            dgvRecebimentos.Name = "dgvRecebimentos";
-            dgvRecebimentos.RowTemplate.Height = 25;
-            dgvRecebimentos.ScrollBars = ScrollBars.Vertical;
-            dgvRecebimentos.Size = new Size(786, 251);
-            dgvRecebimentos.TabIndex = 0;
-            dgvRecebimentos.DoubleClick += dgvRecebimentos_DoubleClick;
             // 
             // panel1
             // 
@@ -626,9 +627,9 @@ namespace SistemaERP.Venda
             panel3.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             tpFinanceiro.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).EndInit();
             panel2.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvRecebimentos).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

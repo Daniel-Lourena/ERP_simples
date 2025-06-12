@@ -33,19 +33,22 @@
             usuáriosToolStripMenuItem = new ToolStripMenuItem();
             gerenciarUsuáriosToolStripMenuItem = new ToolStripMenuItem();
             clientesToolStripMenuItem = new ToolStripMenuItem();
-            gerenciarToolStripMenuItem = new ToolStripMenuItem();
+            gerenciarClientesToolStripMenuItem = new ToolStripMenuItem();
             produtosToolStripMenuItem = new ToolStripMenuItem();
             gerenciarProdutosToolStripMenuItem = new ToolStripMenuItem();
             categoriasToolStripMenuItem = new ToolStripMenuItem();
             estoqueToolStripMenuItem = new ToolStripMenuItem();
+            setoresEstoqueToolStripMenuItem = new ToolStripMenuItem();
             bancosToolStripMenuItem = new ToolStripMenuItem();
             gerenciarBancosToolStripMenuItem1 = new ToolStripMenuItem();
+            maquininhasToolStripMenuItem = new ToolStripMenuItem();
+            gerenciarMaquininhasToolStripMenuItem = new ToolStripMenuItem();
+            adquirentesToolStripMenuItem = new ToolStripMenuItem();
             vendasToolStripMenuItem = new ToolStripMenuItem();
             pedidosToolStripMenuItem = new ToolStripMenuItem();
             pedidosFinalizadosToolStripMenuItem = new ToolStripMenuItem();
             financeiroToolStripMenuItem = new ToolStripMenuItem();
             movimentaçãoBancáriaToolStripMenuItem = new ToolStripMenuItem();
-            setoresEstoqueToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -60,7 +63,7 @@
             // 
             // cadastrosToolStripMenuItem
             // 
-            cadastrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usuáriosToolStripMenuItem, clientesToolStripMenuItem, produtosToolStripMenuItem, bancosToolStripMenuItem });
+            cadastrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usuáriosToolStripMenuItem, clientesToolStripMenuItem, produtosToolStripMenuItem, bancosToolStripMenuItem, maquininhasToolStripMenuItem });
             cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             cadastrosToolStripMenuItem.Size = new Size(71, 20);
             cadastrosToolStripMenuItem.Text = "Cadastros";
@@ -81,17 +84,17 @@
             // 
             // clientesToolStripMenuItem
             // 
-            clientesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gerenciarToolStripMenuItem });
+            clientesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gerenciarClientesToolStripMenuItem });
             clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
             clientesToolStripMenuItem.Size = new Size(180, 22);
             clientesToolStripMenuItem.Text = "Clientes";
             // 
-            // gerenciarToolStripMenuItem
+            // gerenciarClientesToolStripMenuItem
             // 
-            gerenciarToolStripMenuItem.Name = "gerenciarToolStripMenuItem";
-            gerenciarToolStripMenuItem.Size = new Size(124, 22);
-            gerenciarToolStripMenuItem.Text = "Gerenciar";
-            gerenciarToolStripMenuItem.Click += gerenciarClientesToolStripMenuItem_Click;
+            gerenciarClientesToolStripMenuItem.Name = "gerenciarClientesToolStripMenuItem";
+            gerenciarClientesToolStripMenuItem.Size = new Size(124, 22);
+            gerenciarClientesToolStripMenuItem.Text = "Gerenciar";
+            gerenciarClientesToolStripMenuItem.Click += gerenciarClientesToolStripMenuItem_Click;
             // 
             // produtosToolStripMenuItem
             // 
@@ -103,23 +106,30 @@
             // gerenciarProdutosToolStripMenuItem
             // 
             gerenciarProdutosToolStripMenuItem.Name = "gerenciarProdutosToolStripMenuItem";
-            gerenciarProdutosToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarProdutosToolStripMenuItem.Size = new Size(157, 22);
             gerenciarProdutosToolStripMenuItem.Text = "Gerenciar";
             gerenciarProdutosToolStripMenuItem.Click += gerenciarProdutosToolStripMenuItem_Click;
             // 
             // categoriasToolStripMenuItem
             // 
             categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
-            categoriasToolStripMenuItem.Size = new Size(180, 22);
+            categoriasToolStripMenuItem.Size = new Size(157, 22);
             categoriasToolStripMenuItem.Text = "Categorias";
             categoriasToolStripMenuItem.Click += categoriasToolStripMenuItem_Click;
             // 
             // estoqueToolStripMenuItem
             // 
             estoqueToolStripMenuItem.Name = "estoqueToolStripMenuItem";
-            estoqueToolStripMenuItem.Size = new Size(180, 22);
+            estoqueToolStripMenuItem.Size = new Size(157, 22);
             estoqueToolStripMenuItem.Text = "Estoque";
             estoqueToolStripMenuItem.Click += estoqueToolStripMenuItem_Click;
+            // 
+            // setoresEstoqueToolStripMenuItem
+            // 
+            setoresEstoqueToolStripMenuItem.Name = "setoresEstoqueToolStripMenuItem";
+            setoresEstoqueToolStripMenuItem.Size = new Size(157, 22);
+            setoresEstoqueToolStripMenuItem.Text = "Setores Estoque";
+            setoresEstoqueToolStripMenuItem.Click += setoresEstoqueToolStripMenuItem_Click;
             // 
             // bancosToolStripMenuItem
             // 
@@ -134,6 +144,27 @@
             gerenciarBancosToolStripMenuItem1.Size = new Size(124, 22);
             gerenciarBancosToolStripMenuItem1.Text = "Gerenciar";
             gerenciarBancosToolStripMenuItem1.Click += gerenciarBancosToolStripMenuItem1_Click;
+            // 
+            // maquininhasToolStripMenuItem
+            // 
+            maquininhasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gerenciarMaquininhasToolStripMenuItem, adquirentesToolStripMenuItem });
+            maquininhasToolStripMenuItem.Name = "maquininhasToolStripMenuItem";
+            maquininhasToolStripMenuItem.Size = new Size(180, 22);
+            maquininhasToolStripMenuItem.Text = "Maquininhas";
+            // 
+            // gerenciarMaquininhasToolStripMenuItem
+            // 
+            gerenciarMaquininhasToolStripMenuItem.Name = "gerenciarMaquininhasToolStripMenuItem";
+            gerenciarMaquininhasToolStripMenuItem.Size = new Size(180, 22);
+            gerenciarMaquininhasToolStripMenuItem.Text = "Gerenciar";
+            gerenciarMaquininhasToolStripMenuItem.Click += gerenciarMaquininhasToolStripMenuItem_Click;
+            // 
+            // adquirentesToolStripMenuItem
+            // 
+            adquirentesToolStripMenuItem.Name = "adquirentesToolStripMenuItem";
+            adquirentesToolStripMenuItem.Size = new Size(180, 22);
+            adquirentesToolStripMenuItem.Text = "Adquirentes";
+            adquirentesToolStripMenuItem.Click += adquirentesToolStripMenuItem_Click;
             // 
             // vendasToolStripMenuItem
             // 
@@ -168,13 +199,6 @@
             movimentaçãoBancáriaToolStripMenuItem.Size = new Size(202, 22);
             movimentaçãoBancáriaToolStripMenuItem.Text = "Movimentação Bancária";
             // 
-            // setoresEstoqueToolStripMenuItem
-            // 
-            setoresEstoqueToolStripMenuItem.Name = "setoresEstoqueToolStripMenuItem";
-            setoresEstoqueToolStripMenuItem.Size = new Size(180, 22);
-            setoresEstoqueToolStripMenuItem.Text = "Setores Estoque";
-            setoresEstoqueToolStripMenuItem.Click += setoresEstoqueToolStripMenuItem_Click;
-            // 
             // TelaInicial
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -207,10 +231,13 @@
         private ToolStripMenuItem movimentaçãoBancáriaToolStripMenuItem;
         private ToolStripMenuItem gerenciarProdutosToolStripMenuItem;
         private ToolStripMenuItem gerenciarUsuáriosToolStripMenuItem;
-        private ToolStripMenuItem gerenciarToolStripMenuItem;
+        private ToolStripMenuItem gerenciarClientesToolStripMenuItem;
         private ToolStripMenuItem gerenciarBancosToolStripMenuItem1;
         private ToolStripMenuItem categoriasToolStripMenuItem;
         private ToolStripMenuItem estoqueToolStripMenuItem;
         private ToolStripMenuItem setoresEstoqueToolStripMenuItem;
+        private ToolStripMenuItem maquininhasToolStripMenuItem;
+        private ToolStripMenuItem gerenciarMaquininhasToolStripMenuItem;
+        private ToolStripMenuItem adquirentesToolStripMenuItem;
     }
 }

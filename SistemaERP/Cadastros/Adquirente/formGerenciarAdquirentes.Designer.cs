@@ -1,6 +1,6 @@
-﻿namespace SistemaERP.Cadastros.Banco
+﻿namespace SistemaERP.Cadastros.Adquirente
 {
-    partial class formGerenciarBancos
+    partial class formGerenciarAdquirentes
     {
         /// <summary>
         /// Required designer variable.
@@ -28,53 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dgvBancos = new DataGridView();
+            dgvAdquirentes = new DataGridView();
             panel1 = new Panel();
-            ckeOcultaInativos = new CheckBox();
             panel2 = new Panel();
             btnEditar = new Button();
             btnNovo = new Button();
-            ((System.ComponentModel.ISupportInitialize)dgvBancos).BeginInit();
-            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAdquirentes).BeginInit();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // dgvBancos
+            // dgvAdquirentes
             // 
-            dgvBancos.AllowUserToAddRows = false;
-            dgvBancos.AllowUserToDeleteRows = false;
-            dgvBancos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvBancos.BackgroundColor = SystemColors.ActiveBorder;
-            dgvBancos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBancos.Location = new Point(12, 83);
-            dgvBancos.Name = "dgvBancos";
-            dgvBancos.ReadOnly = true;
-            dgvBancos.RowTemplate.Height = 25;
-            dgvBancos.Size = new Size(776, 285);
-            dgvBancos.TabIndex = 0;
-            dgvBancos.RowPrePaint += dgvBancos_RowPrePaint;
+            dgvAdquirentes.AllowUserToAddRows = false;
+            dgvAdquirentes.AllowUserToDeleteRows = false;
+            dgvAdquirentes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvAdquirentes.BackgroundColor = SystemColors.ActiveBorder;
+            dgvAdquirentes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvAdquirentes.Location = new Point(12, 83);
+            dgvAdquirentes.Name = "dgvAdquirentes";
+            dgvAdquirentes.ReadOnly = true;
+            dgvAdquirentes.RowTemplate.Height = 25;
+            dgvAdquirentes.Size = new Size(776, 285);
+            dgvAdquirentes.TabIndex = 0;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.Controls.Add(ckeOcultaInativos);
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Size = new Size(776, 65);
             panel1.TabIndex = 1;
-            // 
-            // ckeOcultaInativos
-            // 
-            ckeOcultaInativos.AutoSize = true;
-            ckeOcultaInativos.Checked = true;
-            ckeOcultaInativos.CheckState = CheckState.Checked;
-            ckeOcultaInativos.Location = new Point(3, 3);
-            ckeOcultaInativos.Name = "ckeOcultaInativos";
-            ckeOcultaInativos.Size = new Size(162, 19);
-            ckeOcultaInativos.TabIndex = 3;
-            ckeOcultaInativos.Text = "Ocultar cadastros inativos";
-            ckeOcultaInativos.UseVisualStyleBackColor = true;
-            ckeOcultaInativos.CheckedChanged += ckeOcultaInativos_CheckedChanged;
             // 
             // panel2
             // 
@@ -114,30 +97,27 @@
             btnNovo.UseVisualStyleBackColor = false;
             btnNovo.Click += btnNovo_Click;
             // 
-            // formGerenciarBancos
+            // formGerenciarAdquirentes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Controls.Add(dgvBancos);
-            Name = "formGerenciarBancos";
-            Text = "Gerenciar Bancos";
-            ((System.ComponentModel.ISupportInitialize)dgvBancos).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            Controls.Add(dgvAdquirentes);
+            Name = "formGerenciarAdquirentes";
+            Text = "Gerenciar Adquirentes";
+            ((System.ComponentModel.ISupportInitialize)dgvAdquirentes).EndInit();
             panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dgvBancos;
+        private DataGridView dgvAdquirentes;
         private Panel panel1;
         private Panel panel2;
         private Button btnNovo;
         private Button btnEditar;
-        private CheckBox ckeOcultaInativos;
     }
 }

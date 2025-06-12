@@ -1,6 +1,6 @@
-﻿namespace SistemaERP.Cadastros.Banco
+﻿namespace SistemaERP.Cadastros.Maquininha
 {
-    partial class formGerenciarBancos
+    partial class formGerenciarMaquininhas
     {
         /// <summary>
         /// Required designer variable.
@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dgvBancos = new DataGridView();
+            dgvMaquininhas = new DataGridView();
             panel1 = new Panel();
             ckeOcultaInativos = new CheckBox();
             panel2 = new Panel();
             btnEditar = new Button();
             btnNovo = new Button();
-            ((System.ComponentModel.ISupportInitialize)dgvBancos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvMaquininhas).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // dgvBancos
+            // dgvMaquininhas
             // 
-            dgvBancos.AllowUserToAddRows = false;
-            dgvBancos.AllowUserToDeleteRows = false;
-            dgvBancos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvBancos.BackgroundColor = SystemColors.ActiveBorder;
-            dgvBancos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBancos.Location = new Point(12, 83);
-            dgvBancos.Name = "dgvBancos";
-            dgvBancos.ReadOnly = true;
-            dgvBancos.RowTemplate.Height = 25;
-            dgvBancos.Size = new Size(776, 285);
-            dgvBancos.TabIndex = 0;
-            dgvBancos.RowPrePaint += dgvBancos_RowPrePaint;
+            dgvMaquininhas.AllowUserToAddRows = false;
+            dgvMaquininhas.AllowUserToDeleteRows = false;
+            dgvMaquininhas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvMaquininhas.BackgroundColor = SystemColors.ActiveBorder;
+            dgvMaquininhas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMaquininhas.Location = new Point(12, 83);
+            dgvMaquininhas.Name = "dgvMaquininhas";
+            dgvMaquininhas.ReadOnly = true;
+            dgvMaquininhas.RowTemplate.Height = 25;
+            dgvMaquininhas.Size = new Size(776, 285);
+            dgvMaquininhas.TabIndex = 0;
+            dgvMaquininhas.RowPrePaint += dgvMaquininhas_RowPrePaint;
             // 
             // panel1
             // 
@@ -114,17 +114,17 @@
             btnNovo.UseVisualStyleBackColor = false;
             btnNovo.Click += btnNovo_Click;
             // 
-            // formGerenciarBancos
+            // formGerenciarMaquininhas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Controls.Add(dgvBancos);
-            Name = "formGerenciarBancos";
-            Text = "Gerenciar Bancos";
-            ((System.ComponentModel.ISupportInitialize)dgvBancos).EndInit();
+            Controls.Add(dgvMaquininhas);
+            Name = "formGerenciarMaquininhas";
+            Text = "Gerenciar Maquininhas";
+            ((System.ComponentModel.ISupportInitialize)dgvMaquininhas).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
@@ -133,7 +133,7 @@
 
         #endregion
 
-        private DataGridView dgvBancos;
+        private DataGridView dgvMaquininhas;
         private Panel panel1;
         private Panel panel2;
         private Button btnNovo;

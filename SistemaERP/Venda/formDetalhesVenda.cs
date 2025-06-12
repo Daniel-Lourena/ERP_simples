@@ -276,12 +276,14 @@ namespace SistemaERP.Venda
 
         private void btnCartaoDebito_Click(object sender, EventArgs e)
         {
-
+            new Venda.Recebimento.formCartao(EFormaPagamento.CARTAO_DEBITO, _pedido.id).ShowDialog();
+            CarregaRecebimentos();
         }
 
         private void btnCartaoCredito_Click(object sender, EventArgs e)
         {
-
+            new Venda.Recebimento.formCartao(EFormaPagamento.CARTAO_CREDITO, _pedido.id).ShowDialog();
+            CarregaRecebimentos();
         }
 
         private void dgvRecebimentos_KeyDown(object sender, KeyEventArgs e)
@@ -320,6 +322,8 @@ namespace SistemaERP.Venda
                 EFormaPagamento.BOLETO => new Venda.Recebimento.formBoleto(row),
                 EFormaPagamento.CHEQUE => new Venda.Recebimento.formCheque(row),
                 EFormaPagamento.TRANSFERENCIA => new Venda.Recebimento.formEspecie(row),
+                EFormaPagamento.CARTAO_DEBITO => new Venda.Recebimento.formCartao(row),
+                EFormaPagamento.CARTAO_CREDITO => new Venda.Recebimento.formCartao(row),
                 _ => null
             };
             form.ShowDialog();

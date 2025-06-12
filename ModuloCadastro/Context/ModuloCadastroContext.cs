@@ -18,6 +18,9 @@ namespace ModuloCadastro.Context
         internal DbSet<ProdutoVendaEntity> ProdutosVendas { get; set; }
         internal DbSet<EstoqueEntity> Estoques { get; set; }
         internal DbSet<RecebimentoVendaEntity> RecebimentosVenda { get; set; }
+        internal DbSet<MaquininhaEntity> Maquininhas { get; set; }
+        internal DbSet<ConfigAdquirenteEntity> ConfigAdquirentes { get; set; }
+        internal DbSet<AdquirenteBandeira> AdquirentesBandeira { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -157,6 +160,34 @@ namespace ModuloCadastro.Context
                 entity.HasKey(r => r.Id );
                 entity.Property(r => r.Especie).HasConversion<int>();
                 entity.Property(r => r.TipoTransferencia).HasConversion<int>();
+            });
+
+            modelBuilder.Entity<MaquininhaEntity>(entity =>
+            {
+                entity.HasKey(m => m.Id );
+                entity.Property(m => m.TipoMaquininha).HasConversion<int>();
+
+                entity.HasOne(c => c.Adquirente)
+                     .WithMany()
+                     .HasForeignKey(c => c.AdquirenteId)
+                     .HasPrincipalKey(key => new { key.Id })
+                     .OnDelete(DeleteBehavior.NoAction);
+            });
+            modelBuilder.Entity<ConfigAdquirenteEntity>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.AdquirenteId).HasConversion<int>();
+            });
+            modelBuilder.Entity<AdquirenteBandeira>(entity =>
+            {
+                entity.HasKey(a => new { a.ConfigAdquirenteId,a.BandeiraId } );
+                entity.Property(a => a.BandeiraId).HasConversion<int>();
+
+                entity.HasOne(c => c.ConfigAdquirente)
+                     .WithMany(c => c.BandeirasSuportadas)
+                     .HasForeignKey(c => c.ConfigAdquirenteId)
+                     .HasPrincipalKey(key => new { key.Id })
+                     .OnDelete(DeleteBehavior.NoAction);
             });
         }
     }

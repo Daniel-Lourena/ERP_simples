@@ -22,6 +22,7 @@ namespace SistemaERP.Venda.Recebimento
         public formCheque()
         {
             InitializeComponent();
+            this.ConfiguraTabIndex();
             CarregaBancos();
         }
 

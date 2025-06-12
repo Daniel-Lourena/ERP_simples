@@ -25,6 +25,7 @@ namespace SistemaERP.Venda.Recebimento
         public formEspecie()
         {
             InitializeComponent();
+            this.ConfiguraTabIndex();
             CarregarTipoTransferencia();
         }
 

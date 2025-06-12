@@ -25,6 +25,7 @@ namespace SistemaERP.Venda.Recebimento
         public formBoleto()
         {
             InitializeComponent();
+            this.ConfiguraTabIndex();
             CarregaBancos();
         }
         public formBoleto(int idPedido) : this()

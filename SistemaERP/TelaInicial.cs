@@ -139,5 +139,37 @@ namespace SistemaERP
             childForm.WindowState = FormWindowState.Maximized;
             childForm.Show();
         }
+
+        private void gerenciarMaquininhasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                if (f.GetType() == typeof(Cadastros.Maquininha.formGerenciarMaquininhas))
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            Cadastros.Maquininha.formGerenciarMaquininhas childForm = new();
+            childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
+            childForm.Show();
+        }
+
+        private void adquirentesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                if (f.GetType() == typeof(Cadastros.Adquirente.formGerenciarAdquirentes))
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            Cadastros.Adquirente.formGerenciarAdquirentes childForm = new();
+            childForm.MdiParent = this;
+            childForm.WindowState = FormWindowState.Maximized;
+            childForm.Show();
+        }
     }
 }

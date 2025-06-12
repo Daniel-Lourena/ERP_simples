@@ -46,5 +46,9 @@ namespace ModuloCadastro.Entity
         public DateTime? DataEmissaoDocumento { get; set; }
         [Column(TypeName = "int")]
         public ETipoTransferencia TipoTransferencia { get; set; }
+        [Column(TypeName = "int")]
+        public int MaquininhaId { get; set; }
+        [Column(TypeName = "int")]
+        public EBandeiraCartao BandeiraCartao { get; set; }
     }
 }

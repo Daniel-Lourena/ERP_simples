@@ -1,0 +1,52 @@
+#Ignorar tudo por padrão
+*
+
+#Permitir apenas C# (estrutura)
+!*.cs
+
+#Ignorar arquivos gerados automaticamente
+*.Designer.cs
+*.g.cs
+*.g.i.cs
+
+#Ignorar UI (WinForms / WPF / etc)
+*Form.cs
+*View.cs
+*Window.cs
+
+#Ignorar código de interface visual específica
+Views/
+UI/
+Screens/
+
+#Build / compilação
+bin/
+obj/
+out/
+
+#Dependências
+packages/
+node_modules/
+
+#Arquivos binários
+*.dll
+*.exe
+
+#Logs / temporários
+*.log
+*.tmp
+
+#Imagens / recursos
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.ico
+
+#Configs pesadas (opcional)
+*.json
+*.xml
+
+#Git
+.git/

@@ -48,6 +48,7 @@ namespace SistemaERP.Cadastros.Maquininha
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+
             if (_id == 0)
             {
                 _maquininha.Id = new ModuloCadastro.Service.MaquininhaService().Insert(_maquininha);

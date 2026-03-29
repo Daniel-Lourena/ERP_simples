@@ -22,12 +22,13 @@ namespace ModuloCadastro.Context
         internal DbSet<ConfigAdquirenteEntity> ConfigAdquirentes { get; set; }
         internal DbSet<AdquirenteBandeira> AdquirentesBandeira { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ModuloCadastroContext()
         {
-            // Conexão com MySQL
-            optionsBuilder.UseMySql(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB + "AllowLoadLocalInfile=true;",
-                new MySqlServerVersion(new Version(5, 7)),  // Versão mínima suportada
-                options => options.EnableRetryOnFailure()); // Configurações adicionais
+        }
+
+        public ModuloCadastroContext(DbContextOptions<ModuloCadastroContext> options)
+       : base(options)
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

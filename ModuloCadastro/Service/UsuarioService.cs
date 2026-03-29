@@ -7,6 +7,11 @@ namespace ModuloCadastro.Service
     public class UsuarioService : IService<UsuarioEntity>
     {
         private ModuloCadastroContext _db_context;
+
+        public UsuarioService()
+        {
+        }
+
         public UsuarioService(ModuloCadastroContext db_context) => _db_context = db_context;
         public UsuarioEntity Get(int id)
         {

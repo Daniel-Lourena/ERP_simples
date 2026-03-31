@@ -47,13 +47,56 @@ A solução tem três projetos:
 - **Service/** — One service per entity implementing `IService<T>`; all DB access goes through services
 - **ViewModel/** — Lightweight DTOs with `INotifyPropertyChanged`; entities expose a `ToViewModel()` method
 - **Enum/** — Domain constants (`EFormaPagamento`, `EAdquirenteMaquininha`, `EBandeiraCartao`, etc.)
-- **Context/ModuloCadastroContext.cs** — Single DbContext; registered and instantiated directly in service constructors
+- **Context/ModuloCadastroContext.cs** — Single DbContext; injetado via DI nos services
 
 ### UI conventions
 
 - Formulários são organizados sob `SistemaERP/Cadastros/<Module>/` e `SistemaERP/Venda/`
 - Formulários de recibo de pagamento ficam em `SistemaERP/Venda/Recebimento/`, um formulário por método de pagamento
 - Formulários genéricos reutilizáveis estão em `SistemaERP/Generico/`
+
+### Injeção de Dependência (DI)
+
+O projeto usa `Microsoft.Extensions.DependencyInjection`. O container é configurado em `Program.cs` via dois métodos de extensão em `SistemaERP/DI/DependencyInjectionRegistryClass.cs`:
+
+- **`AddServices()`** — registra automaticamente via reflection todos os tipos que implementam `IService<T>`, tanto pelo tipo concreto quanto pela interface
+- **`AddForms()`** — registra automaticamente todos os `Form` do assembly como `Transient`; também registra `IFormFactory` como `Singleton`
+
+### FormFactory
+
+`SistemaERP/Factory/IFormFactory` e `FormFactory` permitem instanciar formulários com dependências resolvidas pelo container, inclusive passando parâmetros de runtime:
+
+```csharp
+// sem parâmetro de runtime
+_formFactory.Criar<formDetalhesCliente>().ShowDialog();
+
+// com parâmetro de runtime (ex: id para edição)
+_formFactory.Criar<formDetalhesCliente>(id).ShowDialog();
+```
+
+Usar sempre `_formFactory.Criar<T>(...)` ao abrir formulários filhos — nunca `new formXxx(...)` diretamente.
+
+### Padrão de construtor dos formulários
+
+Todo formulário deve:
+1. Declarar `private readonly [ClassNameService] _service;`
+2. Receber o service via construtor (injetado pelo DI)
+3. Nunca instanciar services internamente com `new`
+
+```csharp
+public partial class formGerenciarXxx : Form
+{
+    private readonly XxxService _service;
+
+    public formGerenciarXxx(XxxService service)
+    {
+        _service = service;
+        InitializeComponent();
+    }
+}
+```
+
+Para formulários com múltiplos services, nomear os campos de forma descritiva: `_serviceEstoque`, `_serviceProduto`, etc.
 
 ## Database
 
@@ -80,3 +123,7 @@ A solução tem três projetos:
 - Focar em lógica de negócio e estrutura por padrão
 - Não alterar a arquitetura existente sem solicitação explícita
 - Ignorar arquivos Designer e código de UI, salvo quando fornecidos manualmente
+- Nunca instanciar services com `new` dentro de formulários — sempre via injeção no construtor
+- Nunca abrir formulários filhos com `new formXxx()` — sempre via `_formFactory.Criar<T>(...)`
+- Ao criar novos formulários, registrá-los no container é automático (reflection em `AddForms`)
+- Ao criar novos services, o registro no container também é automático (reflection em `AddServices`)

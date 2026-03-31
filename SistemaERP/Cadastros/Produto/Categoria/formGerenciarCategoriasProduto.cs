@@ -1,17 +1,18 @@
-﻿using ModuloCadastro.Context;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.Data;
 
 namespace SistemaERP.Cadastros.Produto.Categoria
 {
     public partial class formGerenciarCategoriasProduto : Form
     {
-        private ModuloCadastro.Context.ModuloCadastroContext _db_context;
+        private readonly CategoriaService _serviceCategoria;
 
-        public formGerenciarCategoriasProduto(ModuloCadastroContext db_context)
+        public formGerenciarCategoriasProduto(CategoriaService serviceCategoria)
         {
-            _db_context = db_context;
+            _serviceCategoria = serviceCategoria;
             InitializeComponent();
             CarregaCategorias();
             this.ConfiguraTabIndex();
@@ -19,7 +20,7 @@ namespace SistemaERP.Cadastros.Produto.Categoria
 
         private void CarregaCategorias()
         {
-            List<CategoriaViewModel> _listaDataSource = new List<CategoriaViewModel>(new ModuloCadastro.Service.CategoriaService(_db_context).GetList()
+            List<CategoriaViewModel> _listaDataSource = new List<CategoriaViewModel>(_serviceCategoria.GetList()
             .Select(x => new CategoriaViewModel
             {
                 id = x.Id,
@@ -38,11 +39,11 @@ namespace SistemaERP.Cadastros.Produto.Categoria
 
             if (row.id == 0)
             {
-                new ModuloCadastro.Service.CategoriaService(_db_context).Insert(row.ToEntity());
+                _serviceCategoria.Insert(row.ToEntity());
             }
             else
             {
-                new ModuloCadastro.Service.CategoriaService(_db_context).Update(row.ToEntity());
+                _serviceCategoria.Update(row.ToEntity());
             }
             CarregaCategorias();
         }

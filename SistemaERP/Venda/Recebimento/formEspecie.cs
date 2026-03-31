@@ -4,6 +4,7 @@ using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,23 +19,25 @@ namespace SistemaERP.Venda.Recebimento
 {
     public partial class formEspecie : Form
     {
+        private readonly RecebimentosVendaService _serviceRecebimento;
         private RecebimentoVendaEntity _recebimento;
         private int _idPedido;
         private EFormaPagamento _formaPagamento;
 
-        public formEspecie()
+        public formEspecie(RecebimentosVendaService serviceRecebimento)
         {
+            _serviceRecebimento = serviceRecebimento;
             InitializeComponent();
             this.ConfiguraTabIndex();
             CarregarTipoTransferencia();
         }
 
-        public formEspecie(EFormaPagamento formaPagamento,int idPedido) : this()
+        public formEspecie(RecebimentosVendaService serviceRecebimento, EFormaPagamento formaPagamento, int idPedido) : this(serviceRecebimento)
         {
             _formaPagamento = formaPagamento;
             _idPedido = idPedido;
         }
-        public formEspecie(RecebimentoVendaEntity recebimento) : this()
+        public formEspecie(RecebimentosVendaService serviceRecebimento, RecebimentoVendaEntity recebimento) : this(serviceRecebimento)
         {
             _recebimento = recebimento;
             _formaPagamento = recebimento.Especie;
@@ -64,7 +67,7 @@ namespace SistemaERP.Venda.Recebimento
 
             if (_recebimento.Id == 0)
             {
-                new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
+                _serviceRecebimento.Insert(new RecebimentoVendaEntity()
                 {
                     Especie = _formaPagamento,
                     TipoTransferencia = _formaPagamento == EFormaPagamento.TRANSFERENCIA ? (ETipoTransferencia)Convert.ToInt32(cbTipoTransferencia.SelectedValue) : 0,
@@ -78,7 +81,7 @@ namespace SistemaERP.Venda.Recebimento
             }
             else
             {
-                new RecebimentosVendaService().Update(new RecebimentoVendaEntity()
+                _serviceRecebimento.Update(new RecebimentoVendaEntity()
                 {
                     Id = _recebimento.Id,
                     Especie = _recebimento.Especie,
@@ -99,7 +102,7 @@ namespace SistemaERP.Venda.Recebimento
         private void formEspecie_Load(object sender, EventArgs e)
         {
             ConfiguraDataBindings();
-            if(_formaPagamento == EFormaPagamento.DINHEIRO)
+            if (_formaPagamento == EFormaPagamento.DINHEIRO)
             {
                 cbTipoTransferencia.Visible = false;
             }

@@ -1,25 +1,18 @@
-﻿using ModuloCadastro.Entity;
+using ModuloCadastro.Entity;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SistemaERP.Cadastros.Produto.Estoque
 {
     public partial class formModificarEstoque : Form
     {
+        private readonly EstoqueService _serviceEstoque;
         private EstoqueViewModel _produto;
         private string _funcao;
 
-        public formModificarEstoque(EstoqueViewModel produto, string funcao)
+        public formModificarEstoque(EstoqueService serviceEstoque,EstoqueViewModel produto, string funcao)
         {
+            _serviceEstoque = serviceEstoque;
             InitializeComponent();
             _funcao = funcao;
             _produto = produto;
@@ -46,12 +39,11 @@ namespace SistemaERP.Cadastros.Produto.Estoque
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            var produtoEstoque = new EstoqueService()
-                .Get(_produto.IdProduto, _produto.IdSetorEstoque);
+            var produtoEstoque = _serviceEstoque.Get(_produto.IdProduto, _produto.IdSetorEstoque);
 
             if (_funcao == "+")
             {
-                new EstoqueService().UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
+                _serviceEstoque.UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
                 {
                     ProdutoId = produtoEstoque.IdProduto,
                     SetorEstoqueId = produtoEstoque.IdSetorEstoque,
@@ -63,7 +55,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             {
                 if ((produtoEstoque.QuantidadeEstoque - nudQtd.Value) == 0)
                 {
-                    new EstoqueService().Delete(new ModuloCadastro.Entity.EstoqueEntity
+                    _serviceEstoque.Delete(new ModuloCadastro.Entity.EstoqueEntity
                     {
                         ProdutoId = produtoEstoque.IdProduto,
                         SetorEstoqueId = produtoEstoque.IdSetorEstoque,
@@ -71,7 +63,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
                 }
                 else
                 {
-                    new EstoqueService().UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
+                    _serviceEstoque.UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
                     {
                         ProdutoId = produtoEstoque.IdProduto,
                         SetorEstoqueId = produtoEstoque.IdSetorEstoque,

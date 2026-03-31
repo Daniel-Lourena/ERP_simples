@@ -12,9 +12,14 @@ namespace SistemaERP.Cadastros.Produto
     {
         private int _id = 0;
         private ProdutoViewModel _produto;
+        private readonly ProdutoService _serviceProduto;
+        private readonly CategoriaService _serviceCategoria;
 
-        public formDetalhesProduto()
+        public formDetalhesProduto(ProdutoService serviceProduto, CategoriaService serviceCategoria)
         {
+            _serviceProduto = serviceProduto;
+            _serviceCategoria = serviceCategoria;
+            
             InitializeComponent();
             CarregaOrigem();
             CarregaCST();
@@ -22,7 +27,7 @@ namespace SistemaERP.Cadastros.Produto
             CarregaUnidade();
             this.ConfiguraTabIndex();
         }
-        public formDetalhesProduto(int id) : this()
+        public formDetalhesProduto(ProdutoService serviceProduto, CategoriaService serviceCategoria,int id) : this(serviceProduto,serviceCategoria)
         {
             _id = id;
         }
@@ -58,7 +63,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void CarregaCategoria()
         {
-            List<CategoriaViewModel> categorias = new ModuloCadastro.Service.CategoriaService(new ModuloCadastroContext()).GetList().Select(x => new CategoriaViewModel { id = x.Id, descricao = x.Descricao }).ToList();
+            List<CategoriaViewModel> categorias = _serviceCategoria.GetList().Select(x => new CategoriaViewModel { id = x.Id, descricao = x.Descricao }).ToList();
             cbCategoria.PreencherComboBoxList(categorias, nameof(CategoriaViewModel.id), nameof(CategoriaViewModel.descricao), true);
         }
 
@@ -68,14 +73,14 @@ namespace SistemaERP.Cadastros.Produto
             {
                 _produto.dataCadastro = DateTime.Now;
                 _produto.dataAtualizacao = DateTime.Now;
-                _produto.id = new ModuloCadastro.Service.ProdutoService(new ModuloCadastroContext()).Insert(_produto.ToEntity());
+                _produto.id = _serviceProduto.Insert(_produto.ToEntity());
                 _id = _produto.id;
                 this.Text = $"REGISTRO [{_produto.id}]";
             }
             else
             {
                 _produto.dataAtualizacao = _produto.dataAtualizacao;
-                new ModuloCadastro.Service.ProdutoService(new ModuloCadastroContext()).Update(_produto.ToEntity());
+                _serviceProduto.Update(_produto.ToEntity());
             }
 
             MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -89,7 +94,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void MostraProduto()
         {
-            _produto = new ProdutoService(new ModuloCadastroContext()).Get(_id).ToViewModel();
+            _produto = _serviceProduto.Get(_id).ToViewModel();
             this.Text = $"REGISTRO [{_produto.id}]";
         }
 

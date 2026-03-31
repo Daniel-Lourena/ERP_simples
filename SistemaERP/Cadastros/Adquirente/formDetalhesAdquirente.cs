@@ -11,15 +11,17 @@ namespace SistemaERP.Cadastros.Adquirente
     {
         private int _id = 0;
         private ConfigAdquirenteEntity _adquirente;
+        private ConfigAdquirenteService _service;
 
-        public formDetalhesAdquirente()
+        public formDetalhesAdquirente(ConfigAdquirenteService service)
         {
+            _service = service;
             InitializeComponent();
             CarregarAdquirentes();
             this.ConfiguraTabIndex();
         }
 
-        public formDetalhesAdquirente(int id) : this()
+        public formDetalhesAdquirente(ConfigAdquirenteService service, int id) : this(service)
         {
             _id = id;
         }
@@ -46,13 +48,13 @@ namespace SistemaERP.Cadastros.Adquirente
         {
             if (_id == 0)
             {
-                _adquirente.Id = new ModuloCadastro.Service.ConfigAdquirenteService().Insert(_adquirente);
+                _adquirente.Id = _service.Insert(_adquirente);
                 _id = _adquirente.Id;
                 this.Text = $"REGISTRO [{_adquirente.Id}]";
             }
             else
             {
-                new ModuloCadastro.Service.ConfigAdquirenteService().Update(_adquirente);
+                _service.Update(_adquirente);
             }
             MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -66,7 +68,7 @@ namespace SistemaERP.Cadastros.Adquirente
 
         private void MostraAdquirente()
         {
-            _adquirente = new ConfigAdquirenteService().Get(_id);
+            _adquirente = _service.Get(_id);
             this.Text = $"REGISTRO [{_adquirente.Id}]";
         }
 

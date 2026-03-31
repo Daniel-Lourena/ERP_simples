@@ -10,9 +10,12 @@ namespace ModuloCadastro.Service
 {
     public class EstoqueService
     {
+        private readonly ModuloCadastroContext _db_context;
+        public EstoqueService(ModuloCadastroContext db_context) => this._db_context = db_context;
+
         public List<EstoqueViewModel> GetListEstoqueBruto()
         {
-            return new ModuloCadastroContext().Estoques
+            return _db_context.Estoques
                 .AsNoTracking()
                 .Include(x => x.SetorEstoque)
                 .Include(x => x.Produto)
@@ -69,7 +72,7 @@ namespace ModuloCadastro.Service
                         FROM {SetorEstoqueEntity.Table}
                     ) AS {SetorEstoqueEntity.Table} ON {SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)} = {tb_estoque}.{nameof(EstoqueEntity.SetorEstoqueId)};";
 
-            using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB)})
+            using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB) })
             {
                 comando.CommandText = sql;
                 using (comando.Connection)
@@ -131,7 +134,7 @@ namespace ModuloCadastro.Service
                         FROM {SetorEstoqueEntity.Table}
                     ) AS {SetorEstoqueEntity.Table} ON {SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)} = {tb_estoque}.{nameof(EstoqueEntity.SetorEstoqueId)};";
 
-            using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB)})
+            using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB) })
             {
                 comando.CommandText = sql;
                 using (comando.Connection)
@@ -149,13 +152,13 @@ namespace ModuloCadastro.Service
 
             return produtosEstoque;
         }
-        public EstoqueViewModel Get(int _idProduto ,int _setorEstoque )
+        public EstoqueViewModel Get(int _idProduto, int _setorEstoque)
         {
             EstoqueViewModel produtoEstoque = new();
             string tb_estoque = "estoque";
             string tb_produtosvenda = "produtosvenda";
             StringBuilder sql = new StringBuilder();
-            
+
             sql.Append(@$"
                     SELECT  
                         {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} AS {nameof(EstoqueViewModel.IdProduto)},
@@ -196,7 +199,7 @@ namespace ModuloCadastro.Service
                     WHERE {ProdutoEntity.Table}.{nameof(ProdutoEntity.Id)} = @{ProdutoEntity.Table}{nameof(ProdutoEntity.Id)}
                     AND {SetorEstoqueEntity.Table}.{nameof(SetorEstoqueEntity.Id)} = @{SetorEstoqueEntity.Table}{nameof(SetorEstoqueEntity.Id)};");
 
-            using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB)})
+            using (MySqlCommand comando = new() { Connection = new MySqlConnection(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB) })
             {
                 comando.Parameters.Add($"@{ProdutoEntity.Table}{nameof(ProdutoEntity.Id)}", MySqlDbType.Int32).Value = _idProduto;
                 comando.Parameters.Add($"@{SetorEstoqueEntity.Table}{nameof(SetorEstoqueEntity.Id)}", MySqlDbType.Int32).Value = _setorEstoque;
@@ -220,9 +223,8 @@ namespace ModuloCadastro.Service
 
         public void Insert(EstoqueEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.Estoques.Add(entity);
-            _context.SaveChanges();
+            _db_context.Estoques.Add(entity);
+            _db_context.SaveChanges();
         }
         public void UpdateParcial(EstoqueEntity entity, List<string> listaPropriedadesAtualizar)
         {

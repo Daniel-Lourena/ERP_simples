@@ -1,16 +1,21 @@
-﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.Data;
-using System.Dynamic;
 
 namespace SistemaERP.Cadastros.Adquirente
 {
     public partial class formGerenciarAdquirentes : Form
     {
-        public formGerenciarAdquirentes()
+        private readonly IFormFactory _formFactory;
+        private readonly ConfigAdquirenteService _service;
+
+        public formGerenciarAdquirentes(IFormFactory formFactory, ConfigAdquirenteService service)
         {
+            _formFactory = formFactory;
+            _service = service;
             InitializeComponent();
             CarregaAdquirentes();
             this.ConfiguraTabIndex();
@@ -18,11 +23,17 @@ namespace SistemaERP.Cadastros.Adquirente
 
         private void CarregaAdquirentes()
         {
-            List<ConfigAdquirenteEntity> listaDataSource = new ModuloCadastro.Service.ConfigAdquirenteService().GetList()
-                .Select(x => new ConfigAdquirenteEntity { Id = x.Id, AdquirenteId = x.AdquirenteId,
-                    NroPacelas = x.NroPacelas ,TaxaDebito = x.TaxaDebito, 
-                    TaxaCreditoAVista = x.TaxaCreditoAVista,TaxaCreditoParcelado = x.TaxaCreditoParcelado,
-                    TaxaAntecipacao = x.TaxaAntecipacao}).ToList();
+            List<ConfigAdquirenteEntity> listaDataSource = _service.GetList()
+                .Select(x => new ConfigAdquirenteEntity
+                {
+                    Id = x.Id,
+                    AdquirenteId = x.AdquirenteId,
+                    NroPacelas = x.NroPacelas,
+                    TaxaDebito = x.TaxaDebito,
+                    TaxaCreditoAVista = x.TaxaCreditoAVista,
+                    TaxaCreditoParcelado = x.TaxaCreditoParcelado,
+                    TaxaAntecipacao = x.TaxaAntecipacao
+                }).ToList();
 
             dgvAdquirentes.CriarColunasDataGridView(listaDataSource, new()
             {
@@ -36,7 +47,7 @@ namespace SistemaERP.Cadastros.Adquirente
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            new formDetalhesAdquirente().ShowDialog();
+            _formFactory.Criar<formDetalhesAdquirente>().ShowDialog();
             CarregaAdquirentes();
         }
 
@@ -44,7 +55,7 @@ namespace SistemaERP.Cadastros.Adquirente
         {
             if (dgvAdquirentes.CurrentRow != null)
             {
-                new formDetalhesAdquirente(Convert.ToInt32(dgvAdquirentes.CurrentRow.Cells[nameof(ConfigAdquirenteEntity.Id)].Value)).ShowDialog();
+                _formFactory.Criar<formDetalhesAdquirente>(Convert.ToInt32(dgvAdquirentes.CurrentRow.Cells[nameof(ConfigAdquirenteEntity.Id)].Value)).ShowDialog();
                 CarregaAdquirentes();
             }
         }

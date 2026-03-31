@@ -6,21 +6,22 @@ namespace ModuloCadastro.Service
 {
     public class SetorEstoqueService
     {
+        private readonly ModuloCadastroContext _db_context;
+        public SetorEstoqueService(ModuloCadastroContext db_context) => _db_context = db_context;
+
         public List<SetorEstoqueEntity> GetList()
         {
-            return new ModuloCadastroContext().SetoresEstoque.AsNoTracking().ToList();
+            return _db_context.SetoresEstoque.AsNoTracking().ToList();
         }
         public void Insert(SetorEstoqueEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.SetoresEstoque.Add(entity);
-            _context.SaveChanges();
+            _db_context.SetoresEstoque.Add(entity);
+            _db_context.SaveChanges();
         }
         public void Update(SetorEstoqueEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.SetoresEstoque.Update(entity);
-            _context.SaveChanges();
+            _db_context.SetoresEstoque.Update(entity);
+            _db_context.SaveChanges();
         }
     }
 }

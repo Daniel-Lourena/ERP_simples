@@ -18,22 +18,27 @@ namespace SistemaERP.Venda.Recebimento
 {
     public partial class formCartao : Form
     {
+        private readonly RecebimentosVendaService _serviceRecebimentosVenda;
+        private readonly MaquininhaService _serviceMaquininha;
         private int _idPedido;
         private RecebimentoVendaEntity _recebimento;
         private EFormaPagamento _formaPagamento;
-        public formCartao()
+        public formCartao(RecebimentosVendaService serviceRecebimentosVenda, MaquininhaService serviceMaquininha)
         {
+            _serviceRecebimentosVenda = serviceRecebimentosVenda;
+            _serviceMaquininha = serviceMaquininha;
+
             InitializeComponent();
             this.ConfiguraTabIndex();
             CarregaMaquininhas();
             CarregaBandeiras();
         }
-        public formCartao(EFormaPagamento formaPagamento,int idPedido) : this()
+        public formCartao(RecebimentosVendaService serviceRecebimentosVenda, MaquininhaService serviceMaquininha, EFormaPagamento formaPagamento, int idPedido) : this(serviceRecebimentosVenda, serviceMaquininha)
         {
-            _idPedido = idPedido; 
+            _idPedido = idPedido;
             _formaPagamento = formaPagamento;
         }
-        public formCartao(RecebimentoVendaEntity recebimento) : this()
+        public formCartao(RecebimentosVendaService serviceRecebimentosVenda, MaquininhaService serviceMaquininha, RecebimentoVendaEntity recebimento) : this(serviceRecebimentosVenda, serviceMaquininha)
         {
             _recebimento = recebimento;
             _idPedido = recebimento.PedidoId;
@@ -56,7 +61,7 @@ namespace SistemaERP.Venda.Recebimento
         }
         private void CarregaMaquininhas()
         {
-            cbMaquininhas.PreencherComboBoxList<MaquininhaEntity>(new MaquininhaService().GetList().ToList(),nameof(MaquininhaEntity.Id),nameof(MaquininhaEntity.Nome),true);
+            cbMaquininhas.PreencherComboBoxList<MaquininhaEntity>(_serviceMaquininha.GetList().ToList(), nameof(MaquininhaEntity.Id), nameof(MaquininhaEntity.Nome), true);
         }
         private void CarregaBandeiras()
         {
@@ -67,7 +72,7 @@ namespace SistemaERP.Venda.Recebimento
         {
             foreach (var row in ((BindingList<RecebimentoVendaEntity>)dgvParcelas.DataSource).OrderBy(x => x.NroParcela))
             {
-                new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
+                _serviceRecebimentosVenda.Insert(new RecebimentoVendaEntity()
                 {
                     Especie = EFormaPagamento.BOLETO,
                     NroParcela = row.NroParcela,
@@ -86,7 +91,7 @@ namespace SistemaERP.Venda.Recebimento
         private void formCartao_Load(object sender, EventArgs e)
         {
             ConfiguraDataBindings();
-            if (_formaPagamento == EFormaPagamento.CARTAO_DEBITO) 
+            if (_formaPagamento == EFormaPagamento.CARTAO_DEBITO)
                 lblCartao.Text = "CARTÃO DÉBITO";
             else
                 lblCartao.Text = "CARTÃO CRÉBITO";

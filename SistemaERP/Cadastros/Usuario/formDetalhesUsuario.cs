@@ -3,21 +3,26 @@ using ModuloCadastro.Entity;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 
 namespace SistemaERP.Cadastros.Usuario
 {
     public partial class formDetalhesUsuario : Form
     {
+        private readonly UsuarioService _service;
+
         private int _id = 0;
         private UsuarioViewModel _usuario;
-        public formDetalhesUsuario()
+        public formDetalhesUsuario(UsuarioService service)
         {
+            _service = service;
+
             InitializeComponent();
             CarregaCargo();
             this.ConfiguraTabIndex();
         }
 
-        public formDetalhesUsuario(int id) : this()
+        public formDetalhesUsuario(UsuarioService service, int id) : this(service)
         {
             _id = id;
         }
@@ -43,14 +48,14 @@ namespace SistemaERP.Cadastros.Usuario
                 _usuario.dataCadastro = DateTime.Now;
                 _usuario.dataAtualizacao = DateTime.Now;
                 UsuarioEntity usuario = _usuario.ToEntity();
-                _usuario.id = new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).Insert(usuario);
+                _usuario.id = _service.Insert(usuario);
                 _id = _usuario.id;
                 this.Text = $"REGISTRO [{_usuario.id}]";
             }
             else
             {
                 _usuario.dataAtualizacao = DateTime.Now;
-                new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).Update(_usuario.ToEntity());
+                _service.Update(_usuario.ToEntity());
 
             }
             MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -64,7 +69,7 @@ namespace SistemaERP.Cadastros.Usuario
 
         private void MostraUsuario()
         {
-            _usuario = new UsuarioService(new ModuloCadastroContext()).Get(_id).ToViewModel();
+            _usuario = _service.Get(_id).ToViewModel();
             this.Text = $"REGISTRO [{_usuario.id}]";
         }
 

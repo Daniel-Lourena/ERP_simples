@@ -1,15 +1,21 @@
-﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.Data;
 
 namespace SistemaERP.Cadastros.Maquininha
 {
     public partial class formGerenciarMaquininhas : Form
     {
-        public formGerenciarMaquininhas()
+        private readonly IFormFactory _formFactory;
+        private readonly MaquininhaService _service;
+
+        public formGerenciarMaquininhas(IFormFactory formFactory, MaquininhaService service)
         {
+            _formFactory = formFactory;
+            _service = service;
             InitializeComponent();
             CarregaMaquininhas();
             this.ConfiguraTabIndex();
@@ -17,7 +23,7 @@ namespace SistemaERP.Cadastros.Maquininha
 
         private void CarregaMaquininhas()
         {
-            List<MaquininhaEntity> listaDataSource = new ModuloCadastro.Service.MaquininhaService().GetList()
+            List<MaquininhaEntity> listaDataSource = _service.GetList()
                 .Where(x => (ckeOcultaInativos.Checked ? x.Inativo == false : true))
                 .Select(x => new MaquininhaEntity { Id = x.Id, Nome = x.Nome, Inativo = x.Inativo }).ToList();
 
@@ -30,7 +36,7 @@ namespace SistemaERP.Cadastros.Maquininha
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            new formDetalhesMaquininha().ShowDialog();
+            _formFactory.Criar<formDetalhesMaquininha>().ShowDialog();
             CarregaMaquininhas();
         }
 
@@ -38,10 +44,11 @@ namespace SistemaERP.Cadastros.Maquininha
         {
             if (dgvMaquininhas.CurrentRow != null)
             {
-                new formDetalhesMaquininha(Convert.ToInt32(dgvMaquininhas.CurrentRow.Cells[nameof(MaquininhaEntity.Id)].Value)).ShowDialog();
+                _formFactory.Criar<formDetalhesMaquininha>(Convert.ToInt32(dgvMaquininhas.CurrentRow.Cells[nameof(MaquininhaEntity.Id)].Value)).ShowDialog();
                 CarregaMaquininhas();
             }
         }
+
         private void ckeOcultaInativos_CheckedChanged(object sender, EventArgs e)
         {
             CarregaMaquininhas();

@@ -3,6 +3,7 @@ using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,20 +20,28 @@ namespace SistemaERP.Venda.Recebimento
     public partial class formBoleto : Form
     {
         private int _idPedido;
+        private readonly IFormFactory _formFactory;
         private RecebimentoVendaEntity _recebimento;
+        private readonly RecebimentosVendaService _serviceRecebimento;
+        private readonly BancoService _serviceBanco;
         private bool _atualizarData = true;
         private bool _atualizandoData = false;
-        public formBoleto()
+
+        public formBoleto(IFormFactory formFactory, RecebimentosVendaService serviceRecebimento, BancoService serviceBanco)
         {
+            _serviceRecebimento = serviceRecebimento;
+            _serviceBanco = serviceBanco;
+            _formFactory = formFactory;
+
             InitializeComponent();
             this.ConfiguraTabIndex();
             CarregaBancos();
         }
-        public formBoleto(int idPedido) : this()
+        public formBoleto(IFormFactory formFactory, RecebimentosVendaService serviceRecebimento, BancoService serviceBanco, int idPedido) : this(formFactory, serviceRecebimento, serviceBanco)
         {
             _idPedido = idPedido;
         }
-        public formBoleto(RecebimentoVendaEntity recebimento) : this()
+        public formBoleto(IFormFactory formFactory,RecebimentosVendaService serviceRecebimento, BancoService serviceBanco, RecebimentoVendaEntity recebimento) : this(formFactory,serviceRecebimento, serviceBanco)
         {
             _recebimento = recebimento;
             _idPedido = recebimento.PedidoId;
@@ -56,8 +65,7 @@ namespace SistemaERP.Venda.Recebimento
         private void CarregaBancos()
         {
             cbBanco.PreencherComboBoxList(
-                new BancoService(new ModuloCadastro.Context.ModuloCadastroContext())
-                .GetList().Where(x => x.Inativo == false)
+                _serviceBanco.GetList().Where(x => x.Inativo == false)
                 .Select(x => new BancoEntity { Id = x.Id, Nome = x.Nome }).ToList(),
                 nameof(BancoEntity.Id), nameof(BancoEntity.Nome), true);
         }
@@ -66,7 +74,7 @@ namespace SistemaERP.Venda.Recebimento
         {
             foreach (var row in ((BindingList<RecebimentoVendaEntity>)dgvParcelas.DataSource).OrderBy(x => x.NroParcela))
             {
-                new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
+                _serviceRecebimento.Insert(new RecebimentoVendaEntity()
                 {
                     Especie = EFormaPagamento.BOLETO,
                     NroParcela = row.NroParcela,

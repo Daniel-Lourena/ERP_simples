@@ -1,16 +1,20 @@
-﻿using ModuloCadastro.Context;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.Data;
 
 namespace SistemaERP.Cadastros.Banco
 {
     public partial class formGerenciarBancos : Form
     {
-        ModuloCadastro.Context.ModuloCadastroContext _db_context;
-        public formGerenciarBancos(ModuloCadastroContext db_context)
+        private readonly IFormFactory _formFactory;
+        private readonly BancoService _service;
+
+        public formGerenciarBancos(IFormFactory formFactory,BancoService service)
         {
-            _db_context = db_context;
+            _formFactory = formFactory;
+            _service = service;
             InitializeComponent();
             CarregaBancos();
             this.ConfiguraTabIndex();
@@ -21,16 +25,17 @@ namespace SistemaERP.Cadastros.Banco
             List<BancoViewModel> listaDataSource = new();
             if (ckeOcultaInativos.Checked)
             {
-                listaDataSource = new ModuloCadastro.Service.BancoService(_db_context).GetList()
+                listaDataSource = _service.GetList()
                 .Where(x => !x.Inativo)
-                .Select(x => new BancoViewModel { id = x.Id, nome = x.Nome,inativo = x.Inativo }).ToList();
+                .Select(x => new BancoViewModel { id = x.Id, nome = x.Nome, inativo = x.Inativo }).ToList();
             }
             else
             {
-                listaDataSource = new ModuloCadastro.Service.BancoService(_db_context).GetList()
+                listaDataSource = _service.GetList()
                 .Select(x => new BancoViewModel { id = x.Id, nome = x.Nome, inativo = x.Inativo }).ToList();
             }
-                dgvBancos.CriarColunasDataGridView(listaDataSource, new()
+
+            dgvBancos.CriarColunasDataGridView(listaDataSource, new()
             {
                 (nameof(BancoViewModel.id),true,true), (nameof(BancoViewModel.nome),true,true),
                 (nameof(BancoViewModel.inativo),true,false),
@@ -39,7 +44,7 @@ namespace SistemaERP.Cadastros.Banco
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            new formDetalhesBanco().ShowDialog();
+            _formFactory.Criar<formDetalhesBanco>().ShowDialog();
             CarregaBancos();
         }
 
@@ -47,10 +52,11 @@ namespace SistemaERP.Cadastros.Banco
         {
             if (dgvBancos.CurrentRow != null)
             {
-                new formDetalhesBanco(Convert.ToInt32(dgvBancos.CurrentRow.Cells[nameof(BancoViewModel.id)].Value)).ShowDialog();
+                _formFactory.Criar<formDetalhesBanco>(Convert.ToInt32(dgvBancos.CurrentRow.Cells[nameof(BancoViewModel.id)].Value)).ShowDialog();
                 CarregaBancos();
             }
         }
+
         private void ckeOcultaInativos_CheckedChanged(object sender, EventArgs e)
         {
             CarregaBancos();

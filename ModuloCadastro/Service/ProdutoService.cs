@@ -6,7 +6,7 @@ namespace ModuloCadastro.Service
 {
     public class ProdutoService : IService<ProdutoEntity>
     {
-        private ModuloCadastroContext _db_context;
+        private readonly ModuloCadastroContext _db_context;
 
         public ProdutoService(ModuloCadastroContext db_context) => _db_context = db_context;
         public ProdutoEntity Get(int id)
@@ -22,14 +22,13 @@ namespace ModuloCadastro.Service
         public int Insert(ProdutoEntity entity)
         {
             int insert = 0;
-            using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
+            using (var autoNumeradorContext = new Service.AutoNumeradorService(_db_context))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.IdProduto++;
                 entity.Id = numerador.IdProduto;
-                var _context = new ModuloCadastroContext();
-                _context.Produtos.Add(entity);
-                _context.SaveChanges();
+                _db_context.Produtos.Add(entity);
+				_db_context.SaveChanges();
                 ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdProduto) });
                 insert = entity.Id;
             }
@@ -37,9 +36,8 @@ namespace ModuloCadastro.Service
         }
         public void Update(ProdutoEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.Produtos.Update(entity);
-            _context.SaveChanges();
+            _db_context.Produtos.Update(entity);
+            _db_context.SaveChanges();
         }
 
         public void UpdateParcial(ProdutoEntity entity, List<string> listaPropriedadesAtualizar)

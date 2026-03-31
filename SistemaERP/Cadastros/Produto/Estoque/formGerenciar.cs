@@ -1,15 +1,21 @@
-﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.Data;
 
 namespace SistemaERP.Cadastros.Produto.Estoque
 {
     public partial class formGerenciar : Form
     {
-        public formGerenciar()
+        private readonly IFormFactory _formFactory;
+        private readonly EstoqueService _serviceEstoque;
+
+        public formGerenciar(EstoqueService serviceEstoque)
         {
+            _serviceEstoque = serviceEstoque;
+
             InitializeComponent();
             CarregaEstoque();
             this.ConfiguraTabIndex();
@@ -17,9 +23,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
 
         private void CarregaEstoque()
         {
-            List<EstoqueViewModel> listaDataSource = new();
-
-            listaDataSource = new ModuloCadastro.Service.EstoqueService()
+            List<EstoqueViewModel> listaDataSource = _serviceEstoque
                 .GetListEstoquePosicaoItem().Where(x => !x.inativo).ToList();
 
             dgvProdutos.CriarColunasDataGridView(listaDataSource, new()
@@ -35,7 +39,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             if (dgvProdutos.CurrentRow != null)
             {
                 EstoqueViewModel produto = dgvProdutos.CurrentRow.DataBoundItem as EstoqueViewModel;
-                new formModificarEstoque(produto, "+").ShowDialog();
+                _formFactory.Criar<formModificarEstoque>(produto, "+").ShowDialog();
                 CarregaEstoque();
             }
         }
@@ -45,11 +49,10 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             if (dgvProdutos.CurrentRow != null)
             {
                 EstoqueViewModel produto = dgvProdutos.CurrentRow.DataBoundItem as EstoqueViewModel;
-                new formModificarEstoque(produto, "-").ShowDialog();
+                _formFactory.Criar<formModificarEstoque>(produto, "-").ShowDialog();
                 CarregaEstoque();
             }
         }
-
 
         private void dgvProdutos_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
@@ -63,7 +66,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
-            new formAdicionarEstoque().ShowDialog();
+            _formFactory.Criar<formAdicionarEstoque>().ShowDialog();
             CarregaEstoque();
         }
 
@@ -72,7 +75,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             if (dgvProdutos.CurrentRow != null)
             {
                 EstoqueViewModel produto = dgvProdutos.CurrentRow.DataBoundItem as EstoqueViewModel;
-                new formTransferenciaEstoque(produto).ShowDialog();
+                _formFactory.Criar<formTransferenciaEstoque>(produto).ShowDialog();
                 CarregaEstoque();
             }
         }

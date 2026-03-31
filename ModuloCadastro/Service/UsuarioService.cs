@@ -6,16 +6,12 @@ namespace ModuloCadastro.Service
 {
     public class UsuarioService : IService<UsuarioEntity>
     {
-        private ModuloCadastroContext _db_context;
-
-        public UsuarioService()
-        {
-        }
+        private readonly ModuloCadastroContext _db_context;
 
         public UsuarioService(ModuloCadastroContext db_context) => _db_context = db_context;
         public UsuarioEntity Get(int id)
         {
-            return new ModuloCadastroContext().Usuarios.FirstOrDefault(x => x.Id.Equals(id))!;
+            return _db_context.Usuarios.FirstOrDefault(x => x.Id.Equals(id))!;
         }
         public IQueryable<UsuarioEntity> GetList()
         {
@@ -25,14 +21,13 @@ namespace ModuloCadastro.Service
         public int Insert(UsuarioEntity entity)
         {
             int insert = 0;
-            using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
+            using (var autoNumeradorContext = new Service.AutoNumeradorService(_db_context))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.IdUsuario++;
                 entity.Id = numerador.IdUsuario;
-                var _context = new ModuloCadastroContext();
-                _context.Usuarios.Add(entity);
-                _context.SaveChanges();
+                _db_context.Usuarios.Add(entity);
+                _db_context.SaveChanges();
                 ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdUsuario) });
                 insert = entity.Id;
             }
@@ -40,9 +35,8 @@ namespace ModuloCadastro.Service
         }
         public void Update(UsuarioEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.Usuarios.Update(entity);
-            _context.SaveChanges();
+            _db_context.Usuarios.Update(entity);
+            _db_context.SaveChanges();
         }
 
         public void UpdateParcial(UsuarioEntity entity, List<string> listaPropriedadesAtualizar)

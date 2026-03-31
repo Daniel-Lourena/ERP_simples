@@ -11,16 +11,19 @@ namespace SistemaERP.Cadastros.Maquininha
     {
         private int _id = 0;
         private MaquininhaEntity _maquininha;
+        private readonly MaquininhaService _service;
 
-        public formDetalhesMaquininha()
+        public formDetalhesMaquininha(MaquininhaService service)
         {
+            _service = service;
+
             InitializeComponent();
             CarregarAdquirentes();
             CarregarTipoMaquininha();
             this.ConfiguraTabIndex();
         }
 
-        public formDetalhesMaquininha(int id) : this()
+        public formDetalhesMaquininha(MaquininhaService service,int id) : this(service)
         {
             _id = id;
         }
@@ -51,13 +54,13 @@ namespace SistemaERP.Cadastros.Maquininha
 
             if (_id == 0)
             {
-                _maquininha.Id = new ModuloCadastro.Service.MaquininhaService().Insert(_maquininha);
+                _maquininha.Id = _service.Insert(_maquininha);
                 _id = _maquininha.Id;
                 this.Text = $"REGISTRO [{_maquininha.Id}]";
             }
             else
             {
-                new ModuloCadastro.Service.MaquininhaService().Update(_maquininha);
+                _service.Update(_maquininha);
             }
             MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -71,7 +74,7 @@ namespace SistemaERP.Cadastros.Maquininha
 
         private void MostraMaquininha()
         {
-            _maquininha = new MaquininhaService().Get(_id);
+            _maquininha = _service.Get(_id);
             this.Text = $"REGISTRO [{_maquininha.Id}]";
         }
 

@@ -1,10 +1,16 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ModuloCadastro.Service;
+using SistemaERP.DI;
+using System;
 
 namespace SistemaERP
 {
     internal static class Program
     {
+        private static ServiceProvider _serviceProvider;
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -17,7 +23,7 @@ namespace SistemaERP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
-            Application.Run(new TelaInicial());
+            Application.Run(_serviceProvider.GetRequiredService<TelaInicial>());
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -28,11 +34,16 @@ namespace SistemaERP
 
         private static void OnConfiguring()
         {
-            // Conexão com MySQL
-            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseMySql(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB + "AllowLoadLocalInfile=true;",
-                new MySqlServerVersion(new Version(5, 7)),  // Versão mínima suportada
-                options => options.EnableRetryOnFailure()); // Configurações adicionais
+            ServiceCollection service = new ServiceCollection();
+            service.AddDbContext<ModuloCadastro.Context.ModuloCadastroContext>
+                (
+                    optionsBuilder => optionsBuilder.UseMySql(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB + "AllowLoadLocalInfile=true;",
+                    new MySqlServerVersion(new Version(5, 7)),  // Versão mínima suportada
+                    options => options.EnableRetryOnFailure()) // Configurações adicionais);
+                );
+            service.AddServices();
+            service.AddForms();
+            _serviceProvider = service.BuildServiceProvider();
         }
     }
 }

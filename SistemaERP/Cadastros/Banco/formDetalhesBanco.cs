@@ -10,16 +10,18 @@ namespace SistemaERP.Cadastros.Banco
     {
         private int _id = 0;
         private BancoViewModel _banco;
+        private readonly BancoService _service;
 
-        public formDetalhesBanco()
+        public formDetalhesBanco(BancoService service)
         {
+            _service = service;
             InitializeComponent();
             CarregarTipoConta();
             CarregarTipoChavePix();
             this.ConfiguraTabIndex();
         }
 
-        public formDetalhesBanco(int id) : this()
+        public formDetalhesBanco(BancoService service, int id) : this(service)
         {
             _id = id;
         }
@@ -60,14 +62,14 @@ namespace SistemaERP.Cadastros.Banco
             {
                 _banco.dataCadastro = DateTime.Now;
                 _banco.dataAtualizacao = DateTime.Now;
-                _banco.id = new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Insert(_banco.ToEntity());
+                _banco.id = _service.Insert(_banco.ToEntity());
                 _id = _banco.id;
                 this.Text = $"REGISTRO [{_banco.id}]";
             }
             else
             {
                 _banco.dataAtualizacao = DateTime.Now;
-                new ModuloCadastro.Service.BancoService(new ModuloCadastroContext()).Update(_banco.ToEntity());
+                _service.Update(_banco.ToEntity());
             }
             MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -81,7 +83,7 @@ namespace SistemaERP.Cadastros.Banco
 
         private void MostraBanco()
         {
-            _banco = new BancoService(new ModuloCadastroContext()).Get(_id).ToViewModel();
+            _banco = _service.Get(_id).ToViewModel();
             this.Text = $"REGISTRO [{_banco.id}]";
         }
 

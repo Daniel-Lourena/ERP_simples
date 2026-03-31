@@ -3,21 +3,30 @@ using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Cadastros.Helper;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 
 namespace SistemaERP.Cadastros.Cliente
 {
     public partial class formDetalhesCliente : Form
     {
+        private readonly ClienteService _serviceCliente;
+        private readonly EstadoService _serviceEstado;
+        private readonly CidadeService _serviceCidade;
+
         private int _id = 0;
         private ClienteViewModel _cliente;
 
-        public formDetalhesCliente()
+        public formDetalhesCliente(ClienteService serviceCliente, EstadoService serviceEstado, CidadeService serviceCidade)
         {
+            _serviceCliente = serviceCliente;
+            _serviceEstado = serviceEstado;
+            _serviceCidade = serviceCidade;
+
             InitializeComponent();
             CarregaEstado();
             this.ConfiguraTabIndex();
         }
-        public formDetalhesCliente(int id) : this()
+        public formDetalhesCliente(ClienteService serviceCliente, EstadoService serviceEstado,CidadeService serviceCidade ,int id) : this(serviceCliente, serviceEstado,serviceCidade)
         {
             _id = id;
         }
@@ -39,7 +48,7 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void CarregaEstado()
         {
-            cbEstados.GetListEstados();
+            cbEstados.GetListEstados(_serviceEstado);
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -48,14 +57,14 @@ namespace SistemaERP.Cadastros.Cliente
             {
                 _cliente.dataCadastro = DateTime.Now;
                 _cliente.dataAtualizacao = DateTime.Now;
-                _cliente.id = new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Insert(_cliente.ToEntity());
+                _cliente.id = _serviceCliente.Insert(_cliente.ToEntity());
                 _id = _cliente.id;
                 this.Text = $"REGISTRO [{_cliente.id}]";
             }
             else
             {
                 _cliente.dataAtualizacao = DateTime.Now;
-                new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Update(_cliente.ToEntity());
+                _serviceCliente.Update(_cliente.ToEntity());
             }
 
             MessageBox.Show("Salvo com sucesso", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -69,7 +78,7 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void MostraCliente()
         {
-            _cliente = new ClienteService(new ModuloCadastroContext()).Get(_id).ToViewModel();
+            _cliente = _serviceCliente.Get(_id).ToViewModel();
 
             if (_cliente.excluido)
             {
@@ -107,7 +116,7 @@ namespace SistemaERP.Cadastros.Cliente
         private void cbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbEstados.SelectedValue != null)
-                cbCidades.GetListCidades((int)cbEstados.SelectedValue);
+                cbCidades.GetListCidades(_serviceCidade,(int)cbEstados.SelectedValue);
         }
     }
 }

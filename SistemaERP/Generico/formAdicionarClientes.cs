@@ -3,14 +3,18 @@ using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 
 namespace SistemaERP.Generico
 {
     public partial class formAdicionarClientes : Form
     {
+        private readonly ClienteService _serviceCliente;
         public int _idClienteSelecionado = 0;
-        public formAdicionarClientes()
+        public formAdicionarClientes(ClienteService serviceCliente)
         {
+            _serviceCliente = serviceCliente;
+
             InitializeComponent();
             CarregarClientes();
             this.ConfiguraTabIndex();
@@ -18,8 +22,8 @@ namespace SistemaERP.Generico
 
         private void CarregarClientes()
         {
-            var listaClientes = new ClienteService(new ModuloCadastro.Context.ModuloCadastroContext()).GetList()
-                .Select(x => new ClienteViewModel { id = x.Id,fantasia = x.Fantasia }).ToList();
+            var listaClientes = _serviceCliente.GetList()
+                .Select(x => new ClienteViewModel { id = x.Id, fantasia = x.Fantasia }).ToList();
 
             dgvClientes.CriarColunasDataGridView<ClienteViewModel>
                 (

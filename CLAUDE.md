@@ -2,6 +2,9 @@
 
 Este arquivo fornece orientação para o Claude Code (claude.ai/code) ao trabalhar com código neste repositório.
 
+## CLAUDEIGNORE.md
+Este arquivo tem toda a relação dos arquivos que o Claude Code deve ignorar ao realizar tarefas, sendo estritamente rigoroso em não ler nenhum arquivo presente nessa lista, salvo em casos que seja fornecido manualmente o contexto.
+
 ## Linguagem
 
 - Todas as respostas devem ser em português (Brasil)
@@ -9,7 +12,7 @@ Este arquivo fornece orientação para o Claude Code (claude.ai/code) ao trabalh
 
 ## Visão Geral do Projeto
 
-Sistema ERP desenvolvido em C# (.NET 6) e Windows Forms (WinForms), voltado para casos de uso de varejo/vendas no Brasil. A interface do usuário, as entidades de domínio, os serviços e as colunas do banco de dados estão todos escritos em português.
+Sistema ERP desenvolvido em C# (.NET 8) e Windows Forms (WinForms), voltado para casos de uso de varejo/vendas no Brasil. A interface do usuário, as entidades de domínio, os serviços e as colunas do banco de dados estão todos escritos em português.
 
 ## Compilar e Executar
 
@@ -48,9 +51,9 @@ A solução tem três projetos:
 
 ### UI conventions
 
-- Forms are organized under `SistemaERP/Cadastros/<Module>/` and `SistemaERP/Venda/`
-- Payment receipt forms live under `SistemaERP/Venda/Recebimento/`, one form per payment method
-- Generic reusable forms are in `SistemaERP/Generico/`
+- Formulários são organizados sob `SistemaERP/Cadastros/<Module>/` e `SistemaERP/Venda/`
+- Formulários de recibo de pagamento ficam em `SistemaERP/Venda/Recebimento/`, um formulário por método de pagamento
+- Formulários genéricos reutilizáveis estão em `SistemaERP/Generico/`
 
 ## Database
 
@@ -59,7 +62,7 @@ A solução tem três projetos:
 - EF Core migrations are in `ModuloCadastro/Migrations/`
 - Auto-increment IDs for clients/orders are managed through the `tb_autonumerador` table (`AutoNumeradorEntity`), not MySQL `AUTO_INCREMENT`
 
-## Domain Highlights
+## Destaques do Domínio
 
 - **Vendas** (`tb_vendas`, `tb_produto_venda`) — pedidos com itens de linha, vinculados ao cliente e ao usuário
 - **Pagamentos** (`tb_recebimento_venda`) — aceita dinheiro, cheque, boleto, transferência, PIX, crédito na loja, cartão de débito, cartão de crédito
@@ -69,6 +72,7 @@ A solução tem três projetos:
 
 ## Diretrizes de Desenvolvimento
 
+- Ignorar arquivos de `CLAUDEIGNORE.md`, salvo quando fornecidos manualmente
 - Sempre seguir o padrão Service → Repository existente
 - Não acessar o DbContext diretamente fora dos Services
 - Manter nomenclatura em português

@@ -1,9 +1,9 @@
-﻿using ModuloCadastro.Context;
-using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Entity;
 using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using SistemaERP.Generico;
 using System.ComponentModel;
 
@@ -11,14 +11,27 @@ namespace SistemaERP.Venda
 {
     public partial class formDetalhesVenda : Form
     {
+        private readonly IFormFactory _formFactory;
+        private readonly PedidoVendaService _servicePedidoVenda;
+        private readonly ClienteService _serviceCliente;
+        private readonly ProdutoVendaService _serviceProdutoVenda;
+        private readonly RecebimentosVendaService _serviceRecebimentosVenda;
+        private readonly EstoqueService _serviceEstoque;
+
         private int _idPedido = 0;
         private PedidoVendaViewModel _pedido;
-        public formDetalhesVenda()
+
+        public formDetalhesVenda(IFormFactory formFactory, ProdutoVendaService serviceProdutoVenda, RecebimentosVendaService serviceRecebimentosVenda, EstoqueService serviceEstoque)
         {
+            _formFactory = formFactory;
+            _serviceProdutoVenda = serviceProdutoVenda;
+            _serviceRecebimentosVenda = serviceRecebimentosVenda;
+            _serviceEstoque = serviceEstoque;
+
             InitializeComponent();
             this.ConfiguraTabIndex();
         }
-        public formDetalhesVenda(int idPedido) : this()
+        public formDetalhesVenda(IFormFactory formFactory, ProdutoVendaService serviceProdutoVenda, RecebimentosVendaService serviceRecebimentosVenda, EstoqueService serviceEstoque, int idPedido) : this(formFactory, serviceProdutoVenda, serviceRecebimentosVenda, serviceEstoque)
         {
             _idPedido = idPedido;
         }
@@ -44,7 +57,7 @@ namespace SistemaERP.Venda
         {
             dgvProdutos.CriarColunasDataGridView<ProdutoVendaViewModel>
                 (
-                    new ModuloCadastro.Service.ProdutoVendaService().GetListProdutosPedido(_idPedido),
+                    _serviceProdutoVenda.GetListProdutosPedido(_idPedido),
                     new()
                     {
                         (nameof(ProdutoVendaViewModel.idProduto),true,true),(nameof(ProdutoVendaViewModel.descricaoProduto),true, true),
@@ -59,7 +72,7 @@ namespace SistemaERP.Venda
         {
             dgvRecebimentos.CriarColunasDataGridView<RecebimentoVendaEntity>
                 (
-                    new ModuloCadastro.Service.RecebimentosVendaService().GetList().Where(x => x.PedidoId == _idPedido).ToList(),
+                    _serviceRecebimentosVenda.GetList().Where(x => x.PedidoId == _idPedido).ToList(),
                     new()
                     {
                         (nameof(RecebimentoVendaEntity.PedidoId), false,false),(nameof(RecebimentoVendaEntity.Valor), true,true),
@@ -71,13 +84,13 @@ namespace SistemaERP.Venda
 
         private void MostraPedido()
         {
-            _pedido = new PedidoVendaService(new ModuloCadastroContext()).Get(_idPedido).ToViewModel();
+            _pedido = _servicePedidoVenda.Get(_idPedido).ToViewModel();
             this.Text = $"PEDIDO [{_pedido.id}]";
         }
 
         private void btnAddProduto_Click(object sender, EventArgs e)
         {
-            new formAdicionarProdutosPedido(ETipoPedido.VENDA, _idPedido).ShowDialog();
+            _formFactory.Criar<formAdicionarProdutosPedido>(ETipoPedido.VENDA, _idPedido).ShowDialog();
             CarregarProdutos();
         }
 
@@ -88,7 +101,7 @@ namespace SistemaERP.Venda
             if (MessageBox.Show($"Deseja excluir o item {dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.idProduto)].Value} - {dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.descricaoProduto)].Value} do pedido?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            new ModuloCadastro.Service.ProdutoVendaService().Delete(Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.id)].Value));
+            _serviceProdutoVenda.Delete(Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(ProdutoVendaViewModel.id)].Value));
             CarregarProdutos();
         }
 
@@ -116,7 +129,7 @@ namespace SistemaERP.Venda
                 _pedido.dataAtualizacao = DateTime.Now;
                 _pedido.idCriador = 1; //Provisório
                 _pedido.usuarioAtualizacao = 1; //Provisório
-                _pedido.id = new ModuloCadastro.Service.PedidoVendaService(new ModuloCadastroContext()).Insert(_pedido.ToEntity());
+                _pedido.id = _servicePedidoVenda.Insert(_pedido.ToEntity());
                 _idPedido = _pedido.id;
                 this.Text = $"PEDIDO [{_pedido.id}]";
             }
@@ -124,7 +137,7 @@ namespace SistemaERP.Venda
             {
                 _pedido.usuarioAtualizacao = 1; //Provisório
                 _pedido.dataAtualizacao = DateTime.Now;
-                new ModuloCadastro.Service.PedidoVendaService(new ModuloCadastroContext()).Update(_pedido.ToEntity());
+                _servicePedidoVenda.Update(_pedido.ToEntity());
             }
 
             btnAddProduto.Enabled = true;
@@ -135,15 +148,15 @@ namespace SistemaERP.Venda
 
         private void btnProcurarCliente_Click(object sender, EventArgs e)
         {
-            using (formAdicionarClientes form = new formAdicionarClientes())
+            using (var form = _formFactory.Criar<formAdicionarClientes>())
             {
                 form.ShowDialog();
                 _pedido.idCliente = form._idClienteSelecionado;
-            }
-            ;
+            };
+            
             if (_pedido.idCliente == 0) return;
 
-            var cliente = new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).Get(_pedido.idCliente);
+            var cliente = _serviceCliente.Get(_pedido.idCliente);
             txtIdCliente.Text = cliente.Id.ToString();
             txtFantasia.Text = cliente.Fantasia;
             txtRazaoSocial.Text = cliente.RazaoSocial;
@@ -163,8 +176,7 @@ namespace SistemaERP.Venda
             _pedido.dataExclusao = DateTime.Now;
             _pedido.usuarioExclusao = 1; // PROVISÓRIO
             _pedido.excluido = true;
-            new ModuloCadastro.Service.PedidoVendaService(new ModuloCadastroContext())
-                .UpdateParcial(_pedido.ToEntity(), new()
+            _servicePedidoVenda.UpdateParcial(_pedido.ToEntity(), new()
                 {
                     nameof(PedidoVendaEntity.Excluido),nameof(PedidoVendaEntity.UsuarioExclusaoId),nameof(PedidoVendaEntity.DataExclusao)
                 });
@@ -177,7 +189,7 @@ namespace SistemaERP.Venda
         {
             ProdutoVendaViewModel row = dgvProdutos.Rows[e.RowIndex].DataBoundItem as ProdutoVendaViewModel;
 
-            new ModuloCadastro.Service.ProdutoVendaService()
+            _serviceProdutoVenda
                 .UpdateParcial(new ProdutoVendaEntity
                 {
                     Id = row.id,
@@ -198,12 +210,12 @@ namespace SistemaERP.Venda
 
             foreach (var row in produtos)
             {
-                var estoqueAtual = new ModuloCadastro.Service.EstoqueService().Get(row.idProduto, row.idSetorEstoque);
+                var estoqueAtual = _serviceEstoque.Get(row.idProduto, row.idSetorEstoque);
                 estoqueAtual.QuantidadeEstoque -= row.quantidade;
 
                 if (estoqueAtual.QuantidadeEstoque == 0)
                 {
-                    new ModuloCadastro.Service.EstoqueService().Delete(new EstoqueEntity
+                    _serviceEstoque.Delete(new EstoqueEntity
                     {
                         ProdutoId = row.idProduto,
                         SetorEstoqueId = row.idSetorEstoque,
@@ -211,7 +223,7 @@ namespace SistemaERP.Venda
                 }
                 else
                 {
-                    new ModuloCadastro.Service.EstoqueService()
+                    _serviceEstoque
                     .UpdateParcial(new EstoqueEntity
                     {
                         ProdutoId = row.idProduto,
@@ -232,7 +244,7 @@ namespace SistemaERP.Venda
             _pedido.dataFechamento = DateTime.Now;
             _pedido.usuarioFechamento = 1; // PROVISÓRIO
 
-            new ModuloCadastro.Service.PedidoVendaService(new ModuloCadastroContext())
+            _servicePedidoVenda
                 .UpdateParcial(_pedido.ToEntity(), new()
                 {
                     nameof(PedidoVendaEntity.UsuarioFechamentoId),nameof(PedidoVendaEntity.DataFechamento)
@@ -247,19 +259,19 @@ namespace SistemaERP.Venda
 
         private void btnDinheiro_Click(object sender, EventArgs e)
         {
-            new Venda.Recebimento.formEspecie(EFormaPagamento.DINHEIRO, _pedido.id).ShowDialog();
+            _formFactory.Criar<Venda.Recebimento.formEspecie>(EFormaPagamento.DINHEIRO, _pedido.id).ShowDialog();
             CarregaRecebimentos();
         }
 
         private void btnBoleto_Click(object sender, EventArgs e)
         {
-            new Venda.Recebimento.formBoleto(_pedido.id).ShowDialog();
+            _formFactory.Criar<Venda.Recebimento.formBoleto>(_pedido.id).ShowDialog();
             CarregaRecebimentos();
         }
 
         private void btnCheque_Click(object sender, EventArgs e)
         {
-            new Venda.Recebimento.formCheque(_pedido.id).ShowDialog();
+            _formFactory.Criar<Venda.Recebimento.formCheque>(_pedido.id).ShowDialog();
             CarregaRecebimentos();
         }
 
@@ -270,19 +282,19 @@ namespace SistemaERP.Venda
 
         private void btnTransferencia_Click(object sender, EventArgs e)
         {
-            new Venda.Recebimento.formEspecie(EFormaPagamento.TRANSFERENCIA, _pedido.id).ShowDialog();
+            _formFactory.Criar<Venda.Recebimento.formEspecie>(EFormaPagamento.TRANSFERENCIA, _pedido.id).ShowDialog();
             CarregaRecebimentos();
         }
 
         private void btnCartaoDebito_Click(object sender, EventArgs e)
         {
-            new Venda.Recebimento.formCartao(EFormaPagamento.CARTAO_DEBITO, _pedido.id).ShowDialog();
+            _formFactory.Criar<Venda.Recebimento.formCartao>(EFormaPagamento.CARTAO_DEBITO, _pedido.id).ShowDialog();
             CarregaRecebimentos();
         }
 
         private void btnCartaoCredito_Click(object sender, EventArgs e)
         {
-            new Venda.Recebimento.formCartao(EFormaPagamento.CARTAO_CREDITO, _pedido.id).ShowDialog();
+            _formFactory.Criar<Venda.Recebimento.formCartao>(EFormaPagamento.CARTAO_CREDITO, _pedido.id).ShowDialog();
             CarregaRecebimentos();
         }
 
@@ -304,7 +316,7 @@ namespace SistemaERP.Venda
 
             foreach (DataGridViewRow row in dgvRecebimentos.SelectedRows)
             {
-                new RecebimentosVendaService().Delete(row.DataBoundItem as RecebimentoVendaEntity);
+                _serviceRecebimentosVenda.Delete(row.DataBoundItem as RecebimentoVendaEntity);
             }
             CarregaRecebimentos();
         }
@@ -315,23 +327,18 @@ namespace SistemaERP.Venda
 
             RecebimentoVendaEntity row = dgvRecebimentos.CurrentRow.DataBoundItem as RecebimentoVendaEntity;
 
-            row = new RecebimentosVendaService().Get(row.Id);
+            row = _serviceRecebimentosVenda.Get(row.Id);
             Form form = row.Especie switch
             {
-                EFormaPagamento.DINHEIRO => new Venda.Recebimento.formEspecie(row),
-                EFormaPagamento.BOLETO => new Venda.Recebimento.formBoleto(row),
-                EFormaPagamento.CHEQUE => new Venda.Recebimento.formCheque(row),
-                EFormaPagamento.TRANSFERENCIA => new Venda.Recebimento.formEspecie(row),
-                EFormaPagamento.CARTAO_DEBITO => new Venda.Recebimento.formCartao(row),
-                EFormaPagamento.CARTAO_CREDITO => new Venda.Recebimento.formCartao(row),
+                EFormaPagamento.DINHEIRO => _formFactory.Criar<Venda.Recebimento.formEspecie>(row),
+                EFormaPagamento.BOLETO => _formFactory.Criar<Venda.Recebimento.formBoleto>(row),
+                EFormaPagamento.CHEQUE => _formFactory.Criar<Venda.Recebimento.formCheque>(row),
+                EFormaPagamento.TRANSFERENCIA => _formFactory.Criar<Venda.Recebimento.formEspecie>(row),
+                EFormaPagamento.CARTAO_DEBITO => _formFactory.Criar<Venda.Recebimento.formCartao>(row),
+                EFormaPagamento.CARTAO_CREDITO => _formFactory.Criar<Venda.Recebimento.formCartao>(row),
                 _ => null
             };
             form.ShowDialog();
-        }
-
-        private void dgvRecebimentos_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
-        {
-            
         }
     }
 }

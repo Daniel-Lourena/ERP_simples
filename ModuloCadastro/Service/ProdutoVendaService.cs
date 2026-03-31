@@ -7,9 +7,11 @@ namespace ModuloCadastro.Service
 {
     public class ProdutoVendaService
     {
+        private readonly ModuloCadastroContext _db_context;
+        public ProdutoVendaService(ModuloCadastroContext db_context) => this._db_context = db_context;
         public List<ProdutoVendaViewModel> GetListProdutosPedido(int id)
         {
-            return new ModuloCadastroContext().ProdutosVendas
+            return _db_context.ProdutosVendas
                 .AsNoTracking()
                 .Include(pp => pp.PedidoVenda)
                 .Include(pp => pp.Produto)
@@ -28,7 +30,7 @@ namespace ModuloCadastro.Service
         }
         public List<ProdutoVendaEntity> GetListProdutosVendaAberto()
         {
-            return new ModuloCadastroContext().ProdutosVendas
+            return _db_context.ProdutosVendas
                 .AsNoTracking()
                 .Include(pp => pp.PedidoVenda)
                 .Where(pp => pp.PedidoVenda.DataFechamento == null)
@@ -36,7 +38,7 @@ namespace ModuloCadastro.Service
         }
         public List<ProdutoVendaEntity> GetListProdutosVendaFechado()
         {
-            return new ModuloCadastroContext().ProdutosVendas
+            return _db_context.ProdutosVendas
                 .AsNoTracking()
                 .Include(pp => pp.PedidoVenda)
                 .Where(pp => pp.PedidoVenda.DataFechamento != null)
@@ -45,11 +47,8 @@ namespace ModuloCadastro.Service
 
         public void Insert(ProdutoVendaEntity entity)
         {
-            using (var _context = new ModuloCadastroContext())
-            {
-                _context.ProdutosVendas.Add(entity);
-                _context.SaveChanges();
-            }
+            _db_context.ProdutosVendas.Add(entity);
+            _db_context.SaveChanges();
         }
         public void UpdateParcial(ProdutoVendaEntity entity, List<string> listaPropriedadesAtualizar)
         {
@@ -58,11 +57,8 @@ namespace ModuloCadastro.Service
 
         public void Delete(int id)
         {
-            using (var _context = new ModuloCadastroContext())
-            {
-                _context.ProdutosVendas.Remove(new ProdutoVendaEntity { Id = id });
-                _context.SaveChanges();
-            }
+            _db_context.ProdutosVendas.Remove(new ProdutoVendaEntity { Id = id });
+            _db_context.SaveChanges();
         }
     }
 }

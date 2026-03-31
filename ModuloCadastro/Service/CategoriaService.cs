@@ -6,7 +6,7 @@ namespace ModuloCadastro.Service
 {
     public class CategoriaService
     {
-        private ModuloCadastroContext _db_context;
+        private readonly ModuloCadastroContext _db_context;
         public CategoriaService(ModuloCadastroContext db_context) => _db_context = db_context;
 
         public List<CategoriaEntity> GetList()
@@ -18,7 +18,7 @@ namespace ModuloCadastro.Service
 
         public void Insert(CategoriaEntity entity)
         {
-            using (var _context = new ModuloCadastroContext())
+            using (var _context = _db_context)
             {
                 _context.Categorias.Add(entity);
                 _context.SaveChanges();
@@ -27,7 +27,7 @@ namespace ModuloCadastro.Service
 
         public void Update(CategoriaEntity entity)
         {
-            using (var _context = new ModuloCadastroContext())
+            using (var _context = _db_context)
             {
                 _context.Categorias.Update(entity);
                 _context.SaveChanges();

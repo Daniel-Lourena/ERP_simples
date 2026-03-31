@@ -12,31 +12,32 @@ namespace ModuloCadastro.Service
 {
     public class RecebimentosVendaService : IService<RecebimentoVendaEntity>
     {
+        private readonly ModuloCadastroContext _db_context;
+        public RecebimentosVendaService(ModuloCadastroContext db_context) => this._db_context = db_context;
+
         public RecebimentoVendaEntity Get(int id)
         {
-            return new ModuloCadastroContext().RecebimentosVenda
+            return _db_context.RecebimentosVenda
                 .AsNoTracking()
                 .FirstOrDefault(x => x.Id.Equals(id))!;
         }
 
         public IQueryable<RecebimentoVendaEntity> GetList()
         {
-            return new ModuloCadastroContext().RecebimentosVenda.AsNoTracking();
+            return _db_context.RecebimentosVenda.AsNoTracking();
         }
 
         public int Insert(RecebimentoVendaEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.RecebimentosVenda.Add(entity);
-            _context.SaveChanges();
+            _db_context.RecebimentosVenda.Add(entity);
+            _db_context.SaveChanges();
 
             return entity.Id;
         }
         public void Update(RecebimentoVendaEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.RecebimentosVenda.Update(entity);
-            _context.SaveChanges();
+            _db_context.RecebimentosVenda.Update(entity);
+            _db_context.SaveChanges();
         }
 
         public void UpdateParcial(RecebimentoVendaEntity entity, List<string> listaPropriedadesAtualizar)
@@ -45,11 +46,8 @@ namespace ModuloCadastro.Service
         }
         public void Delete(RecebimentoVendaEntity entity)
         {
-            using (var _context = new ModuloCadastroContext())
-            {
-                _context.RecebimentosVenda.Remove(new RecebimentoVendaEntity { Id = entity.Id });
-                _context.SaveChanges();
-            }
+            _db_context.RecebimentosVenda.Remove(new RecebimentoVendaEntity { Id = entity.Id });
+            _db_context.SaveChanges();
         }
     }
 }

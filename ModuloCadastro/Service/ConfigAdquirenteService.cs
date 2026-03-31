@@ -11,6 +11,8 @@ namespace ModuloCadastro.Service
 {
     public class ConfigAdquirenteService
     {
+        private readonly ModuloCadastroContext _db_context;
+
         public ConfigAdquirenteEntity Get(int id)
         {
             return new ModuloCadastroContext().ConfigAdquirentes.AsNoTracking()

@@ -1,18 +1,22 @@
-﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.Data;
 
 namespace SistemaERP.Cadastros.Usuario
 {
     public partial class formGerenciarUsuarios : Form
     {
-        private ModuloCadastro.Context.ModuloCadastroContext _db_context;
+        private readonly IFormFactory _formFactory;
+        private readonly UsuarioService _service;
 
-        public formGerenciarUsuarios(ModuloCadastroContext db_context)
+        public formGerenciarUsuarios(IFormFactory formFactory,UsuarioService service)
         {
-            _db_context = db_context;
+            _formFactory = formFactory;
+            _service = service;
+
             InitializeComponent();
             CarregaUsuarios();
             this.ConfiguraTabIndex();
@@ -23,7 +27,7 @@ namespace SistemaERP.Cadastros.Usuario
             List<UsuarioViewModel> listaDataSource = new();
             if (ckeOcultaExcluidos.Checked)
             {
-                listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
+                listaDataSource = _service.GetList()
                 .Where(x => !x.Excluido)
                 .Select(x => new UsuarioViewModel
                 { id = x.Id, nome = x.Nome, cargo = x.Cargo, dataCadastro = x.DataCadastro, dataAtualizacao = x.DataAtualizacao, excluido = x.Excluido })
@@ -31,12 +35,11 @@ namespace SistemaERP.Cadastros.Usuario
             }
             else
             {
-                listaDataSource = new ModuloCadastro.Service.UsuarioService(_db_context).GetList()
+                listaDataSource = _service.GetList()
                 .Select(x => new UsuarioViewModel
-                { id = x.Id, nome = x.Nome, cargo = x.Cargo, dataCadastro = x.DataCadastro, dataAtualizacao = x.DataAtualizacao,excluido = x.Excluido })
+                { id = x.Id, nome = x.Nome, cargo = x.Cargo, dataCadastro = x.DataCadastro, dataAtualizacao = x.DataAtualizacao, excluido = x.Excluido })
                 .ToList();
             }
-
 
             dgvUsuarios.CriarColunasDataGridView(listaDataSource, new()
             {
@@ -48,7 +51,7 @@ namespace SistemaERP.Cadastros.Usuario
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            new formDetalhesUsuario().ShowDialog();
+            _formFactory.Criar<formDetalhesUsuario>().ShowDialog();
             CarregaUsuarios();
         }
 
@@ -56,7 +59,7 @@ namespace SistemaERP.Cadastros.Usuario
         {
             if (dgvUsuarios.CurrentRow != null)
             {
-                new formDetalhesUsuario(Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioViewModel.id)].Value)).ShowDialog();
+                _formFactory.Criar<formDetalhesUsuario>(Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioViewModel.id)].Value)).ShowDialog();
             }
             CarregaUsuarios();
         }
@@ -65,7 +68,7 @@ namespace SistemaERP.Cadastros.Usuario
         {
             if (MessageBox.Show("Deseja realmente excluir os usuários selecionados?", String.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                new ModuloCadastro.Service.UsuarioService(new ModuloCadastroContext()).UpdateParcial(new UsuarioEntity()
+                _service.UpdateParcial(new UsuarioEntity()
                 {
                     Id = Convert.ToInt32(dgvUsuarios.CurrentRow.Cells[nameof(UsuarioViewModel.id)].Value),
                     DataExclusao = DateTime.Now,

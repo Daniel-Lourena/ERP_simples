@@ -6,7 +6,7 @@ namespace ModuloCadastro.Service
 {
     public class PedidoVendaService : IService<PedidoVendaEntity>
     {
-        private ModuloCadastroContext _db_context;
+        private readonly ModuloCadastroContext _db_context;
 
         public PedidoVendaService(ModuloCadastroContext db_context)
         {
@@ -15,7 +15,7 @@ namespace ModuloCadastro.Service
 
         public PedidoVendaEntity Get(int id)
         {
-            return new ModuloCadastroContext().PedidosVendas
+            return _db_context.PedidosVendas
                 .AsNoTracking()
                 .Include(x => x.UsuarioCriacao)
                 .Include(x => x.UsuarioAtualizacao)
@@ -32,14 +32,13 @@ namespace ModuloCadastro.Service
         public int Insert(PedidoVendaEntity entity)
         {
             int insert = 0;
-            using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
+            using (var autoNumeradorContext = new Service.AutoNumeradorService(_db_context))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.IdPedidoVenda++;
                 entity.Id = numerador.IdPedidoVenda;
-                var _context = new ModuloCadastroContext();
-                _context.PedidosVendas.Add(entity);
-                _context.SaveChanges();
+                _db_context.PedidosVendas.Add(entity);
+				_db_context.SaveChanges();
                 ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdPedidoVenda) });
                 insert = entity.Id;
             }
@@ -47,9 +46,8 @@ namespace ModuloCadastro.Service
         }
         public void Update(PedidoVendaEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.PedidosVendas.Update(entity);
-            _context.SaveChanges();
+            _db_context.PedidosVendas.Update(entity);
+			_db_context.SaveChanges();
         }
 
         public void UpdateParcial(PedidoVendaEntity entity, List<string> listaPropriedadesAtualizar)

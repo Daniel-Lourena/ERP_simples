@@ -1,7 +1,8 @@
-﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.ComponentModel;
 using System.Data;
 
@@ -9,10 +10,14 @@ namespace SistemaERP.Cadastros.Cliente
 {
     public partial class formGerenciarClientes : Form
     {
-        ModuloCadastro.Context.ModuloCadastroContext _db_context;
-        public formGerenciarClientes(ModuloCadastroContext db_context)
+        private readonly IFormFactory _formFactory;
+        private readonly ClienteService _service;
+
+        public formGerenciarClientes(IFormFactory formFactory, ClienteService service)
         {
-            _db_context = db_context;
+            _formFactory = formFactory;
+            _service = service;
+
             InitializeComponent();
             CarregaClientes();
             this.ConfiguraTabIndex();
@@ -23,18 +28,16 @@ namespace SistemaERP.Cadastros.Cliente
             List<ClienteViewModel> listaDataSource = new();
             if (ckeOcultaExcluidos.Checked)
             {
-                listaDataSource = new ModuloCadastro.Service.ClienteService(_db_context)
-                .GetList()
+                listaDataSource = _service.GetList()
                 .Where(x => !x.Excluido)
                 .Select(x => new ClienteViewModel
                 { id = x.Id, fantasia = x.Fantasia, DadosCidade = x.Cidade, excluido = x.Excluido }).ToList();
             }
             else
             {
-                listaDataSource = new ModuloCadastro.Service.ClienteService(_db_context)
-                .GetList()
+                listaDataSource = _service.GetList()
                 .Select(x => new ClienteViewModel
-                { id = x.Id, fantasia = x.Fantasia, DadosCidade = x.Cidade,excluido = x.Excluido }).ToList();
+                { id = x.Id, fantasia = x.Fantasia, DadosCidade = x.Cidade, excluido = x.Excluido }).ToList();
             }
 
             dgvClientes.CriarColunasDataGridView(listaDataSource, new()
@@ -47,8 +50,7 @@ namespace SistemaERP.Cadastros.Cliente
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            new formDetalhesCliente().ShowDialog();
-
+            _formFactory.Criar<formDetalhesCliente>().ShowDialog();
             CarregaClientes();
         }
 
@@ -56,8 +58,7 @@ namespace SistemaERP.Cadastros.Cliente
         {
             if (dgvClientes.CurrentRow != null)
             {
-                new formDetalhesCliente(Convert.ToInt32(dgvClientes.CurrentRow.Cells[nameof(ClienteViewModel.id)].Value)).ShowDialog();
-
+                _formFactory.Criar<formDetalhesCliente>(Convert.ToInt32(dgvClientes.CurrentRow.Cells[nameof(ClienteViewModel.id)].Value)).ShowDialog();
                 CarregaClientes();
             }
         }
@@ -68,7 +69,7 @@ namespace SistemaERP.Cadastros.Cliente
             {
                 foreach (var cliente in (BindingList<ClienteViewModel>)dgvClientes.DataSource)
                 {
-                    new ModuloCadastro.Service.ClienteService(new ModuloCadastroContext()).UpdateParcial(new ClienteEntity
+                    _service.UpdateParcial(new ClienteEntity
                     {
                         Id = cliente.id,
                         DataExclusao = DateTime.Now,

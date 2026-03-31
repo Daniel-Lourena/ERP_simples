@@ -10,10 +10,14 @@ namespace SistemaERP.Generico
     {
         private ETipoPedido _tipoPedido;
         private int _idPedido = 0;
-        public formAdicionarProdutosPedido(ETipoPedido tipoPedido, int idPedido)
+        private readonly EstoqueService _serviceEstoque;
+        private readonly ProdutoVendaService _serviceProdutoVenda;
+        public formAdicionarProdutosPedido(EstoqueService serviceEstoque, ProdutoVendaService serviceProdutoVenda,ETipoPedido tipoPedido, int idPedido)
         {
             _tipoPedido = tipoPedido;
             _idPedido = idPedido;
+            _serviceEstoque = serviceEstoque;
+            _serviceProdutoVenda = serviceProdutoVenda;
             InitializeComponent();
             CarregarProdutos();
             this.ConfiguraTabIndex();
@@ -21,7 +25,7 @@ namespace SistemaERP.Generico
 
         private void CarregarProdutos()
         {
-            var listaEstoque = new EstoqueService().GetListEstoqueDisponivel();
+            var listaEstoque = _serviceEstoque.GetListEstoqueDisponivel();
             dgvProdutos.CriarColunasDataGridView<EstoqueViewModel>
                 (
                     listaEstoque,
@@ -50,7 +54,7 @@ namespace SistemaERP.Generico
             switch (_tipoPedido)
             {
                 case ETipoPedido.VENDA:
-                    new ProdutoVendaService().Insert
+                    _serviceProdutoVenda.Insert
                         (
                             new ProdutoVendaEntity()
                             {

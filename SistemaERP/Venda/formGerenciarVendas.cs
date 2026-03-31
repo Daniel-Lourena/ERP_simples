@@ -3,14 +3,22 @@ using ModuloCadastro.Entity;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.Data;
 
 namespace SistemaERP.Venda
 {
     public partial class formGerenciarVendas : Form
     {
-        public formGerenciarVendas()
+        private readonly IFormFactory _formFactory;
+        private readonly ClienteService _serviceCliente;
+        private readonly PedidoVendaService _servicePedidoVenda;
+        public formGerenciarVendas(IFormFactory formFactory, ClienteService serviceCliente, PedidoVendaService servicePedidoVenda)
         {
+            _formFactory = formFactory;
+            _serviceCliente = serviceCliente;
+            _servicePedidoVenda = servicePedidoVenda;
+
             InitializeComponent();
             CarregaVendas();
             this.ConfiguraTabIndex();
@@ -18,7 +26,7 @@ namespace SistemaERP.Venda
 
         private void CarregaVendas()
         {
-            var listaDataSource = new ModuloCadastro.Service.PedidoVendaService(new ModuloCadastroContext())
+            var listaDataSource = _servicePedidoVenda
                 .GetList()
                 .Where(x => !x.Excluido)
                 .Select(x => new PedidoVendaViewModel { id = x.Id, clienteFantasia = x.Cliente.Fantasia, dataCriacao = x.DataCriacao, nomeUsuarioCriador = x.UsuarioCriacao.Nome }).ToList();
@@ -32,13 +40,13 @@ namespace SistemaERP.Venda
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            if (new ClienteService(new ModuloCadastroContext()).GetList().Count() == 0)
+            if (_serviceCliente.GetList().Count() == 0)
             {
                 MessageBox.Show("Para seguir com a criação do pedido, cadastre um cliente", "Sistema ERP", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            new formDetalhesVenda().ShowDialog();
+            _formFactory.Criar<formDetalhesVenda>().ShowDialog();
             CarregaVendas();
         }
 
@@ -46,7 +54,7 @@ namespace SistemaERP.Venda
         {
             if (dgvVendas.CurrentRow != null)
             {
-                new formDetalhesVenda(Convert.ToInt32(dgvVendas.CurrentRow.Cells[nameof(PedidoVendaEntity.Id)].Value)).ShowDialog();
+                _formFactory.Criar<formDetalhesVenda>(Convert.ToInt32(dgvVendas.CurrentRow.Cells[nameof(PedidoVendaEntity.Id)].Value)).ShowDialog();
                 CarregaVendas();
             }
         }

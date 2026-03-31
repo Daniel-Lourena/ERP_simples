@@ -1,5 +1,5 @@
-﻿using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
 using System.Data;
@@ -8,8 +8,11 @@ namespace SistemaERP.Cadastros.Produto.SetorEstoque
 {
     public partial class formGerenciarSetorEstoqueProduto : Form
     {
-        public formGerenciarSetorEstoqueProduto()
+        private readonly SetorEstoqueService _service;
+
+        public formGerenciarSetorEstoqueProduto(SetorEstoqueService service)
         {
+            _service = service;
             InitializeComponent();
             CarregaSetores();
             this.ConfiguraTabIndex();
@@ -17,7 +20,7 @@ namespace SistemaERP.Cadastros.Produto.SetorEstoque
 
         private void CarregaSetores()
         {
-            List<SetorEstoqueEntity> _listaDataSource = new ModuloCadastro.Service.SetorEstoqueService().GetList()
+            List<SetorEstoqueEntity> _listaDataSource = _service.GetList()
             .Select(x => new SetorEstoqueEntity
             {
                 Id = x.Id,
@@ -36,11 +39,11 @@ namespace SistemaERP.Cadastros.Produto.SetorEstoque
 
             if (row.Id == 0)
             {
-                new ModuloCadastro.Service.SetorEstoqueService().Insert(row);
+                _service.Insert(row);
             }
             else
             {
-                new ModuloCadastro.Service.SetorEstoqueService().Update(row);
+                _service.Update(row);
             }
             CarregaSetores();
         }

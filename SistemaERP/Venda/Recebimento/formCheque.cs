@@ -3,6 +3,7 @@ using ModuloCadastro.Enum;
 using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,20 +18,23 @@ namespace SistemaERP.Venda.Recebimento
 {
     public partial class formCheque : Form
     {
+        private readonly BancoService _serviceBanco;
+        private readonly RecebimentosVendaService _serviceRecebimentosVenda;
         private int _idPedido;
         private RecebimentoVendaEntity _recebimento;
-        public formCheque()
+
+        public formCheque(BancoService serviceBanco, RecebimentosVendaService serviceRecebimentosVenda)
         {
             InitializeComponent();
             this.ConfiguraTabIndex();
             CarregaBancos();
         }
 
-        public formCheque(int idPedido) : this()
+        public formCheque(BancoService serviceBanco, RecebimentosVendaService serviceRecebimentosVenda, int idPedido) : this(serviceBanco, serviceRecebimentosVenda)
         {
             _idPedido = idPedido;
         }
-        public formCheque(RecebimentoVendaEntity recebimento) : this()
+        public formCheque(BancoService serviceBanco, RecebimentosVendaService serviceRecebimentosVenda, RecebimentoVendaEntity recebimento) : this(serviceBanco, serviceRecebimentosVenda)
         {
             _recebimento = recebimento;
         }
@@ -59,8 +63,7 @@ namespace SistemaERP.Venda.Recebimento
         private void CarregaBancos()
         {
             cbBanco.PreencherComboBoxList(
-                new BancoService(new ModuloCadastro.Context.ModuloCadastroContext())
-                .GetList().Where(x => x.Inativo == false)
+                _serviceBanco.GetList().Where(x => x.Inativo == false)
                 .Select(x => new BancoEntity { Id = x.Id, Nome = x.Nome }).ToList(),
                 nameof(BancoEntity.Id), nameof(BancoEntity.Nome), true);
         }
@@ -75,7 +78,7 @@ namespace SistemaERP.Venda.Recebimento
 
             if (_recebimento.Id == 0)
             {
-                new RecebimentosVendaService().Insert(new RecebimentoVendaEntity()
+                _serviceRecebimentosVenda.Insert(new RecebimentoVendaEntity()
                 {
                     Especie = EFormaPagamento.CHEQUE,
                     NroParcela = 1,
@@ -96,7 +99,7 @@ namespace SistemaERP.Venda.Recebimento
             }
             else
             {
-                new RecebimentosVendaService().Update(new RecebimentoVendaEntity()
+                _serviceRecebimentosVenda.Update(new RecebimentoVendaEntity()
                 {
                     Especie = EFormaPagamento.CHEQUE,
                     NroParcela = 1,

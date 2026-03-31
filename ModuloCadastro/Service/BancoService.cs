@@ -6,12 +6,12 @@ namespace ModuloCadastro.Service
 {
     public class BancoService : IService<BancoEntity>
     {
-        private ModuloCadastroContext _db_context;
+        private readonly ModuloCadastroContext _db_context;
 
         public BancoService(ModuloCadastroContext db_context) => _db_context = db_context;
         public BancoEntity Get(int id)
         {
-            return new ModuloCadastroContext().Bancos.FirstOrDefault(x => x.Id.Equals(id))!;
+            return _db_context.Bancos.FirstOrDefault(x => x.Id.Equals(id))!;
         }
         public IQueryable<BancoEntity> GetList()
         {
@@ -21,14 +21,13 @@ namespace ModuloCadastro.Service
         public int Insert(BancoEntity entity)
         {
             int insert = 0;
-            using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
+            using (var autoNumeradorContext = new Service.AutoNumeradorService(_db_context))
             {
                 AutoNumeradorEntity numerador = autoNumeradorContext.Get();
                 numerador.IdBanco++;
                 entity.Id = numerador.IdBanco;
-                var _context = new ModuloCadastroContext();
-                _context.Bancos.Add(entity);
-                _context.SaveChanges();
+                _db_context.Bancos.Add(entity);
+                _db_context.SaveChanges();
                 ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdBanco) });
                 insert = entity.Id;
             }
@@ -36,9 +35,8 @@ namespace ModuloCadastro.Service
         }
         public void Update(BancoEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.Bancos.Update(entity);
-            _context.SaveChanges();
+            _db_context.Bancos.Update(entity);
+            _db_context.SaveChanges();
         }
 
         public void UpdateParcial(BancoEntity entity, List<string> listaPropriedadesAtualizar)

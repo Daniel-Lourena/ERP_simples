@@ -1,18 +1,24 @@
-﻿using ModuloCadastro.Context;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Service;
 using ModuloCadastro.ViewModel;
 using SistemaERP.Extensions;
+using SistemaERP.Factory;
 using System.Data;
 
 namespace SistemaERP.Cadastros.Produto
 {
     public partial class formGerenciarProdutos : Form
     {
-        private ModuloCadastro.Context.ModuloCadastroContext _db_context;
+        private readonly IFormFactory _formFactory;
+        private readonly ProdutoService _service;
 
-        public formGerenciarProdutos(ModuloCadastroContext db_context)
+        public formGerenciarProdutos(IFormFactory formFactory, ProdutoService service)
         {
-            _db_context = db_context;
+            _formFactory = formFactory;
+            _service = service;
+
             InitializeComponent();
             CarregaProdutos();
             this.ConfiguraTabIndex();
@@ -23,14 +29,14 @@ namespace SistemaERP.Cadastros.Produto
             List<ProdutoViewModel> listaDataSource = new();
             if (ckeOcultaInativos.Checked)
             {
-                listaDataSource = new ModuloCadastro.Service.ProdutoService(_db_context).GetList()
+                listaDataSource = _service.GetList()
                 .Where(x => !x.Inativo)
                 .Select(x => new ProdutoViewModel
                 { id = x.Id, descricao = x.Descricao, DadosCategoria = x.Categoria, idUnidade = x.UnidadeId, inativo = x.Inativo }).ToList();
             }
             else
             {
-                listaDataSource = new ModuloCadastro.Service.ProdutoService(_db_context).GetList()
+                listaDataSource = _service.GetList()
                .Select(x => new ProdutoViewModel
                { id = x.Id, descricao = x.Descricao, DadosCategoria = x.Categoria, idUnidade = x.UnidadeId, inativo = x.Inativo }).ToList();
             }
@@ -45,7 +51,7 @@ namespace SistemaERP.Cadastros.Produto
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            new formDetalhesProduto().ShowDialog();
+            _formFactory.Criar<formDetalhesProduto>().ShowDialog();
             CarregaProdutos();
         }
 
@@ -53,7 +59,7 @@ namespace SistemaERP.Cadastros.Produto
         {
             if (dgvProdutos.CurrentRow != null)
             {
-                new formDetalhesProduto(Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(ProdutoViewModel.id)].Value)).ShowDialog();
+                _formFactory.Criar<formDetalhesProduto>(Convert.ToInt32(dgvProdutos.CurrentRow.Cells[nameof(ProdutoViewModel.id)].Value)).ShowDialog();
                 CarregaProdutos();
             }
         }

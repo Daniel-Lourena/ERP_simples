@@ -25,19 +25,21 @@ dotnet run --project SistemaERP/SistemaERP.csproj
 
 # Aplicar migrações pendentes do EF Core
 dotnet ef database update --project ModuloCadastro
-```
 
-Nenhuma ferramenta de teste ou lint está configurada.
+# Rodar testes
+dotnet test ModuloCadastro.Tests/ModuloCadastro.Tests.csproj
+```
 
 ## Arquitetura
 
-A solução tem três projetos:
+A solução tem quatro projetos:
 
 | Project | Role |
 |---|---|
 | `SistemaERP` | WinForms UI — MDI host (`TelaInicial`) with child forms per feature |
 | `ModuloCadastro` | Business logic: Entities, Services, ViewModels, EF Core DbContext, Migrations |
 | `Configuracoes` (ModuloConfiguracoes) | Shared: connection string, enum/extension utilities |
+| `ModuloCadastro.Tests` | Testes automatizados do ModuloCadastro (xUnit, EF Core InMemory) |
 
 **Data flow:** WinForms form → Service → EF Core DbContext → MySQL
 
@@ -112,6 +114,46 @@ Para formulários com múltiplos services, nomear os campos de forma descritiva:
 - **Processamento de cartão** — adquirentes (`tb_config_adquirente`), maquininhas (`tb_maquininhas`), e bandeiras de cartão (`tb_adquirente_bandeira`) são configuradas separadamente; adquirentes suportados: REDE, STONE, PAGSEGURO, SUMUP, GETNET, CIELO
 - **Inventário** — multisetor estoque (`tb_estoque` composto PK: `ProdutoId` + `SetorEstoqueId`)
 - **Endereço** — três-niveis de hierarquia: Estado → Cidade → Cliente
+
+## Testes
+
+O projeto `ModuloCadastro.Tests` testa a camada de Service usando EF Core InMemory. Consulte `ModuloCadastro.Tests/PADRAO_TESTES.md` para o padrão completo.
+
+### Padrão de setup do contexto InMemory
+
+Cada classe de teste cria seu próprio contexto isolado com `EnsureDeleted()` + `EnsureCreated()` e popula um seed mínimo:
+
+```csharp
+private (ModuloCadastroContext context, int idClienteInicial) CriarContexto()
+{
+    int idInicial = GerarIdAleatorio(); // Random.Next(0, 101)
+    var options = new DbContextOptionsBuilder<ModuloCadastroContext>()
+        .UseInMemoryDatabase("NomeDaClasseTests")
+        .Options;
+    var context = new ModuloCadastroContext(options);
+    context.Database.EnsureDeleted();
+    context.Database.EnsureCreated();
+    // seed mínimo necessário para os testes...
+    return (context, idInicial);
+}
+```
+
+### Acesso aos DbSets nos testes
+
+Os DbSets de `ModuloCadastroContext` são `internal`. Nos testes, usar sempre `context.Set<TEntity>()` em vez da propriedade direta:
+
+```csharp
+// correto nos testes
+context.Set<ClienteEntity>().Add(cliente);
+context.Set<ClienteEntity>().Find(id);
+
+// incorreto — inacessível fora do assembly
+context.Clientes.Add(cliente);
+```
+
+### Limitação: ServiceMethods.UpdateParcial
+
+`ServiceMethods.UpdateParcial` é estático e cria `new ModuloCadastroContext()` sem injeção de provider. Métodos de service que o chamam internamente (ex: `ClienteService.Insert`, `ClienteService.UpdateParcial`) **não são testáveis com InMemory** sem refatoração. Documentar no arquivo de teste e não criar testes para esses casos.
 
 ## Diretrizes de Desenvolvimento
 

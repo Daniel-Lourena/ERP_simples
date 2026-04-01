@@ -1,10 +1,10 @@
 # PADRAO_TESTES.md
 
-Este documento define uma estrutura padrao para organizacao de testes automatizados em projetos .NET, com foco em clareza, escalabilidade e manutenibilidade.
+Este documento define a estrutura e as convencoes para testes automatizados neste projeto (.NET 8, xUnit, EF Core InMemory).
 
 ---
 
-##OBJETIVO
+## OBJETIVO
 
 * Garantir consistencia entre projetos de testes
 * Facilitar manutencao e leitura
@@ -13,175 +13,256 @@ Este documento define uma estrutura padrao para organizacao de testes automatiza
 
 ---
 
-##ESTRUTURA DE PASTAS
+## ESTRUTURA DE PASTAS
 
-├── MeuProjeto.Tests
-│   ├── Services
-│   │   ├── ClienteServiceTests.cs
-│   │   │   
-│   │
-│   ├── Entity
-│   │   ├── ClienteTests.cs
-│   │   │   
-│   │
-│   ├── Geral
-│   │   ├── Fixtures
-│   │   ├── Builders
-│   │   └── Mocks
-│   │
-│   └── MeuProjeto.Tests.csproj
+```
+ModuloCadastro.Tests/
+├── Services/
+│   └── ClienteServiceTests.cs
+├── Entity/
+│   └── ClienteTests.cs
+├── Geral/
+│   ├── Fixtures/
+│   ├── Builders/
+│   │   └── ClienteBuilder.cs
+│   └── Mocks/
+└── ModuloCadastro.Tests.csproj
+```
 
 ---
 
-# REGRAS GERAIS
+## REGRAS GERAIS
 
-## Um projeto de teste por projeto principal
+### Um projeto de teste por projeto principal
 
-Para cada projeto principal, deve existir um correspondente de testes:
+```
+ModuloCadastro  ->  ModuloCadastro.Tests
+```
 
-Projeto Principal       -> Projeto de Teste
-MeuProjeto.Application  -> MeuProjeto.Tests
-
----
-
-## Espelhar a estrutura (quando fizer sentido)
+### Espelhar a estrutura (quando fizer sentido)
 
 A estrutura de pastas dentro do projeto de testes deve refletir a estrutura do projeto original.
-
 Nao e obrigatorio copiar tudo. Apenas o que precisa ser testado.
 
----
+### Nomeacao dos arquivos
 
-## Nomeacao dos arquivos
+Sempre terminar com "Tests":
 
-Sempre terminar com "Tests"
-
-Exemplos:
+```
 ClienteServiceTests.cs
-PedidoRepositoryTests.cs
+PedidoServiceTests.cs
+```
+
+### Nomeacao dos metodos
+
+Padrao: `Metodo_Condicao_ResultadoEsperado()`
+
+```
+Get_QuandoClienteExiste_DeveRetornarClienteComCidadeEEstado()
+GetList_QuandoBancoVazio_DeveRetornarListaVazia()
+Update_QuandoClienteExiste_DeveAtualizarDadosNoBanco()
+```
 
 ---
 
-## Nomeacao dos metodos
+## DEPENDENCIAS
 
-Padrao recomendado:
+```xml
+<PackageReference Include="xunit" Version="2.5.3" />
+<PackageReference Include="FluentAssertions" Version="6.12.0" />
+<PackageReference Include="Moq" Version="4.20.70" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
+```
 
-Metodo_Condicao_ResultadoEsperado()
+Sempre adicionar referencia ao projeto sendo testado:
 
-Exemplo:
-CriarCliente_QuandoDadosValidos_DeveSalvarComSucesso()
+```xml
+<ProjectReference Include="..\ModuloCadastro\ModuloCadastro.csproj" />
+```
 
 ---
 
-# ESTRUTURA DE UMA CLASSE DE TESTE
+## ESTRUTURA DE UMA CLASSE DE TESTE
 
+```csharp
 public class ClienteServiceTests
 {
-private readonly ClienteService _service;
+    private static int GerarIdAleatorio() => new Random().Next(0, 101);
 
+    private (ModuloCadastroContext context, int idInicial) CriarContexto()
+    {
+        int idInicial = GerarIdAleatorio();
+        var options = new DbContextOptionsBuilder<ModuloCadastroContext>()
+            .UseInMemoryDatabase("ClienteServiceTests")
+            .Options;
+        var context = new ModuloCadastroContext(options);
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+        // seed minimo necessario para os testes
+        context.Set<AutoNumeradorEntity>().Add(new AutoNumeradorEntity { IdCliente = idInicial });
+        context.SaveChanges();
+        return (context, idInicial);
+    }
+
+    [Fact]
+    public void Get_QuandoClienteExiste_DeveRetornarCliente()
+    {
+        // Arrange
+        var (context, _) = CriarContexto();
+        var cliente = new ClienteBuilder().ComRazaoSocial("Empresa ABC").Build();
+        cliente.Id = 1;
+        context.Set<ClienteEntity>().Add(cliente);
+        context.SaveChanges();
+        var service = new ClienteService(context);
+
+        // Act
+        var resultado = service.Get(1);
+
+        // Assert
+        resultado.Should().NotBeNull();
+        resultado.RazaoSocial.Should().Be("Empresa ABC");
+    }
+}
 ```
-public ClienteServiceTests()
+
+---
+
+## PADRAO DE CONTEXTO INMEMORY
+
+Usar `UseInMemoryDatabase` com nome fixo por classe + `EnsureDeleted()` no inicio do setup para garantir isolamento entre testes.
+
+```csharp
+var options = new DbContextOptionsBuilder<ModuloCadastroContext>()
+    .UseInMemoryDatabase("NomeDaClasseTests") // nome fixo por classe
+    .Options;
+var context = new ModuloCadastroContext(options);
+context.Database.EnsureDeleted(); // limpa estado anterior
+context.Database.EnsureCreated();
+```
+
+### Acesso aos DbSets
+
+Os DbSets de `ModuloCadastroContext` sao `internal`. Usar sempre `context.Set<TEntity>()`:
+
+```csharp
+// correto
+context.Set<ClienteEntity>().Add(cliente);
+context.Set<ClienteEntity>().Find(id);
+
+// nao funciona fora do assembly
+context.Clientes.Add(cliente);
+```
+
+### Seed minimo por contexto
+
+Incluir apenas o que os testes precisam. Exemplo para testes de cliente:
+
+```csharp
+context.Set<AutoNumeradorEntity>().Add(new AutoNumeradorEntity { IdCliente = idInicial });
+context.Set<EstadoEntity>().Add(new EstadoEntity { Cuf = 35, Uf = "SP", Nome = "Sao Paulo" });
+context.Set<CidadeEntity>().Add(new CidadeEntity { Id = 1, Cuf = 35, Cmunicipio = "3550308", Dmunicipio = "Sao Paulo" });
+```
+
+### GerarIdAleatorio
+
+Usar numero aleatorio entre 0 e 100 como valor inicial do IdCliente no AutoNumerador. Isso garante que os testes validem o comportamento de incremento com valores variados, nao apenas partindo de zero.
+
+```csharp
+private static int GerarIdAleatorio() => new Random().Next(0, 101);
+```
+
+---
+
+## BUILDERS
+
+Usar Builders para construir entidades com defaults sensiveis. Campos `varchar` nao anulaveis devem ter valor vazio como default para nao violar constraints do InMemory.
+
+```csharp
+public class ClienteBuilder
 {
-    // Setup (Arrange global)
-    _service = new ClienteService();
-}
+    private string _razaoSocial = "Cliente Teste";
+    private int _cidadeId = 1;
+    private int _estadoId = 35;
 
-[Fact]
-public void CriarCliente_QuandoDadosValidos_DeveSalvarComSucesso()
-{
-    // Arrange
-    var cliente = new Cliente { Nome = "Joao" };
+    public ClienteBuilder ComRazaoSocial(string valor) { _razaoSocial = valor; return this; }
+    public ClienteBuilder ComCidadeId(int id) { _cidadeId = id; return this; }
 
-    // Act
-    var resultado = _service.Criar(cliente);
-
-    // Assert
-    Assert.True(resultado);
+    public ClienteEntity Build() => new ClienteEntity
+    {
+        RazaoSocial = _razaoSocial,
+        CidadeId = _cidadeId,
+        EstadoId = _estadoId,
+        End_nomeRua = "",    // campos varchar nao anulaveis precisam de valor
+        End_bairro = "",
+        End_numero = "",
+        End_logradouro = "",
+        DataCadastro = DateTime.Now,
+        Excluido = false
+    };
 }
 ```
 
-}
+---
+
+## ORGANIZACAO POR TIPO DE TESTE
+
+**Testes Unitarios (InMemory)**
+* Foco em Services isolados
+* Banco InMemory como substituto do MySQL
+* Nao requerem conexao externa
+
+**Testes de Integracao** (nao implementados ainda)
+* Acessam banco de dados real
+* Validam fluxo completo incluindo MySQL
 
 ---
 
-# ORGANIZACAO POR TIPO DE TESTE
+## LIMITACOES CONHECIDAS
 
-Testes Unitarios
+### ServiceMethods.UpdateParcial
 
-* Foco em classes isoladas
-* Uso de mocks (ex: Moq)
+`ServiceMethods.UpdateParcial` e estatico e cria `new ModuloCadastroContext()` internamente sem receber injecao de provider. Qualquer metodo de service que o chame internamente nao e testavel com InMemory:
 
-Testes de Integracao
+- `ClienteService.Insert` — chama `ServiceMethods.UpdateParcial` no AutoNumerador
+- `ClienteService.UpdateParcial` — delega diretamente para `ServiceMethods.UpdateParcial`
 
-* Acessam banco de dados real ou em memoria
-* Validam fluxo completo
-
-Sugestao:
-
-/tests
-├── MeuProjeto.UnitTests
-├── MeuProjeto.IntegrationTests
+Nesses casos, documentar no arquivo de teste como comentario e nao criar testes para esses metodos ate que `ServiceMethods` seja refatorado para aceitar injecao de contexto.
 
 ---
 
-# BOAS PRATICAS
+## BOAS PRATICAS
 
-AAA (Arrange, Act, Assert)
+**AAA (Arrange, Act, Assert)** — separar claramente as tres secoes em todo teste
 
-Sempre separar claramente:
+**Evite logica dentro dos testes** — testes devem ser lineares e previsıveis
 
-// Arrange
-// Act
-// Assert
+**Limpe o ChangeTracker entre operacoes** — ao buscar dados apos uma escrita no mesmo contexto:
 
-Evite logica dentro dos testes
+```csharp
+context.ChangeTracker.Clear(); // evita que EF retorne entidade em cache
+```
 
-Use Builders para objetos complexos
-
-var cliente = new ClienteBuilder()
-.ComNome("Joao")
-.Build();
-
-Centralize mocks e fixtures
-
-Common/
-├── Mocks/
-├── Fixtures/
-└── Builders/
-
-Teste comportamento, nao implementacao
-
-Evite:
-
-* Testar metodos privados
-* Acoplar testes a implementacao interna
+**Teste comportamento, nao implementacao**
+* Nao testar metodos privados
+* Nao acoplar testes a detalhes internos
 
 ---
 
-# O QUE EVITAR
+## O QUE EVITAR
 
 * Testes dependentes entre si
-* Uso de dados reais sem controle
-* Testes muito grandes
-* Repeticao de codigo
+* Compartilhar instancia de contexto entre testes (usar `EnsureDeleted`)
+* Deixar campos `varchar` nao anulaveis sem valor (InMemory enforcea nullability)
+* Usar `with {}` em entidades — funciona apenas com `record`, nao com `class`
+* Acessar DbSets diretamente pelo nome da propriedade (sao `internal`)
 
 ---
 
-# DEPENDENCIAS COMUNS
+## EXECUTAR OS TESTES
 
-* xUnit
-* Moq
-* FluentAssertions
+```bash
+dotnet test ModuloCadastro.Tests/ModuloCadastro.Tests.csproj
 
----
-
-# CONCLUSAO
-
-Seguindo esse padrao voce garante:
-
-* Organizacao consistente
-* Testes faceis de manter
-* Melhor legibilidade
-* Facilidade para novos desenvolvedores
-
----
+# com output detalhado
+dotnet test ModuloCadastro.Tests/ --logger "console;verbosity=detailed"
+```

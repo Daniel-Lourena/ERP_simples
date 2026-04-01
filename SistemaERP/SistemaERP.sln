@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModuloCadastro", "..\Modulo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuloConfiguracoes", "..\Configuracoes\ModuloConfiguracoes.csproj", "{F9236529-F8BC-409F-AA81-4A8B24F71A58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuloCadastro.Tests", "..\ModuloCadastro.Tests\ModuloCadastro.Tests.csproj", "{2592C8C7-7B20-4035-B554-1C56E3DF8064}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F9236529-F8BC-409F-AA81-4A8B24F71A58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9236529-F8BC-409F-AA81-4A8B24F71A58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9236529-F8BC-409F-AA81-4A8B24F71A58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2592C8C7-7B20-4035-B554-1C56E3DF8064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2592C8C7-7B20-4035-B554-1C56E3DF8064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2592C8C7-7B20-4035-B554-1C56E3DF8064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2592C8C7-7B20-4035-B554-1C56E3DF8064}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

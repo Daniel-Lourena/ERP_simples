@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 using ModuloCadastro.Service;
+using ModuloCadastro.Tests.Factory;
 using ModuloCadastro.Tests.Geral.Builders;
 
 namespace ModuloCadastro.Tests.Services
@@ -12,7 +13,7 @@ namespace ModuloCadastro.Tests.Services
         // Retorna um número aleatório entre 0 e 100 para usar como IdCliente inicial
         private static int GerarIdAleatorio() => new Random().Next(0, 101);
 
-        private (ModuloCadastroContext context, int idClienteInicial) CriarContexto()
+        private (DbContextOptions<ModuloCadastroContext> options, ModuloCadastroContext context, int idClienteInicial) CriarContexto()
         {
             int idInicial = GerarIdAleatorio();
 
@@ -29,7 +30,7 @@ namespace ModuloCadastro.Tests.Services
             context.Set<CidadeEntity>().Add(new CidadeEntity { Id = 1, Cuf = 35, Cmunicipio = "3550308", Dmunicipio = "São Paulo" });
             context.SaveChanges();
 
-            return (context, idInicial);
+            return (options, context,idInicial);
         }
 
         // ===== Get =====
@@ -38,13 +39,15 @@ namespace ModuloCadastro.Tests.Services
         public void Get_QuandoClienteExiste_DeveRetornarClienteComCidadeEEstado()
         {
             // Arrange
-            var (context, _) = CriarContexto();
+            var (options, context,_) = CriarContexto();
             var cliente = new ClienteBuilder().ComRazaoSocial("Empresa ABC").Build();
             cliente.Id = 1;
+
             context.Set<ClienteEntity>().Add(cliente);
             context.SaveChanges();
 
-            var service = new ClienteService(context);
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             var resultado = service.Get(1);
@@ -60,8 +63,10 @@ namespace ModuloCadastro.Tests.Services
         public void Get_QuandoClienteNaoExiste_DeveRetornarNull()
         {
             // Arrange
-            var (context, _) = CriarContexto();
-            var service = new ClienteService(context);
+            var (options, context, _) = CriarContexto();
+
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             var resultado = service.Get(999);
@@ -76,7 +81,7 @@ namespace ModuloCadastro.Tests.Services
         public void GetList_QuandoExistemClientes_DeveRetornarTodosComRelacionamentos()
         {
             // Arrange
-            var (context, _) = CriarContexto();
+            var (options, context, _) = CriarContexto();
 
             var cliente1 = new ClienteBuilder().ComRazaoSocial("Cliente 1").Build();
             cliente1.Id = 1;
@@ -85,7 +90,8 @@ namespace ModuloCadastro.Tests.Services
             context.Set<ClienteEntity>().AddRange(cliente1, cliente2);
             context.SaveChanges();
 
-            var service = new ClienteService(context);
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             var resultado = service.GetList().ToList();
@@ -99,8 +105,10 @@ namespace ModuloCadastro.Tests.Services
         public void GetList_QuandoBancoVazio_DeveRetornarListaVazia()
         {
             // Arrange
-            var (context, _) = CriarContexto();
-            var service = new ClienteService(context);
+            var (options, context, _) = CriarContexto();
+
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             var resultado = service.GetList().ToList();
@@ -115,7 +123,7 @@ namespace ModuloCadastro.Tests.Services
         public void Update_QuandoClienteExiste_DeveAtualizarDadosNoBanco()
         {
             // Arrange
-            var (context, _) = CriarContexto();
+            var (options, context, _) = CriarContexto();
             var cliente = new ClienteBuilder().ComRazaoSocial("Nome Original").Build();
             cliente.Id = 1;
             context.Set<ClienteEntity>().Add(cliente);
@@ -124,7 +132,10 @@ namespace ModuloCadastro.Tests.Services
 
             var clienteAtualizado = new ClienteBuilder().ComRazaoSocial("Nome Atualizado").Build();
             clienteAtualizado.Id = 1;
-            var service = new ClienteService(context);
+
+
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             service.Update(clienteAtualizado);
@@ -140,9 +151,11 @@ namespace ModuloCadastro.Tests.Services
         public void Insert_QuandoDadosValidos_DevePersistirClienteERetornarId()
         {
             // Arrange
-            var (context, idInicial) = CriarContexto();
+            var (options,context, idInicial) = CriarContexto();
             var cliente = new ClienteBuilder().ComRazaoSocial("Cliente Novo").Build();
-            var service = new ClienteService(context);
+
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             var idRetornado = service.Insert(cliente);
@@ -159,9 +172,11 @@ namespace ModuloCadastro.Tests.Services
         public void Insert_QuandoInserido_DeveIncrementarIdNoAutoNumerador()
         {
             // Arrange
-            var (context, idInicial) = CriarContexto();
+            var (options, context, idInicial) = CriarContexto();
             var cliente = new ClienteBuilder().Build();
-            var service = new ClienteService(context);
+
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             service.Insert(cliente);
@@ -176,10 +191,12 @@ namespace ModuloCadastro.Tests.Services
         public void Insert_QuandoInseridoDoisClientes_DeveAtribuirIdsSequenciais()
         {
             // Arrange
-            var (context, idInicial) = CriarContexto();
+            var (options, context, idInicial) = CriarContexto();
             var cliente1 = new ClienteBuilder().ComRazaoSocial("Cliente 1").Build();
             var cliente2 = new ClienteBuilder().ComRazaoSocial("Cliente 2").Build();
-            var service = new ClienteService(context);
+
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             var id1 = service.Insert(cliente1);
@@ -196,7 +213,7 @@ namespace ModuloCadastro.Tests.Services
         public void UpdateParcial_QuandoPropriedadeEspecificada_DeveAtualizarApenasEssaPropriedade()
         {
             // Arrange
-            var (context, _) = CriarContexto();
+            var (options, context, _) = CriarContexto();
             var cliente = new ClienteBuilder()
                 .ComRazaoSocial("Razao Original")
                 .ComFantasia("Fantasia Original")
@@ -211,7 +228,9 @@ namespace ModuloCadastro.Tests.Services
                 .ComFantasia("Fantasia Nao Deve Mudar")
                 .Build();
             clienteParaAtualizar.Id = 1;
-            var service = new ClienteService(context);
+
+            var factory = new DbContextFactoryFake(options);
+            var service = new ClienteService(factory);
 
             // Act
             service.UpdateParcial(clienteParaAtualizar, new List<string> { nameof(ClienteEntity.RazaoSocial) });

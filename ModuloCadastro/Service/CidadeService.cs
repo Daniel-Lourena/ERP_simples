@@ -6,20 +6,23 @@ namespace ModuloCadastro.Service
 {
     public class CidadeService
     {
-        private readonly ModuloCadastroContext _db_context;
-        public CidadeService(ModuloCadastroContext db_context) => _db_context = db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory;
+        public CidadeService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
 
         public CidadeEntity Get(int id)
         {
-            return _db_context.Cidades.AsNoTracking().FirstOrDefault(x => x.Id.Equals(id))!;
+            var _db_context = _factory.CreateDbContext();
+            return _db_context.Cidades.AsNoTracking().FirstOrDefault(x => x.Id == id)!;
         }
         public List<CidadeEntity> GetList()
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.Cidades.AsNoTracking().ToList();
         }
         public List<CidadeEntity> GetListByEstado(int cuf)
         {
-            return _db_context.Cidades.AsNoTracking().ToList().Where(x => x.Cuf.Equals(cuf)).ToList();
+            var _db_context = _factory.CreateDbContext();
+            return _db_context.Cidades.AsNoTracking().Where(x => x.Cuf == cuf).ToList();
         }
     }
 }

@@ -82,5 +82,13 @@ namespace SistemaERP
         {
             AbrirForm<Cadastros.Adquirente.formGerenciarAdquirentes>();
         }
+
+        private void TelaInicial_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Deseja sair do sistema?", "Sistema ERP", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

@@ -6,18 +6,22 @@ namespace ModuloCadastro.Service
 {
     public class EstadoService
     {
-        private readonly ModuloCadastroContext _db_context;
-        public EstadoService(ModuloCadastroContext db_context) => _db_context = db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory;
+        public EstadoService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
+
         public EstadoEntity Get(int cuf)
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.Estados.AsNoTracking().FirstOrDefault(x => x.Cuf.Equals(cuf))!;
         }
         public EstadoEntity Get(string uf)
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.Estados.AsNoTracking().FirstOrDefault(x => x.Uf.Equals(uf))!;
         }
         public List<EstadoEntity> GetList()
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.Estados.AsNoTracking().ToList();
         }
     }

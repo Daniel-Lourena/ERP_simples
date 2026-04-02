@@ -6,11 +6,12 @@ namespace ModuloCadastro.Service
 {
     public class CategoriaService
     {
-        private readonly ModuloCadastroContext _db_context;
-        public CategoriaService(ModuloCadastroContext db_context) => _db_context = db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory;
+        public CategoriaService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
 
         public List<CategoriaEntity> GetList()
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.Categorias
                 .AsNoTracking()
                 .ToList();
@@ -18,20 +19,16 @@ namespace ModuloCadastro.Service
 
         public void Insert(CategoriaEntity entity)
         {
-            using (var _context = _db_context)
-            {
-                _context.Categorias.Add(entity);
-                _context.SaveChanges();
-            }
+            var _db_context = _factory.CreateDbContext();
+            _db_context.Categorias.Add(entity);
+            _db_context.SaveChanges();
         }
 
         public void Update(CategoriaEntity entity)
         {
-            using (var _context = _db_context)
-            {
-                _context.Categorias.Update(entity);
-                _context.SaveChanges();
-            }
+            var _db_context = _factory.CreateDbContext();
+            _db_context.Categorias.Update(entity);
+            _db_context.SaveChanges();
         }
     }
 }

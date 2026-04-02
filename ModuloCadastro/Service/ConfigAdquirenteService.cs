@@ -11,26 +11,31 @@ namespace ModuloCadastro.Service
 {
     public class ConfigAdquirenteService
     {
-        private readonly ModuloCadastroContext _db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory;
+        public ConfigAdquirenteService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
 
         public ConfigAdquirenteEntity Get(int id)
         {
-            return new ModuloCadastroContext().ConfigAdquirentes.AsNoTracking()
-                .FirstOrDefault(x => x.Id.Equals(id))!;
+            var _db_context = _factory.CreateDbContext();
+            return _db_context.ConfigAdquirentes.AsNoTracking()
+                .FirstOrDefault(x => x.Id == id)!;
         }
         public IQueryable<ConfigAdquirenteEntity> GetList()
         {
-            return new ModuloCadastroContext().ConfigAdquirentes.AsNoTracking();
+            var _db_context = _factory.CreateDbContext();
+            return _db_context.ConfigAdquirentes.AsNoTracking();
         }
 
         public int Insert(ConfigAdquirenteEntity entity)
         {
+            var _db_context = _factory.CreateDbContext();
+
             int insert = 0;
-            var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext());
+            var autoNumeradorContext = new Service.AutoNumeradorService(_factory);
             AutoNumeradorEntity numerador = autoNumeradorContext.Get();
             numerador.IdAdquirente++;
             entity.Id = numerador.IdAdquirente;
-            var _context = new ModuloCadastroContext();
+            var _context = _db_context;
             _context.ConfigAdquirentes.Add(entity);
             _context.SaveChanges();
             new ServiceMethods(_context).UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdAdquirente) });
@@ -39,13 +44,15 @@ namespace ModuloCadastro.Service
         }
         public void Update(ConfigAdquirenteEntity entity)
         {
-            var _context = new ModuloCadastroContext();
-            _context.ConfigAdquirentes.Update(entity);
-            _context.SaveChanges();
+            var _db_context = _factory.CreateDbContext();
+
+            _db_context.ConfigAdquirentes.Update(entity);
+            _db_context.SaveChanges();
         }
 
         public void UpdateParcial(ConfigAdquirenteEntity entity, List<string> listaPropriedadesAtualizar)
         {
+            var _db_context = _factory.CreateDbContext();
             new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }

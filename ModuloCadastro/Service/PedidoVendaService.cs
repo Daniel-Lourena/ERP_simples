@@ -6,24 +6,23 @@ namespace ModuloCadastro.Service
 {
     public class PedidoVendaService : IService<PedidoVendaEntity>
     {
-        private readonly ModuloCadastroContext _db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory;
+        public PedidoVendaService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
 
-        public PedidoVendaService(ModuloCadastroContext db_context)
-        {
-            _db_context = db_context;
-        }
 
         public PedidoVendaEntity Get(int id)
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.PedidosVendas
                 .AsNoTracking()
                 .Include(x => x.UsuarioCriacao)
                 .Include(x => x.UsuarioAtualizacao)
                 .Include(x => x.Cliente).ThenInclude(x => x.Cidade).ThenInclude(x => x.DadosEstado)
-                .FirstOrDefault(x => x.Id.Equals(id))!;
+                .FirstOrDefault(x => x.Id == id)!;
         }
         public IQueryable<PedidoVendaEntity> GetList()
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.PedidosVendas.AsNoTracking()
                 .Include(x => x.Cliente)
                 .Include(x => x.UsuarioCriacao);
@@ -31,8 +30,10 @@ namespace ModuloCadastro.Service
 
         public int Insert(PedidoVendaEntity entity)
         {
+            var _db_context = _factory.CreateDbContext();
+
             int insert = 0;
-            var autoNumeradorContext = new Service.AutoNumeradorService(_db_context);
+            var autoNumeradorContext = new Service.AutoNumeradorService(_factory);
             AutoNumeradorEntity numerador = autoNumeradorContext.Get();
             numerador.IdPedidoVenda++;
             entity.Id = numerador.IdPedidoVenda;
@@ -44,12 +45,14 @@ namespace ModuloCadastro.Service
         }
         public void Update(PedidoVendaEntity entity)
         {
+            var _db_context = _factory.CreateDbContext();
             _db_context.PedidosVendas.Update(entity);
             _db_context.SaveChanges();
         }
 
         public void UpdateParcial(PedidoVendaEntity entity, List<string> listaPropriedadesAtualizar)
         {
+            var _db_context = _factory.CreateDbContext();
             new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }

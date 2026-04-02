@@ -35,7 +35,7 @@ namespace SistemaERP
         private static void OnConfiguring()
         {
             ServiceCollection service = new ServiceCollection();
-            service.AddDbContext<ModuloCadastro.Context.ModuloCadastroContext>
+            service.AddDbContextFactory<ModuloCadastro.Context.ModuloCadastroContext>
                 (
                     optionsBuilder => optionsBuilder.UseMySql(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB + "AllowLoadLocalInfile=true;",
                     new MySqlServerVersion(new Version(5, 7)),  // Versão mínima suportada

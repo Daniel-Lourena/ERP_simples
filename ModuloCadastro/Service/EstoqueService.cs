@@ -10,11 +10,12 @@ namespace ModuloCadastro.Service
 {
     public class EstoqueService
     {
-        private readonly ModuloCadastroContext _db_context;
-        public EstoqueService(ModuloCadastroContext db_context) => this._db_context = db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory;
+        public EstoqueService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
 
         public List<EstoqueViewModel> GetListEstoqueBruto()
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.Estoques
                 .AsNoTracking()
                 .Include(x => x.SetorEstoque)
@@ -223,20 +224,20 @@ namespace ModuloCadastro.Service
 
         public void Insert(EstoqueEntity entity)
         {
+            var _db_context = _factory.CreateDbContext();
             _db_context.Estoques.Add(entity);
             _db_context.SaveChanges();
         }
         public void UpdateParcial(EstoqueEntity entity, List<string> listaPropriedadesAtualizar)
         {
+            var _db_context = _factory.CreateDbContext();
             new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
         public void Delete(EstoqueEntity entity)
         {
-            using (var _context = new ModuloCadastroContext())
-            {
-                _context.Estoques.Remove(new EstoqueEntity { ProdutoId = entity.ProdutoId, SetorEstoqueId = entity.SetorEstoqueId });
-                _context.SaveChanges();
-            }
+            var _db_context = _factory.CreateDbContext();
+            _db_context.Estoques.Remove(new EstoqueEntity { ProdutoId = entity.ProdutoId, SetorEstoqueId = entity.SetorEstoqueId });
+            _db_context.SaveChanges();
         }
     }
 }

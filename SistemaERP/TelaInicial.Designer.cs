@@ -209,12 +209,14 @@
             MainMenuStrip = menuStrip1;
             Name = "TelaInicial";
             Text = "Sistema ERP";
+            this.FormClosing += TelaInicial_FormClosing;
             WindowState = FormWindowState.Maximized;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
+
 
         #endregion
 

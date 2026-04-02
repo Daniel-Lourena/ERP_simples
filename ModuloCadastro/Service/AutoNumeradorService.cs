@@ -1,16 +1,19 @@
-﻿using ModuloCadastro.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
 
 namespace ModuloCadastro.Service
 {
     public class AutoNumeradorService 
     {
-        private readonly ModuloCadastroContext _db_context;
-        public AutoNumeradorService(ModuloCadastroContext db_context) => _db_context = db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory ;
+        public AutoNumeradorService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
 
         public AutoNumeradorEntity Get()
         {
-            return _db_context.AutoNumeradores.FirstOrDefault(x => x.Id.Equals(1));
+            var _context = _factory.CreateDbContext();
+            return _context.AutoNumeradores.AsNoTracking().FirstOrDefault(x => x.Id.Equals(1));
         }
     }
 }

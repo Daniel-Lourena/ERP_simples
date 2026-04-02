@@ -6,23 +6,26 @@ namespace ModuloCadastro.Service
 {
     public class ProdutoService : IService<ProdutoEntity>
     {
-        private readonly ModuloCadastroContext _db_context;
-
-        public ProdutoService(ModuloCadastroContext db_context) => _db_context = db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory;
+        public ProdutoService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
+        
         public ProdutoEntity Get(int id)
         {
-            return new ModuloCadastroContext().Produtos.FirstOrDefault(x => x.Id.Equals(id))!;
+            var _db_context = _factory.CreateDbContext();
+            return _db_context.Produtos.FirstOrDefault(x => x.Id == id)!;
         }
         public IQueryable<ProdutoEntity> GetList()
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.Produtos.AsNoTracking()
                 .Include(x => x.Categoria);
         }
 
         public int Insert(ProdutoEntity entity)
         {
+            var _db_context = _factory.CreateDbContext();
             int insert = 0;
-            var autoNumeradorContext = new Service.AutoNumeradorService(_db_context);
+            var autoNumeradorContext = new Service.AutoNumeradorService(_factory);
             AutoNumeradorEntity numerador = autoNumeradorContext.Get();
             numerador.IdProduto++;
             entity.Id = numerador.IdProduto;
@@ -34,12 +37,14 @@ namespace ModuloCadastro.Service
         }
         public void Update(ProdutoEntity entity)
         {
+            var _db_context = _factory.CreateDbContext();
             _db_context.Produtos.Update(entity);
             _db_context.SaveChanges();
         }
 
         public void UpdateParcial(ProdutoEntity entity, List<string> listaPropriedadesAtualizar)
         {
+            var _db_context = _factory.CreateDbContext();
             new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }

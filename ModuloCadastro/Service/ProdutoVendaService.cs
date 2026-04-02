@@ -7,10 +7,12 @@ namespace ModuloCadastro.Service
 {
     public class ProdutoVendaService
     {
-        private readonly ModuloCadastroContext _db_context;
-        public ProdutoVendaService(ModuloCadastroContext db_context) => this._db_context = db_context;
+        private readonly IDbContextFactory<ModuloCadastroContext> _factory;
+        public ProdutoVendaService(IDbContextFactory<ModuloCadastroContext> factory) => _factory = factory;
+        
         public List<ProdutoVendaViewModel> GetListProdutosPedido(int id)
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.ProdutosVendas
                 .AsNoTracking()
                 .Include(pp => pp.PedidoVenda)
@@ -30,6 +32,7 @@ namespace ModuloCadastro.Service
         }
         public List<ProdutoVendaEntity> GetListProdutosVendaAberto()
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.ProdutosVendas
                 .AsNoTracking()
                 .Include(pp => pp.PedidoVenda)
@@ -38,6 +41,7 @@ namespace ModuloCadastro.Service
         }
         public List<ProdutoVendaEntity> GetListProdutosVendaFechado()
         {
+            var _db_context = _factory.CreateDbContext();
             return _db_context.ProdutosVendas
                 .AsNoTracking()
                 .Include(pp => pp.PedidoVenda)
@@ -47,16 +51,19 @@ namespace ModuloCadastro.Service
 
         public void Insert(ProdutoVendaEntity entity)
         {
+            var _db_context = _factory.CreateDbContext();
             _db_context.ProdutosVendas.Add(entity);
             _db_context.SaveChanges();
         }
         public void UpdateParcial(ProdutoVendaEntity entity, List<string> listaPropriedadesAtualizar)
         {
+            var _db_context = _factory.CreateDbContext();
             new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
 
         public void Delete(int id)
         {
+            var _db_context = _factory.CreateDbContext();
             _db_context.ProdutosVendas.Remove(new ProdutoVendaEntity { Id = id });
             _db_context.SaveChanges();
         }

@@ -32,27 +32,25 @@ namespace ModuloCadastro.Service
         public int Insert(PedidoVendaEntity entity)
         {
             int insert = 0;
-            using (var autoNumeradorContext = new Service.AutoNumeradorService(_db_context))
-            {
-                AutoNumeradorEntity numerador = autoNumeradorContext.Get();
-                numerador.IdPedidoVenda++;
-                entity.Id = numerador.IdPedidoVenda;
-                _db_context.PedidosVendas.Add(entity);
-				_db_context.SaveChanges();
-                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdPedidoVenda) });
-                insert = entity.Id;
-            }
+            var autoNumeradorContext = new Service.AutoNumeradorService(_db_context);
+            AutoNumeradorEntity numerador = autoNumeradorContext.Get();
+            numerador.IdPedidoVenda++;
+            entity.Id = numerador.IdPedidoVenda;
+            _db_context.PedidosVendas.Add(entity);
+            _db_context.SaveChanges();
+            new ServiceMethods(_db_context).UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdPedidoVenda) });
+            insert = entity.Id;
             return insert;
         }
         public void Update(PedidoVendaEntity entity)
         {
             _db_context.PedidosVendas.Update(entity);
-			_db_context.SaveChanges();
+            _db_context.SaveChanges();
         }
 
         public void UpdateParcial(PedidoVendaEntity entity, List<string> listaPropriedadesAtualizar)
         {
-            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+            new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }
 }

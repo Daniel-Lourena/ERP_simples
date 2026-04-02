@@ -228,7 +228,7 @@ namespace ModuloCadastro.Service
         }
         public void UpdateParcial(EstoqueEntity entity, List<string> listaPropriedadesAtualizar)
         {
-            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+            new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
         public void Delete(EstoqueEntity entity)
         {

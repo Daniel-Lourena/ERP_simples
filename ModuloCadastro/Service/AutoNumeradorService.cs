@@ -3,15 +3,10 @@ using ModuloCadastro.Entity;
 
 namespace ModuloCadastro.Service
 {
-    public class AutoNumeradorService : IDisposable
+    public class AutoNumeradorService 
     {
         private readonly ModuloCadastroContext _db_context;
         public AutoNumeradorService(ModuloCadastroContext db_context) => _db_context = db_context;
-
-        public void Dispose()
-        {
-            _db_context.Dispose();
-        }
 
         public AutoNumeradorEntity Get()
         {

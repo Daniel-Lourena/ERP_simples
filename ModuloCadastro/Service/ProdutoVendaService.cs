@@ -52,7 +52,7 @@ namespace ModuloCadastro.Service
         }
         public void UpdateParcial(ProdutoVendaEntity entity, List<string> listaPropriedadesAtualizar)
         {
-            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+            new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
 
         public void Delete(int id)

@@ -22,16 +22,14 @@ namespace ModuloCadastro.Service
         public int Insert(ProdutoEntity entity)
         {
             int insert = 0;
-            using (var autoNumeradorContext = new Service.AutoNumeradorService(_db_context))
-            {
-                AutoNumeradorEntity numerador = autoNumeradorContext.Get();
-                numerador.IdProduto++;
-                entity.Id = numerador.IdProduto;
-                _db_context.Produtos.Add(entity);
-				_db_context.SaveChanges();
-                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdProduto) });
-                insert = entity.Id;
-            }
+            var autoNumeradorContext = new Service.AutoNumeradorService(_db_context);
+            AutoNumeradorEntity numerador = autoNumeradorContext.Get();
+            numerador.IdProduto++;
+            entity.Id = numerador.IdProduto;
+            _db_context.Produtos.Add(entity);
+            _db_context.SaveChanges();
+            new ServiceMethods(_db_context).UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdProduto) });
+            insert = entity.Id;
             return insert;
         }
         public void Update(ProdutoEntity entity)
@@ -42,7 +40,7 @@ namespace ModuloCadastro.Service
 
         public void UpdateParcial(ProdutoEntity entity, List<string> listaPropriedadesAtualizar)
         {
-            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+            new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }
 }

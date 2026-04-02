@@ -134,12 +134,93 @@ namespace ModuloCadastro.Tests.Services
             clienteSalvo!.RazaoSocial.Should().Be("Nome Atualizado");
         }
 
-        // ===== Insert / UpdateParcial =====
-        // Não testáveis sem refatoração:
-        // - Insert chama ServiceMethods.UpdateParcial(numerador, ...) internamente
-        // - UpdateParcial chama ServiceMethods.UpdateParcial(entity, ...)
-        // Ambos criam new ModuloCadastroContext() sem provider configurado,
-        // lançando InvalidOperationException em SaveChanges.
-        // Para testar esses métodos, ServiceMethods deve receber injeção de contexto.
+        // ===== Insert =====
+
+        [Fact]
+        public void Insert_QuandoDadosValidos_DevePersistirClienteERetornarId()
+        {
+            // Arrange
+            var (context, idInicial) = CriarContexto();
+            var cliente = new ClienteBuilder().ComRazaoSocial("Cliente Novo").Build();
+            var service = new ClienteService(context);
+
+            // Act
+            var idRetornado = service.Insert(cliente);
+
+            // Assert
+            idRetornado.Should().Be(idInicial + 1);
+            context.ChangeTracker.Clear();
+            var clienteSalvo = context.Set<ClienteEntity>().Find(idRetornado);
+            clienteSalvo.Should().NotBeNull();
+            clienteSalvo!.RazaoSocial.Should().Be("Cliente Novo");
+        }
+
+        [Fact]
+        public void Insert_QuandoInserido_DeveIncrementarIdNoAutoNumerador()
+        {
+            // Arrange
+            var (context, idInicial) = CriarContexto();
+            var cliente = new ClienteBuilder().Build();
+            var service = new ClienteService(context);
+
+            // Act
+            service.Insert(cliente);
+
+            // Assert
+            context.ChangeTracker.Clear();
+            var numerador = context.Set<AutoNumeradorEntity>().First();
+            numerador.IdCliente.Should().Be(idInicial + 1);
+        }
+
+        [Fact]
+        public void Insert_QuandoInseridoDoisClientes_DeveAtribuirIdsSequenciais()
+        {
+            // Arrange
+            var (context, idInicial) = CriarContexto();
+            var cliente1 = new ClienteBuilder().ComRazaoSocial("Cliente 1").Build();
+            var cliente2 = new ClienteBuilder().ComRazaoSocial("Cliente 2").Build();
+            var service = new ClienteService(context);
+
+            // Act
+            var id1 = service.Insert(cliente1);
+            var id2 = service.Insert(cliente2);
+
+            // Assert
+            id1.Should().Be(idInicial + 1);
+            id2.Should().Be(idInicial + 2);
+        }
+
+        // ===== UpdateParcial =====
+
+        [Fact]
+        public void UpdateParcial_QuandoPropriedadeEspecificada_DeveAtualizarApenasEssaPropriedade()
+        {
+            // Arrange
+            var (context, _) = CriarContexto();
+            var cliente = new ClienteBuilder()
+                .ComRazaoSocial("Razao Original")
+                .ComFantasia("Fantasia Original")
+                .Build();
+            cliente.Id = 1;
+            context.Set<ClienteEntity>().Add(cliente);
+            context.SaveChanges();
+            context.ChangeTracker.Clear();
+
+            var clienteParaAtualizar = new ClienteBuilder()
+                .ComRazaoSocial("Razao Atualizada")
+                .ComFantasia("Fantasia Nao Deve Mudar")
+                .Build();
+            clienteParaAtualizar.Id = 1;
+            var service = new ClienteService(context);
+
+            // Act
+            service.UpdateParcial(clienteParaAtualizar, new List<string> { nameof(ClienteEntity.RazaoSocial) });
+
+            // Assert
+            context.ChangeTracker.Clear();
+            var clienteSalvo = context.Set<ClienteEntity>().Find(1);
+            clienteSalvo!.RazaoSocial.Should().Be("Razao Atualizada");
+            clienteSalvo.Fantasia.Should().Be("Fantasia Original");
+        }
     }
 }

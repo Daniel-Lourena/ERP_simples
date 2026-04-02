@@ -26,17 +26,15 @@ namespace ModuloCadastro.Service
         public int Insert(ConfigAdquirenteEntity entity)
         {
             int insert = 0;
-            using (var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext()))
-            {
-                AutoNumeradorEntity numerador = autoNumeradorContext.Get();
-                numerador.IdAdquirente++;
-                entity.Id = numerador.IdAdquirente;
-                var _context = new ModuloCadastroContext();
-                _context.ConfigAdquirentes.Add(entity);
-                _context.SaveChanges();
-                ServiceMethods.UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdAdquirente) });
-                insert = entity.Id;
-            }
+            var autoNumeradorContext = new Service.AutoNumeradorService(new ModuloCadastroContext());
+            AutoNumeradorEntity numerador = autoNumeradorContext.Get();
+            numerador.IdAdquirente++;
+            entity.Id = numerador.IdAdquirente;
+            var _context = new ModuloCadastroContext();
+            _context.ConfigAdquirentes.Add(entity);
+            _context.SaveChanges();
+            new ServiceMethods(_context).UpdateParcial(numerador, new List<string>() { nameof(AutoNumeradorEntity.IdAdquirente) });
+            insert = entity.Id;
             return insert;
         }
         public void Update(ConfigAdquirenteEntity entity)
@@ -48,7 +46,7 @@ namespace ModuloCadastro.Service
 
         public void UpdateParcial(ConfigAdquirenteEntity entity, List<string> listaPropriedadesAtualizar)
         {
-            ServiceMethods.UpdateParcial(entity, listaPropriedadesAtualizar);
+            new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
         }
     }
 }

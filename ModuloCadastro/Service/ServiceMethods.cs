@@ -2,20 +2,20 @@
 
 namespace ModuloCadastro.Service
 {
-    public static class ServiceMethods
+    public class ServiceMethods
     {
-        public static void UpdateParcial<T>(T entity, List<string> listaPropriedadesAtualizar) where T : class
+        private readonly ModuloCadastroContext _context;
+        public ServiceMethods(ModuloCadastroContext context) => _context = context;
+
+        public void UpdateParcial<T>(T entity, List<string> listaPropriedadesAtualizar) where T : class
         {
-            using (var _context = new ModuloCadastroContext())
-            {
-                _context.Attach(entity);
+            _context.Attach(entity);
 
-                listaPropriedadesAtualizar.
-                    ForEach(propriedadeAtualiza =>
-                    _context.Entry(entity).Property(propriedadeAtualiza).IsModified = true);
+            listaPropriedadesAtualizar.
+                ForEach(propriedadeAtualiza =>
+                _context.Entry(entity).Property(propriedadeAtualiza).IsModified = true);
 
-                _context.SaveChanges();
-            }
+            _context.SaveChanges();
         }
     }
 }

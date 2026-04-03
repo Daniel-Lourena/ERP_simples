@@ -87,6 +87,16 @@ Sempre adicionar referencia ao projeto sendo testado:
 Os services recebem `IDbContextFactory<ModuloCadastroContext>`. Usar `DbContextFactoryFake` para injeção e retornar o `options` junto com o `context` para que o fake possa ser criado depois:
 
 ```csharp
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using ModuloCadastro.Context;
+using ModuloCadastro.Entity;                          // AutoNumeradorEntity
+using ModuloCadastro.Entity.Cadastro.Cliente;         // ClienteEntity
+using ModuloCadastro.Entity.Cadastro.Localizacao;     // CidadeEntity, EstadoEntity
+using ModuloCadastro.Service.Cadastro.Cliente;        // ClienteService
+using ModuloCadastro.Tests.Factory;
+using ModuloCadastro.Tests.Geral.Builders;
+
 public class ClienteServiceTests
 {
     private static int GerarIdAleatorio() => new Random().Next(0, 101);
@@ -177,7 +187,7 @@ context.Clientes.Add(cliente);
 
 ### Seed minimo por contexto
 
-Incluir apenas o que os testes precisam. Exemplo para testes de cliente:
+Incluir apenas o que os testes precisam. Exemplo para testes de cliente (namespaces: `AutoNumeradorEntity` em `ModuloCadastro.Entity`; `EstadoEntity`/`CidadeEntity` em `ModuloCadastro.Entity.Cadastro.Localizacao`):
 
 ```csharp
 context.Set<AutoNumeradorEntity>().Add(new AutoNumeradorEntity { IdCliente = idInicial });
@@ -197,9 +207,11 @@ private static int GerarIdAleatorio() => new Random().Next(0, 101);
 
 ## BUILDERS
 
-Usar Builders para construir entidades com defaults sensiveis. Campos `varchar` nao anulaveis devem ter valor vazio como default para nao violar constraints do InMemory.
+Usar Builders para construir entidades com defaults sensiveis. Campos `varchar` nao anulaveis devem ter valor vazio como default para nao violar constraints do InMemory. O Builder deve importar o namespace correto da entidade (ex: `ModuloCadastro.Entity.Cadastro.Cliente` para `ClienteEntity`).
 
 ```csharp
+using ModuloCadastro.Entity.Cadastro.Cliente;
+
 public class ClienteBuilder
 {
     private string _razaoSocial = "Cliente Teste";
@@ -223,6 +235,29 @@ public class ClienteBuilder
     };
 }
 ```
+
+---
+
+## NAMESPACES DE REFERENCIA
+
+A estrutura de pastas de Entity, Service e ViewModel espelha diretamente o namespace. Referência rápida para os usings mais comuns em testes:
+
+| Tipo | Namespace |
+|---|---|
+| `AutoNumeradorEntity`, `BaseEntity` | `ModuloCadastro.Entity` |
+| `ClienteEntity` | `ModuloCadastro.Entity.Cadastro.Cliente` |
+| `CidadeEntity`, `EstadoEntity` | `ModuloCadastro.Entity.Cadastro.Localizacao` |
+| `CategoriaEntity`, `EstoqueEntity`, `ProdutoEntity`, `SetorEstoqueEntity` | `ModuloCadastro.Entity.Cadastro.Produto` |
+| `UsuarioEntity` | `ModuloCadastro.Entity.Cadastro.Usuario` |
+| `AdquirenteBandeira`, `BancoEntity`, `ConfigAdquirenteEntity`, `MaquininhaEntity` | `ModuloCadastro.Entity.Financeiro` |
+| `PedidoVendaEntity`, `ProdutoVendaEntity`, `RecebimentoVendaEntity` | `ModuloCadastro.Entity.Venda` |
+| `ClienteService` | `ModuloCadastro.Service.Cadastro.Cliente` |
+| `CidadeService`, `EstadoService` | `ModuloCadastro.Service.Cadastro.Localizacao` |
+| `CategoriaService`, `EstoqueService`, `ProdutoService`, `SetorEstoqueService` | `ModuloCadastro.Service.Cadastro.Produto` |
+| `UsuarioService` | `ModuloCadastro.Service.Cadastro.Usuario` |
+| `BancoService`, `ConfigAdquirenteService`, `MaquininhaService` | `ModuloCadastro.Service.Financeiro` |
+| `PedidoVendaService`, `ProdutoVendaService`, `RecebimentosVendaService` | `ModuloCadastro.Service.Venda` |
+| `AutoNumeradorService`, `IService`, `ServiceMethods` | `ModuloCadastro.Service` |
 
 ---
 

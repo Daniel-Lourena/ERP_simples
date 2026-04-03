@@ -12,6 +12,9 @@ Este arquivo fornece orientação para o Claude Code (claude.ai/code) ao trabalh
 ## CLAUDEIGNORE.md
 Este arquivo tem toda a relação dos arquivos que o Claude Code deve ignorar ao realizar tarefas, sendo estritamente rigoroso em não ler nenhum arquivo presente nessa lista, salvo em casos que seja fornecido manualmente o contexto.
 
+## EVITAR.md
+Registro de práticas que geraram retrabalho em sessões anteriores. **Deve ser lido obrigatoriamente antes de iniciar qualquer operação que envolva:** renomear namespaces, mover arquivos em lote, atualizar múltiplas camadas simultaneamente, executar scripts de substituição em massa, ou qualquer refatoração que impacte mais de 5 arquivos. Ao identificar que o usuário está planejando uma dessas operações, consultar o arquivo e alertar sobre os pontos relevantes antes de prosseguir.
+
 ## Linguagem
 
 - Todas as respostas devem ser em português (Brasil)
@@ -22,6 +25,15 @@ Este arquivo tem toda a relação dos arquivos que o Claude Code deve ignorar ao
 Sistema ERP desenvolvido em C# (.NET 8) e Windows Forms (WinForms), voltado para casos de uso de varejo/vendas no Brasil. A interface do usuário, as entidades de domínio, os serviços e as colunas do banco de dados estão todos escritos em português.
 
 ## Compilar e Executar
+
+# ORDEM DE COMPILACAO
+Entities
+DbContext
+Migrations (Snapshot + Designer)
+Services
+ViewModels
+UI
+Testes
 
 ```bash
 # Build the solution
@@ -52,12 +64,86 @@ A solução tem quatro projetos:
 
 ### Key layers in `ModuloCadastro`
 
-- **Entity/** — EF Core model classes mapped to `tb_*` MySQL tables (13 entidades)
-- **Service/** — Um service por entidade; alguns implementam `IService<T>`, outros têm métodos específicos; todo acesso ao banco passa pelos services
+As pastas **Entity/**, **Service/** e **ViewModel/** seguem a mesma hierarquia semântica, e os namespaces espelham exatamente o caminho de pasta:
+
+```
+Entity/
+├── AutoNumeradorEntity.cs          (ModuloCadastro.Entity)
+├── BaseEntity.cs                   (ModuloCadastro.Entity)
+├── Financeiro/                     (ModuloCadastro.Entity.Financeiro)
+│   ├── AdquirenteBandeira.cs
+│   ├── BancoEntity.cs
+│   ├── ConfigAdquirenteEntity.cs
+│   └── MaquininhaEntity.cs
+├── Cadastro/
+│   ├── Cliente/                    (ModuloCadastro.Entity.Cadastro.Cliente)
+│   │   └── ClienteEntity.cs
+│   ├── Localizacao/                (ModuloCadastro.Entity.Cadastro.Localizacao)
+│   │   ├── CidadeEntity.cs
+│   │   └── EstadoEntity.cs
+│   ├── Produto/                    (ModuloCadastro.Entity.Cadastro.Produto)
+│   │   ├── CategoriaEntity.cs
+│   │   ├── EstoqueEntity.cs
+│   │   ├── ProdutoEntity.cs
+│   │   └── SetorEstoqueEntity.cs
+│   └── Usuario/                    (ModuloCadastro.Entity.Cadastro.Usuario)
+│       └── UsuarioEntity.cs
+└── Venda/                          (ModuloCadastro.Entity.Venda)
+    ├── PedidoVendaEntity.cs
+    ├── ProdutoVendaEntity.cs
+    └── RecebimentoVendaEntity.cs
+
+Service/
+├── IService.cs                     (ModuloCadastro.Service)
+├── ServiceMethods.cs               (ModuloCadastro.Service)
+├── AutoNumeradorService.cs         (ModuloCadastro.Service)
+├── Financeiro/                     (ModuloCadastro.Service.Financeiro)
+│   ├── BancoService.cs
+│   ├── ConfigAdquirenteService.cs
+│   └── MaquininhaService.cs
+├── Cadastro/
+│   ├── Cliente/                    (ModuloCadastro.Service.Cadastro.Cliente)
+│   │   └── ClienteService.cs
+│   ├── Localizacao/                (ModuloCadastro.Service.Cadastro.Localizacao)
+│   │   ├── CidadeService.cs
+│   │   └── EstadoService.cs
+│   ├── Produto/                    (ModuloCadastro.Service.Cadastro.Produto)
+│   │   ├── CategoriaService.cs
+│   │   ├── EstoqueService.cs
+│   │   ├── ProdutoService.cs
+│   │   └── SetorEstoqueService.cs
+│   └── Usuario/                    (ModuloCadastro.Service.Cadastro.Usuario)
+│       └── UsuarioService.cs
+└── Venda/                          (ModuloCadastro.Service.Venda)
+    ├── PedidoVendaService.cs
+    ├── ProdutoVendaService.cs
+    └── RecebimentosVendaService.cs
+
+ViewModel/
+├── Financeiro/                     (ModuloCadastro.ViewModel.Financeiro)
+│   └── BancoViewModel.cs
+├── Cadastro/
+│   ├── Cliente/                    (ModuloCadastro.ViewModel.Cadastro.Cliente)
+│   │   └── ClienteViewModel.cs
+│   ├── Produto/                    (ModuloCadastro.ViewModel.Cadastro.Produto)
+│   │   ├── CategoriaViewModel.cs
+│   │   ├── EstoqueViewModel.cs
+│   │   └── ProdutoViewModel.cs
+│   └── Usuario/                    (ModuloCadastro.ViewModel.Cadastro.Usuario)
+│       └── UsuarioViewModel.cs
+└── Venda/                          (ModuloCadastro.ViewModel.Venda)
+    ├── PedidoVendaViewModel.cs
+    └── ProdutoVendaViewModel.cs
+```
+
+- **Entity/** — EF Core model classes mapped to `tb_*` MySQL tables; namespace alinhado à subpasta
+- **Service/** — Um service por entidade; alguns implementam `IService<T>`, outros têm métodos específicos; todo acesso ao banco passa pelos services; `IService.cs`, `ServiceMethods.cs` e `AutoNumeradorService.cs` ficam na raiz `ModuloCadastro.Service`
 - **ViewModel/** — DTOs leves com `INotifyPropertyChanged`; entidades expõem `ToViewModel()` e ViewModels expõem `ToEntity()`
 - **Enum/** — Constantes de domínio (`EFormaPagamento`, `EAdquirenteMaquininha`, `EBandeiraCartao`, `ECargo`, `ECst`, `EOrigemProduto`, `ETipoChavePix`, `ETipoContaBanco`, `ETipoMaquininha`, `ETipoTransferencia`, `EUnidadeProduto`, `EGatewayPDV`, `ETipoPedido`)
 - **Context/ModuloCadastroContext.cs** — Single DbContext; todos os DbSets são `internal`; injetado via `IDbContextFactory<ModuloCadastroContext>` nos services
 - **DTO/** — Data Transfer Objects para operações específicas
+
+> **Regra de namespace:** ao criar novos arquivos em Entity/, Service/ ou ViewModel/, o namespace deve sempre refletir o caminho da subpasta. Ex: um service em `Service/Cadastro/Produto/` deve declarar `namespace ModuloCadastro.Service.Cadastro.Produto`.
 
 ### UI conventions
 
@@ -180,6 +266,29 @@ context.Clientes.Add(cliente);
 ### Limitação: ServiceMethods.UpdateParcial
 
 `ServiceMethods.UpdateParcial` é estático e cria `new ModuloCadastroContext()` sem injeção de provider. Métodos de service que o chamam internamente (ex: `ClienteService.Insert`, `ClienteService.UpdateParcial`) **não são testáveis com InMemory** sem refatoração. Documentar no arquivo de teste e não criar testes para esses casos.
+
+## Lições Aprendidas (Erros a Evitar)
+
+Pontos que geraram retrabalho e consumo excessivo de contexto em sessões anteriores:
+
+### Automação em massa via shell neste ambiente
+
+- **Nunca usar `python3` inline** — não está disponível no PATH neste ambiente Windows; falha imediata.
+- **Nunca usar PowerShell inline com heredoc bash** — o bash interpreta `\r\n` dentro de strings PowerShell como literais (`r` e `n`), corrompendo arquivos. Sempre escrever um `.ps1` separado via `Write` e executar com `powershell.exe -ExecutionPolicy Bypass -File script.ps1`.
+- **Regex do PowerShell com `\r\n` via `-replace`** — o operador `-replace` no PowerShell não interpreta `\r\n` como newline quando a string de substituição vem de interpolação bash. Preferir `.Replace()` com `[char]10` ou escrever o script em arquivo.
+- **Substituições em massa em muitos arquivos** — antes de rodar qualquer script de substituição em lote, validar em um único arquivo primeiro. Evita corromper dezenas de arquivos de uma vez.
+
+### Fluxo de build e verificação
+
+- **Rodar o build antes de modificar arquivos consumidores** — ao renomear namespaces, compilar logo após mover/atualizar os arquivos de origem. Não acumular todas as mudanças (Entity + Service + ViewModel + Forms + Testes) para só então descobrir os erros: o ciclo correto é mover → ajustar namespace → compilar → corrigir erros → avançar.
+- **Verificar FQNs hardcoded antes de declarar concluído** — após renomear namespaces, buscar por `ModuloCadastro.Entity.<NomeClasse>` nos arquivos consumidores. FQNs não são cobertos por `using` e quebram silenciosamente.
+- **Migrations Designer usam strings FQN, não tipos** — ao mover entidades, os arquivos `*.Designer.cs` e `ModelSnapshot.cs` referenciam tipos como strings (`"ModuloCadastro.Entity.ClienteEntity"`). Essas strings não são detectadas pelo compilador; devem ser atualizadas manualmente junto com o namespace da entidade.
+
+### Estratégia de adição de usings
+
+- **Não adicionar todos os sub-namespaces a todos os arquivos indiscriminadamente** — o correto é ler o arquivo, identificar quais tipos ele usa, e adicionar apenas os namespaces necessários. A abordagem de "adicionar tudo em todos" funciona mas gera usings desnecessários.
+
+---
 
 ## Diretrizes de Desenvolvimento (NUNCA VIOLAR)
 

@@ -2,7 +2,10 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ModuloCadastro.Context;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Entity.Cadastro.Cliente;
+using ModuloCadastro.Entity.Cadastro.Localizacao;
 using ModuloCadastro.Service;
+using ModuloCadastro.Service.Cadastro.Cliente;
 using ModuloCadastro.Tests.Factory;
 using ModuloCadastro.Tests.Geral.Builders;
 

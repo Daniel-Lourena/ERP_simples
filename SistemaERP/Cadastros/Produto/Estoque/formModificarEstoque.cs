@@ -1,6 +1,23 @@
-using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Entity;
+using ModuloCadastro.Entity.Financeiro;
+using ModuloCadastro.Entity.Cadastro.Produto;
+using ModuloCadastro.Entity.Cadastro.Cliente;
+using ModuloCadastro.Entity.Cadastro.Localizacao;
+using ModuloCadastro.Entity.Cadastro.Usuario;
+using ModuloCadastro.Entity.Venda;
 using ModuloCadastro.Service;
+using ModuloCadastro.Service.Financeiro;
+using ModuloCadastro.Service.Cadastro.Produto;
+using ModuloCadastro.Service.Cadastro.Cliente;
+using ModuloCadastro.Service.Cadastro.Localizacao;
+using ModuloCadastro.Service.Cadastro.Usuario;
+using ModuloCadastro.Service.Venda;
 using ModuloCadastro.ViewModel;
+using ModuloCadastro.ViewModel.Financeiro;
+using ModuloCadastro.ViewModel.Cadastro.Produto;
+using ModuloCadastro.ViewModel.Cadastro.Cliente;
+using ModuloCadastro.ViewModel.Cadastro.Usuario;
+using ModuloCadastro.ViewModel.Venda;
 
 namespace SistemaERP.Cadastros.Produto.Estoque
 {
@@ -43,7 +60,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
 
             if (_funcao == "+")
             {
-                _serviceEstoque.UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
+                _serviceEstoque.UpdateParcial(new EstoqueEntity
                 {
                     ProdutoId = produtoEstoque.IdProduto,
                     SetorEstoqueId = produtoEstoque.IdSetorEstoque,
@@ -55,7 +72,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             {
                 if ((produtoEstoque.QuantidadeEstoque - nudQtd.Value) == 0)
                 {
-                    _serviceEstoque.Delete(new ModuloCadastro.Entity.EstoqueEntity
+                    _serviceEstoque.Delete(new EstoqueEntity
                     {
                         ProdutoId = produtoEstoque.IdProduto,
                         SetorEstoqueId = produtoEstoque.IdSetorEstoque,
@@ -63,7 +80,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
                 }
                 else
                 {
-                    _serviceEstoque.UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
+                    _serviceEstoque.UpdateParcial(new EstoqueEntity
                     {
                         ProdutoId = produtoEstoque.IdProduto,
                         SetorEstoqueId = produtoEstoque.IdSetorEstoque,

@@ -1,6 +1,23 @@
-using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Entity;
+using ModuloCadastro.Entity.Financeiro;
+using ModuloCadastro.Entity.Cadastro.Produto;
+using ModuloCadastro.Entity.Cadastro.Cliente;
+using ModuloCadastro.Entity.Cadastro.Localizacao;
+using ModuloCadastro.Entity.Cadastro.Usuario;
+using ModuloCadastro.Entity.Venda;
 using ModuloCadastro.Service;
+using ModuloCadastro.Service.Financeiro;
+using ModuloCadastro.Service.Cadastro.Produto;
+using ModuloCadastro.Service.Cadastro.Cliente;
+using ModuloCadastro.Service.Cadastro.Localizacao;
+using ModuloCadastro.Service.Cadastro.Usuario;
+using ModuloCadastro.Service.Venda;
 using ModuloCadastro.ViewModel;
+using ModuloCadastro.ViewModel.Financeiro;
+using ModuloCadastro.ViewModel.Cadastro.Produto;
+using ModuloCadastro.ViewModel.Cadastro.Cliente;
+using ModuloCadastro.ViewModel.Cadastro.Usuario;
+using ModuloCadastro.ViewModel.Venda;
 using SistemaERP.Extensions;
 
 namespace SistemaERP.Cadastros.Produto.Estoque
@@ -48,7 +65,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            _estoqueService.Insert(new ModuloCadastro.Entity.EstoqueEntity
+            _estoqueService.Insert(new EstoqueEntity
             {
                 ProdutoId = Convert.ToInt32(cbProdutos.SelectedValue),
                 SetorEstoqueId = Convert.ToInt32(cbSetores.SelectedValue),

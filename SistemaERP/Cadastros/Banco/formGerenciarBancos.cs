@@ -1,5 +1,16 @@
-using ModuloCadastro.Service;
+﻿using ModuloCadastro.Service;
+using ModuloCadastro.Service.Financeiro;
+using ModuloCadastro.Service.Cadastro.Produto;
+using ModuloCadastro.Service.Cadastro.Cliente;
+using ModuloCadastro.Service.Cadastro.Localizacao;
+using ModuloCadastro.Service.Cadastro.Usuario;
+using ModuloCadastro.Service.Venda;
 using ModuloCadastro.ViewModel;
+using ModuloCadastro.ViewModel.Financeiro;
+using ModuloCadastro.ViewModel.Cadastro.Produto;
+using ModuloCadastro.ViewModel.Cadastro.Cliente;
+using ModuloCadastro.ViewModel.Cadastro.Usuario;
+using ModuloCadastro.ViewModel.Venda;
 using SistemaERP.Extensions;
 using SistemaERP.Factory;
 using System.Data;

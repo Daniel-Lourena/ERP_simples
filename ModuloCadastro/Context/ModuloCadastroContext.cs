@@ -1,5 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModuloCadastro.Entity;
+using ModuloCadastro.Entity.Cadastro.Cliente;
+using ModuloCadastro.Entity.Cadastro.Localizacao;
+using ModuloCadastro.Entity.Cadastro.Produto;
+using ModuloCadastro.Entity.Cadastro.Usuario;
+using ModuloCadastro.Entity.Financeiro;
+using ModuloCadastro.Entity.Venda;
 
 namespace ModuloCadastro.Context
 {

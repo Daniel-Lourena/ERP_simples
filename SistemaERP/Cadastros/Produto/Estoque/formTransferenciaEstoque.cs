@@ -1,6 +1,23 @@
-using ModuloCadastro.Entity;
+﻿using ModuloCadastro.Entity;
+using ModuloCadastro.Entity.Financeiro;
+using ModuloCadastro.Entity.Cadastro.Produto;
+using ModuloCadastro.Entity.Cadastro.Cliente;
+using ModuloCadastro.Entity.Cadastro.Localizacao;
+using ModuloCadastro.Entity.Cadastro.Usuario;
+using ModuloCadastro.Entity.Venda;
 using ModuloCadastro.Service;
+using ModuloCadastro.Service.Financeiro;
+using ModuloCadastro.Service.Cadastro.Produto;
+using ModuloCadastro.Service.Cadastro.Cliente;
+using ModuloCadastro.Service.Cadastro.Localizacao;
+using ModuloCadastro.Service.Cadastro.Usuario;
+using ModuloCadastro.Service.Venda;
 using ModuloCadastro.ViewModel;
+using ModuloCadastro.ViewModel.Financeiro;
+using ModuloCadastro.ViewModel.Cadastro.Produto;
+using ModuloCadastro.ViewModel.Cadastro.Cliente;
+using ModuloCadastro.ViewModel.Cadastro.Usuario;
+using ModuloCadastro.ViewModel.Venda;
 using MySqlConnector;
 using SistemaERP.Extensions;
 
@@ -55,7 +72,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
 
             if ((produtoEnviado.QuantidadeEstoque - nudQtd.Value) == 0)
             {
-                _estoqueService.Delete(new ModuloCadastro.Entity.EstoqueEntity
+                _estoqueService.Delete(new EstoqueEntity
                 {
                     ProdutoId = produtoEnviado.IdProduto,
                     SetorEstoqueId = produtoEnviado.IdSetorEstoque
@@ -63,7 +80,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             }
             else
             {
-                _estoqueService.UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
+                _estoqueService.UpdateParcial(new EstoqueEntity
                 {
                     ProdutoId = produtoEnviado.IdProduto,
                     SetorEstoqueId = produtoEnviado.IdSetorEstoque,
@@ -74,7 +91,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
 
             if (produtoRecebido.IdProduto == 0)
             {
-                _estoqueService.Insert(new ModuloCadastro.Entity.EstoqueEntity
+                _estoqueService.Insert(new EstoqueEntity
                 {
                     ProdutoId = _produtoTransferir.IdProduto,
                     SetorEstoqueId = Convert.ToInt32(cbSetorDestino.SelectedValue),
@@ -83,7 +100,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
             }
             else
             {
-                _estoqueService.UpdateParcial(new ModuloCadastro.Entity.EstoqueEntity
+                _estoqueService.UpdateParcial(new EstoqueEntity
                 {
                     ProdutoId = produtoRecebido.IdProduto,
                     SetorEstoqueId = produtoRecebido.IdSetorEstoque,

@@ -47,7 +47,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_autonumerador");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.BancoEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Financeiro.BancoEntity", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -117,7 +117,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_bancos");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.CategoriaEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Produto.CategoriaEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -131,7 +131,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_categoria");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.CidadeEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Localizacao.CidadeEntity", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -154,7 +154,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_cidades");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.ClienteEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Cliente.ClienteEntity", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -211,7 +211,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_clientes");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.EstadoEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Localizacao.EstadoEntity", b =>
                 {
                     b.Property<int>("Cuf")
                         .HasColumnType("int");
@@ -229,7 +229,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_estados");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.EstoqueEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Produto.EstoqueEntity", b =>
                 {
                     b.Property<int>("ProdutoId")
                         .HasColumnType("int");
@@ -247,7 +247,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_estoque");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.PedidoVendaEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Venda.PedidoVendaEntity", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -297,7 +297,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_vendas");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.ProdutoEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Produto.ProdutoEntity", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -353,7 +353,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_produtos");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.ProdutoVendaEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Venda.ProdutoVendaEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -385,7 +385,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_produtosvenda");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.RecebimentoVendaEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Venda.RecebimentoVendaEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -417,7 +417,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_recebimento_venda");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.SetorEstoqueEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Produto.SetorEstoqueEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -431,7 +431,7 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_setorestoque");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.UsuarioEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Usuario.UsuarioEntity", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -460,9 +460,9 @@ namespace ModuloCadastro.Migrations
                     b.ToTable("tb_usuarios");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.CidadeEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Localizacao.CidadeEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.EstadoEntity", "DadosEstado")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Localizacao.EstadoEntity", "DadosEstado")
                         .WithMany()
                         .HasForeignKey("Cuf")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -471,9 +471,9 @@ namespace ModuloCadastro.Migrations
                     b.Navigation("DadosEstado");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.ClienteEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Cliente.ClienteEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.CidadeEntity", "Cidade")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Localizacao.CidadeEntity", "Cidade")
                         .WithMany()
                         .HasForeignKey("CidadeId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -482,15 +482,15 @@ namespace ModuloCadastro.Migrations
                     b.Navigation("Cidade");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.EstoqueEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Produto.EstoqueEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "Produto")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Produto.ProdutoEntity", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.SetorEstoqueEntity", "SetorEstoque")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Produto.SetorEstoqueEntity", "SetorEstoque")
                         .WithMany()
                         .HasForeignKey("SetorEstoqueId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -501,33 +501,33 @@ namespace ModuloCadastro.Migrations
                     b.Navigation("SetorEstoque");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.PedidoVendaEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Venda.PedidoVendaEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.ClienteEntity", "Cliente")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Cliente.ClienteEntity", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "UsuarioAtualizacao")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Usuario.UsuarioEntity", "UsuarioAtualizacao")
                         .WithMany()
                         .HasForeignKey("UsuarioAtualizacaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "UsuarioCriacao")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Usuario.UsuarioEntity", "UsuarioCriacao")
                         .WithMany()
                         .HasForeignKey("UsuarioCriacaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "UsuarioExclusao")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Usuario.UsuarioEntity", "UsuarioExclusao")
                         .WithMany()
                         .HasForeignKey("UsuarioExclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.UsuarioEntity", "UsuarioFechamento")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Usuario.UsuarioEntity", "UsuarioFechamento")
                         .WithMany()
                         .HasForeignKey("UsuarioFechamentoId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -543,9 +543,9 @@ namespace ModuloCadastro.Migrations
                     b.Navigation("UsuarioFechamento");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.ProdutoEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Cadastro.Produto.ProdutoEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.CategoriaEntity", "Categoria")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Produto.CategoriaEntity", "Categoria")
                         .WithMany()
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -554,21 +554,21 @@ namespace ModuloCadastro.Migrations
                     b.Navigation("Categoria");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.ProdutoVendaEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Venda.ProdutoVendaEntity", b =>
                 {
-                    b.HasOne("ModuloCadastro.Entity.PedidoVendaEntity", "PedidoVenda")
+                    b.HasOne("ModuloCadastro.Entity.Venda.PedidoVendaEntity", "PedidoVenda")
                         .WithMany("ListaProdutosVenda")
                         .HasForeignKey("PedidoVendaId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.ProdutoEntity", "Produto")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Produto.ProdutoEntity", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ModuloCadastro.Entity.SetorEstoqueEntity", "SetorEstoque")
+                    b.HasOne("ModuloCadastro.Entity.Cadastro.Produto.SetorEstoqueEntity", "SetorEstoque")
                         .WithMany()
                         .HasForeignKey("SetorEstoqueId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -581,7 +581,7 @@ namespace ModuloCadastro.Migrations
                     b.Navigation("SetorEstoque");
                 });
 
-            modelBuilder.Entity("ModuloCadastro.Entity.PedidoVendaEntity", b =>
+            modelBuilder.Entity("ModuloCadastro.Entity.Venda.PedidoVendaEntity", b =>
                 {
                     b.Navigation("ListaProdutosVenda");
                 });

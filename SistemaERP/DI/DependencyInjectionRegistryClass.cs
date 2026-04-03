@@ -1,5 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ModuloCadastro.Service;
+using ModuloCadastro.Service.Financeiro;
+using ModuloCadastro.Service.Cadastro.Produto;
+using ModuloCadastro.Service.Cadastro.Cliente;
+using ModuloCadastro.Service.Cadastro.Localizacao;
+using ModuloCadastro.Service.Cadastro.Usuario;
+using ModuloCadastro.Service.Venda;
 using SistemaERP.Factory;
 using System;
 using System.Collections.Generic;

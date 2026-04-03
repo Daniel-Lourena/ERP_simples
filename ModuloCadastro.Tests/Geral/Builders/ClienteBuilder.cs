@@ -1,4 +1,4 @@
-using ModuloCadastro.Entity;
+using ModuloCadastro.Entity.Cadastro.Cliente;
 
 namespace ModuloCadastro.Tests.Geral.Builders
 {

@@ -1,7 +1,13 @@
-using Microsoft.EntityFrameworkCore;
+ï»¿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ModuloCadastro.Service;
+using ModuloCadastro.Service.Financeiro;
+using ModuloCadastro.Service.Cadastro.Produto;
+using ModuloCadastro.Service.Cadastro.Cliente;
+using ModuloCadastro.Service.Cadastro.Localizacao;
+using ModuloCadastro.Service.Cadastro.Usuario;
+using ModuloCadastro.Service.Venda;
 using SistemaERP.DI;
 using System;
 
@@ -29,7 +35,7 @@ namespace SistemaERP
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             Exception ex = e.Exception;
-            MessageBox.Show("Houve um erro ao realizar a ação!" + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace, "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Houve um erro ao realizar a aï¿½ï¿½o!" + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace, "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private static void OnConfiguring()
@@ -38,8 +44,8 @@ namespace SistemaERP
             service.AddDbContextFactory<ModuloCadastro.Context.ModuloCadastroContext>
                 (
                     optionsBuilder => optionsBuilder.UseMySql(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB + "AllowLoadLocalInfile=true;",
-                    new MySqlServerVersion(new Version(5, 7)),  // Versão mínima suportada
-                    options => options.EnableRetryOnFailure()) // Configurações adicionais);
+                    new MySqlServerVersion(new Version(5, 7)),  // Versï¿½o mï¿½nima suportada
+                    options => options.EnableRetryOnFailure()) // Configuraï¿½ï¿½es adicionais);
                 );
             service.AddServices();
             service.AddForms();

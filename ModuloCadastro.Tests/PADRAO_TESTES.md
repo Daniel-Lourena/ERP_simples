@@ -19,8 +19,8 @@ Este documento define a estrutura e as convencoes para testes automatizados nest
 ModuloCadastro.Tests/
 ├── Services/
 │   └── ClienteServiceTests.cs
-├── Entity/
-│   └── ClienteTests.cs
+├── Factory/
+│   └── DbContextFactoryFake.cs     # IDbContextFactory<> fake para injeção nos services
 ├── Geral/
 │   ├── Fixtures/
 │   ├── Builders/
@@ -84,12 +84,14 @@ Sempre adicionar referencia ao projeto sendo testado:
 
 ## ESTRUTURA DE UMA CLASSE DE TESTE
 
+Os services recebem `IDbContextFactory<ModuloCadastroContext>`. Usar `DbContextFactoryFake` para injeção e retornar o `options` junto com o `context` para que o fake possa ser criado depois:
+
 ```csharp
 public class ClienteServiceTests
 {
     private static int GerarIdAleatorio() => new Random().Next(0, 101);
 
-    private (ModuloCadastroContext context, int idInicial) CriarContexto()
+    private (DbContextOptions<ModuloCadastroContext> options, ModuloCadastroContext context, int idInicial) CriarContexto()
     {
         int idInicial = GerarIdAleatorio();
         var options = new DbContextOptionsBuilder<ModuloCadastroContext>()
@@ -100,20 +102,22 @@ public class ClienteServiceTests
         context.Database.EnsureCreated();
         // seed minimo necessario para os testes
         context.Set<AutoNumeradorEntity>().Add(new AutoNumeradorEntity { IdCliente = idInicial });
+        context.Set<EstadoEntity>().Add(new EstadoEntity { Cuf = 35, Uf = "SP", Nome = "Sao Paulo" });
+        context.Set<CidadeEntity>().Add(new CidadeEntity { Id = 1, Cuf = 35, Cmunicipio = "3550308", Dmunicipio = "Sao Paulo" });
         context.SaveChanges();
-        return (context, idInicial);
+        return (options, context, idInicial);
     }
 
     [Fact]
     public void Get_QuandoClienteExiste_DeveRetornarCliente()
     {
         // Arrange
-        var (context, _) = CriarContexto();
+        var (options, context, _) = CriarContexto();
         var cliente = new ClienteBuilder().ComRazaoSocial("Empresa ABC").Build();
         cliente.Id = 1;
         context.Set<ClienteEntity>().Add(cliente);
         context.SaveChanges();
-        var service = new ClienteService(context);
+        var service = new ClienteService(new DbContextFactoryFake(options));
 
         // Act
         var resultado = service.Get(1);
@@ -129,7 +133,7 @@ public class ClienteServiceTests
 
 ## PADRAO DE CONTEXTO INMEMORY
 
-Usar `UseInMemoryDatabase` com nome fixo por classe + `EnsureDeleted()` no inicio do setup para garantir isolamento entre testes.
+Usar `UseInMemoryDatabase` com nome fixo por classe + `EnsureDeleted()` no inicio do setup para garantir isolamento entre testes. Retornar também o `options` para criar o `DbContextFactoryFake`:
 
 ```csharp
 var options = new DbContextOptionsBuilder<ModuloCadastroContext>()
@@ -138,6 +142,24 @@ var options = new DbContextOptionsBuilder<ModuloCadastroContext>()
 var context = new ModuloCadastroContext(options);
 context.Database.EnsureDeleted(); // limpa estado anterior
 context.Database.EnsureCreated();
+```
+
+### DbContextFactoryFake
+
+Os services recebem `IDbContextFactory<ModuloCadastroContext>`. Usar `DbContextFactoryFake` com o mesmo `options` do contexto de teste para que o service acesse o mesmo banco InMemory:
+
+```csharp
+// Factory/DbContextFactoryFake.cs
+public class DbContextFactoryFake : IDbContextFactory<ModuloCadastroContext>
+{
+    private readonly DbContextOptions<ModuloCadastroContext> _options;
+    public DbContextFactoryFake(DbContextOptions<ModuloCadastroContext> options) => _options = options;
+    public ModuloCadastroContext CreateDbContext() => new ModuloCadastroContext(_options);
+}
+
+// Uso nos testes
+var factory = new DbContextFactoryFake(options);
+var service = new ClienteService(factory);
 ```
 
 ### Acesso aos DbSets
@@ -225,6 +247,7 @@ public class ClienteBuilder
 
 - `ClienteService.Insert` — chama `ServiceMethods.UpdateParcial` no AutoNumerador
 - `ClienteService.UpdateParcial` — delega diretamente para `ServiceMethods.UpdateParcial`
+- O mesmo vale para services similares (Produto, Banco, Maquininha, Adquirente, Pedido)
 
 Nesses casos, documentar no arquivo de teste como comentario e nao criar testes para esses metodos ate que `ServiceMethods` seja refatorado para aceitar injecao de contexto.
 

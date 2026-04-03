@@ -45,11 +45,12 @@ A solução tem quatro projetos:
 
 ### Key layers in `ModuloCadastro`
 
-- **Entity/** — EF Core model classes mapped to `tb_*` MySQL tables
-- **Service/** — One service per entity implementing `IService<T>`; all DB access goes through services
-- **ViewModel/** — Lightweight DTOs with `INotifyPropertyChanged`; entities expose a `ToViewModel()` method
-- **Enum/** — Domain constants (`EFormaPagamento`, `EAdquirenteMaquininha`, `EBandeiraCartao`, etc.)
-- **Context/ModuloCadastroContext.cs** — Single DbContext; injetado via DI nos services
+- **Entity/** — EF Core model classes mapped to `tb_*` MySQL tables (13 entidades)
+- **Service/** — Um service por entidade; alguns implementam `IService<T>`, outros têm métodos específicos; todo acesso ao banco passa pelos services
+- **ViewModel/** — DTOs leves com `INotifyPropertyChanged`; entidades expõem `ToViewModel()` e ViewModels expõem `ToEntity()`
+- **Enum/** — Constantes de domínio (`EFormaPagamento`, `EAdquirenteMaquininha`, `EBandeiraCartao`, `ECargo`, `ECst`, `EOrigemProduto`, `ETipoChavePix`, `ETipoContaBanco`, `ETipoMaquininha`, `ETipoTransferencia`, `EUnidadeProduto`, `EGatewayPDV`, `ETipoPedido`)
+- **Context/ModuloCadastroContext.cs** — Single DbContext; todos os DbSets são `internal`; injetado via `IDbContextFactory<ModuloCadastroContext>` nos services
+- **DTO/** — Data Transfer Objects para operações específicas
 
 ### UI conventions
 
@@ -63,6 +64,18 @@ O projeto usa `Microsoft.Extensions.DependencyInjection`. O container é configu
 
 - **`AddServices()`** — registra automaticamente via reflection todos os tipos que implementam `IService<T>`, tanto pelo tipo concreto quanto pela interface
 - **`AddForms()`** — registra automaticamente todos os `Form` do assembly como `Transient`; também registra `IFormFactory` como `Singleton`
+
+O `IDbContextFactory<ModuloCadastroContext>` é registrado em `Program.cs` e injetado nos services. Cada operação de service cria seu próprio contexto via `_factory.CreateDbContext()`:
+
+```csharp
+service.AddDbContextFactory<ModuloCadastroContext>(
+    optionsBuilder => optionsBuilder.UseMySql(
+        connectionString,
+        new MySqlServerVersion(new Version(5, 7)),
+        options => options.EnableRetryOnFailure()
+    )
+);
+```
 
 ### FormFactory
 
@@ -109,11 +122,13 @@ Para formulários com múltiplos services, nomear os campos de forma descritiva:
 
 ## Destaques do Domínio
 
-- **Vendas** (`tb_vendas`, `tb_produto_venda`) — pedidos com itens de linha, vinculados ao cliente e ao usuário
-- **Pagamentos** (`tb_recebimento_venda`) — aceita dinheiro, cheque, boleto, transferência, PIX, crédito na loja, cartão de débito, cartão de crédito
-- **Processamento de cartão** — adquirentes (`tb_config_adquirente`), maquininhas (`tb_maquininhas`), e bandeiras de cartão (`tb_adquirente_bandeira`) são configuradas separadamente; adquirentes suportados: REDE, STONE, PAGSEGURO, SUMUP, GETNET, CIELO
-- **Inventário** — multisetor estoque (`tb_estoque` composto PK: `ProdutoId` + `SetorEstoqueId`)
-- **Endereço** — três-niveis de hierarquia: Estado → Cidade → Cliente
+- **Vendas** (`tb_vendas`, `tb_produtosvenda`) — pedidos com itens de linha, vinculados ao cliente; rastreiam 4 usuários distintos: criação, atualização, fechamento e exclusão
+- **Pagamentos** (`tb_recebimento_venda`) — aceita dinheiro, cheque, boleto, transferência, PIX, crédito na loja, cartão de débito, cartão de crédito (8 formas via `EFormaPagamento`)
+- **Processamento de cartão** — adquirentes (`tb_config_adquirente`), maquininhas (`tb_maquininhas`), e bandeiras de cartão (`tb_adquirente_bandeira`) são configuradas separadamente; `ConfigAdquirenteEntity` implementa `INotifyPropertyChanged` e contém dados estáticos (CNPJ/nomes) dos adquirentes; adquirentes suportados: REDE, STONE, PAGSEGURO, SUMUP, GETNET, CIELO
+- **Inventário** — multisetor estoque (`tb_estoque`, PK composta: `ProdutoId` + `SetorEstoqueId`); `EstoqueService` usa SQL nativo (`MySqlCommand`) para queries de agregação com saldo disponível
+- **Endereço** — três níveis de hierarquia: Estado → Cidade → Cliente
+- **Auto-numeração** (`tb_autonumerador`) — controla IDs manualmente para: Cliente, Usuario, Produto, Banco, PedidoVenda, Maquininha, Adquirente; não usa `AUTO_INCREMENT` do MySQL
+- **Soft delete** — Clientes, Usuários e Pedidos têm campos `Excluido` (bool) + `DataExclusao` para exclusão lógica
 
 ## Testes
 
@@ -121,10 +136,10 @@ O projeto `ModuloCadastro.Tests` testa a camada de Service usando EF Core InMemo
 
 ### Padrão de setup do contexto InMemory
 
-Cada classe de teste cria seu próprio contexto isolado com `EnsureDeleted()` + `EnsureCreated()` e popula um seed mínimo:
+Os services usam `IDbContextFactory<ModuloCadastroContext>`. Nos testes, use `DbContextFactoryFake` (em `ModuloCadastro.Tests/Factory/`) para injetar o mesmo banco InMemory:
 
 ```csharp
-private (ModuloCadastroContext context, int idClienteInicial) CriarContexto()
+private (DbContextOptions<ModuloCadastroContext> options, ModuloCadastroContext context, int idInicial) CriarContexto()
 {
     int idInicial = GerarIdAleatorio(); // Random.Next(0, 101)
     var options = new DbContextOptionsBuilder<ModuloCadastroContext>()
@@ -134,8 +149,12 @@ private (ModuloCadastroContext context, int idClienteInicial) CriarContexto()
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
     // seed mínimo necessário para os testes...
-    return (context, idInicial);
+    return (options, context, idInicial);
 }
+
+// Instanciar o service com a factory fake:
+var factory = new DbContextFactoryFake(options);
+var service = new ClienteService(factory);
 ```
 
 ### Acesso aos DbSets nos testes

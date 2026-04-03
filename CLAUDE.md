@@ -2,6 +2,13 @@
 
 Este arquivo fornece orientação para o Claude Code (claude.ai/code) ao trabalhar com código neste repositório.
 
+## Comportamento do Claude Code
+
+- Sempre seguir as regras deste arquivo
+- Se detectar violacao, corrigir automaticamente
+- Priorizar consistência com a arquitetura existente
+- Nunca sugerir alternativas que quebrem o padrão do projeto
+
 ## CLAUDEIGNORE.md
 Este arquivo tem toda a relação dos arquivos que o Claude Code deve ignorar ao realizar tarefas, sendo estritamente rigoroso em não ler nenhum arquivo presente nessa lista, salvo em casos que seja fornecido manualmente o contexto.
 
@@ -174,7 +181,7 @@ context.Clientes.Add(cliente);
 
 `ServiceMethods.UpdateParcial` é estático e cria `new ModuloCadastroContext()` sem injeção de provider. Métodos de service que o chamam internamente (ex: `ClienteService.Insert`, `ClienteService.UpdateParcial`) **não são testáveis com InMemory** sem refatoração. Documentar no arquivo de teste e não criar testes para esses casos.
 
-## Diretrizes de Desenvolvimento
+## Diretrizes de Desenvolvimento (NUNCA VIOLAR)
 
 - Ignorar arquivos de `CLAUDEIGNORE.md`, salvo quando fornecidos manualmente
 - Sempre seguir o padrão Service → Repository existente
@@ -182,9 +189,16 @@ context.Clientes.Add(cliente);
 - Manter nomenclatura em português
 - Não gerar código de interface (WinForms) a menos que seja solicitado
 - Focar em lógica de negócio e estrutura por padrão
-- Não alterar a arquitetura existente sem solicitação explícita
 - Ignorar arquivos Designer e código de UI, salvo quando fornecidos manualmente
 - Nunca instanciar services com `new` dentro de formulários — sempre via injeção no construtor
-- Nunca abrir formulários filhos com `new formXxx()` — sempre via `_formFactory.Criar<T>(...)`
 - Ao criar novos formulários, registrá-los no container é automático (reflection em `AddForms`)
 - Ao criar novos services, o registro no container também é automático (reflection em `AddServices`)
+- Não alterar a arquitetura existente sem solicitação explícita
+- Nunca usar `new formXxx()` para formularios que contenham como entrada de parâmetro `IFactory` — sempre via `_formFactory.Criar<T>(...)`
+- Nunca abrir formulários filhos com `new formXxx()` — sempre via `_formFactory.Criar<T>(...)`
+- Nunca instanciar services manualmente
+- Nunca acessar DbContext fora de services
+- Sempre usar `_formFactory.Criar<T>()`
+- Sempre usar `IDbContextFactory`
+
+

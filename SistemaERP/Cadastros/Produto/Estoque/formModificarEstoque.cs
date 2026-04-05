@@ -1,23 +1,6 @@
-﻿using ModuloCadastro.Entity;
-using ModuloCadastro.Entity.Financeiro;
-using ModuloCadastro.Entity.Cadastro.Produto;
-using ModuloCadastro.Entity.Cadastro.Cliente;
-using ModuloCadastro.Entity.Cadastro.Localizacao;
-using ModuloCadastro.Entity.Cadastro.Usuario;
-using ModuloCadastro.Entity.Venda;
-using ModuloCadastro.Service;
-using ModuloCadastro.Service.Financeiro;
+﻿using ModuloCadastro.Entity.Cadastro.Produto;
 using ModuloCadastro.Service.Cadastro.Produto;
-using ModuloCadastro.Service.Cadastro.Cliente;
-using ModuloCadastro.Service.Cadastro.Localizacao;
-using ModuloCadastro.Service.Cadastro.Usuario;
-using ModuloCadastro.Service.Venda;
-using ModuloCadastro.ViewModel;
-using ModuloCadastro.ViewModel.Financeiro;
 using ModuloCadastro.ViewModel.Cadastro.Produto;
-using ModuloCadastro.ViewModel.Cadastro.Cliente;
-using ModuloCadastro.ViewModel.Cadastro.Usuario;
-using ModuloCadastro.ViewModel.Venda;
 
 namespace SistemaERP.Cadastros.Produto.Estoque
 {
@@ -27,7 +10,7 @@ namespace SistemaERP.Cadastros.Produto.Estoque
         private EstoqueViewModel _produto;
         private string _funcao;
 
-        public formModificarEstoque(EstoqueService serviceEstoque,EstoqueViewModel produto, string funcao)
+        public formModificarEstoque(EstoqueService serviceEstoque, EstoqueViewModel produto, string funcao)
         {
             _serviceEstoque = serviceEstoque;
             InitializeComponent();

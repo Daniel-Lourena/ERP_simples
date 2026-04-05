@@ -1,4 +1,4 @@
-﻿namespace ModuloCadastro.Enum
+﻿namespace ModuloCadastro.Enum.Financeiro.Generico.Pedido
 {
     public enum ETipoPedido
     {

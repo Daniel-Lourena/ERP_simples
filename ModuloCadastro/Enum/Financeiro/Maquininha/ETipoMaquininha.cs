@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Enum
+namespace ModuloCadastro.Enum.Financeiro.Maquininha
 {
-    public enum ETipoTransferencia
+    public enum ETipoMaquininha
     {
-        PIX = 1,
-        TED = 2,
-        DOC = 3
+        POS = 1,
+        TEF = 2
     }
 }

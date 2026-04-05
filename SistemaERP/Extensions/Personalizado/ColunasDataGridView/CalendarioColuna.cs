@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SistemaERP.Extensions.Personalizado.ColunasDataGridView
+﻿namespace SistemaERP.Extensions.Personalizado.ColunasDataGridView
 {
     public class CalendarioColuna : DataGridViewColumn
     {
-        public CalendarioColuna() : base(new CalendarioCelula()) {}
+        public CalendarioColuna() : base(new CalendarioCelula()) { }
         public override DataGridViewCell CellTemplate
         {
             get => base.CellTemplate;

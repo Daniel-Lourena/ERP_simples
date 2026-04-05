@@ -1,23 +1,6 @@
-﻿using ModuloCadastro.Entity;
-using ModuloCadastro.Entity.Financeiro;
-using ModuloCadastro.Entity.Cadastro.Produto;
-using ModuloCadastro.Entity.Cadastro.Cliente;
-using ModuloCadastro.Entity.Cadastro.Localizacao;
-using ModuloCadastro.Entity.Cadastro.Usuario;
-using ModuloCadastro.Entity.Venda;
-using ModuloCadastro.Service;
-using ModuloCadastro.Service.Financeiro;
-using ModuloCadastro.Service.Cadastro.Produto;
-using ModuloCadastro.Service.Cadastro.Cliente;
-using ModuloCadastro.Service.Cadastro.Localizacao;
+﻿using ModuloCadastro.Entity.Cadastro.Usuario;
 using ModuloCadastro.Service.Cadastro.Usuario;
-using ModuloCadastro.Service.Venda;
-using ModuloCadastro.ViewModel;
-using ModuloCadastro.ViewModel.Financeiro;
-using ModuloCadastro.ViewModel.Cadastro.Produto;
-using ModuloCadastro.ViewModel.Cadastro.Cliente;
 using ModuloCadastro.ViewModel.Cadastro.Usuario;
-using ModuloCadastro.ViewModel.Venda;
 using SistemaERP.Extensions;
 using SistemaERP.Factory;
 using System.Data;
@@ -29,7 +12,7 @@ namespace SistemaERP.Cadastros.Usuario
         private readonly IFormFactory _formFactory;
         private readonly UsuarioService _service;
 
-        public formGerenciarUsuarios(IFormFactory formFactory,UsuarioService service)
+        public formGerenciarUsuarios(IFormFactory formFactory, UsuarioService service)
         {
             _formFactory = formFactory;
             _service = service;

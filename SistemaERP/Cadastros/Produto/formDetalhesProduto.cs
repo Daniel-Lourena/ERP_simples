@@ -1,25 +1,6 @@
-﻿using ModuloCadastro.Context;
-using ModuloCadastro.Entity;
-using ModuloCadastro.Entity.Financeiro;
-using ModuloCadastro.Entity.Cadastro.Produto;
-using ModuloCadastro.Entity.Cadastro.Cliente;
-using ModuloCadastro.Entity.Cadastro.Localizacao;
-using ModuloCadastro.Entity.Cadastro.Usuario;
-using ModuloCadastro.Entity.Venda;
-using ModuloCadastro.Enum;
-using ModuloCadastro.Service;
-using ModuloCadastro.Service.Financeiro;
+﻿using ModuloCadastro.Enum.Produto;
 using ModuloCadastro.Service.Cadastro.Produto;
-using ModuloCadastro.Service.Cadastro.Cliente;
-using ModuloCadastro.Service.Cadastro.Localizacao;
-using ModuloCadastro.Service.Cadastro.Usuario;
-using ModuloCadastro.Service.Venda;
-using ModuloCadastro.ViewModel;
-using ModuloCadastro.ViewModel.Financeiro;
 using ModuloCadastro.ViewModel.Cadastro.Produto;
-using ModuloCadastro.ViewModel.Cadastro.Cliente;
-using ModuloCadastro.ViewModel.Cadastro.Usuario;
-using ModuloCadastro.ViewModel.Venda;
 using SistemaERP.Extensions;
 using System.Data;
 
@@ -36,7 +17,7 @@ namespace SistemaERP.Cadastros.Produto
         {
             _serviceProduto = serviceProduto;
             _serviceCategoria = serviceCategoria;
-            
+
             InitializeComponent();
             CarregaOrigem();
             CarregaCST();
@@ -44,7 +25,7 @@ namespace SistemaERP.Cadastros.Produto
             CarregaUnidade();
             this.ConfiguraTabIndex();
         }
-        public formDetalhesProduto(ProdutoService serviceProduto, CategoriaService serviceCategoria,int id) : this(serviceProduto,serviceCategoria)
+        public formDetalhesProduto(ProdutoService serviceProduto, CategoriaService serviceCategoria, int id) : this(serviceProduto, serviceCategoria)
         {
             _id = id;
         }
@@ -67,15 +48,15 @@ namespace SistemaERP.Cadastros.Produto
 
         private void CarregaOrigem()
         {
-            cbOrigem.PreencherComboBoxEnum<ModuloCadastro.Enum.EOrigemProduto>();
+            cbOrigem.PreencherComboBoxEnum<EOrigemProduto>();
         }
         private void CarregaCST()
         {
-            cbCST.PreencherComboBoxEnum<ModuloCadastro.Enum.ECst>();
+            cbCST.PreencherComboBoxEnum<ECst>();
         }
         private void CarregaUnidade()
         {
-            cbUnidade.PreencherComboBoxEnum<ModuloCadastro.Enum.EUnidadeProduto>();
+            cbUnidade.PreencherComboBoxEnum<EUnidadeProduto>();
         }
 
         private void CarregaCategoria()

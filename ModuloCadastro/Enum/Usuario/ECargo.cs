@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ModuloCadastro.Enum
+namespace ModuloCadastro.Enum.Usuario
 {
     public enum ECargo
     {
@@ -17,6 +17,6 @@ namespace ModuloCadastro.Enum
         [Description("SUPERVISOR")]
         SUPERVISOR = 6,
         [Description("GERENTE")]
-        GERENTE = 7
+        GERENTE = 7,
     }
 }

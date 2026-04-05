@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ModuloCadastro.Enum;
+using ModuloCadastro.Enum.Produto;
 using ModuloCadastro.ViewModel.Cadastro.Produto;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Enum
+namespace ModuloCadastro.Enum.Financeiro.Maquininha
 {
     public enum EAdquirenteMaquininha
     {

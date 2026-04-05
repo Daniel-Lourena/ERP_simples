@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloCadastro.Enum
+namespace ModuloCadastro.Enum.Financeiro.Transacao
 {
-    public enum EGatewayPDV
+    public enum ETipoTransferencia
     {
-        PayGo = 0,
-        Sitef = 1,
-        PagarMe = 2
+        PIX = 1,
+        TED = 2,
+        DOC = 3
     }
 }

@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-using SistemaERP.Cadastros.Produto.SetorEstoque;
 using SistemaERP.Extensions;
 using SistemaERP.Factory;
 

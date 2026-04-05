@@ -1,4 +1,4 @@
-﻿using ModuloCadastro.Enum;
+﻿using ModuloCadastro.Enum.Financeiro.Banco;
 using ModuloCadastro.ViewModel.Financeiro;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

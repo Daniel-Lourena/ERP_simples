@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ModuloCadastro.Enum
+namespace ModuloCadastro.Enum.Financeiro.Transacao
 {
     public enum EFormaPagamento
     {

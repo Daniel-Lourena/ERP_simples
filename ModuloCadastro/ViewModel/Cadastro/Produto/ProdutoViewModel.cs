@@ -1,5 +1,4 @@
 ﻿using ModuloCadastro.Entity.Cadastro.Produto;
-using ModuloCadastro.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +9,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ModuloConfiguracoes.Extensions;
+using ModuloCadastro.Enum.Produto;
 
 namespace ModuloCadastro.ViewModel.Cadastro.Produto
 {

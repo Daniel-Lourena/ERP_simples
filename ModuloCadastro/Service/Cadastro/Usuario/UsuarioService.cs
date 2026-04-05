@@ -36,6 +36,8 @@ namespace ModuloCadastro.Service.Cadastro.Usuario
             insert = entity.Id;
             return insert;
         }
+
+
         public void Update(UsuarioEntity entity)
         {
             var _db_context = _factory.CreateDbContext();
@@ -47,6 +49,12 @@ namespace ModuloCadastro.Service.Cadastro.Usuario
         {
             var _db_context = _factory.CreateDbContext();
             new ServiceMethods(_db_context).UpdateParcial(entity, listaPropriedadesAtualizar);
+        }
+
+        public UsuarioEntity? ObterPorEmail(string? email)
+        {
+            var _db_context = _factory.CreateDbContext();
+            return _db_context.Usuarios.FirstOrDefault(x => x.Email == email)!;
         }
     }
 }

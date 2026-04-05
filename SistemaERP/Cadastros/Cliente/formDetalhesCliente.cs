@@ -1,20 +1,8 @@
-﻿using ModuloCadastro.Context;
-using ModuloCadastro.Service;
-using ModuloCadastro.Service.Financeiro;
-using ModuloCadastro.Service.Cadastro.Produto;
-using ModuloCadastro.Service.Cadastro.Cliente;
+﻿using ModuloCadastro.Service.Cadastro.Cliente;
 using ModuloCadastro.Service.Cadastro.Localizacao;
-using ModuloCadastro.Service.Cadastro.Usuario;
-using ModuloCadastro.Service.Venda;
-using ModuloCadastro.ViewModel;
-using ModuloCadastro.ViewModel.Financeiro;
-using ModuloCadastro.ViewModel.Cadastro.Produto;
 using ModuloCadastro.ViewModel.Cadastro.Cliente;
-using ModuloCadastro.ViewModel.Cadastro.Usuario;
-using ModuloCadastro.ViewModel.Venda;
 using SistemaERP.Cadastros.Helper;
 using SistemaERP.Extensions;
-using SistemaERP.Factory;
 
 namespace SistemaERP.Cadastros.Cliente
 {
@@ -37,7 +25,7 @@ namespace SistemaERP.Cadastros.Cliente
             CarregaEstado();
             this.ConfiguraTabIndex();
         }
-        public formDetalhesCliente(ClienteService serviceCliente, EstadoService serviceEstado,CidadeService serviceCidade ,int id) : this(serviceCliente, serviceEstado,serviceCidade)
+        public formDetalhesCliente(ClienteService serviceCliente, EstadoService serviceEstado, CidadeService serviceCidade, int id) : this(serviceCliente, serviceEstado, serviceCidade)
         {
             _id = id;
         }
@@ -127,7 +115,7 @@ namespace SistemaERP.Cadastros.Cliente
         private void cbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbEstados.SelectedValue != null)
-                cbCidades.GetListCidades(_serviceCidade,(int)cbEstados.SelectedValue);
+                cbCidades.GetListCidades(_serviceCidade, (int)cbEstados.SelectedValue);
         }
     }
 }

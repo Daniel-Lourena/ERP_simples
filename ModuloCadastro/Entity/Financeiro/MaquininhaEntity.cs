@@ -1,4 +1,4 @@
-﻿using ModuloCadastro.Enum;
+﻿using ModuloCadastro.Enum.Financeiro.Maquininha;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

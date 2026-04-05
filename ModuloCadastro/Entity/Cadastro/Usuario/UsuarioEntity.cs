@@ -1,4 +1,4 @@
-﻿using ModuloCadastro.Enum;
+﻿using ModuloCadastro.Enum.Usuario;
 using ModuloCadastro.ViewModel.Cadastro.Usuario;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,6 +22,10 @@ namespace ModuloCadastro.Entity.Cadastro.Usuario
         public bool Excluido { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataExclusao { get; set; }
+        [Column(TypeName = "varchar(100)")]
+        public string? Email { get; set; }
+        [Column(TypeName = "varchar(100)")]
+        public string? Senha { get; set; }
 
 
         public UsuarioViewModel ToViewModel()
@@ -34,7 +38,9 @@ namespace ModuloCadastro.Entity.Cadastro.Usuario
                 dataCadastro = this.DataCadastro,
                 dataAtualizacao = this.DataAtualizacao,
                 dataExclusao = this.DataExclusao,
-                excluido = this.Excluido
+                excluido = this.Excluido,
+                email = this.Email,
+                senha = this.Senha,
             };
         }
     }

@@ -1,24 +1,8 @@
-﻿using ModuloCadastro.Entity;
-using ModuloCadastro.Entity.Financeiro;
-using ModuloCadastro.Entity.Cadastro.Produto;
-using ModuloCadastro.Entity.Cadastro.Cliente;
-using ModuloCadastro.Entity.Cadastro.Localizacao;
-using ModuloCadastro.Entity.Cadastro.Usuario;
-using ModuloCadastro.Entity.Venda;
-using ModuloCadastro.Enum;
-using ModuloCadastro.Service;
-using ModuloCadastro.Service.Financeiro;
+﻿using ModuloCadastro.Entity.Venda;
+using ModuloCadastro.Enum.Financeiro.Generico.Pedido;
 using ModuloCadastro.Service.Cadastro.Produto;
-using ModuloCadastro.Service.Cadastro.Cliente;
-using ModuloCadastro.Service.Cadastro.Localizacao;
-using ModuloCadastro.Service.Cadastro.Usuario;
 using ModuloCadastro.Service.Venda;
-using ModuloCadastro.ViewModel;
-using ModuloCadastro.ViewModel.Financeiro;
 using ModuloCadastro.ViewModel.Cadastro.Produto;
-using ModuloCadastro.ViewModel.Cadastro.Cliente;
-using ModuloCadastro.ViewModel.Cadastro.Usuario;
-using ModuloCadastro.ViewModel.Venda;
 using SistemaERP.Extensions;
 
 namespace SistemaERP.Generico
@@ -29,7 +13,7 @@ namespace SistemaERP.Generico
         private int _idPedido = 0;
         private readonly EstoqueService _serviceEstoque;
         private readonly ProdutoVendaService _serviceProdutoVenda;
-        public formAdicionarProdutosPedido(EstoqueService serviceEstoque, ProdutoVendaService serviceProdutoVenda,ETipoPedido tipoPedido, int idPedido)
+        public formAdicionarProdutosPedido(EstoqueService serviceEstoque, ProdutoVendaService serviceProdutoVenda, ETipoPedido tipoPedido, int idPedido)
         {
             _tipoPedido = tipoPedido;
             _idPedido = idPedido;
@@ -85,7 +69,7 @@ namespace SistemaERP.Generico
                 case ETipoPedido.COMPRA:
                     break;
             }
-            
+
             panelProduto.Visible = false;
             CarregarProdutos();
         }

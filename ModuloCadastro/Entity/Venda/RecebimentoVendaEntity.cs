@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Enum;
+﻿using ModuloCadastro.Enum.Financeiro.Maquininha;
+using ModuloCadastro.Enum.Financeiro.Transacao;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -1,23 +1,10 @@
-﻿using ModuloCadastro.Entity;
-using ModuloCadastro.Entity.Financeiro;
-using ModuloCadastro.Entity.Cadastro.Produto;
-using ModuloCadastro.Entity.Cadastro.Cliente;
-using ModuloCadastro.Entity.Cadastro.Localizacao;
-using ModuloCadastro.Entity.Cadastro.Usuario;
+﻿using ModuloCadastro.Entity.Cadastro.Produto;
 using ModuloCadastro.Entity.Venda;
-using ModuloCadastro.Enum;
-using ModuloCadastro.Service;
-using ModuloCadastro.Service.Financeiro;
-using ModuloCadastro.Service.Cadastro.Produto;
+using ModuloCadastro.Enum.Financeiro.Generico.Pedido;
+using ModuloCadastro.Enum.Financeiro.Transacao;
 using ModuloCadastro.Service.Cadastro.Cliente;
-using ModuloCadastro.Service.Cadastro.Localizacao;
-using ModuloCadastro.Service.Cadastro.Usuario;
+using ModuloCadastro.Service.Cadastro.Produto;
 using ModuloCadastro.Service.Venda;
-using ModuloCadastro.ViewModel;
-using ModuloCadastro.ViewModel.Financeiro;
-using ModuloCadastro.ViewModel.Cadastro.Produto;
-using ModuloCadastro.ViewModel.Cadastro.Cliente;
-using ModuloCadastro.ViewModel.Cadastro.Usuario;
 using ModuloCadastro.ViewModel.Venda;
 using SistemaERP.Extensions;
 using SistemaERP.Factory;
@@ -169,8 +156,9 @@ namespace SistemaERP.Venda
             {
                 form.ShowDialog();
                 _pedido.idCliente = form._idClienteSelecionado;
-            };
-            
+            }
+            ;
+
             if (_pedido.idCliente == 0) return;
 
             var cliente = _serviceCliente.Get(_pedido.idCliente);

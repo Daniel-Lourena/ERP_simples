@@ -1,5 +1,5 @@
 ﻿using ModuloCadastro.Entity.Cadastro.Usuario;
-using ModuloCadastro.Enum;
+using ModuloCadastro.Enum.Usuario;
 using ModuloConfiguracoes.Extensions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +16,8 @@ namespace ModuloCadastro.ViewModel.Cadastro.Usuario
         private DateTime? _dataAtualizacao;
         private bool _excluido;
         private DateTime? _dataExclusao;
+        private string? _email;
+        private string? _senha;
 
 
 
@@ -35,7 +37,10 @@ namespace ModuloCadastro.ViewModel.Cadastro.Usuario
         public DateTime? dataExclusao { get => _dataExclusao; set { if (_dataExclusao != value) { _dataExclusao = value; OnPropertyChanged(); } } }
         [Display(Name = "Descrição Cargo", Description = "")]
         public string _descricaoCargo => _cargo.GetDescription();
-
+        [Display(Name = "E-mail", Description = "")]
+        public string? email { get => _email; set { if (_email != value) { _email = value; OnPropertyChanged(); } } }
+        [Display(Name = "Senha", Description = "")]
+        public string? senha { get => _senha; set { if (_senha != value) { _senha = value; OnPropertyChanged(); } } }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propriedade = null)
@@ -53,7 +58,8 @@ namespace ModuloCadastro.ViewModel.Cadastro.Usuario
                 DataCadastro = dataCadastro,
                 DataAtualizacao = dataAtualizacao,
                 DataExclusao = dataExclusao,
-                Excluido = excluido
+                Excluido = excluido,
+                Email = email
             };
         }
 

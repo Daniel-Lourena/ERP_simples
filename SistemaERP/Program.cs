@@ -1,15 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using ModuloCadastro.Service;
-using ModuloCadastro.Service.Financeiro;
-using ModuloCadastro.Service.Cadastro.Produto;
-using ModuloCadastro.Service.Cadastro.Cliente;
-using ModuloCadastro.Service.Cadastro.Localizacao;
-using ModuloCadastro.Service.Cadastro.Usuario;
-using ModuloCadastro.Service.Venda;
 using SistemaERP.DI;
-using System;
 
 namespace SistemaERP
 {

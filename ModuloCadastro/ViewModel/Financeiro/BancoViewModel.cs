@@ -1,5 +1,5 @@
 ﻿using ModuloCadastro.Entity.Financeiro;
-using ModuloCadastro.Enum;
+using ModuloCadastro.Enum.Financeiro.Banco;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;

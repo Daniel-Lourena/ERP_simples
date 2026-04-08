@@ -15,5 +15,22 @@ namespace SistemaERP.Factory
         {
             return ActivatorUtilities.CreateInstance<T>(_provider, parameters);
         }
+
+        ////ALTERNATIVA PARA UTILIZAR SCOPO
+        //public T Criar<T>(params object[] parameters) where T : Form
+        //{
+        //    var scope = _provider.CreateScope();
+
+        //    var form = ActivatorUtilities.CreateInstance<T>(
+        //        scope.ServiceProvider, parameters
+        //    );
+
+        //    form.FormClosed += (s, e) =>
+        //    {
+        //        scope.Dispose();
+        //    };
+
+        //    return form;
+        //}
     }
 }

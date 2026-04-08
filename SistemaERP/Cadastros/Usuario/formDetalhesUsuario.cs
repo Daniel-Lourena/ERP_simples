@@ -1,5 +1,6 @@
 ﻿using ModuloCadastro.Entity.Cadastro.Usuario;
 using ModuloCadastro.Enum.Usuario;
+using ModuloCadastro.Enum.Usuario.Departamento;
 using ModuloCadastro.Service.Cadastro.Usuario;
 using ModuloCadastro.ViewModel.Cadastro.Usuario;
 using SistemaERP.Extensions;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ModuloCadastro.Enum.Usuario
+namespace ModuloCadastro.Enum.Usuario.Departamento
 {
     public enum ECargo
     {

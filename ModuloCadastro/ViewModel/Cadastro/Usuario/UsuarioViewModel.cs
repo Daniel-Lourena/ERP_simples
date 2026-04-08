@@ -1,5 +1,5 @@
 ﻿using ModuloCadastro.Entity.Cadastro.Usuario;
-using ModuloCadastro.Enum.Usuario;
+using ModuloCadastro.Enum.Usuario.Departamento;
 using ModuloConfiguracoes.Extensions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

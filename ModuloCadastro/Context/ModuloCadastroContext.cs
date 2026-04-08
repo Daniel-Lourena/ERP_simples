@@ -13,6 +13,7 @@ namespace ModuloCadastro.Context
     {
         internal DbSet<AutoNumeradorEntity> AutoNumeradores { get; set; }
         internal DbSet<UsuarioEntity> Usuarios { get; set; }
+        internal DbSet<UsuarioPermissaoEntity> UsuariosPermissoes { get; set; }
         internal DbSet<ClienteEntity> Clientes { get; set; }
         internal DbSet<CidadeEntity> Cidades { get; set; }
         internal DbSet<EstadoEntity> Estados { get; set; }
@@ -27,10 +28,6 @@ namespace ModuloCadastro.Context
         internal DbSet<MaquininhaEntity> Maquininhas { get; set; }
         internal DbSet<ConfigAdquirenteEntity> ConfigAdquirentes { get; set; }
         internal DbSet<AdquirenteBandeira> AdquirentesBandeira { get; set; }
-
-        public ModuloCadastroContext()
-        {
-        }
 
         public ModuloCadastroContext(DbContextOptions<ModuloCadastroContext> options)
        : base(options)
@@ -48,6 +45,15 @@ namespace ModuloCadastro.Context
             {
                 entity.HasKey(u => u.Id);
                 entity.Property(u => u.Cargo).HasConversion<int>();
+            });
+            modelBuilder.Entity<UsuarioPermissaoEntity>(entity =>
+            {
+                entity.HasKey(u => new { u.UsuarioId, u.PermissaoId });
+                entity.Property(x => x.PermissaoId).HasConversion<int>();
+
+                entity.HasOne(x => x.Usuario)
+                      .WithMany(u => u.ListaPermissoes)
+                      .HasForeignKey(x => x.UsuarioId);
             });
 
             modelBuilder.Entity<ClienteEntity>(entity =>
@@ -164,14 +170,14 @@ namespace ModuloCadastro.Context
 
             modelBuilder.Entity<RecebimentoVendaEntity>(entity =>
             {
-                entity.HasKey(r => r.Id );
+                entity.HasKey(r => r.Id);
                 entity.Property(r => r.Especie).HasConversion<int>();
                 entity.Property(r => r.TipoTransferencia).HasConversion<int>();
             });
 
             modelBuilder.Entity<MaquininhaEntity>(entity =>
             {
-                entity.HasKey(m => m.Id );
+                entity.HasKey(m => m.Id);
                 entity.Property(m => m.TipoMaquininha).HasConversion<int>();
 
                 entity.HasOne(c => c.Adquirente)
@@ -187,7 +193,7 @@ namespace ModuloCadastro.Context
             });
             modelBuilder.Entity<AdquirenteBandeira>(entity =>
             {
-                entity.HasKey(a => new { a.ConfigAdquirenteId,a.BandeiraId } );
+                entity.HasKey(a => new { a.ConfigAdquirenteId, a.BandeiraId });
                 entity.Property(a => a.BandeiraId).HasConversion<int>();
 
                 entity.HasOne(c => c.ConfigAdquirente)

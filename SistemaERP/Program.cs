@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ModuloCadastro.Context;
 using SistemaERP.DI;
 
 namespace SistemaERP
@@ -26,18 +27,14 @@ namespace SistemaERP
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             Exception ex = e.Exception;
-            MessageBox.Show("Houve um erro ao realizar a a��o!" + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace, "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Houve um erro ao realizar a ação!" + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace, "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private static void OnConfiguring()
         {
             ServiceCollection service = new ServiceCollection();
-            service.AddDbContextFactory<ModuloCadastro.Context.ModuloCadastroContext>
-                (
-                    optionsBuilder => optionsBuilder.UseMySql(ModuloConfiguracoes.ConfiguracoesGerais.stringConexaoDB + "AllowLoadLocalInfile=true;",
-                    new MySqlServerVersion(new Version(5, 7)),  // Vers�o m�nima suportada
-                    options => options.EnableRetryOnFailure()) // Configura��es adicionais);
-                );
+
+            service.ConfigurarContexto();
             service.AddServices();
             service.AddForms();
             _serviceProvider = service.BuildServiceProvider();

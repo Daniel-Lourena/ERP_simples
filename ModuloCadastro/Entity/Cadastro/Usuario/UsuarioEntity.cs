@@ -1,4 +1,5 @@
-﻿using ModuloCadastro.Enum.Usuario;
+﻿using ModuloCadastro.Enum.Usuario.Departamento;
+using ModuloCadastro.Enum.Usuario.Perfil;
 using ModuloCadastro.ViewModel.Cadastro.Usuario;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,6 +27,12 @@ namespace ModuloCadastro.Entity.Cadastro.Usuario
         public string? Email { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string? Senha { get; set; }
+        [Column(TypeName = "int")]
+        public EDepartamento Departamento { get; set; }
+        [Column(TypeName = "int")]
+        public EPerfilAcesso PerfilAcesso { get; set; }
+
+        public List<UsuarioPermissaoEntity> ListaPermissoes { get; set; } = new();
 
 
         public UsuarioViewModel ToViewModel()

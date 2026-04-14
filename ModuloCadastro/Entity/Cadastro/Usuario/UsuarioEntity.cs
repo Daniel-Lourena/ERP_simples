@@ -48,6 +48,8 @@ namespace ModuloCadastro.Entity.Cadastro.Usuario
                 excluido = this.Excluido,
                 email = this.Email,
                 senha = this.Senha,
+                departamento = this.Departamento,
+                perfilAcesso = this.PerfilAcesso,
             };
         }
     }

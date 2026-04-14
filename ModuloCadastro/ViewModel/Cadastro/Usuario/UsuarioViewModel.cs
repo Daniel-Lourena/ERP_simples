@@ -1,5 +1,6 @@
 ﻿using ModuloCadastro.Entity.Cadastro.Usuario;
 using ModuloCadastro.Enum.Usuario.Departamento;
+using ModuloCadastro.Enum.Usuario.Perfil;
 using ModuloConfiguracoes.Extensions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -18,6 +19,8 @@ namespace ModuloCadastro.ViewModel.Cadastro.Usuario
         private DateTime? _dataExclusao;
         private string? _email;
         private string? _senha;
+        private EDepartamento _departamento;
+        private EPerfilAcesso _perfilAcesso;
 
 
 
@@ -41,6 +44,10 @@ namespace ModuloCadastro.ViewModel.Cadastro.Usuario
         public string? email { get => _email; set { if (_email != value) { _email = value; OnPropertyChanged(); } } }
         [Display(Name = "Senha", Description = "")]
         public string? senha { get => _senha; set { if (_senha != value) { _senha = value; OnPropertyChanged(); } } }
+        [Display(Name = "Departamento", Description = "")]
+        public EDepartamento departamento { get => _departamento; set { if (_departamento != value) { _departamento = value; OnPropertyChanged(); } } }
+        [Display(Name = "Perfil de Acesso", Description = "")]
+        public EPerfilAcesso perfilAcesso { get => _perfilAcesso; set { if (_perfilAcesso != value) { _perfilAcesso = value; OnPropertyChanged(); } } }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propriedade = null)
@@ -59,7 +66,10 @@ namespace ModuloCadastro.ViewModel.Cadastro.Usuario
                 DataAtualizacao = dataAtualizacao,
                 DataExclusao = dataExclusao,
                 Excluido = excluido,
-                Email = email
+                Email = email,
+                Senha = senha,
+                Departamento = departamento,
+                PerfilAcesso = perfilAcesso
             };
         }
 

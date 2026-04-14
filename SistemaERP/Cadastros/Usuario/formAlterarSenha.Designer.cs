@@ -25,25 +25,26 @@ namespace SistemaERP.Cadastros.Usuario
             btnSalvarNovaSenha = new Button();
             btnCancelar = new Button();
             SuspendLayout();
-            //
+            // 
             // lblSenhaAtual
-            //
+            // 
             lblSenhaAtual.AutoSize = true;
             lblSenhaAtual.Location = new Point(14, 20);
             lblSenhaAtual.Name = "lblSenhaAtual";
-            lblSenhaAtual.Size = new Size(78, 15);
+            lblSenhaAtual.Size = new Size(73, 15);
+            lblSenhaAtual.TabIndex = 0;
             lblSenhaAtual.Text = "Senha Atual:";
-            //
+            // 
             // txtSenhaAtual
-            //
+            // 
             txtSenhaAtual.Location = new Point(110, 17);
             txtSenhaAtual.Name = "txtSenhaAtual";
             txtSenhaAtual.PasswordChar = '●';
             txtSenhaAtual.Size = new Size(200, 23);
             txtSenhaAtual.TabIndex = 0;
-            //
+            // 
             // btnValidarSenha
-            //
+            // 
             btnValidarSenha.Location = new Point(318, 16);
             btnValidarSenha.Name = "btnValidarSenha";
             btnValidarSenha.Size = new Size(90, 25);
@@ -51,54 +52,56 @@ namespace SistemaERP.Cadastros.Usuario
             btnValidarSenha.Text = "VALIDAR";
             btnValidarSenha.UseVisualStyleBackColor = true;
             btnValidarSenha.Click += btnValidarSenha_Click;
-            //
+            // 
             // lblNovaSenha
-            //
+            // 
             lblNovaSenha.AutoSize = true;
             lblNovaSenha.Location = new Point(14, 60);
             lblNovaSenha.Name = "lblNovaSenha";
-            lblNovaSenha.Size = new Size(78, 15);
+            lblNovaSenha.Size = new Size(73, 15);
+            lblNovaSenha.TabIndex = 2;
             lblNovaSenha.Text = "Nova Senha:";
-            //
+            // 
             // txtNovaSenha
-            //
+            // 
             txtNovaSenha.Enabled = false;
             txtNovaSenha.Location = new Point(110, 57);
             txtNovaSenha.Name = "txtNovaSenha";
             txtNovaSenha.PasswordChar = '●';
             txtNovaSenha.Size = new Size(200, 23);
             txtNovaSenha.TabIndex = 2;
-            //
+            // 
             // lblConfirmaSenha
-            //
+            // 
             lblConfirmaSenha.AutoSize = true;
-            lblConfirmaSenha.Location = new Point(14, 100);
+            lblConfirmaSenha.Location = new Point(12, 90);
             lblConfirmaSenha.Name = "lblConfirmaSenha";
-            lblConfirmaSenha.Size = new Size(78, 15);
-            lblConfirmaSenha.Text = "Confirma Nova Senha:";
-            //
+            lblConfirmaSenha.Size = new Size(73, 30);
+            lblConfirmaSenha.TabIndex = 3;
+            lblConfirmaSenha.Text = "Confirma\r\nNova Senha:";
+            // 
             // txtNovaSenhaConfirma
-            //
+            // 
             txtNovaSenhaConfirma.Enabled = false;
             txtNovaSenhaConfirma.Location = new Point(110, 97);
             txtNovaSenhaConfirma.Name = "txtNovaSenhaConfirma";
             txtNovaSenhaConfirma.PasswordChar = '●';
             txtNovaSenhaConfirma.Size = new Size(200, 23);
             txtNovaSenhaConfirma.TabIndex = 3;
-            //
+            // 
             // btnSalvarNovaSenha
-            //
+            // 
             btnSalvarNovaSenha.Enabled = false;
             btnSalvarNovaSenha.Location = new Point(318, 140);
             btnSalvarNovaSenha.Name = "btnSalvarNovaSenha";
             btnSalvarNovaSenha.Size = new Size(90, 30);
             btnSalvarNovaSenha.TabIndex = 5;
-            btnSalvarNovaSenha.Text = "SALVAR SENHA";
+            btnSalvarNovaSenha.Text = "SALVAR";
             btnSalvarNovaSenha.UseVisualStyleBackColor = true;
             btnSalvarNovaSenha.Click += btnSalvarNovaSenha_Click;
-            //
+            // 
             // btnCancelar
-            //
+            // 
             btnCancelar.BackColor = Color.IndianRed;
             btnCancelar.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCancelar.ForeColor = SystemColors.ButtonHighlight;
@@ -109,9 +112,9 @@ namespace SistemaERP.Cadastros.Usuario
             btnCancelar.Text = "CANCELAR";
             btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
-            //
+            // 
             // formAlterarSenha
-            //
+            // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(424, 188);
